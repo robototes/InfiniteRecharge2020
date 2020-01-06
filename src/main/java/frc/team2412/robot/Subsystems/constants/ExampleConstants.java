@@ -12,4 +12,8 @@ public class ExampleConstants {
 	public final static Distance EXAMPLE_DISTANCE = new Distance(1, DistanceUnits.INCH);
 
 	// Enums will go below here
+
+	public enum ExampleEnum {
+		LOW, MID, HIGH
+	}
 }
