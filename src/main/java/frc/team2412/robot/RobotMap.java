@@ -8,14 +8,14 @@ public class RobotMap {
 
 	// IDs
 	public static int exampleID = 1;
-	
-	//Button ports
+
+	// Button ports
 	public static int LIFT_UP_BUTTON_PORT = 1;
 	public static int LIFT_DOWN_BUTTON_PORT = 1;
-	
+
 	public static boolean LiftIsUp = false;
 
-	//DoubleSolenoid Ports
+	// DoubleSolenoid Ports
 	public static int LIFT_UP_PORT = 1;
 	public static int LIFT_DOWN_PORT = 1;
 

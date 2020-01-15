@@ -17,21 +17,19 @@ public class OI {
 
 	// Buttons
 	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
-	
+
 	public Button liftUpButton = new JoystickButton(codriverStick, RobotMap.LIFT_UP_BUTTON_PORT);
 	public Button liftDownButton = new JoystickButton(codriverStick, RobotMap.LIFT_DOWN_BUTTON_PORT);
-
 
 	// Constructor to set all of the commands and buttons
 	public OI() {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
-		
+
 		liftUpButton.whenPressed(new LiftUp());
 		liftDownButton.whenPressed(new LiftDown());
-		
+
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
-				
-		
+
 	}
 }
