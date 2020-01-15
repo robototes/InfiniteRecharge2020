@@ -18,8 +18,8 @@ public class RobotMap {
 	public static int exampleID = 1;
 
 	// Limelight subsystem
-	public static NetworkTable limelightTable = NetworkTableInstance.create().getTable("limelight");
-	public static Limelight limelight = new Limelight(limelightTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
+	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
+	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
 			Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
 
 	// Robot container
