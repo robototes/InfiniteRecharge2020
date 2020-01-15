@@ -11,13 +11,13 @@ public class RobotContainer {
 	// Subsystems
 	public ExampleSubsystem m_ExampleSubsystem;
 	
-	public LiftSubsystem LiftSubsystem;
+	public static LiftSubsystem liftSubsystem;
 
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
 		
-		LiftSubsystem = new LiftSubsystem();
+		liftSubsystem = new LiftSubsystem();
 
 		// create an OI object
 		m_OI = new OI();

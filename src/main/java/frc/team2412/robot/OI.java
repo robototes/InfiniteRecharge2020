@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.Commands.ExampleCommand;
+import frc.team2412.robot.Commands.LiftCommands.LiftUp;
+import frc.team2412.robot.Subsystems.LiftSubsystem;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
@@ -23,9 +25,12 @@ public class OI {
 	public OI() {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
-		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
-				
+		
 		liftUpButton.whenPressed(new LiftUp());
 		liftDownButton.whenPressed(new LiftDown());
+		
+		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
+				
+		
 	}
 }

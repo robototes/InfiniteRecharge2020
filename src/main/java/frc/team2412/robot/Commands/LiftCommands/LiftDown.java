@@ -1,12 +1,13 @@
-package LiftComands;
+package frc.team2412.robot.Commands.LiftCommands;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 
-public class LiftDown {
+public class LiftDown extends CommandBase{
 	
 	public LiftDown() {
-		addRequirements(LiftSubsystem);
+		addRequirements(liftSubsystem);
 	}
 
 	@Override
