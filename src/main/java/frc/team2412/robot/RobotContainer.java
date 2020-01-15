@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 
@@ -13,11 +14,15 @@ public class RobotContainer {
 
 	public LiftSubsystem liftSubsystem;
 
+	public DriveBaseSubsystem driveBaseSubsystem;
+
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
 
 		liftSubsystem = new LiftSubsystem();
+
+		driveBaseSubsystem = new DriveBaseSubsystem();
 
 		// create an OI object
 		m_OI = new OI();
