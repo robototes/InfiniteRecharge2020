@@ -11,7 +11,7 @@ public class RobotContainer {
 	// Subsystems
 	public ExampleSubsystem m_ExampleSubsystem;
 
-	public static LiftSubsystem liftSubsystem;
+	public LiftSubsystem liftSubsystem;
 
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
