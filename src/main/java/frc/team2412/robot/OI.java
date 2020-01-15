@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.Commands.ExampleCommand;
+import frc.team2412.robot.Commands.LiftCommands.LiftDown;
 import frc.team2412.robot.Commands.LiftCommands.LiftUp;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 
