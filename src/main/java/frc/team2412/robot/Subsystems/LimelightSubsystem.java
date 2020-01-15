@@ -10,9 +10,12 @@ import frc.team2412.robot.Subsystems.constants.LimelightConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
 
+	// Store local values of distance and yaw so they aren't calculated multiple
+	// times a loop
 	public Distance m_distanceToTarget;
 	public Rotations m_yawFromTarget;
 
+	// Store the limelight
 	private Limelight m_limelight;
 
 	public LimelightSubsystem(Limelight limelight) {
@@ -23,6 +26,9 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
+
+		// If we have a target, set distance and yaw, otherwise error them
+
 		if (m_limelight.hasValidTarget()) {
 			setDistanceFromTable();
 			setYawFromTable();
@@ -32,11 +38,13 @@ public class LimelightSubsystem extends SubsystemBase {
 	}
 
 	public void setValuesToError() {
+		// Error distance and yaw to make sure that we know if we dont have a target
 		m_distanceToTarget = new Distance(Double.NaN);
 		m_yawFromTarget = new Rotations(Double.NaN);
 	}
 
 	public void setYawFromTable() {
+		// Set the yaw to a degree value from the limelight
 		m_yawFromTarget = new Rotations(m_limelight.getTX(), RotationUnits.DEGREE);
 	}
 
@@ -44,14 +52,19 @@ public class LimelightSubsystem extends SubsystemBase {
 		// Formula from docs.limelight.io:
 		// d = (h2-h1) / tan(a1+a2)
 
+		// Find h2-h1, or delta y (opposite side)
 		Distance targetHeightMinusLimelightHeight = LimelightConstants.TARGET_CENTER_HEIGHT
 				.subtract(LimelightConstants.LIFT_UP_HEIGHT);
 
+		// Get the angle to the target from the limelight and add that to the mount
+		// angle to get the angle from the horizontal
 		Rotations angleUpDownToTarget = new Rotations(m_limelight.getTY(), RotationUnits.DEGREE);
 		Rotations angleFromHorizontal = angleUpDownToTarget.add(LimelightConstants.LIMELIGHT_MOUNT_ANGLE);
 
+		// Get the tangent of the angle (opposite/adjacent)
 		double tangentOfAngle = Math.tan(angleFromHorizontal.getValue());
 
+		// Divide delta y by the tangent to get the distance (adjacent side)
 		m_distanceToTarget = targetHeightMinusLimelightHeight.divide(new Distance(tangentOfAngle));
 	}
 
