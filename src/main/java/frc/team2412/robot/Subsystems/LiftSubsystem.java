@@ -10,12 +10,12 @@ public class LiftSubsystem extends SubsystemBase {
 
 	public void liftUp() {
 		liftUpDown.set(DoubleSolenoid.Value.kForward);
-		RobotMap.LiftIsUp = true;
+		RobotMap.IsLiftUp = true;
 	}
 
 	public void liftDown() {
 		liftUpDown.set(DoubleSolenoid.Value.kReverse);
-		RobotMap.LiftIsUp = false;
+		RobotMap.IsLiftUp = false;
 	}
 
 }
