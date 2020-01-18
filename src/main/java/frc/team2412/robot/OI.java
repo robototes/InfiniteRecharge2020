@@ -7,7 +7,6 @@ import frc.team2412.robot.Commands.ExampleCommand;
 import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftDown;
 import frc.team2412.robot.Commands.LiftCommands.LiftUp;
-import frc.team2412.robot.Subsystems.LiftSubsystem;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
