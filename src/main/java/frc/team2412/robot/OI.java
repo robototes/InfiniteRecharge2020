@@ -19,7 +19,7 @@ public class OI {
 	// Buttons
 	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
 
-	public Button StartDriving = JoystickButton(driverStick, RobotMap.START_DRIVE_BUTTON_PORT);
+	public Button StartDriving = new JoystickButton(driverStick, RobotMap.START_DRIVE_BUTTON_PORT);
 
 	public Button liftUpButton = new JoystickButton(codriverStick, RobotMap.LIFT_UP_BUTTON_PORT);
 	public Button liftDownButton = new JoystickButton(codriverStick, RobotMap.LIFT_DOWN_BUTTON_PORT);

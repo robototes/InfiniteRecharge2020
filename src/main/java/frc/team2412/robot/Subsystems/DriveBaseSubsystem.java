@@ -9,7 +9,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	private DifferentialDrive robotDrive = RobotMap.robotDrive;
 
-	public void aller(Joystick joystick) {
+	public void drive(Joystick joystick) {
 		robotDrive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
 
 	}

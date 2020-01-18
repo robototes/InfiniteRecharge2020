@@ -15,7 +15,7 @@ public class DriveCommand extends CommandBase {
 	}
 
 	public void execute() {
-		driveBaseSubsystem.aller(RobotMap.robotContainer.m_OI.driverStick);
+		driveBaseSubsystem.drive(RobotMap.robotContainer.m_OI.driverStick);
 	}
 
 	@Override

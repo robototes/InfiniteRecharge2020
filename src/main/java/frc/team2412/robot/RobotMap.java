@@ -38,15 +38,18 @@ public class RobotMap {
 	// Button ports
 	public static final int START_DRIVE_BUTTON_PORT = 4;
 
-	public static int LIFT_UP_BUTTON_PORT = 1;
-	public static int LIFT_DOWN_BUTTON_PORT = 1;
+	public static final int LIFT_UP_BUTTON_PORT = 1;
+	public static final int LIFT_DOWN_BUTTON_PORT = 1;
+
+	// Color Sensor I2C port
+	public static final int COLOR_SENSOR_I2C_PORT = 1;
 
 	public static boolean IsLiftUp = false;
 
 	// DoubleSolenoid Ports
 	public static int LIFT_UP_PORT = 1;
 	public static int LIFT_DOWN_PORT = 1;
-	
+
 	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_UP_PORT, LIFT_DOWN_PORT);
 
 	// Robot container
