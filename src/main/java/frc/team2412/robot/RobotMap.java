@@ -43,8 +43,6 @@ public class RobotMap {
 	// Color Sensor I2C port
 	public static final int COLOR_SENSOR_I2C_PORT = 1;
 
-	public static boolean IsLiftUp = false;
-
 	// DoubleSolenoid Ports
 	public static int LIFT_UP_PORT = 1;
 	public static int LIFT_DOWN_PORT = 1;

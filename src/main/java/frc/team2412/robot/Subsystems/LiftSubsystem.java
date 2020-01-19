@@ -2,20 +2,34 @@ package frc.team2412.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotMap;
+import frc.team2412.robot.Subsystems.constants.LiftConstants.LiftState;
 
 public class LiftSubsystem extends SubsystemBase {
 
-	private static DoubleSolenoid liftUpDown = RobotMap.liftUpDown;
+	private DoubleSolenoid m_liftUpDown;
+
+	private LiftState m_currentState = LiftState.DOWN;
+
+	public LiftSubsystem(DoubleSolenoid liftUpDown) {
+		this.m_liftUpDown = liftUpDown;
+		this.setName("Lift Subsystem");
+	}
 
 	public void liftUp() {
-		liftUpDown.set(DoubleSolenoid.Value.kForward);
-		RobotMap.IsLiftUp = true;
+		setLift(LiftState.UP);
 	}
 
 	public void liftDown() {
-		liftUpDown.set(DoubleSolenoid.Value.kReverse);
-		RobotMap.IsLiftUp = false;
+		setLift(LiftState.DOWN);
+	}
+
+	private void setLift(LiftState newState) {
+		m_liftUpDown.set(newState.value);
+		m_currentState = newState;
+	}
+
+	public LiftState getCurrentState() {
+		return m_currentState;
 	}
 
 }

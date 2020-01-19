@@ -3,11 +3,11 @@ package frc.team2412.robot.Commands.LiftCommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 
-public class LiftUp extends CommandBase {
+public class LiftUpCommand extends CommandBase {
 
 	private LiftSubsystem liftSubsystem;
 
-	public LiftUp(LiftSubsystem liftSubsystem) {
+	public LiftUpCommand(LiftSubsystem liftSubsystem) {
 		addRequirements(liftSubsystem);
 		this.liftSubsystem = liftSubsystem;
 	}

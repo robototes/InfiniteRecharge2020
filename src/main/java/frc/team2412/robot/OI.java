@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.Commands.ExampleCommand;
 import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
-import frc.team2412.robot.Commands.LiftCommands.LiftDown;
-import frc.team2412.robot.Commands.LiftCommands.LiftUp;
+import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
+import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
@@ -30,8 +30,8 @@ public class OI {
 
 		StartDriving.whenPressed(new DriveCommand(RobotMap.robotContainer.driveBaseSubsystem));
 
-		liftUpButton.whenPressed(new LiftUp(RobotMap.robotContainer.liftSubsystem));
-		liftDownButton.whenPressed(new LiftDown(RobotMap.robotContainer.liftSubsystem));
+		liftUpButton.whenPressed(new LiftUpCommand(RobotMap.robotContainer.liftSubsystem));
+		liftDownButton.whenPressed(new LiftDownCommand(RobotMap.robotContainer.liftSubsystem));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
 

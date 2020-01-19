@@ -20,7 +20,7 @@ public class RobotContainer {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
 
-		liftSubsystem = new LiftSubsystem();
+		liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
 
 		driveBaseSubsystem = new DriveBaseSubsystem();
 
