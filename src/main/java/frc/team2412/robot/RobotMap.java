@@ -26,6 +26,8 @@ public class RobotMap {
 	public static SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFront, rightBack);
 
 	public static DifferentialDrive robotDrive = new DifferentialDrive(leftSide, rightSide);
+	
+	
 
 	// IDs
 	public static int exampleID = 1;
@@ -35,13 +37,8 @@ public class RobotMap {
 	public static final int CODRIVER_STICK_PORT = 1;
 
 	// Button ports
-	public static final int START_DRIVE_BUTTON_PORT = 4;
-
 	public static final int LIFT_UP_BUTTON_PORT = 1;
 	public static final int LIFT_DOWN_BUTTON_PORT = 1;
-
-	// Color Sensor I2C port
-	public static final int COLOR_SENSOR_I2C_PORT = 1;
 
 	// DoubleSolenoid Ports
 	public static int LIFT_UP_PORT = 1;

@@ -20,6 +20,6 @@ public class DriveCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		return true;
 	}
 }
