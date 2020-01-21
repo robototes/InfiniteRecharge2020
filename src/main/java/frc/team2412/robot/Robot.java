@@ -8,6 +8,7 @@
 package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,7 +23,7 @@ public class Robot extends TimedRobot {
 
 	// Have instances of robot container and OI for easy access
 	private RobotContainer m_RobotContainer = RobotMap.robotContainer;
-	private OI m_OI = RobotMap.robotContainer.m_OI;
+	private OI m_OI = RobotMap.m_OI;
 
 	/**
 	 * This function is called once when autonomous is started
@@ -60,6 +61,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
+		CommandScheduler.getInstance().run();
+		System.out.println(m_RobotContainer.m_LimelightSubsystem.m_distanceToTarget);
+		System.out.println(RobotMap.limelight.hasValidTarget());
+		System.out.println();
 	}
 
 	/**
