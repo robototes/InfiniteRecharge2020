@@ -4,6 +4,11 @@ import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 import com.robototes.sensors.Limelight;
+import com.robototes.sensors.Limelight.CamMode;
+import com.robototes.sensors.Limelight.LEDMode;
+import com.robototes.sensors.Limelight.Pipeline;
+import com.robototes.sensors.Limelight.SnapshotMode;
+import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.LimelightConstants;
@@ -20,6 +25,13 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	public LimelightSubsystem(Limelight limelight) {
 		this.m_limelight = limelight;
+
+		m_limelight.setLedMode(LEDMode.OFF);
+		m_limelight.setCamMode(CamMode.VISION_PROCESSER);
+		m_limelight.setPipeline(Pipeline.ZERO);
+		m_limelight.setSnapshotMode(SnapshotMode.OFF);
+		m_limelight.setStreamMode(StreamMode.STANDARD);
+
 		this.m_distanceToTarget = new Distance(0);
 		this.m_yawFromTarget = new Rotations(0);
 	}

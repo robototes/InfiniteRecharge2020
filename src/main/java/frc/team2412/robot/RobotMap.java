@@ -1,11 +1,8 @@
 package frc.team2412.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.robototes.sensors.Limelight;
-import com.robototes.sensors.Limelight.CamMode;
-import com.robototes.sensors.Limelight.LEDMode;
-import com.robototes.sensors.Limelight.Pipeline;
-import com.robototes.sensors.Limelight.SnapshotMode;
-import com.robototes.sensors.Limelight.StreamMode;
+import com.robototes.sensors.Limelight.*;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -18,10 +15,17 @@ public class RobotMap {
 	public static int exampleID = 1;
 
 	// Limelight subsystem
-	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
+	public static NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault().getTable("limelight");
 	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
 			Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
 
+	// Turret Subsystem
+	public static int turretMotorID = 0;
+	public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(turretMotorID);
+
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
+
+	// OI
+	public static OI m_OI = new OI(robotContainer);
 }
