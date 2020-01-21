@@ -5,8 +5,8 @@ package frc.team2412.robot;
 public class RobotMap {
 
 	// IDs
-	public static int exampleID = 1;
-
+	public static int deployArmPneumatic1 = 1;
+	public static int deployArmPneumatic2 = 2;
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
 }
