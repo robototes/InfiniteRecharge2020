@@ -9,10 +9,12 @@ public class RobotContainer {
 
 	// Subsystems
 	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
+	
 
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
 		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.deployArmPneumatic1, RobotMap.deployArmPneumatic2);
+		
 		// create an OI object
 		m_OI = new OI();
 	}
