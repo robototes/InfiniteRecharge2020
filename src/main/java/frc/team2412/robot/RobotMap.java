@@ -26,8 +26,6 @@ public class RobotMap {
 	public static SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFront, rightBack);
 
 	public static DifferentialDrive robotDrive = new DifferentialDrive(leftSide, rightSide);
-	
-	
 
 	// IDs
 	public static int exampleID = 1;
