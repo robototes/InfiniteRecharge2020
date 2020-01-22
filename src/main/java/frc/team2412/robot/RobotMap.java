@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -26,6 +27,8 @@ public class RobotMap {
 	public static SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFront, rightBack);
 
 	public static DifferentialDrive robotDrive = new DifferentialDrive(leftSide, rightSide);
+
+	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	// IDs
 	public static int exampleID = 1;

@@ -22,7 +22,7 @@ public class RobotContainer {
 
 		liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
 
-		driveBaseSubsystem = new DriveBaseSubsystem();
+		driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro);
 
 		// create an OI object
 		m_OI = new OI();
