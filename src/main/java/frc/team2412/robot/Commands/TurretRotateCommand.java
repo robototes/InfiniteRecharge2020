@@ -14,7 +14,6 @@ public class TurretRotateCommand extends CommandBase {
 		addRequirements(turretSubsystem);
 
 		m_LimelightSubsystem = limelightSubsystem;
-		addRequirements(limelightSubsystem);
 	}
 
 	@Override

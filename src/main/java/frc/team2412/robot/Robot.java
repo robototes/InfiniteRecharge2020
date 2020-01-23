@@ -7,6 +7,8 @@
 
 package frc.team2412.robot;
 
+import com.robototes.sensors.Limelight.LEDMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -62,9 +64,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		System.out.println(m_RobotContainer.m_LimelightSubsystem.m_distanceToTarget);
-		System.out.println(RobotMap.limelight.hasValidTarget());
-		System.out.println();
+//		System.out.println(m_RobotContainer.m_LimelightSubsystem.m_distanceToTarget);
+//		System.out.println(RobotMap.limelight.hasValidTarget());
+//		System.out.println();
 	}
 
 	/**
@@ -79,5 +81,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+
+	@Override
+	public void disabledPeriodic() {
 	}
 }

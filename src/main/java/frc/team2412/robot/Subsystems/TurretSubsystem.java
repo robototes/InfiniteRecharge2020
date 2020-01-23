@@ -24,8 +24,17 @@ public class TurretSubsystem extends SubsystemBase {
 	}
 
 	public void turnBasedOnLimelightAngle(Rotations limelightAngle) {
-		m_turretMotor.set(ControlMode.PercentOutput,
-				MathUtils.constrain(limelightAngle.convertTo(RotationUnits.DEGREE), -1, 1));
+
+		System.out.println("turning");
+
+		if (Double.isNaN(limelightAngle.getValue())) {
+			System.out.println("error turn");
+			m_turretMotor.set(ControlMode.PercentOutput, -0.25);
+		} else {
+			System.out.println("turn with control");
+			m_turretMotor.set(ControlMode.PercentOutput,
+					MathUtils.constrain(-limelightAngle.convertTo(RotationUnits.DEGREE), -0.25, 0.25));
+		}
 	}
 
 	public Rotations getM_currentAngle() {
