@@ -31,9 +31,4 @@ public class OI {
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
 
 	}
-
-	private Button JoystickButton(Joystick driverStick2, int startDriveButtonPort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
