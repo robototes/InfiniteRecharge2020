@@ -20,7 +20,7 @@ public class RobotMap {
 			Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
 
 	// Turret Subsystem
-	public static int turretMotorID = 0;
+	public static int turretMotorID = 1;
 	public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(turretMotorID);
 
 	// Robot container

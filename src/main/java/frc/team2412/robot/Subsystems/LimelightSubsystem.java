@@ -11,6 +11,7 @@ import com.robototes.sensors.Limelight.SnapshotMode;
 import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.Commands.LimelightReadCommand;
 import frc.team2412.robot.Subsystems.constants.LimelightConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
@@ -23,29 +24,43 @@ public class LimelightSubsystem extends SubsystemBase {
 	// Store the limelight
 	private Limelight m_limelight;
 
+	private int loopCount = 0;
+
 	public LimelightSubsystem(Limelight limelight) {
 		this.m_limelight = limelight;
 
 		m_limelight.setLedMode(LEDMode.OFF);
 		m_limelight.setCamMode(CamMode.VISION_PROCESSER);
-		m_limelight.setPipeline(Pipeline.ZERO);
+		m_limelight.setPipeline(Pipeline.FOUR);
 		m_limelight.setSnapshotMode(SnapshotMode.OFF);
 		m_limelight.setStreamMode(StreamMode.STANDARD);
 
 		this.m_distanceToTarget = new Distance(0);
 		this.m_yawFromTarget = new Rotations(0);
+
+		this.setDefaultCommand(new LimelightReadCommand(this));
 	}
 
 	@Override
 	public void periodic() {
 
-		// If we have a target, set distance and yaw, otherwise error them
+	}
 
-		if (m_limelight.hasValidTarget()) {
-			setDistanceFromTable();
-			setYawFromTable();
+	public void getValues() {
+		if (++loopCount % 60 < 15) {
+
+			System.out.println("getting values!");
+			// If we have a target, set distance and yaw, otherwise error them
+			m_limelight.setLedMode(LEDMode.ON);
+			if (m_limelight.hasValidTarget()) {
+				setDistanceFromTable();
+				setYawFromTable();
+			}
+//			else {
+//			setValuesToError();
+//			}
 		} else {
-			setValuesToError();
+			m_limelight.setLedMode(LEDMode.OFF);
 		}
 	}
 
@@ -86,5 +101,9 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	public Rotations getYawFromTarget() {
 		return m_yawFromTarget;
+	}
+
+	public void stopLimelight() {
+		m_limelight.setLedMode(LEDMode.OFF);
 	}
 }
