@@ -1,11 +1,9 @@
 package frc.team2412.robot;
 
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorMatch;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -13,9 +11,6 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
-
-
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses. 
 //remember to declare robot container at the bottom of this class 
@@ -44,14 +39,6 @@ public class RobotMap {
 	// IDs
 	public static int exampleID = 1;
 
-	// Joystick ports
-	public static final int DRIVER_STICK_PORT = 0;
-	public static final int CODRIVER_STICK_PORT = 1;
-
-	// Button ports
-	public static final int LIFT_UP_BUTTON_PORT = 1;
-	public static final int LIFT_DOWN_BUTTON_PORT = 1;
-
 	// motor ports
 	public static final int INTAKE_FRONT_PORT = 1;
 	public static final int INTAKE_BACK_PORT = 1;
@@ -71,13 +58,15 @@ public class RobotMap {
 
 	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_UP_PORT, LIFT_DOWN_PORT);
 
-	//Control Panel I2C
+	// Control Panel I2C
 	public static I2C.Port COLOR_SESNOR_PORT = I2C.Port.kOnboard;
-	
+
 	public static ColorSensorV3 colorSensor = new ColorSensorV3(COLOR_SESNOR_PORT);
 	public static ColorMatch colorMatcher = new ColorMatch();
-	
-	
+
+	public static final int CONTROL_PANEL_MOTOR_PORT = 1;
+	public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
+
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
 }

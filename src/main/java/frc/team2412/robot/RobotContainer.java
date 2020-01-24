@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import frc.team2412.robot.Subsystems.IntakeMotorOnOffSubsystem;
@@ -24,6 +25,8 @@ public class RobotContainer {
 
 	public IntakeUpDownSubsystem intakeUpDownSubsystem;
 
+	public ControlPanelColorSubsystem controlPanelColorSubsystem;
+
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
@@ -37,6 +40,8 @@ public class RobotContainer {
 		frontIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeFront);
 
 		intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
+
+		controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
 
 		// create an OI object
 		m_OI = new OI();
