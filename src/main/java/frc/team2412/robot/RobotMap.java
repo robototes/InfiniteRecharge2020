@@ -47,12 +47,12 @@ public class RobotMap {
 	// motor ports
 	public static final int INTAKE_FRONT_PORT = 1;
 	public static final int INTAKE_BACK_PORT = 1;
-	
+
 	public static int INTAKE_UP_PORT = 1;
 	public static int INTAKE_DOWN_PORT = 1;
-	
+
 	public static DoubleSolenoid intakeUpDown = new DoubleSolenoid(INTAKE_UP_PORT, INTAKE_DOWN_PORT);
-	
+
 	// Intake Motors
 	public static CANSparkMax intakeFront = new CANSparkMax(INTAKE_FRONT_PORT, MotorType.kBrushless);
 	public static CANSparkMax intakeBack = new CANSparkMax(INTAKE_BACK_PORT, MotorType.kBrushless);

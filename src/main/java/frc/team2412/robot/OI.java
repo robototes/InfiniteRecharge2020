@@ -51,14 +51,13 @@ public class OI {
 		liftUpButton.whenPressed(new LiftUpCommand(RobotMap.robotContainer.liftSubsystem));
 		liftDownButton.whenPressed(new LiftDownCommand(RobotMap.robotContainer.liftSubsystem));
 
-		intakeUpButton.whenPressed(new IntakeUpCommand(RobotMap.robotContainer.intakeUpDownSubsystem)); 
+		intakeUpButton.whenPressed(new IntakeUpCommand(RobotMap.robotContainer.intakeUpDownSubsystem));
 		intakeDownButton.whenPressed(new IntakeDownCommand(RobotMap.robotContainer.intakeUpDownSubsystem));
 		intakeFrontOnButton.whenPressed(new IntakeOnCommand(RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem));
 		intakeFrontOffButton.whenPressed(new IntakeOffCommand(RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem));
 		intakeBackOnButton.whenPressed(new IntakeOnCommand(RobotMap.robotContainer.backIntakeMotorOnOffSubsystem));
 		intakeBackOffButton.whenPressed(new IntakeOffCommand(RobotMap.robotContainer.backIntakeMotorOnOffSubsystem));
 
-		
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
 
 	}

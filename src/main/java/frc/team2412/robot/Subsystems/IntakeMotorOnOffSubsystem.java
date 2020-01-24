@@ -7,10 +7,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeMotorOnOffSubsystem extends SubsystemBase {
 
 	private CANSparkMax m_intakeMotor;
-	
-	
+
 	public IntakeMotorOnOffSubsystem(CANSparkMax Motor) {
-		this.m_intakeMotor = Motor;		
+		this.m_intakeMotor = Motor;
 	}
 
 	public void intakeOn() {

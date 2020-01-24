@@ -21,7 +21,7 @@ public class RobotContainer {
 	public IntakeMotorOnOffSubsystem backIntakeMotorOnOffSubsystem;
 
 	public IntakeMotorOnOffSubsystem frontIntakeMotorOnOffSubsystem;
-	
+
 	public IntakeUpDownSubsystem intakeUpDownSubsystem;
 
 	public RobotContainer() {
@@ -33,11 +33,9 @@ public class RobotContainer {
 		driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro);
 
 		backIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeBack);
-		
+
 		frontIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeFront);
 
-		
-		
 		intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
 
 		// create an OI object

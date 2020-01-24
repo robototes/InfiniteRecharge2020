@@ -19,6 +19,5 @@ public class IntakeConstants {
 			this.value = value;
 		}
 	}
-	
-	
+
 }
