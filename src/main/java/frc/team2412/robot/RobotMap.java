@@ -2,7 +2,6 @@ package frc.team2412.robot;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -23,7 +22,6 @@ public class RobotMap {
 	public static final int RIGHT_BACK_ID = 0;
 
 	// Drive Motors
-
 	private static Talon leftFront = new Talon(LEFT_FRONT_ID);
 	private static Talon leftBack = new Talon(LEFT_BACK_ID);
 	private static Talon rightFront = new Talon(RIGHT_FRONT_ID);
@@ -62,7 +60,6 @@ public class RobotMap {
 	public static I2C.Port COLOR_SESNOR_PORT = I2C.Port.kOnboard;
 
 	public static ColorSensorV3 colorSensor = new ColorSensorV3(COLOR_SESNOR_PORT);
-	public static ColorMatch colorMatcher = new ColorMatch();
 
 	public static final int CONTROL_PANEL_MOTOR_PORT = 1;
 	public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
