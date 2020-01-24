@@ -1,5 +1,8 @@
 package frc.team2412.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -40,6 +43,19 @@ public class RobotMap {
 	// Button ports
 	public static final int LIFT_UP_BUTTON_PORT = 1;
 	public static final int LIFT_DOWN_BUTTON_PORT = 1;
+
+	// motor ports
+	public static final int INTAKE_FRONT_PORT = 1;
+	public static final int INTAKE_BACK_PORT = 1;
+	
+	public static int INTAKE_UP_PORT = 1;
+	public static int INTAKE_DOWN_PORT = 1;
+	
+	public static DoubleSolenoid intakeUpDown = new DoubleSolenoid(INTAKE_UP_PORT, INTAKE_DOWN_PORT);
+	
+	// Intake Motors
+	public static CANSparkMax intakeFront = new CANSparkMax(INTAKE_FRONT_PORT, MotorType.kBrushless);
+	public static CANSparkMax intakeBack = new CANSparkMax(INTAKE_BACK_PORT, MotorType.kBrushless);
 
 	// DoubleSolenoid Ports
 	public static int LIFT_UP_PORT = 1;

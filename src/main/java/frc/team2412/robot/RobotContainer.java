@@ -2,6 +2,8 @@ package frc.team2412.robot;
 
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
+import frc.team2412.robot.Subsystems.IntakeMotorOnOffSubsystem;
+import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 
 // this is the class for containing all the subsystems and OI of the robot
@@ -16,6 +18,12 @@ public class RobotContainer {
 
 	public DriveBaseSubsystem driveBaseSubsystem;
 
+	public IntakeMotorOnOffSubsystem backIntakeMotorOnOffSubsystem;
+
+	public IntakeMotorOnOffSubsystem frontIntakeMotorOnOffSubsystem;
+	
+	public IntakeUpDownSubsystem intakeUpDownSubsystem;
+
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
@@ -23,6 +31,14 @@ public class RobotContainer {
 		liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
 
 		driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro);
+
+		backIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeBack);
+		
+		frontIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeFront);
+
+		
+		
+		intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
 
 		// create an OI object
 		m_OI = new OI();
