@@ -20,4 +20,7 @@ public class IntakeMotorOnOffSubsystem extends SubsystemBase {
 		m_intakeMotor.set(0);
 	}
 
+	public void setIntake(double speed) {
+		m_intakeMotor.set(speed);
+	}
 }

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.Commands.ExampleCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
-import frc.team2412.robot.Commands.ControlPanelCommands.SetoToTargetColorCommand;
+import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeOnCommand;
@@ -20,22 +20,23 @@ public class OI {
 	public static final int DRIVER_STICK_PORT = 0;
 	public static final int CODRIVER_STICK_PORT = 1;
 
-	// Button ports
+	// LIFT button ports
 	public static final int LIFT_UP_BUTTON_PORT = 1;
 	public static final int LIFT_DOWN_BUTTON_PORT = 1;
 
-	// Front on off
+	// INTAKE front on off
 	public static final int INTAKE_FRONT_ON_BUTTON_PORT = 1;
 	public static final int INTAKE_FRONT_OFF_BUTTON_PORT = 1;
 
-	// back on off
+	// INTAKE back on off
 	public static final int INTAKE_BACK_ON_BUTTON_PORT = 1;
 	public static final int INTAKE_BACK_OFF_BUTTON_PORT = 1;
 
-	// bring it up and down
+	// INTAKE bring it up and down
 	public static final int INTAKE_UP_BUTTON_PORT = 1;
 	public static final int INTAKE_DOWN_BUTTON_PORT = 1;
 
+	// CONTROL PANEL button ports
 	public static final int CONTROL_PANEL_SPIN_3_TIMES_BUTTON_PORT = 1;
 	public static final int CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT = 1;
 
@@ -66,20 +67,27 @@ public class OI {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
 
+		// LIFT
 		liftUpButton.whenPressed(new LiftUpCommand(RobotMap.robotContainer.liftSubsystem));
 		liftDownButton.whenPressed(new LiftDownCommand(RobotMap.robotContainer.liftSubsystem));
 
+		// INTAKE UpDown
 		intakeUpButton.whenPressed(new IntakeUpCommand(RobotMap.robotContainer.intakeUpDownSubsystem));
 		intakeDownButton.whenPressed(new IntakeDownCommand(RobotMap.robotContainer.intakeUpDownSubsystem));
+
+		// INTAKE front
 		intakeFrontOnButton.whenPressed(new IntakeOnCommand(RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem));
 		intakeFrontOffButton.whenPressed(new IntakeOffCommand(RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem));
+
+		// INTAKE back
 		intakeBackOnButton.whenPressed(new IntakeOnCommand(RobotMap.robotContainer.backIntakeMotorOnOffSubsystem));
 		intakeBackOffButton.whenPressed(new IntakeOffCommand(RobotMap.robotContainer.backIntakeMotorOnOffSubsystem));
 
+		// CONTROL PANEL
 		controlPanelSpinThreeTimesButton
 				.whenPressed(new RotateControlPanelCommand(RobotMap.robotContainer.controlPanelColorSubsystem));
 		controlPanelSetToTargetButton
-				.whenPressed(new SetoToTargetColorCommand(RobotMap.robotContainer.controlPanelColorSubsystem));
+				.whenPressed(new SetToTargetColorCommand(RobotMap.robotContainer.controlPanelColorSubsystem));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
 

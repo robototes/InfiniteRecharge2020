@@ -21,7 +21,7 @@ public class ControlPanelColorSubsystem extends SubsystemBase {
 		this.m_wheelMotor = motor;
 	}
 
-	public void spinThreeTimes() {
+	public void rotateControlPanel() {
 		rotationCount = 0;
 		m_StartColor = m_colorSensor.getColor();
 		m_wheelMotor.set(0.5);

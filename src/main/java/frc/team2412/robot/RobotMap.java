@@ -15,47 +15,59 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 //remember to declare robot container at the bottom of this class 
 public class RobotMap {
 
-	// Drive Motor port
+	// IDs
+	public static int exampleID = 1;
+
+	// DRIVEBASE SUBSYSTEM
+	// -------------------------------------------------------------------------
+	// DriveBase Motor ports
 	public static final int LEFT_FRONT_ID = 0;
 	public static final int LEFT_BACK_ID = 0;
 	public static final int RIGHT_FRONT_ID = 0;
 	public static final int RIGHT_BACK_ID = 0;
 
-	// Drive Motors
+	// DriveBase Motors
 	private static Talon leftFront = new Talon(LEFT_FRONT_ID);
 	private static Talon leftBack = new Talon(LEFT_BACK_ID);
 	private static Talon rightFront = new Talon(RIGHT_FRONT_ID);
 	private static Talon rightBack = new Talon(RIGHT_BACK_ID);
 
+	// DriveBase SpeedControllerGroups
 	public static SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFront, leftBack);
 	public static SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFront, rightBack);
 
+	// DriveBase DifferentialDrive
 	public static DifferentialDrive robotDrive = new DifferentialDrive(leftSide, rightSide);
 
+	// DriveBase Gyro
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
-	// IDs
-	public static int exampleID = 1;
+	// INTAKE SUBSYSTEM
+	// -----------------------------------------------------------------------------
+	// Intake motor ports
+	public static final int INTAKE_FRONT_MOTOR_PORT = 1;
+	public static final int INTAKE_BACK_MOTOR_PORT = 1;
 
-	// motor ports
-	public static final int INTAKE_FRONT_PORT = 1;
-	public static final int INTAKE_BACK_PORT = 1;
+	// Intake Motors
+	public static CANSparkMax intakeFront = new CANSparkMax(INTAKE_FRONT_MOTOR_PORT, MotorType.kBrushless);
+	public static CANSparkMax intakeBack = new CANSparkMax(INTAKE_BACK_MOTOR_PORT, MotorType.kBrushless);
 
+	// Intake DoubleSolenoid Ports
 	public static int INTAKE_UP_PORT = 1;
 	public static int INTAKE_DOWN_PORT = 1;
 
 	public static DoubleSolenoid intakeUpDown = new DoubleSolenoid(INTAKE_UP_PORT, INTAKE_DOWN_PORT);
 
-	// Intake Motors
-	public static CANSparkMax intakeFront = new CANSparkMax(INTAKE_FRONT_PORT, MotorType.kBrushless);
-	public static CANSparkMax intakeBack = new CANSparkMax(INTAKE_BACK_PORT, MotorType.kBrushless);
-
-	// DoubleSolenoid Ports
+	// LIFT SUBSYSTEM
+	// -------------------------------------------------------------------------------
+	// Lift DoubleSolenoid Ports
 	public static int LIFT_UP_PORT = 1;
 	public static int LIFT_DOWN_PORT = 1;
 
 	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_UP_PORT, LIFT_DOWN_PORT);
 
+	// CONTROL PANEL SUBSYSTEM
+	// ----------------------------------------------------------------------
 	// Control Panel I2C
 	public static I2C.Port COLOR_SESNOR_PORT = I2C.Port.kOnboard;
 
@@ -64,6 +76,7 @@ public class RobotMap {
 	public static final int CONTROL_PANEL_MOTOR_PORT = 1;
 	public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
 
+	// ----------------------------------------------------------------------------------------------
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
 }

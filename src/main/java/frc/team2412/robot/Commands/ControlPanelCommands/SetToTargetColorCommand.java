@@ -3,11 +3,11 @@ package frc.team2412.robot.Commands.ControlPanelCommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
 
-public class SetoToTargetColorCommand extends CommandBase {
+public class SetToTargetColorCommand extends CommandBase {
 
 	private ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
-	public SetoToTargetColorCommand(ControlPanelColorSubsystem controlPanelColorSubsystem) {
+	public SetToTargetColorCommand(ControlPanelColorSubsystem controlPanelColorSubsystem) {
 		addRequirements(controlPanelColorSubsystem);
 		this.m_controlPanelColorSubsystem = controlPanelColorSubsystem;
 	}
