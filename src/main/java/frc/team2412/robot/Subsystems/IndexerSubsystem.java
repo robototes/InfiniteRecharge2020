@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotMap;
-import frc.team2412.robot.Subsystems.constants.IndexConstants.IndexConstatnts;
+import frc.team2412.robot.Subsystems.constants.IndexConstants.indexConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
 	public CANSparkMax indexBackMotor;
