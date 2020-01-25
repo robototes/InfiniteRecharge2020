@@ -47,6 +47,8 @@ public class ControlPanelSubsystemTest {
 	@Test
 	public void RotateControlPanelCommandOnControlPanelColorSubsystemCallsMotorandSensor() {
 		// Reset the subsystem to make sure all mock values are reset
+		reset(mockedColorMotor);
+		reset(mockedColorSensor);
 		reset(realControlPanelColorSubsystem);
 
 		// Create command
