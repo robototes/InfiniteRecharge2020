@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotMap;
-import frc.team2412.robot.Subsystems.constants.IndexConstants.indexConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
 	public CANSparkMax indexBackMotor;
@@ -85,6 +84,14 @@ public class IndexerSubsystem extends SubsystemBase {
 	public void backShiftDown() {
 		rearClutch.set(DoubleSolenoid.Value.kReverse);
 	}
+	public void allShiftUp() {
+		rearClutch.set(DoubleSolenoid.Value.kForward);
+		frontClutch.set(DoubleSolenoid.Value.kForward);
+	}
+	public void allShiftDown() {
+		rearClutch.set(DoubleSolenoid.Value.kReverse);
+		frontClutch.set(DoubleSolenoid.Value.kReverse);
+	}
 	// Motors
 	public void stopAll() {
 		indexMotors.set(0.0);
@@ -126,7 +133,7 @@ public class IndexerSubsystem extends SubsystemBase {
 	 * }
 	 */
 	public void shoot() {
-		shiftDown();
+		allShiftDown();
 		indexMidMotor.set(1);
 		if (frontMid.get() && front.get()) {
 			indexFrontMotor.set(0);
@@ -277,7 +284,7 @@ public class IndexerSubsystem extends SubsystemBase {
 			intakeDirection = (DriveBaseSubsystem.getCurrentYSpeed >= 0);
 			run++;
 		}
-		shiftUp();
+		allShiftUp();
 		if (intakeDirection) {
 			indexFrontMotor.set(1);
 			if (!front.get()) {
