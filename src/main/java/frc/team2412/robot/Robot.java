@@ -21,7 +21,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class Robot extends TimedRobot {
 
 	// Have instances of robot container and OI for easy access
-	private RobotContainer m_RobotContainer = RobotMap.robotContainer;
+
+	private RobotContainer m_robotContainer = RobotMap.robotContainer;
 	private OI m_OI = RobotMap.robotContainer.m_OI;
 
 	/**
@@ -46,7 +47,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-
 	}
 
 	/**
@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
+
 	}
 
 	/**
@@ -67,6 +68,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		m_robotContainer.driveBaseSubsystem.drive(m_OI.driverStick);
 	}
 
 	/**
