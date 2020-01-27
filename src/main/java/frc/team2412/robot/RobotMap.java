@@ -30,10 +30,15 @@ public class RobotMap {
 	// Turret Subsystem
 	public static int turretMotorID = 3;
 	public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(turretMotorID);
-	public static CANSparkMax BB8 = new CANSparkMax(turretMotorID, MotorType.kBrushless);
-	public static CANSparkMax R2D2 = new CANSparkMax(turretMotorID, MotorType.kBrushless);
 
-	public static SpeedControllerGroup Droids = new SpeedControllerGroup(BB8, R2D2);
+	// Flywheel subsystem
+	public static int flywheelMotorID1 = 0;
+	public static int flywheelMotorID2 = 2;
+
+	public static CANSparkMax flywheelMotor1 = new CANSparkMax(flywheelMotorID1, MotorType.kBrushless);
+	public static CANSparkMax flywheelMotor2 = new CANSparkMax(flywheelMotorID2, MotorType.kBrushless);
+
+	public static SpeedControllerGroup flywheelSpeedGroup = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
 
 	// Hood Subsystem
 	public static final int HOOD_SERVO_PORT = 1;

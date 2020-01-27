@@ -1,4 +1,8 @@
-package frc.team2412.robot.Commands;
+package frc.team2412.robot.Commands.turret;
+
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
 
 import java.util.function.DoubleSupplier;
 
@@ -7,19 +11,15 @@ import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.team2412.robot.Subsystems.LimelightSubsystem;
 import frc.team2412.robot.Subsystems.TurretSubsystem;
-import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class TurretRotateCommand extends PIDCommand {
 	TurretSubsystem m_TurretSubsystem;
-	LimelightSubsystem m_LimelightSubsystem;
 
 	public double m_doubleSetpoint;
 
-	public TurretRotateCommand(TurretSubsystem turretSubsystem, LimelightSubsystem limelightSubsystem,
-			Rotations angleToRotate) {
+	public TurretRotateCommand(TurretSubsystem turretSubsystem, Rotations angleToRotate) {
 		super(TURRET_PID_CONTROLLER, turretSubsystem::getMeasurement, 0, output -> turretSubsystem.set(-output),
 				(Subsystem) turretSubsystem);
 
@@ -27,7 +27,6 @@ public class TurretRotateCommand extends PIDCommand {
 
 		m_TurretSubsystem = turretSubsystem;
 
-		m_LimelightSubsystem = limelightSubsystem;
 		getController().setTolerance(10);
 	}
 

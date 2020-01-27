@@ -1,4 +1,4 @@
-package frc.team2412.robot.Commands.Flywheel;
+package frc.team2412.robot.Commands.flywheel;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.FlywheelSubsystem;

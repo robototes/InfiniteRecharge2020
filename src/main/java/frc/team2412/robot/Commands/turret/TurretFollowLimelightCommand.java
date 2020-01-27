@@ -1,4 +1,4 @@
-package frc.team2412.robot.Commands;
+package frc.team2412.robot.Commands.turret;
 
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
@@ -14,8 +14,12 @@ import frc.team2412.robot.Subsystems.TurretSubsystem;
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class TurretFollowLimelightCommand extends TurretAddRotateCommand {
 
+	private LimelightSubsystem m_LimelightSubsystem;
+
 	public TurretFollowLimelightCommand(TurretSubsystem turretSubsystem, LimelightSubsystem limelightSubsystem) {
-		super(turretSubsystem, limelightSubsystem, new Rotations(0));
+		super(turretSubsystem, new Rotations(0));
+
+		this.m_LimelightSubsystem = limelightSubsystem;
 	}
 
 	@Override

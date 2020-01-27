@@ -1,19 +1,17 @@
 package frc.team2412.robot.Subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.robototes.math.MathUtils;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.Commands.TurretFollowLimelightCommand;
-import frc.team2412.robot.Commands.TurretRotateCommand;
-import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
+import frc.team2412.robot.Commands.turret.TurretFollowLimelightCommand;
 
 @SuppressWarnings("unused")
 public class TurretSubsystem extends PIDSubsystem {
