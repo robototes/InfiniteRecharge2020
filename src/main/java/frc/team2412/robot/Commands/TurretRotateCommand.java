@@ -1,30 +1,58 @@
 package frc.team2412.robot.Commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.util.function.DoubleSupplier;
+
+import com.robototes.units.Rotations;
+import com.robototes.units.UnitTypes.RotationUnits;
+
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.team2412.robot.Subsystems.LimelightSubsystem;
 import frc.team2412.robot.Subsystems.TurretSubsystem;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
-public class TurretRotateCommand extends CommandBase {
+public class TurretRotateCommand extends PIDCommand {
 	TurretSubsystem m_TurretSubsystem;
 	LimelightSubsystem m_LimelightSubsystem;
 
-	public TurretRotateCommand(TurretSubsystem turretSubsystem, LimelightSubsystem limelightSubsystem) {
+	public double m_doubleSetpoint;
+
+	public TurretRotateCommand(TurretSubsystem turretSubsystem, LimelightSubsystem limelightSubsystem,
+			Rotations angleToRotate) {
+		super(TURRET_PID_CONTROLLER, turretSubsystem::getMeasurement, 0, output -> turretSubsystem.set(-output),
+				(Subsystem) turretSubsystem);
+
+		configureSetpoint(TICKS_PER_DEGREE * angleToRotate.convertTo(RotationUnits.DEGREE));
+
 		m_TurretSubsystem = turretSubsystem;
-		addRequirements(turretSubsystem);
 
 		m_LimelightSubsystem = limelightSubsystem;
+		getController().setTolerance(10);
 	}
 
-	@Override
-	public void execute() {
-		// run the example method
-		m_TurretSubsystem.turnBasedOnLimelightAngle(m_LimelightSubsystem.getYawFromTarget());
+	public void configureSetpoint(double inSetpoint) {
+		m_doubleSetpoint = inSetpoint;
+
+		if (m_doubleSetpoint > TICKS_PER_REVOLUTION / 2) {
+			m_doubleSetpoint %= TICKS_PER_REVOLUTION;
+		} else if (m_doubleSetpoint < -TICKS_PER_REVOLUTION / 2) {
+			m_doubleSetpoint += TICKS_PER_REVOLUTION;
+			m_doubleSetpoint %= TICKS_PER_REVOLUTION;
+		}
+
+		this.m_setpoint = new DoubleSupplier() {
+			@Override
+			public double getAsDouble() {
+				return m_doubleSetpoint;
+			}
+		};
 	}
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		System.out.printf("Position Error: %f \n", getController().getPositionError());
+		return getController().atSetpoint();
 	}
 
 }

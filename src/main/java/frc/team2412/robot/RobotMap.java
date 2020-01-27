@@ -17,7 +17,7 @@ public class RobotMap {
 	// Limelight subsystem
 	public static NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault().getTable("limelight");
 	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
-			Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
+			Pipeline.FOUR, StreamMode.STANDARD, SnapshotMode.OFF);
 
 	// Turret Subsystem
 	public static int turretMotorID = 1;

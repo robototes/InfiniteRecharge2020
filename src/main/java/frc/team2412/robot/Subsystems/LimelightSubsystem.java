@@ -24,12 +24,10 @@ public class LimelightSubsystem extends SubsystemBase {
 	// Store the limelight
 	private Limelight m_limelight;
 
-	private int loopCount = 0;
-
 	public LimelightSubsystem(Limelight limelight) {
 		this.m_limelight = limelight;
 
-		m_limelight.setLedMode(LEDMode.OFF);
+		m_limelight.setLedMode(LEDMode.ON);
 		m_limelight.setCamMode(CamMode.VISION_PROCESSER);
 		m_limelight.setPipeline(Pipeline.FOUR);
 		m_limelight.setSnapshotMode(SnapshotMode.OFF);
@@ -47,20 +45,10 @@ public class LimelightSubsystem extends SubsystemBase {
 	}
 
 	public void getValues() {
-		if (++loopCount % 60 < 15) {
-
-			System.out.println("getting values!");
-			// If we have a target, set distance and yaw, otherwise error them
-			m_limelight.setLedMode(LEDMode.ON);
-			if (m_limelight.hasValidTarget()) {
-				setDistanceFromTable();
-				setYawFromTable();
-			}
-//			else {
-//			setValuesToError();
-//			}
-		} else {
-			m_limelight.setLedMode(LEDMode.OFF);
+		// If we have a target, set distance and yaw, otherwise error them
+		if (m_limelight.hasValidTarget()) {
+			setDistanceFromTable();
+			setYawFromTable();
 		}
 	}
 
