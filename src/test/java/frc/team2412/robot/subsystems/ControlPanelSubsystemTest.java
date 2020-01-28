@@ -57,7 +57,7 @@ public class ControlPanelSubsystemTest {
 				realControlPanelColorSubsystem);
 
 		when(mockedColorSensor.getColor()).thenReturn(ControlPanelConstants.blueTarget);
-		
+
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
@@ -81,7 +81,6 @@ public class ControlPanelSubsystemTest {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedColorMotor);
 		reset(mockedColorSensor);
-		
 
 		// Create command
 		SetToTargetColorCommand setToTargetColorCommand = new SetToTargetColorCommand(realControlPanelColorSubsystem);
@@ -89,8 +88,9 @@ public class ControlPanelSubsystemTest {
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
-		when(mockedColorSensor.getColor()).thenReturn(ControlPanelConstants.blueTarget).thenReturn(ControlPanelConstants.yellowTarget).thenReturn(ControlPanelConstants.redTarget);
-		
+		when(mockedColorSensor.getColor()).thenReturn(ControlPanelConstants.blueTarget)
+				.thenReturn(ControlPanelConstants.yellowTarget).thenReturn(ControlPanelConstants.redTarget);
+
 		// Tell the button to run example command when pressed
 		fakeButton.whenPressed(setToTargetColorCommand);
 
