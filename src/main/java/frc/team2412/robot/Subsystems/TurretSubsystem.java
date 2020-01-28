@@ -1,8 +1,6 @@
 package frc.team2412.robot.Subsystems;
 
-import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
-import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
-import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -13,15 +11,14 @@ import com.robototes.units.UnitTypes.RotationUnits;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.team2412.robot.Commands.turret.TurretFollowLimelightCommand;
 
-@SuppressWarnings("unused")
 public class TurretSubsystem extends PIDSubsystem {
 
 	private Rotations m_currentAngle;
 	private WPI_TalonSRX m_turretMotor;
 	private LimelightSubsystem m_LimelightSubsystem;
 	private int m_TurretOffsetPosition = 0;
-	private int m_TurretPastPosition = 0;
-	private int m_TurretCurrentPosition = 0;
+	private int m_TurretPastPosition;
+	private int m_TurretCurrentPosition;
 
 	public TurretSubsystem(WPI_TalonSRX turretMotor, LimelightSubsystem limelightSubsystem) {
 		super(TURRET_PID_CONTROLLER);
@@ -38,8 +35,8 @@ public class TurretSubsystem extends PIDSubsystem {
 		m_turretMotor.setSelectedSensorPosition(0);
 
 		m_TurretOffsetPosition = m_turretMotor.getSelectedSensorPosition(0);
-
-		periodic();
+		m_TurretCurrentPosition = 0;
+		m_TurretPastPosition = 0;
 	}
 
 	@Override
@@ -54,19 +51,9 @@ public class TurretSubsystem extends PIDSubsystem {
 		}
 
 		m_TurretPastPosition = m_TurretCurrentPosition;
-		System.out.printf("Measurment Position: %f \n", (float) getMeasurement());
 		m_currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
 				RotationUnits.DEGREE);
-		System.out.println(m_currentAngle);
 	}
-
-//	public void turnBasedOnLimelightAngle(Rotations limelightAngle) {
-//		if (m_TurretCurrentPosition - m_TurretOffsetPosition < 4096 * 3) {
-//			m_turretMotor.set(-0.25);
-//		} else {
-//			m_turretMotor.set(0);
-//		}
-//	}
 
 	public Rotations getCurrentAngle() {
 		return m_currentAngle;
@@ -79,19 +66,16 @@ public class TurretSubsystem extends PIDSubsystem {
 
 	@Override
 	public double getMeasurement() {
-
 		return m_TurretCurrentPosition - m_TurretOffsetPosition;
 	}
 
 	public void set(double output) {
-
 		output = MathUtils.constrain(output, -1, 1);
 
 		if (output < 0.05 && output > -0.05) {
 			output = 0;
 		}
 
-		System.out.printf("Set speed: %f \n", output);
 		m_turretMotor.set(output);
 	}
 }
