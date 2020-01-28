@@ -3,7 +3,9 @@ package frc.team2412.robot.Subsystems.constants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class IntakeConstants {
-
+	
+	public final static int MAX_INTAKE_SPEED = 1;
+	
 	public static enum IntakeState {
 
 		// Creates a value called up which is equal to kForward
@@ -17,6 +19,16 @@ public class IntakeConstants {
 
 		private IntakeState(DoubleSolenoid.Value value) {
 			this.value = value;
+		}
+	}
+	
+	public static enum IntakeLastMotor {
+		FRONT(1), BOTH(0), BACK(-1);
+		
+		public int value;
+		
+		private IntakeLastMotor(int value) {
+			this.value = value;			
 		}
 	}
 
