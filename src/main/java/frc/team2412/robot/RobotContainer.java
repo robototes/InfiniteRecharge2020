@@ -19,9 +19,7 @@ public class RobotContainer {
 
 	public DriveBaseSubsystem driveBaseSubsystem;
 
-	public IntakeMotorOnOffSubsystem backIntakeMotorOnOffSubsystem;
-
-	public IntakeMotorOnOffSubsystem frontIntakeMotorOnOffSubsystem;
+	public IntakeMotorOnOffSubsystem intakeMotorOnOffSubsystem;
 
 	public IntakeUpDownSubsystem intakeUpDownSubsystem;
 
@@ -33,11 +31,10 @@ public class RobotContainer {
 
 		liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
 
-		driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro);
+		driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro,
+				RobotMap.robotContainer.m_OI.driverStick);
 
-		backIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeBack);
-
-		frontIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeFront);
+		intakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeFront, RobotMap.intakeBack);
 
 		intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
 

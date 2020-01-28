@@ -6,10 +6,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.Commands.ExampleCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeDownCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeOnOffToggleCommandGroup;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeUpCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
@@ -83,20 +86,18 @@ public class OI {
 		intakeDownButton.whenPressed(new IntakeDownCommand(RobotMap.robotContainer.intakeUpDownSubsystem));
 
 		// INTAKE front
-		intakeFrontOnButton.whenPressed(new IntakeOnCommand(RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem));
-		intakeFrontOffButton.whenPressed(new IntakeOffCommand(RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem));
+		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
+		intakeFrontOffButton.whenPressed(new IntakeFrontOffCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
 
 		// INTAKE back
-		intakeBackOnButton.whenPressed(new IntakeOnCommand(RobotMap.robotContainer.backIntakeMotorOnOffSubsystem));
-		intakeBackOffButton.whenPressed(new IntakeOffCommand(RobotMap.robotContainer.backIntakeMotorOnOffSubsystem));
+		intakeBackOnButton.whenPressed(new IntakeBackOnCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
+		intakeBackOffButton.whenPressed(new IntakeBackOffCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
 
 		// INTAKE group on/off
 		intakeFrontOnBackOffButton
-				.whenPressed(new IntakeOnOffToggleCommandGroup(RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem,
-						RobotMap.robotContainer.backIntakeMotorOnOffSubsystem));
-		intakeFrontOnBackOffButton
-				.whenPressed(new IntakeOnOffToggleCommandGroup(RobotMap.robotContainer.backIntakeMotorOnOffSubsystem,
-						RobotMap.robotContainer.frontIntakeMotorOnOffSubsystem));
+				.whenPressed(new IntakeFrontOnIntakeBackOffCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
+		intakeFrontOffBackOnButton
+				.whenPressed(new IntakeFrontOffIntakeBackOnCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
 
 		// CONTROL PANEL
 		controlPanelSpinThreeTimesButton

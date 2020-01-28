@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		m_robotContainer.driveBaseSubsystem.drive(m_OI.driverStick);
+		m_robotContainer.driveBaseSubsystem.drive();
 	}
 
 	/**

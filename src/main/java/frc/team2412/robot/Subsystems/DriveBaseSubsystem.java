@@ -15,22 +15,25 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public ADXRS450_Gyro m_gyro;
 
+	private Joystick m_joystick;
+
 	public double CurrentYSpeed;
 
-	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro) {
+	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro, Joystick joystick) {
 		m_motion = new Vector(0);
 		this.m_robotDrive = robotDrive;
 		this.setName("DriveBase Subsystem");
 		m_gyro = gyro;
+		this.m_joystick = joystick;
 	}
 
 	public void periodic() {
 		m_motion = new Vector(m_gyro.getAngle() % 360);
 	}
 
-	public void drive(Joystick joystick) {
-		m_robotDrive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
-		CurrentYSpeed = joystick.getY();
+	public void drive() {
+		m_robotDrive.arcadeDrive(m_joystick.getY(), m_joystick.getTwist(), true);
+		CurrentYSpeed = m_joystick.getY();
 	}
 
 	public void setDriveSpeed(double forwardness, double turn) {
