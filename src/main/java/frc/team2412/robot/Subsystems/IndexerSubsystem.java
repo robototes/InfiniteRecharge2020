@@ -1,31 +1,30 @@
 package frc.team2412.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotMap;
+import frc.team2412.robot.Commands.IndexerCommands.IntakeBalls;
+import frc.team2412.robot.Commands.IndexerCommands.ProcessBalls;
+import frc.team2412.robot.Commands.IndexerCommands.ShootBalls;
+import frc.team2412.robot.Commands.IndexerCommands.SwitchBalls;
 
 public class IndexerSubsystem extends SubsystemBase {
-	public CANSparkMax indexBackMotor;
-	public CANSparkMax indexFrontMotor;
-	public CANSparkMax indexMidMotor;
-	public SpeedControllerGroup indexMotors;
-	public SpeedControllerGroup indexSideMotors;
+	public CANSparkMax indexBackMotor, indexFrontMotor, indexMidMotor;
+	public SpeedControllerGroup indexMotors, indexSideMotors;
 
-	public DigitalInput back;
-	public DigitalInput backMid;
-	public DigitalInput mid;
-	public DigitalInput frontMid;
-	public DigitalInput front;
-	
-	public DoubleSolenoid frontClutch;
-	public DoubleSolenoid rearClutch;
+	public DigitalInput back, backMid, mid, frontMid, front, intakeFront, intakeBack;
 
+	// NUMBER OF BALLS IN SYSTEM
 	public int numBalls = 0;
-	public boolean ballUnbalancedSide = false;
+
+	// SIDE OF INDEXER WITH LESS BALLS
+	public IntakeDirection ballUnbalancedSide;
+
+	// to run function once until reset
+	private int run = 0;
 
 	public IndexerSubsystem() {
 		// Motors
@@ -36,62 +35,20 @@ public class IndexerSubsystem extends SubsystemBase {
 		indexSideMotors = new SpeedControllerGroup(indexFrontMotor, indexBackMotor);
 
 		// Sensors
-		back = RobotMap.BB;
-		backMid = RobotMap.BT;
-		mid = RobotMap.T;
-		frontMid = RobotMap.FT;
-		front = RobotMap.FF;
-		
-		//soulenoid
-		frontClutch = RobotMap.frontClutch;
-		rearClutch = RobotMap.rearClutch;
+		back = RobotMap.back;
+		backMid = RobotMap.backMid;
+		mid = RobotMap.mid;
+		frontMid = RobotMap.frontMid;
+		front = RobotMap.front;
+
+		intakeFront = RobotMap.intakeFront;
+		intakeBack = RobotMap.intakeBack;
+
+		setDefaultCommand(new ProcessBalls(this, new ShootBalls(this), new IntakeBalls(this), new SwitchBalls(this)));
 	}
 
-	public void indexerLogic(boolean shoot) {
-		if (shoot) {
-			shoot();
-		} else {
-			switch (numBalls) {
-			case 0:
-				intake1();
-			case 1:
-				intake2();
-				switchBalls2(ballUnbalancedSide);
-			case 2:
-				intake3();
-				switchBalls34(ballUnbalancedSide);
-			case 3:
-				intake4();
-				switchBalls34(ballUnbalancedSide);
-			case 4:
-				intake5();
-			case 5:
-				System.out.println("im full");
-			}
-		}
+	// shifters
 
-	}
-	//shifters
-	public void frontShiftUp() {
-		frontClutch.set(DoubleSolenoid.Value.kForward);
-	}
-	public void frontShiftDown() {
-		frontClutch.set(DoubleSolenoid.Value.kReverse);
-	}
-	public void backShiftUp() {
-		rearClutch.set(DoubleSolenoid.Value.kForward);
-	}
-	public void backShiftDown() {
-		rearClutch.set(DoubleSolenoid.Value.kReverse);
-	}
-	public void allShiftUp() {
-		rearClutch.set(DoubleSolenoid.Value.kForward);
-		frontClutch.set(DoubleSolenoid.Value.kForward);
-	}
-	public void allShiftDown() {
-		rearClutch.set(DoubleSolenoid.Value.kReverse);
-		frontClutch.set(DoubleSolenoid.Value.kReverse);
-	}
 	// Motors
 	public void stopAll() {
 		indexMotors.set(0.0);
@@ -120,185 +77,181 @@ public class IndexerSubsystem extends SubsystemBase {
 		// check if all sensors are on
 	}
 
-	/*
-	 * if(allSensorsOff()){intake12();
-	 * 
-	 * boolean b;if(backMid.get()) { b = true; } else { b = false; }
-	 * switchBalls2(b); intake3(); if (backMid.get()) { b = true; } else { b =
-	 * false; } switchBalls34(b); intake4(); if (back.get()) { b = true; } else { b
-	 * = false; } switchBalls34(b); intake5(); }
-	 * 
-	 * shoot();
-	 * 
-	 * }
-	 */
 	public void shoot() {
-		allShiftDown();
+		// allShiftDown();
 		indexMidMotor.set(1);
+		if (ballUnbalancedSide == IntakeDirection.FRONT) {
+			indexBackMotor.set(-1);
+		} else {
+			indexFrontMotor.set(1);
+		}
 		if (frontMid.get() && front.get()) {
 			indexFrontMotor.set(0);
+			ballUnbalancedSide = IntakeDirection.FRONT;
 		} else if (backMid.get() && back.get()) {
 			indexBackMotor.set(0);
+			ballUnbalancedSide = IntakeDirection.BACK;
+		} else if (allSensorsOff()) {
+			stopAll();
+			ballUnbalancedSide = IntakeDirection.NONE;
 		}
-		
-		stopAll();
 	}
 
 //Switch ball positions
-	public void switchBalls2(boolean currentDirection) {
-		if (currentDirection != (DriveBaseSubsystem.getCurrentYSpeed >= 0)) {
-			if (currentDirection) {
-				indexFrontMotor.set(1);
-				indexBackMotor.set(1);
-				if (!backMid.get()) {
-					stopAll();
-					ballUnbalancedSide = !ballUnbalancedSide;
-				}
-			} else {
-				indexFrontMotor.set(-1);
-				indexBackMotor.set(-1);
-				if (!frontMid.get()) {
-					stopAll();
-					ballUnbalancedSide = !ballUnbalancedSide;
-				}
-			}
-		}
+
+	public enum IntakeDirection {
+		FRONT, BACK, BOTH, NONE;
 	}
 
-	public void switchBalls34(boolean currentDirection) {
-		if (currentDirection != (DriveBaseSubsystem.getCurrentYSpeed >= 0)) {
-			if (currentDirection) {
+	public void intake(int num, IntakeDirection dir) {
+		switch (num) {
+		case 1:
+			if (dir == IntakeDirection.FRONT) {
 				indexFrontMotor.set(1);
-				indexBackMotor.set(1);
-				if (!back.get()) {
+			} else if (dir == IntakeDirection.BACK) {
+				indexBackMotor.set(-1);
+			}
+			if (!mid.get()) {
+				stopAll();
+				numBalls++;
+			}
+			break;
+		case 2:
+			indexFrontMotor.set(1);
+			indexBackMotor.set(-1);
+			if (!frontMid.get()) {
+				stopAll();
+				ballUnbalancedSide = IntakeDirection.BACK;
+				numBalls++;
+			} else if (!backMid.get()) {
+				stopAll();
+				ballUnbalancedSide = IntakeDirection.FRONT;
+				numBalls++;
+			}
+			break;
+		case 3:
+			if (ballUnbalancedSide == IntakeDirection.FRONT) {
+				indexFrontMotor.set(1);
+				if (!frontMid.get()) {
 					stopAll();
-					ballUnbalancedSide = !ballUnbalancedSide;
+					numBalls++;
+					ballUnbalancedSide = IntakeDirection.NONE;
+
+				} else if (!intakeBack.get()) {
+					stopAll();
+					numBalls++;
 				}
-			} else {
+			} else if (ballUnbalancedSide == IntakeDirection.BACK) {
+				indexBackMotor.set(-1);
+				if (!backMid.get()) {
+					stopAll();
+					numBalls++;
+					ballUnbalancedSide = IntakeDirection.NONE;
+				} else if (!intakeFront.get()) {
+					stopAll();
+					numBalls++;
+				}
+
+			}
+			break;
+		case 4:
+
+			if (ballUnbalancedSide == IntakeDirection.FRONT) {
+				indexFrontMotor.set(1);
+				if (!frontMid.get()) {
+					stopAll();
+					numBalls++;
+					ballUnbalancedSide = IntakeDirection.NONE;
+
+				} else if (!intakeBack.get()) {
+					stopAll();
+					numBalls++;
+				}
+			} else if (ballUnbalancedSide == IntakeDirection.BACK) {
+				indexBackMotor.set(-1);
+				if (!backMid.get()) {
+					stopAll();
+					numBalls++;
+					ballUnbalancedSide = IntakeDirection.NONE;
+				} else if (!intakeFront.get()) {
+					stopAll();
+					numBalls++;
+				}
+
+			}
+			break;
+		case 5:
+			if (dir == IntakeDirection.FRONT) {
+				if (!intakeFront.get()) {
+					numBalls++;
+				}
+			} else if (dir == IntakeDirection.BACK) {
+				indexBackMotor.set(1);
+				if (!intakeBack.get()) {
+					numBalls++;
+				}
+			}
+			break;
+		}
+
+	}
+
+	public void swap(IntakeDirection dir, int num) {
+		// dir is side with least balls
+		switch (num) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			if (dir == IntakeDirection.FRONT) {
+				if (!front.get()) {
+					indexFrontMotor.set(0);
+				} else {
+					indexFrontMotor.set(-1);
+				}
+				if (!backMid.get() && !front.get()) {
+					indexBackMotor.set(0);
+					ballUnbalancedSide = IntakeDirection.BACK;
+				} else {
+					indexBackMotor.set(-1);
+				}
+			} else if (dir == IntakeDirection.BACK) {
+				if (!back.get()) {
+					indexBackMotor.set(0);
+				} else {
+					indexBackMotor.set(1);
+				}
+				if (!frontMid.get() && !back.get()) {
+					indexFrontMotor.set(0);
+					ballUnbalancedSide = IntakeDirection.FRONT;
+				} else {
+					indexFrontMotor.set(1);
+				}
+			}
+			break;
+		case 4:
+			if (dir == IntakeDirection.FRONT) {
 				indexFrontMotor.set(-1);
 				indexBackMotor.set(-1);
 				if (!front.get()) {
 					stopAll();
-					ballUnbalancedSide = !ballUnbalancedSide;
+					ballUnbalancedSide = IntakeDirection.BACK;
+				}
+			} else if (dir == IntakeDirection.BACK) {
+				indexFrontMotor.set(1);
+				indexBackMotor.set(1);
+				if (!back.get()) {
+					stopAll();
+					ballUnbalancedSide = IntakeDirection.FRONT;
 				}
 			}
+			break;
+		case 5:
+			break;
 		}
-	}
 
-//first two balls
-	public void intake1() {
-
-		indexFrontMotor.set(1);
-		indexBackMotor.set(-1);
-		if (!mid.get()) {
-			stopAll();
-			numBalls++;
-		}
-	}
-
-	public void intake2() {
-		indexFrontMotor.set(1);
-		indexBackMotor.set(-1);
-		if (!frontMid.get()) {
-			stopAll();
-			ballUnbalancedSide = false;
-			numBalls++;
-		} else if (!backMid.get()) {
-			stopAll();
-			ballUnbalancedSide = true;
-			numBalls++;
-		}
-	}
-
-//Third Ball 
-	private int run = 0;
-	private boolean intakeDirection;
-
-	public void intake3() {
-		if (run == 0) {
-			intakeDirection = (DriveBaseSubsystem.getCurrentYSpeed >= 0);
-			run++;
-		}
-		if (intakeDirection) {
-			if (!frontMid.get()) {
-				indexFrontMotor.set(0);
-			} else {
-				indexFrontMotor.set(1);
-
-			}
-			if (!back.get()) {
-				indexBackMotor.set(0);
-			} else {
-				indexBackMotor.set(1);
-			}
-			if (!back.get() && !backMid.get() && mid.get() && frontMid.get() && front.get()) {
-				numBalls++;
-				run--;
-			}
-		} else {
-			if (!backMid.get()) {
-				indexFrontMotor.set(0);
-			} else {
-				indexFrontMotor.set(-1);
-
-			}
-			if (!front.get()) {
-				indexBackMotor.set(0);
-			} else {
-				indexBackMotor.set(-1);
-			}
-			if (back.get() && backMid.get() && mid.get() && !frontMid.get() && !front.get()) {
-				numBalls++;
-				run--;
-			}
-		}
-	}
-
-//fourth ball
-	public void intake4() {
-		if (run == 0) {
-			intakeDirection = (DriveBaseSubsystem.getCurrentYSpeed >= 0);
-			run++;
-		}
-		if (intakeDirection) {
-			indexFrontMotor.set(1);
-			if (!frontMid.get()) {
-				indexFrontMotor.set(0);
-				numBalls++;
-				run--;
-				ballUnbalancedSide = true;
-			}
-		} else {
-			indexBackMotor.set(-1);
-			if (!backMid.get()) {
-				indexBackMotor.set(0);
-				numBalls++;
-				run--;
-				ballUnbalancedSide = false;
-			}
-		}
-	}
-
-	public void intake5() {
-		if (run == 0) {
-			intakeDirection = (DriveBaseSubsystem.getCurrentYSpeed >= 0);
-			run++;
-		}
-		allShiftUp();
-		if (intakeDirection) {
-			indexFrontMotor.set(1);
-			if (!front.get()) {
-				indexFrontMotor.set(0);
-				numBalls++;
-				run--;
-			}
-		} else {
-			indexBackMotor.set(-1);
-			if (!back.get()) {
-				indexBackMotor.set(0);
-				numBalls++;
-				run--;
-			}
-		}
 	}
 }

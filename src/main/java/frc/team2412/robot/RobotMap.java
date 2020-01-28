@@ -11,34 +11,40 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class RobotMap {
 
 	// IDs
-	public static int exampleID = 1;
-	public static int indexBackMotorID = 1;
-	public static int indexFrontMotorID = 2;
-	public static int indexMidMotorID = 3;
-	public static int BBSensorID = 1;//Back Back
-	public static int BTSensorID = 2;//Back Tower
-	public static int TSensorID = 3; //Middle Position / Tower
-	public static int FTSensorID = 4;//Front Tower
-	public static int FFSensorID = 5;//Front Front
-	public static int frontDoubleSoulenoidDown_ID = 1;
-	public static int frontDoubleSoulenoidUp_ID = 2;
-	public static int rearDoubleSoulenoidDown_ID = 3;
-	public static int rearDoubleSoulenoidUp_ID = 4;
+	private final static int exampleID = 1;
+	private final static int indexBackMotorID = 1;
+	private final static int indexFrontMotorID = 2;
+	private final static int indexMidMotorID = 3;
+	private final static int backSensorID = 1;
+	private final static int backMidSensorID = 2;
+	private final static int midSensorID = 3; 
+	private final static int frontMidSensorID = 4;
+	private final static int frontSensorID = 5;
+	private final static int intakeFrontSensorID = 6;
+	private final static int intakeBackSensorID = 7;
+	private final static int frontDoubleSolenoidDown_ID = 1;
+	private final static int frontDoubleSolenoidUp_ID = 2;
+	private final static int rearDoubleSolenoidDown_ID = 3;
+	private final static int rearDoubleSolenoidUp_ID = 4;
 	
 	//motors
 	public static CANSparkMax indexFrontMotor = new CANSparkMax(indexFrontMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexBackMotor = new CANSparkMax(indexBackMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexMidMotor = new CANSparkMax(indexMidMotorID, MotorType.kBrushless);
 	
-	public static DoubleSolenoid frontClutch = new DoubleSolenoid(frontDoubleSoulenoidUp_ID, frontDoubleSoulenoidDown_ID);
-	public static DoubleSolenoid rearClutch = new DoubleSolenoid(rearDoubleSoulenoidUp_ID, rearDoubleSoulenoidDown_ID);
+	public static DoubleSolenoid frontClutch = new DoubleSolenoid(frontDoubleSolenoidUp_ID, frontDoubleSolenoidDown_ID);
+	public static DoubleSolenoid rearClutch = new DoubleSolenoid(rearDoubleSolenoidUp_ID, rearDoubleSolenoidDown_ID);
 	
 	//sensors
-	public static DigitalInput BB = new DigitalInput(BBSensorID);
-	public static DigitalInput BT = new DigitalInput(BTSensorID);
-	public static DigitalInput T = new DigitalInput(TSensorID);
-	public static DigitalInput FT = new DigitalInput(FTSensorID);
-	public static DigitalInput FF = new DigitalInput(FFSensorID);
+	public static DigitalInput back = new DigitalInput(backSensorID);
+	public static DigitalInput backMid = new DigitalInput(backMidSensorID);
+	public static DigitalInput mid = new DigitalInput(midSensorID);
+	public static DigitalInput frontMid = new DigitalInput(frontMidSensorID);
+	public static DigitalInput front = new DigitalInput(frontSensorID);
+	
+	//INDEXER CONTROLS THESE NOT INTAKE FYI
+	public static DigitalInput intakeFront = new DigitalInput(intakeFrontSensorID);
+	public static DigitalInput intakeBack = new DigitalInput(intakeBackSensorID);
 	
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
