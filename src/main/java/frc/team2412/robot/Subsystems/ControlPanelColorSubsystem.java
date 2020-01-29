@@ -1,5 +1,7 @@
 package frc.team2412.robot.Subsystems;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Talon;
@@ -10,15 +12,17 @@ import frc.team2412.robot.Subsystems.constants.ControlPanelConstants;
 public class ControlPanelColorSubsystem extends SubsystemBase {
 
 	private ColorSensorV3 m_colorSensor;
+	private ColorMatch m_colorMatcher;
 	private Talon m_wheelMotor;
 	private Color m_CurrentColor;
 	private Color m_StartColor;
 	private Color m_ColorUnderBar;
 	private int rotationCount = 0;
 
-	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor) {
+	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor, ColorMatch colorMatch) {
 		this.m_colorSensor = colorSensor;
 		this.m_wheelMotor = motor;
+		this.m_colorMatcher = colorMatch;
 	}
 
 	public void rotateControlPanel() {
@@ -75,7 +79,21 @@ public class ControlPanelColorSubsystem extends SubsystemBase {
 		else {
 			return "Unknown";
 		}
-
 	}
 
+	public Color colorMatcher(Color detectedColor) {
+		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+		if (match.color == ControlPanelConstants.blueTarget) {
+			return ControlPanelConstants.blueTarget;
+		} else if (match.color == ControlPanelConstants.redTarget) {
+			return ControlPanelConstants.redTarget;
+		} else if (match.color == ControlPanelConstants.greenTarget) {
+			return ControlPanelConstants.greenTarget;
+		} else if (match.color == ControlPanelConstants.yellowTarget) {
+			return ControlPanelConstants.yellowTarget;
+		}
+
+		return detectedColor;
+
+	}
 }

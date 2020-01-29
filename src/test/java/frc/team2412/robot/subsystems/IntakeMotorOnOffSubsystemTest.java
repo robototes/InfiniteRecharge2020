@@ -41,13 +41,13 @@ public class IntakeMotorOnOffSubsystemTest {
 
 		mockedIntakeFrontMotor = mock(CANSparkMax.class);
 		mockedIntakeBackMotor = mock(CANSparkMax.class);
-		
+
 		realIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
 	}
 
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
-	
+
 	@Test
 	public void IntakeFrontOnCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -74,7 +74,7 @@ public class IntakeMotorOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-	
+
 	@Test
 	public void IntakeFrontOffCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -128,7 +128,7 @@ public class IntakeMotorOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-	
+
 	@Test
 	public void IntakeBackOffCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -155,9 +155,6 @@ public class IntakeMotorOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-	
-	
-	
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -168,33 +165,34 @@ public class IntakeMotorOnOffSubsystemTest {
 	}
 
 	@Test
-		public void IntakeFrontOnIntakeBackOffIntakeMotorOnOffSubsystemCallsMotorSet() {
-			// Reset the subsystem to make sure all mock values are reset
-			reset(mockedIntakeFrontMotor);
-			reset(mockedIntakeBackMotor);
-	
-			// Create command
-			IntakeFrontOnIntakeBackOffCommand intakeFrontOnIntakeBackOffCommand  = new IntakeFrontOnIntakeBackOffCommand (realIntakeMotorOnOffSubsystem);
-	
-			// Create a fake button that will be "pressed"
-			MockButton fakeButton = new MockButton();
-	
-			// Tell the button to run example command when pressed
-			fakeButton.whenPressed(intakeFrontOnIntakeBackOffCommand);
-	
-			// Push the button and run the scheduler once
-			fakeButton.push();
-			CommandScheduler.getInstance().run();
-			fakeButton.release();
-	
-			// Verify that the solenoid was set correctly
-			verify(mockedIntakeFrontMotor, times(1)).set(1);
-			verify(mockedIntakeBackMotor, times(1)).set(0);
-	
-			// Clear the scheduler
-			TestWithScheduler.schedulerClear();
-		}
-	
+	public void IntakeFrontOnIntakeBackOffIntakeMotorOnOffSubsystemCallsMotorSet() {
+		// Reset the subsystem to make sure all mock values are reset
+		reset(mockedIntakeFrontMotor);
+		reset(mockedIntakeBackMotor);
+
+		// Create command
+		IntakeFrontOnIntakeBackOffCommand intakeFrontOnIntakeBackOffCommand = new IntakeFrontOnIntakeBackOffCommand(
+				realIntakeMotorOnOffSubsystem);
+
+		// Create a fake button that will be "pressed"
+		MockButton fakeButton = new MockButton();
+
+		// Tell the button to run example command when pressed
+		fakeButton.whenPressed(intakeFrontOnIntakeBackOffCommand);
+
+		// Push the button and run the scheduler once
+		fakeButton.push();
+		CommandScheduler.getInstance().run();
+		fakeButton.release();
+
+		// Verify that the solenoid was set correctly
+		verify(mockedIntakeFrontMotor, times(1)).set(1);
+		verify(mockedIntakeBackMotor, times(1)).set(0);
+
+		// Clear the scheduler
+		TestWithScheduler.schedulerClear();
+	}
+
 	@Test
 	public void IntakeFrontOffIntakeBackOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -202,7 +200,8 @@ public class IntakeMotorOnOffSubsystemTest {
 		reset(mockedIntakeBackMotor);
 
 		// Create command
-		IntakeFrontOffIntakeBackOnCommand intakeFrontOffIntakeBackOnCommand = new IntakeFrontOffIntakeBackOnCommand(realIntakeMotorOnOffSubsystem);
+		IntakeFrontOffIntakeBackOnCommand intakeFrontOffIntakeBackOnCommand = new IntakeFrontOffIntakeBackOnCommand(
+				realIntakeMotorOnOffSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();

@@ -12,7 +12,7 @@ public class IntakeMotorOnOffSubsystem extends SubsystemBase {
 	private CANSparkMax m_intakeFrontMotor;
 	private CANSparkMax m_intakeBackMotor;
 	private SpeedControllerGroup m_intakes = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);
-	
+
 	public IntakeLastMotor m_lastMotor = IntakeLastMotor.BOTH;
 
 	public IntakeMotorOnOffSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
@@ -33,7 +33,7 @@ public class IntakeMotorOnOffSubsystem extends SubsystemBase {
 		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.FRONT;
 	}
-	
+
 	public void frontIntakeOff() {
 		m_intakeFrontMotor.set(0);
 	}
@@ -46,7 +46,7 @@ public class IntakeMotorOnOffSubsystem extends SubsystemBase {
 	public void backIntakeOff() {
 		m_intakeBackMotor.set(0);
 	}
-	
+
 	public void frontIntakeOnBackIntakeOff() {
 		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_intakeBackMotor.set(0);
@@ -58,11 +58,11 @@ public class IntakeMotorOnOffSubsystem extends SubsystemBase {
 		m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.BACK;
 	}
-	
+
 	public IntakeLastMotor getLastMotor() {
 		return m_lastMotor;
 	}
-	
+
 	public void setIntake(double speed) {
 		m_intakes.set(speed);
 	}

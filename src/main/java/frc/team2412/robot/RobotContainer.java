@@ -38,7 +38,8 @@ public class RobotContainer {
 
 		intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
 
-		controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
+		controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor,
+				RobotMap.colorMatcher);
 
 		// create an OI object
 		m_OI = new OI();

@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
@@ -28,6 +29,7 @@ public class ControlPanelSubsystemTest {
 	// Mock instance of Example Subsystem
 	ControlPanelColorSubsystem realControlPanelColorSubsystem;
 	ColorSensorV3 mockedColorSensor;
+	ColorMatch mockedColorMatch;
 	Talon mockedColorMotor;
 
 	// This method is run before the tests begin. initialize all mocks you wish to
@@ -40,8 +42,10 @@ public class ControlPanelSubsystemTest {
 
 		mockedColorSensor = mock(ColorSensorV3.class);
 		mockedColorMotor = mock(Talon.class);
+		mockedColorMatch = mock(ColorMatch.class);
 
-		realControlPanelColorSubsystem = new ControlPanelColorSubsystem(mockedColorSensor, mockedColorMotor);
+		realControlPanelColorSubsystem = new ControlPanelColorSubsystem(mockedColorSensor, mockedColorMotor,
+				mockedColorMatch);
 	}
 
 	// This test makes sure that the example command calls the .subsystemMethod of
@@ -51,6 +55,7 @@ public class ControlPanelSubsystemTest {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedColorMotor);
 		reset(mockedColorSensor);
+		reset(mockedColorMatch);
 
 		// Create command
 		RotateControlPanelCommand rotateControlPanelCommand = new RotateControlPanelCommand(
@@ -81,6 +86,7 @@ public class ControlPanelSubsystemTest {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedColorMotor);
 		reset(mockedColorSensor);
+		reset(mockedColorMatch);
 
 		// Create command
 		SetToTargetColorCommand setToTargetColorCommand = new SetToTargetColorCommand(realControlPanelColorSubsystem);
