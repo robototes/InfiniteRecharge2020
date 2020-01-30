@@ -15,39 +15,25 @@ public class ClimbLiftSubsystem extends SubsystemBase{
 	private DoubleSolenoid m_leftPneumatic;
 	private DoubleSolenoid m_rightPneumatic;
 	
-	public static boolean climbMode = false;
 	
 	public ClimbLiftSubsystem(DoubleSolenoid leftPneumatic, DoubleSolenoid rightPneumatic) {
-//		if(climbMode==true) {
-//			RetractRails(leftPneumatic, rightPneumatic);
-//			climbMode = false;
-//		}
-//		else {
-//			DeployRails(leftPneumatic, rightPneumatic);
-//			climbMode = true;
-//		}
 		
 		m_leftPneumatic = leftPneumatic;
 		m_rightPneumatic = rightPneumatic;
-		if(climbMode == false) {
-			DeployRails();
-			}
-		else { 
-			RetractRails();
-		}
+		
 	}
 			
 
 		public void DeployRails() {
 			m_leftPneumatic.set(DoubleSolenoid.Value.kForward);
 			m_rightPneumatic.set(DoubleSolenoid.Value.kForward);
-			System.out.println("Deploy");
+			System.out.println("Deploying Rails");
 		}
 
 		public void RetractRails() {
 			m_leftPneumatic.set(DoubleSolenoid.Value.kReverse);
 			m_rightPneumatic.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("Retract");
+			System.out.println("Retracting Rails");
 		}
 		
 
