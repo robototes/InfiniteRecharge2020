@@ -23,6 +23,14 @@ public class ExampleSubsystemTest {
 	// Mock instance of Example Subsystem
 	ExampleSubsystem mockedExampleSubsystem;
 
+	// This is called after tests, and makes sure that nothing is left open and
+	// everything is ready for the next test class
+	@After
+	public void after() {
+		TestWithScheduler.schedulerDestroy();
+		MockHardwareExtension.afterAll();
+	}
+
 	// This method is run before the tests begin. initialize all mocks you wish to
 	// use in multiple functions here. Copy and paste this function in your own test
 	@Before
@@ -80,14 +88,6 @@ public class ExampleSubsystemTest {
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
-	}
-
-	// This is called after tests, and makes sure that nothing is left open and
-	// everything is ready for the next test class
-	@After
-	public void after() {
-		TestWithScheduler.schedulerDestroy();
-		MockHardwareExtension.afterAll();
 	}
 
 }

@@ -1,12 +1,12 @@
-package frc.team2412.robot.Commands.Flywheel;
+package frc.team2412.robot.Commands.flywheel;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.FlywheelSubsystem;
 
-public class FLywheelStopCommand extends CommandBase {
+public class FlywheelStopCommand extends CommandBase {
 	FlywheelSubsystem m_Subsystem;
 
-	public FLywheelStopCommand(FlywheelSubsystem subsystem) {
+	public FlywheelStopCommand(FlywheelSubsystem subsystem) {
 		m_Subsystem = subsystem;
 		addRequirements(subsystem);
 	}

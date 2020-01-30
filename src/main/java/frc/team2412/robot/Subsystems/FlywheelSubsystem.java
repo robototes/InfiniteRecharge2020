@@ -1,5 +1,7 @@
 package frc.team2412.robot.Subsystems;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -9,17 +11,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class FlywheelSubsystem extends SubsystemBase {
 
-	private SpeedControllerGroup m_droids;
+	private SpeedControllerGroup m_flywheelMotors;
 
-	public FlywheelSubsystem(SpeedControllerGroup droids) {
-		this.m_droids = droids;
+	public FlywheelSubsystem(CANSparkMax flywheelMotor1, CANSparkMax flywheelMotor2) {
+		flywheelMotor2.setInverted(true);
+		SpeedControllerGroup flywheelMotors = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
+
+		this.m_flywheelMotors = flywheelMotors;
 	}
 
 	public void Shoot() {
-		m_droids.set(1.0);
+		m_flywheelMotors.set(1.0);
 	}
 
 	public void Stop() {
-		m_droids.set(0.0);
+		m_flywheelMotors.set(0.0);
 	}
 }

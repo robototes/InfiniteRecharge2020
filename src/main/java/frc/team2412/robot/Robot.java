@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-
 @SuppressWarnings("unused")
 public class Robot extends TimedRobot {
 
@@ -41,13 +40,22 @@ public class Robot extends TimedRobot {
 
 	}
 
+	@Override
+	public void disabledInit() {
+
+	}
+
+	@Override
+	public void disabledPeriodic() {
+	}
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-
+		m_RobotContainer.m_TurretSubsystem.initTurretEncoder();
 	}
 
 	/**
@@ -62,9 +70,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-//		System.out.println(m_RobotContainer.m_LimelightSubsystem.m_distanceToTarget);
-//		System.out.println(RobotMap.limelight.hasValidTarget());
-//		System.out.println();
 	}
 
 	/**
@@ -79,9 +84,5 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-	}
-
-	@Override
-	public void disabledPeriodic() {
 	}
 }
