@@ -65,7 +65,7 @@ public class LimelightSubsystemTest {
 		double distance = (LimelightConstants.TARGET_CENTER_HEIGHT.subtract(LimelightConstants.LIFT_UP_HEIGHT)
 				.getValue())
 				/ (Math.tan(new Rotations(ty, RotationUnits.DEGREE).add(LimelightConstants.LIMELIGHT_MOUNT_ANGLE)
-						.getValue()));
+						.convertTo(RotationUnits.RADIAN)));
 
 		// Assert that manual and calculated distances are equal
 		assertEquals("Limelight has correct distance", new Distance(distance),

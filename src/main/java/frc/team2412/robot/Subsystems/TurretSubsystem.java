@@ -3,6 +3,7 @@ package frc.team2412.robot.Subsystems;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.robototes.math.MathUtils;
 import com.robototes.units.Rotations;
@@ -26,6 +27,7 @@ public class TurretSubsystem extends PIDSubsystem {
 		m_LimelightSubsystem = limelightSubsystem;
 
 		initTurretEncoder();
+
 		setDefaultCommand(new TurretFollowLimelightCommand(this, m_LimelightSubsystem));
 	}
 
@@ -34,9 +36,13 @@ public class TurretSubsystem extends PIDSubsystem {
 		m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
 		m_turretMotor.setSelectedSensorPosition(0);
 
+		m_turretMotor.setNeutralMode(NeutralMode.Brake);
+
 		m_TurretOffsetPosition = m_turretMotor.getSelectedSensorPosition(0);
 		m_TurretCurrentPosition = 0;
 		m_TurretPastPosition = 0;
+
+		periodic();
 	}
 
 	@Override
@@ -53,6 +59,7 @@ public class TurretSubsystem extends PIDSubsystem {
 		m_TurretPastPosition = m_TurretCurrentPosition;
 		m_currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
 				RotationUnits.DEGREE);
+		System.out.println(getMeasurement());
 	}
 
 	public Rotations getCurrentAngle() {

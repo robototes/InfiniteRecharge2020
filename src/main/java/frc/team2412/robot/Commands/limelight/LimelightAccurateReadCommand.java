@@ -1,13 +1,13 @@
-package frc.team2412.robot.Commands;
+package frc.team2412.robot.Commands.limelight;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.LimelightSubsystem;
 
-public class LimelightReadCommand extends CommandBase {
+public class LimelightAccurateReadCommand extends CommandBase {
 
 	private LimelightSubsystem m_LimelightSubsystem;
 
-	public LimelightReadCommand(LimelightSubsystem limelightSubsystem) {
+	public LimelightAccurateReadCommand(LimelightSubsystem limelightSubsystem) {
 		addRequirements(limelightSubsystem);
 		m_LimelightSubsystem = limelightSubsystem;
 	}
@@ -17,8 +17,10 @@ public class LimelightReadCommand extends CommandBase {
 		m_LimelightSubsystem.getValues();
 	}
 
-	public void end() {
-		m_LimelightSubsystem.stopLimelight();
+	@Override
+	public void end(boolean cancelled) {
+		if (!cancelled)
+			m_LimelightSubsystem.stopLimelight();
 	}
 
 	@Override
