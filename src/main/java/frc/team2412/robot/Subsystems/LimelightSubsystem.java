@@ -39,26 +39,6 @@ public class LimelightSubsystem extends SubsystemBase {
 		this.setDefaultCommand(new LimelightReadCommand(this));
 	}
 
-	@Override
-	public void periodic() {
-
-	}
-
-	public void getValues() {
-		// If we have a target, set distance and yaw, otherwise error them
-		if (m_limelight.hasValidTarget()) {
-			setDistanceFromTable();
-			setYawFromTable();
-		}
-	}
-
-	public void setYawFromTable() {
-		// Set the yaw to a degree value from the limelight
-		Rotations yawFromOuterTarget = new Rotations(m_limelight.getTX(), RotationUnits.DEGREE);
-
-		m_yawFromTarget = yawFromOuterTarget;
-	}
-
 	public void accurateAim() {
 		if (m_limelight.hasValidTarget()) {
 			setDistanceFromTable();
@@ -77,6 +57,27 @@ public class LimelightSubsystem extends SubsystemBase {
 											* LimelightConstants.INNER_TARGET_DISTANCE.getValue() * cosOfSkew));
 			m_yawFromTarget = m_yawFromTarget.add(new Rotations(angleFromYawToInner, RotationUnits.RADIAN));
 		}
+	}
+
+	public Distance getDistanceToTarget() {
+		return m_distanceToTarget;
+	}
+
+	public void getValues() {
+		// If we have a target, set distance and yaw, otherwise error them
+		if (m_limelight.hasValidTarget()) {
+			setDistanceFromTable();
+			setYawFromTable();
+		}
+	}
+
+	public Rotations getYawFromTarget() {
+		return m_yawFromTarget;
+	}
+
+	@Override
+	public void periodic() {
+
 	}
 
 	public void setDistanceFromTable() {
@@ -99,12 +100,11 @@ public class LimelightSubsystem extends SubsystemBase {
 		m_distanceToTarget = targetHeightMinusLimelightHeight.divide(new Distance(tangentOfAngle));
 	}
 
-	public Distance getDistanceToTarget() {
-		return m_distanceToTarget;
-	}
+	public void setYawFromTable() {
+		// Set the yaw to a degree value from the limelight
+		Rotations yawFromOuterTarget = new Rotations(m_limelight.getTX(), RotationUnits.DEGREE);
 
-	public Rotations getYawFromTarget() {
-		return m_yawFromTarget;
+		m_yawFromTarget = yawFromOuterTarget;
 	}
 
 	public void stopLimelight() {

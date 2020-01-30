@@ -14,6 +14,10 @@ public class HoodSubsystem extends SubsystemBase {
 		this.m_hoodServo = hoodServo;
 	}
 
+	public double getServo() {
+		return m_hoodServo.get();
+	}
+
 	public void servoExtend() {
 		m_hoodServo.set(HoodConstants.MaxExtension);
 	}
@@ -24,10 +28,6 @@ public class HoodSubsystem extends SubsystemBase {
 
 	public void setServo(double angle) {
 		m_hoodServo.set(angle);
-	}
-
-	public double getServo() {
-		return m_hoodServo.get();
 	}
 
 }

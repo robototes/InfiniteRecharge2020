@@ -13,14 +13,14 @@ public class LimelightReadCommand extends CommandBase {
 	}
 
 	@Override
-	public void execute() {
-		m_LimelightSubsystem.getValues();
-	}
-
-	@Override
 	public void end(boolean cancelled) {
 		if (!cancelled)
 			m_LimelightSubsystem.stopLimelight();
+	}
+
+	@Override
+	public void execute() {
+		m_LimelightSubsystem.getValues();
 	}
 
 	@Override

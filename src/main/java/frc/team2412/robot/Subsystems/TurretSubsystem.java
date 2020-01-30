@@ -31,6 +31,15 @@ public class TurretSubsystem extends PIDSubsystem {
 		setDefaultCommand(new TurretFollowLimelightCommand(this, m_LimelightSubsystem));
 	}
 
+	public Rotations getCurrentAngle() {
+		return m_currentAngle;
+	}
+
+	@Override
+	public double getMeasurement() {
+		return m_TurretCurrentPosition - m_TurretOffsetPosition;
+	}
+
 	public void initTurretEncoder() {
 		m_turretMotor.configFactoryDefault();
 		m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
@@ -62,20 +71,6 @@ public class TurretSubsystem extends PIDSubsystem {
 		System.out.println(getMeasurement());
 	}
 
-	public Rotations getCurrentAngle() {
-		return m_currentAngle;
-	}
-
-	@Override
-	public void useOutput(double output, double setpoint) {
-		m_turretMotor.set(output);
-	}
-
-	@Override
-	public double getMeasurement() {
-		return m_TurretCurrentPosition - m_TurretOffsetPosition;
-	}
-
 	public void set(double output) {
 		output = MathUtils.constrain(output, -1, 1);
 
@@ -83,6 +78,11 @@ public class TurretSubsystem extends PIDSubsystem {
 			output = 0;
 		}
 
+		m_turretMotor.set(output);
+	}
+
+	@Override
+	public void useOutput(double output, double setpoint) {
 		m_turretMotor.set(output);
 	}
 }

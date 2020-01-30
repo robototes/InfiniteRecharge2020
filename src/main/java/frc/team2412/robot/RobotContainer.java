@@ -1,6 +1,8 @@
 package frc.team2412.robot;
 
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
+import frc.team2412.robot.Subsystems.FlywheelSubsystem;
+import frc.team2412.robot.Subsystems.HoodSubsystem;
 import frc.team2412.robot.Subsystems.LimelightSubsystem;
 import frc.team2412.robot.Subsystems.TurretSubsystem;
 
@@ -10,6 +12,8 @@ public class RobotContainer {
 	public ExampleSubsystem m_ExampleSubsystem;
 	public LimelightSubsystem m_LimelightSubsystem;
 	public TurretSubsystem m_TurretSubsystem;
+	public FlywheelSubsystem m_FlywheelSubsystem;
+	public HoodSubsystem m_HoodSubsystem;
 
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
@@ -18,5 +22,9 @@ public class RobotContainer {
 		m_LimelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
 
 		m_TurretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
+
+		m_FlywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelMotor1, RobotMap.flywheelMotor2);
+
+		m_HoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
 	}
 }

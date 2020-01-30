@@ -25,6 +25,12 @@ public class LimelightSubsystemTest {
 	Limelight mockedLimelight;
 	LimelightSubsystem realLimelightSubsystem;
 
+	@After
+	public void after() {
+		TestWithScheduler.schedulerDestroy();
+		MockHardwareExtension.afterAll();
+	}
+
 	@Before
 	public void before() {
 		TestWithScheduler.schedulerStart();
@@ -35,6 +41,26 @@ public class LimelightSubsystemTest {
 		mockedLimelight = mock(Limelight.class);
 		realLimelightSubsystem = new LimelightSubsystem(mockedLimelight);
 	}
+
+	/*
+	 * @Test public void LimelightSubsystemSetsErrorValuesWhenNoTargetIsFound() {
+	 * 
+	 * // Configure the limelight to not find a target
+	 * when(mockedLimelight.hasValidTarget()).thenReturn(false);
+	 * 
+	 * // Register realLimelightSubsystem and run it once
+	 * CommandScheduler.getInstance().registerSubsystem(realLimelightSubsystem);
+	 * CommandScheduler.getInstance().run();
+	 * 
+	 * // Make sure that both yaw and distance have Double.NaN values
+	 * assertEquals("Limelight has NaN yaw", Double.NaN,
+	 * realLimelightSubsystem.getYawFromTarget().getValue(), MathUtils.EPSILON);
+	 * 
+	 * assertEquals("Limelight has NaN distance", Double.NaN,
+	 * realLimelightSubsystem.getDistanceToTarget().getValue(), MathUtils.EPSILON);
+	 * 
+	 * TestWithScheduler.schedulerClear(); }
+	 */
 
 	@Test
 	public void LimelightSubsystemSetsCorrectDistanceAndYawWhenTargetIsFound() {
@@ -72,32 +98,6 @@ public class LimelightSubsystemTest {
 				realLimelightSubsystem.getDistanceToTarget());
 
 		TestWithScheduler.schedulerClear();
-	}
-
-	/*
-	 * @Test public void LimelightSubsystemSetsErrorValuesWhenNoTargetIsFound() {
-	 * 
-	 * // Configure the limelight to not find a target
-	 * when(mockedLimelight.hasValidTarget()).thenReturn(false);
-	 * 
-	 * // Register realLimelightSubsystem and run it once
-	 * CommandScheduler.getInstance().registerSubsystem(realLimelightSubsystem);
-	 * CommandScheduler.getInstance().run();
-	 * 
-	 * // Make sure that both yaw and distance have Double.NaN values
-	 * assertEquals("Limelight has NaN yaw", Double.NaN,
-	 * realLimelightSubsystem.getYawFromTarget().getValue(), MathUtils.EPSILON);
-	 * 
-	 * assertEquals("Limelight has NaN distance", Double.NaN,
-	 * realLimelightSubsystem.getDistanceToTarget().getValue(), MathUtils.EPSILON);
-	 * 
-	 * TestWithScheduler.schedulerClear(); }
-	 */
-
-	@After
-	public void after() {
-		TestWithScheduler.schedulerDestroy();
-		MockHardwareExtension.afterAll();
 	}
 
 }

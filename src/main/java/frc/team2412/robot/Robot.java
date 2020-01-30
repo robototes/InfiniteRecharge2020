@@ -7,8 +7,6 @@
 
 package frc.team2412.robot;
 
-import com.robototes.math.MathUtils;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -19,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-
+@SuppressWarnings("unused")
 public class Robot extends TimedRobot {
 
 	// Have instances of robot container and OI for easy access
@@ -40,6 +38,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 
+	}
+
+	@Override
+	public void disabledInit() {
+
+	}
+
+	@Override
+	public void disabledPeriodic() {
 	}
 
 	/**
@@ -70,7 +77,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		RobotMap.robotDrive.arcadeDrive(m_OI.driverStick.getY(), MathUtils.cube(-m_OI.driverStick.getX()));
 	}
 
 	/**
@@ -78,14 +84,5 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-	}
-
-	@Override
-	public void disabledPeriodic() {
-	}
-
-	@Override
-	public void disabledInit() {
-
 	}
 }
