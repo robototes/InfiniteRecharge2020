@@ -2,6 +2,7 @@ package frc.team2412.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses. 
@@ -14,10 +15,12 @@ public class RobotMap {
 	static boolean climbMode = false;
 	
 	//climb Pneumatics
-	public static int pneumatic1 = 1;
-	public static Solenoid leftPneumatic = new Solenoid(pneumatic1);
-	public static int pneumatic2 = 2;
-	public static Solenoid rightPneumatic = new Solenoid(pneumatic2);
+	public static int pneumatic1Open = 1;
+	public static int pneumatic1Closed = 2;
+	public static DoubleSolenoid leftPneumatic = new DoubleSolenoid(pneumatic1Open, pneumatic1Closed);
+	public static int pneumatic2Open = 3;
+	public static int pneumatic2Closed = 4;
+	public static DoubleSolenoid rightPneumatic = new DoubleSolenoid(pneumatic2Open, pneumatic2Closed);
 	
 	//Motors
 	public static int climbMotor1 = 1;
