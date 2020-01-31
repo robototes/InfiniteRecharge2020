@@ -4,7 +4,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
@@ -24,9 +28,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses. 
 //remember to declare robot container at the bottom of this class 
 public class RobotMap {
-
-	// IDs
-	public static int exampleID = 1;
 
 	// DRIVEBASE SUBSYSTEM
 	// -------------------------------------------------------------------------
@@ -52,15 +53,26 @@ public class RobotMap {
 	// DriveBase Gyro
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
-	// INTAKE SUBSYSTEM
-	// -----------------------------------------------------------------------------
-	// Intake motor ports
-	public static final int INTAKE_FRONT_MOTOR_PORT = 1;
-	public static final int INTAKE_BACK_MOTOR_PORT = 1;
 
-	// Intake Motors
-	public static CANSparkMax intakeFront = new CANSparkMax(INTAKE_FRONT_MOTOR_PORT, MotorType.kBrushless);
-	public static CANSparkMax intakeBack = new CANSparkMax(INTAKE_BACK_MOTOR_PORT, MotorType.kBrushless);
+	// IDs
+	public static final int exampleID = 1;
+
+	// Turret Subsystem
+	public static final int turretMotorID = 1;
+	public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(turretMotorID);
+
+	// Flywheel subsystem
+	public static final int flywheelMotorID1 = 0;
+	public static final int flywheelMotorID2 = 2;
+
+	public static CANSparkMax flywheelMotor1 = new CANSparkMax(flywheelMotorID1, MotorType.kBrushless);
+	public static CANSparkMax flywheelMotor2 = new CANSparkMax(flywheelMotorID2, MotorType.kBrushless);
+
+	public static SpeedControllerGroup flywheelSpeedGroup = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
+
+	// Hood Subsystem
+	public static final int HOOD_SERVO_PORT = 1;
+	public static Servo hoodServo = new Servo(HOOD_SERVO_PORT);
 
 	// Intake DoubleSolenoid Ports
 	public static final int INTAKE_UP_PORT = 1;
@@ -96,5 +108,6 @@ public class RobotMap {
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
 
+	// OI
 	public static OI m_OI = new OI(robotContainer);
 }
