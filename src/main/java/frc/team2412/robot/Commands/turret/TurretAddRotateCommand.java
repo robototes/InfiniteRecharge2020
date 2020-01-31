@@ -10,7 +10,7 @@ import frc.team2412.robot.Subsystems.TurretSubsystem;
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class TurretAddRotateCommand extends TurretRotateCommand {
 
-	public Rotations m_rotationsToAdd;
+	private Rotations m_rotationsToAdd;
 
 	public TurretAddRotateCommand(TurretSubsystem turretSubsystem, Rotations angleToAddToRotate) {
 		super(turretSubsystem, turretSubsystem.getCurrentAngle().add(angleToAddToRotate));
