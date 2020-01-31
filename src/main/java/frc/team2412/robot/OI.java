@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.Commands.ExampleCommand;
-import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
+import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeDownCommand;
@@ -79,9 +79,10 @@ public class OI {
 	public OI(RobotContainer robotContainer) {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
-		indexerStopButton.toggleWhenPressed(new ProcessBallsCommandGroup(robotContainer.m_IndexerSubsystem, indexerShootButton));
+		indexerStopButton
+				.toggleWhenPressed(new ProcessBallsCommandGroup(robotContainer.m_IndexerSubsystem, indexerShootButton));
 
-    exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
+		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
 		// LIFT
 		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
