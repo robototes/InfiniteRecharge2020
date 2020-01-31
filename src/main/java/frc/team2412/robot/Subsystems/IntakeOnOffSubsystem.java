@@ -20,22 +20,8 @@ public class IntakeOnOffSubsystem extends SubsystemBase {
 		this.m_intakeBackMotor = backMotor;
 	}
 
-	public void intakeOn() {
-		m_intakes.set(1);
-		m_lastMotor = IntakeLastMotor.BOTH;
-	}
-
-	public void intakeOff() {
-		m_intakes.set(0);
-	}
-
-	public void frontIntakeOn() {
-		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
-		m_lastMotor = IntakeLastMotor.FRONT;
-	}
-
-	public void frontIntakeOff() {
-		m_intakeFrontMotor.set(0);
+	public void backIntakeOff() {
+		m_intakeBackMotor.set(0);
 	}
 
 	public void backIntakeOn() {
@@ -43,14 +29,8 @@ public class IntakeOnOffSubsystem extends SubsystemBase {
 		m_lastMotor = IntakeLastMotor.BACK;
 	}
 
-	public void backIntakeOff() {
-		m_intakeBackMotor.set(0);
-	}
-
-	public void frontIntakeOnBackIntakeOff() {
-		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
-		m_intakeBackMotor.set(0);
-		m_lastMotor = IntakeLastMotor.FRONT;
+	public void frontIntakeOff() {
+		m_intakeFrontMotor.set(0);
 	}
 
 	public void frontIntakeOffBackIntakeOn() {
@@ -59,8 +39,28 @@ public class IntakeOnOffSubsystem extends SubsystemBase {
 		m_lastMotor = IntakeLastMotor.BACK;
 	}
 
+	public void frontIntakeOn() {
+		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+		m_lastMotor = IntakeLastMotor.FRONT;
+	}
+
+	public void frontIntakeOnBackIntakeOff() {
+		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+		m_intakeBackMotor.set(0);
+		m_lastMotor = IntakeLastMotor.FRONT;
+	}
+
 	public IntakeLastMotor getLastMotor() {
 		return m_lastMotor;
+	}
+
+	public void intakeOff() {
+		m_intakes.set(0);
+	}
+
+	public void intakeOn() {
+		m_intakes.set(1);
+		m_lastMotor = IntakeLastMotor.BOTH;
 	}
 
 	public void setIntake(double speed) {

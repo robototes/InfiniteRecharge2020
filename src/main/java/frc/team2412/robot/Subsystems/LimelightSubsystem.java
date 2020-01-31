@@ -1,6 +1,5 @@
 package frc.team2412.robot.Subsystems;
 
-
 import com.robototes.sensors.Limelight;
 import com.robototes.sensors.Limelight.CamMode;
 import com.robototes.sensors.Limelight.LEDMode;
@@ -96,7 +95,6 @@ public class LimelightSubsystem extends SubsystemBase {
 		Rotations angleFromHorizontal = angleUpDownToTarget.add(LimelightConstants.LIMELIGHT_MOUNT_ANGLE);
 
 		// Get the tangent of the angle (opposite/adjacent)
-		double tangentOfAngle = Math.tan(angleFromHorizontal.getValue());
 		double tangentOfAngle = Math.tan(angleFromHorizontal.convertTo(RotationUnits.RADIAN));
 
 		// Divide delta y by the tangent to get the distance (adjacent side)

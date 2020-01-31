@@ -107,8 +107,5 @@ public class OI {
 				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
-
-		liftUpButton.whenPressed(new LiftUpCommand(RobotMap.robotContainer.liftSubsystem));
-		liftDownButton.whenPressed(new LiftDownCommand(RobotMap.robotContainer.liftSubsystem));
 	}
 }

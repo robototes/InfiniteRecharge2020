@@ -14,22 +14,22 @@ public class IntakeUpDownSubsystem extends SubsystemBase {
 		this.m_intakeUpDown = intakeUpDown;
 	}
 
-	public void intakeUp() {
-		setLift(IntakeState.WITHDRAWN);
-
+	public IntakeState getCurrentState() {
+		return m_currentState;
 	}
 
 	public void intakeDown() {
 		setLift(IntakeState.EXTENDED);
 	}
 
+	public void intakeUp() {
+		setLift(IntakeState.WITHDRAWN);
+
+	}
+
 	private void setLift(IntakeState newState) {
 		m_intakeUpDown.set(newState.value);
 		m_currentState = newState;
-	}
-
-	public IntakeState getCurrentState() {
-		return m_currentState;
 	}
 
 }

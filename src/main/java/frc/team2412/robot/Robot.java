@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_RobotContainer.m_TurretSubsystem.initTurretEncoder();
+		m_robotContainer.m_TurretSubsystem.initTurretEncoder();
 	}
 
 	/**
