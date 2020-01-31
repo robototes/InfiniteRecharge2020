@@ -1,7 +1,7 @@
 package frc.team2412.robot.Commands.IndexerCommands;
 
-import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team2412.robot.Subsystems.IndexerSubsystem;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
@@ -11,7 +11,7 @@ public class ProcessBallsCommandGroup extends ParallelCommandGroup {
 	IntakeBalls intake;
 	SwitchBalls switchB;
 	Button shootButton;
-	
+
 	public ProcessBallsCommandGroup(IndexerSubsystem subsystem, Button sButton) {
 		shootButton = sButton;
 		m_Subsystem = subsystem;
@@ -25,7 +25,7 @@ public class ProcessBallsCommandGroup extends ParallelCommandGroup {
 	@Override
 	public void execute() {
 		// run the example method
-		//get the button value for shooting
+		// get the button value for shooting
 		if (shootButton.get()) {
 			shoot.execute();
 		} else {

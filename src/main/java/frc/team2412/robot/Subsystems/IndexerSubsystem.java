@@ -1,6 +1,7 @@
 package frc.team2412.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -62,9 +63,9 @@ public class IndexerSubsystem extends SubsystemBase {
 		return false;
 		// check if all sensors are on
 	}
-	
+
 	public void intake(int balls, IndexerDirection dir) {
-		switch(balls) {
+		switch (balls) {
 		case 1:
 			intake1(dir);
 			break;
@@ -82,9 +83,9 @@ public class IndexerSubsystem extends SubsystemBase {
 			break;
 		}
 	}
-	
+
 	public void swap(int balls, IndexerDirection dir) {
-		switch(balls) {
+		switch (balls) {
 		case 3:
 			swap3(dir);
 			break;
@@ -93,7 +94,7 @@ public class IndexerSubsystem extends SubsystemBase {
 			break;
 		}
 	}
-	
+
 	public void shoot() {
 		// allShiftDown();
 		m_indexMidMotor.set(1);
