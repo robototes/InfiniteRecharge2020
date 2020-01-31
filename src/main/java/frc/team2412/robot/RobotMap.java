@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 public class RobotMap {
 
 	// IDs
-	public static int exampleID = 1;
+	public static final int exampleID = 1;
 
 	// Limelight subsystem
 	public static NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault().getTable("limelight");
@@ -28,12 +28,12 @@ public class RobotMap {
 			Pipeline.FOUR, StreamMode.STANDARD, SnapshotMode.OFF);
 
 	// Turret Subsystem
-	public static int turretMotorID = 1;
+	public static final int turretMotorID = 1;
 	public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(turretMotorID);
 
 	// Flywheel subsystem
-	public static int flywheelMotorID1 = 0;
-	public static int flywheelMotorID2 = 2;
+	public static final int flywheelMotorID1 = 0;
+	public static final int flywheelMotorID2 = 2;
 
 	public static CANSparkMax flywheelMotor1 = new CANSparkMax(flywheelMotorID1, MotorType.kBrushless);
 	public static CANSparkMax flywheelMotor2 = new CANSparkMax(flywheelMotorID2, MotorType.kBrushless);

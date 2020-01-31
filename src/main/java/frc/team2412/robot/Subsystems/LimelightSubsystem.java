@@ -18,8 +18,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
-	public Distance m_distanceToTarget;
-	public Rotations m_yawFromTarget;
+	private Distance m_distanceToTarget;
+	private Rotations m_yawFromTarget;
 
 	// Store the limelight
 	private Limelight m_limelight;
@@ -44,6 +44,7 @@ public class LimelightSubsystem extends SubsystemBase {
 			setDistanceFromTable();
 			setYawFromTable();
 
+			// Complex equation that wont be explained here because it is really confusing
 			double skewOfTarget = m_limelight.getNetworkTable().getEntry("ts").getDouble(0);
 
 			double cosOfSkew = Math
@@ -55,6 +56,7 @@ public class LimelightSubsystem extends SubsystemBase {
 									+ Math.pow(LimelightConstants.INNER_TARGET_DISTANCE.getValue(), 2)
 									- 2 * m_distanceToTarget.getValue()
 											* LimelightConstants.INNER_TARGET_DISTANCE.getValue() * cosOfSkew));
+
 			m_yawFromTarget = m_yawFromTarget.add(new Rotations(angleFromYawToInner, RotationUnits.RADIAN));
 		}
 	}
