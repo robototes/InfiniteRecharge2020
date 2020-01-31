@@ -15,9 +15,9 @@ public class FlywheelSubsystem extends SubsystemBase {
 
 	public FlywheelSubsystem(CANSparkMax flywheelMotor1, CANSparkMax flywheelMotor2) {
 		flywheelMotor2.setInverted(true);
-		SpeedControllerGroup flywheelMotors = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
+		this.m_flywheelMotors = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
 
-		this.m_flywheelMotors = flywheelMotors;
+		
 	}
 
 	public void Shoot() {
