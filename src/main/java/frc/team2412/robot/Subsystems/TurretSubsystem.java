@@ -3,6 +3,7 @@ package frc.team2412.robot.Subsystems;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -60,10 +61,10 @@ public class TurretSubsystem extends PIDSubsystem {
 	public void periodic() {
 		m_TurretCurrentPosition = m_turretMotor.getSelectedSensorPosition(0);
 
-		if (m_TurretCurrentPosition - m_TurretPastPosition > 3800) {
+		if (m_TurretCurrentPosition - m_TurretPastPosition > ENCODER_MAX_ERROR_JUMP ) {
 			m_TurretOffsetPosition += TICKS_PER_REVOLUTION;
 
-		} else if (Math.abs(m_TurretCurrentPosition - m_TurretPastPosition) > 500) {
+		} else if (Math.abs(m_TurretCurrentPosition - m_TurretPastPosition) > ENCODER_MAX_ERROR_JUMP ) {
 			m_TurretCurrentPosition = m_TurretPastPosition;
 		}
 
