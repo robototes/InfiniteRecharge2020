@@ -1,8 +1,5 @@
 package frc.team2412.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -17,9 +14,8 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
@@ -56,13 +52,12 @@ public class RobotMap {
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	// IDs
-	private final static int exampleID = 1;
 	private final static int indexBackMotorID = 1;
 	private final static int indexFrontMotorID = 2;
 	private final static int indexMidMotorID = 3;
 	private final static int backSensorID = 1;
 	private final static int backMidSensorID = 2;
-	private final static int midSensorID = 3; 
+	private final static int midSensorID = 3;
 	private final static int frontMidSensorID = 4;
 	private final static int frontSensorID = 5;
 	private final static int intakeFrontSensorID = 6;
@@ -71,23 +66,23 @@ public class RobotMap {
 	private final static int frontDoubleSolenoidUp_ID = 2;
 	private final static int rearDoubleSolenoidDown_ID = 3;
 	private final static int rearDoubleSolenoidUp_ID = 4;
-	
-	//motors
+
+	// motors
 	public static CANSparkMax indexFrontMotor = new CANSparkMax(indexFrontMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexBackMotor = new CANSparkMax(indexBackMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexMidMotor = new CANSparkMax(indexMidMotorID, MotorType.kBrushless);
-	
+
 	public static DoubleSolenoid frontClutch = new DoubleSolenoid(frontDoubleSolenoidUp_ID, frontDoubleSolenoidDown_ID);
 	public static DoubleSolenoid rearClutch = new DoubleSolenoid(rearDoubleSolenoidUp_ID, rearDoubleSolenoidDown_ID);
-	
-	//sensors
+
+	// sensors
 	public static DigitalInput back = new DigitalInput(backSensorID);
 	public static DigitalInput backMid = new DigitalInput(backMidSensorID);
 	public static DigitalInput mid = new DigitalInput(midSensorID);
 	public static DigitalInput frontMid = new DigitalInput(frontMidSensorID);
 	public static DigitalInput front = new DigitalInput(frontSensorID);
-	
-	//INDEXER CONTROLS THESE NOT INTAKE FYI
+
+	// INDEXER CONTROLS THESE NOT INTAKE FYI
 	public static DigitalInput intakeFront = new DigitalInput(intakeFrontSensorID);
 	public static DigitalInput intakeBack = new DigitalInput(intakeBackSensorID);
 	public static final int exampleID = 1;
@@ -149,6 +144,6 @@ public class RobotMap {
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();
 
-  // OI
-	public static OI m_OI = new OI(robotContainer);
+	// OI
+	public static OI m_OI = new OI(m_robotContainer);
 }
