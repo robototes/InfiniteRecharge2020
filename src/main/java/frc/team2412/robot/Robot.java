@@ -21,8 +21,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class Robot extends TimedRobot {
 
 	// Have instances of robot container and OI for easy access
-	private RobotContainer m_RobotContainer = RobotMap.robotContainer;
-	private OI m_OI = RobotMap.robotContainer.m_OI;
+
+	private RobotContainer m_robotContainer = RobotMap.robotContainer;
+	private OI m_OI = RobotMap.m_OI;
 
 	/**
 	 * This function is called once when autonomous is started
@@ -46,7 +47,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-
 	}
 
 	/**
@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
+
 	}
 
 	/**
