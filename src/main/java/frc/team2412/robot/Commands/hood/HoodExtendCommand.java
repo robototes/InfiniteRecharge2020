@@ -4,17 +4,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.HoodSubsystem;
 
 public class HoodExtendCommand extends CommandBase {
-	HoodSubsystem m_Subsystem;
+	HoodSubsystem m_HoodSubsystem;
 
 	public HoodExtendCommand(HoodSubsystem subsystem) {
-		m_Subsystem = subsystem;
+		m_HoodSubsystem = subsystem;
 		addRequirements(subsystem);
 	}
 
 	@Override
 	public void execute() {
 		// run the example method
-		m_Subsystem.servoExtend();
+		m_HoodSubsystem.servoExtend();
 	}
 
 	@Override
