@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class MockHardwareExtension {
 
-	public static void beforeAll() {
-		initializeHardware();
-	}
-
 	public static void afterAll() {
 		DriverStation.getInstance().release();
 		HAL.releaseDSMutex();
+	}
+
+	public static void beforeAll() {
+		initializeHardware();
 	}
 
 	private static void initializeHardware() {

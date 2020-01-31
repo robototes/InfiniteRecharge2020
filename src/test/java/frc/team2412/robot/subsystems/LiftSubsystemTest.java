@@ -1,5 +1,6 @@
 package frc.team2412.robot.subsystems;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -13,15 +14,19 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.ExampleCommand;
-import frc.team2412.robot.Subsystems.ExampleSubsystem;
+import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
+import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
+import frc.team2412.robot.Subsystems.LiftSubsystem;
+import frc.team2412.robot.Subsystems.constants.LiftConstants.LiftState;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
-public class ExampleSubsystemTest {
+public class LiftSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	ExampleSubsystem mockedExampleSubsystem;
+	LiftSubsystem realLiftSubsystem;
+	DoubleSolenoid mockedLiftSolenoid;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -39,52 +44,62 @@ public class ExampleSubsystemTest {
 		TestWithScheduler.schedulerClear();
 		MockHardwareExtension.beforeAll();
 
-		mockedExampleSubsystem = mock(ExampleSubsystem.class);
+		mockedLiftSolenoid = mock(DoubleSolenoid.class);
+
+		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid);
 	}
 
-	// This test makes sure that the example command calls the .subsystemMethod of
-	// example subsystem
 	@Test
-	public void ExampleCommandOnExampleSubsystem() {
+	public void LiftDownCommandOnLiftSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedExampleSubsystem);
+		reset(mockedLiftSolenoid);
 
 		// Create command
-		ExampleCommand exampleCommand = new ExampleCommand(mockedExampleSubsystem);
+		LiftDownCommand liftDownCommand = new LiftDownCommand(realLiftSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
 		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(exampleCommand);
+		fakeButton.whenPressed(liftDownCommand);
 
 		// Push the button and run the scheduler once
 		fakeButton.push();
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
 
-		// Verify that subsystemMethod was called once
-		verify(mockedExampleSubsystem, times(1)).subsystemMethod();
+		// Verify that the solenoid was set correctly
+		verify(mockedLiftSolenoid, times(1)).set(LiftState.DOWN.value);
+		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.DOWN);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
 
-	// This test makes sure that periodic is called properly (odd case as this
-	// should already work, but you may want to test methods inside of periodic)
+	// This test makes sure that the example command calls the .subsystemMethod of
+	// example subsystem
 	@Test
-	public void ExampleSubsystemCallsPeriodic() {
+	public void LiftUpCommandOnLiftSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedExampleSubsystem);
+		reset(mockedLiftSolenoid);
 
-		// Make sure that the scheduler has the subsystem registered
-		CommandScheduler.getInstance().registerSubsystem(mockedExampleSubsystem);
+		// Create command
+		LiftUpCommand liftUpCommand = new LiftUpCommand(realLiftSubsystem);
 
-		// run the scheduler once
+		// Create a fake button that will be "pressed"
+		MockButton fakeButton = new MockButton();
+
+		// Tell the button to run example command when pressed
+		fakeButton.whenPressed(liftUpCommand);
+
+		// Push the button and run the scheduler once
+		fakeButton.push();
 		CommandScheduler.getInstance().run();
+		fakeButton.release();
 
-		// Verify that periodic was called once
-		verify(mockedExampleSubsystem, times(1)).periodic();
+		// Verify that the solenoid was set correctly
+		verify(mockedLiftSolenoid, times(1)).set(LiftState.UP.value);
+		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.UP);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();

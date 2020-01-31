@@ -1,11 +1,17 @@
 package frc.team2412.robot.Subsystems;
 
+import com.robototes.sensors.Limelight;
+import com.robototes.sensors.Limelight.CamMode;
+import com.robototes.sensors.Limelight.LEDMode;
+import com.robototes.sensors.Limelight.Pipeline;
+import com.robototes.sensors.Limelight.SnapshotMode;
+import com.robototes.sensors.Limelight.StreamMode;
 import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
-import com.robototes.sensors.Limelight;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.Commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.Subsystems.constants.LimelightConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
@@ -20,32 +26,59 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	public LimelightSubsystem(Limelight limelight) {
 		this.m_limelight = limelight;
+		m_limelight.setLedMode(LEDMode.ON);
+		m_limelight.setCamMode(CamMode.VISION_PROCESSER);
+		m_limelight.setPipeline(Pipeline.FOUR);
+		m_limelight.setSnapshotMode(SnapshotMode.OFF);
+		m_limelight.setStreamMode(StreamMode.STANDARD);
+
 		this.m_distanceToTarget = new Distance(0);
 		this.m_yawFromTarget = new Rotations(0);
+
+		this.setDefaultCommand(new LimelightReadCommand(this));
+	}
+
+	public void accurateAim() {
+		if (m_limelight.hasValidTarget()) {
+			setDistanceFromTable();
+			setYawFromTable();
+
+			// Complex equation that wont be explained here because it is really confusing
+			double skewOfTarget = m_limelight.getNetworkTable().getEntry("ts").getDouble(0);
+
+			double cosOfSkew = Math
+					.cos(new Rotations(180 - skewOfTarget, RotationUnits.DEGREE).convertTo(RotationUnits.RADIAN));
+
+			double angleFromYawToInner = Math.acos(
+					(m_distanceToTarget.getValue() - LimelightConstants.INNER_TARGET_DISTANCE.getValue() * cosOfSkew)
+							/ Math.sqrt(Math.pow(m_distanceToTarget.getValue(), 2)
+									+ Math.pow(LimelightConstants.INNER_TARGET_DISTANCE.getValue(), 2)
+									- 2 * m_distanceToTarget.getValue()
+											* LimelightConstants.INNER_TARGET_DISTANCE.getValue() * cosOfSkew));
+
+			m_yawFromTarget = m_yawFromTarget.add(new Rotations(angleFromYawToInner, RotationUnits.RADIAN));
+		}
+	}
+
+	public Distance getDistanceToTarget() {
+		return m_distanceToTarget;
+	}
+
+	public void getValues() {
+		// If we have a target, set distance and yaw, otherwise error them
+		if (m_limelight.hasValidTarget()) {
+			setDistanceFromTable();
+			setYawFromTable();
+		}
+	}
+
+	public Rotations getYawFromTarget() {
+		return m_yawFromTarget;
 	}
 
 	@Override
 	public void periodic() {
 
-		// If we have a target, set distance and yaw, otherwise error them
-
-		if (m_limelight.hasValidTarget()) {
-			setDistanceFromTable();
-			setYawFromTable();
-		} else {
-			setValuesToError();
-		}
-	}
-
-	public void setValuesToError() {
-		// Error distance and yaw to make sure that we know if we dont have a target
-		m_distanceToTarget = new Distance(Double.NaN);
-		m_yawFromTarget = new Rotations(Double.NaN);
-	}
-
-	public void setYawFromTable() {
-		// Set the yaw to a degree value from the limelight
-		m_yawFromTarget = new Rotations(m_limelight.getTX(), RotationUnits.DEGREE);
 	}
 
 	public void setDistanceFromTable() {
@@ -62,17 +95,20 @@ public class LimelightSubsystem extends SubsystemBase {
 		Rotations angleFromHorizontal = angleUpDownToTarget.add(LimelightConstants.LIMELIGHT_MOUNT_ANGLE);
 
 		// Get the tangent of the angle (opposite/adjacent)
-		double tangentOfAngle = Math.tan(angleFromHorizontal.getValue());
+		double tangentOfAngle = Math.tan(angleFromHorizontal.convertTo(RotationUnits.RADIAN));
 
 		// Divide delta y by the tangent to get the distance (adjacent side)
 		m_distanceToTarget = targetHeightMinusLimelightHeight.divide(new Distance(tangentOfAngle));
 	}
 
-	public Distance getDistanceToTarget() {
-		return m_distanceToTarget;
+	public void setYawFromTable() {
+		// Set the yaw to a degree value from the limelight
+		Rotations yawFromOuterTarget = new Rotations(m_limelight.getTX(), RotationUnits.DEGREE);
+
+		m_yawFromTarget = yawFromOuterTarget;
 	}
 
-	public Rotations getYawFromTarget() {
-		return m_yawFromTarget;
+	public void stopLimelight() {
+		m_limelight.setLedMode(LEDMode.OFF);
 	}
 }
