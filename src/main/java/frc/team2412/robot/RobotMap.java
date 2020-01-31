@@ -47,5 +47,6 @@ public class RobotMap {
 	public static DigitalInput intakeBack = new DigitalInput(intakeBackSensorID);
 	
 	// Robot container
-	public static RobotContainer robotContainer = new RobotContainer();
+	public static RobotContainer m_robotContainer = new RobotContainer();
+	public static OI m_OI = new OI(m_robotContainer);
 }

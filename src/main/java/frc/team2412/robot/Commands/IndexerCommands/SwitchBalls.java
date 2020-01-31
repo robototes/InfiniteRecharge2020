@@ -15,7 +15,7 @@ public class SwitchBalls extends CommandBase {
 	@Override
 	public void execute() {
 		// run the example method
-		m_Subsystem.swap(m_Subsystem.ballUnbalancedSide, m_Subsystem.numBalls);
+		m_Subsystem.swap(m_Subsystem.getBallUnbalancedSide(), m_Subsystem.getNumBalls());
 	}
 
 	@Override

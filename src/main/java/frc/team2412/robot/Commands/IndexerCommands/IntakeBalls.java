@@ -15,14 +15,12 @@ public class IntakeBalls extends CommandBase {
 	@Override
 	public void execute() {
 		// run the example method
-		m_Subsystem.intake(m_Subsystem.numBalls+1, intakeSubsystem.intakeDirection());
+		m_Subsystem.intake(m_Subsystem.getNumBalls()+1, null);
 	}
 
 	@Override
 	public boolean isFinished() {
 		return true;
 	}
-	public IndexerSubsystem.IntakeDirection currentIntakeDirection(){
-		
-	}
+
 }

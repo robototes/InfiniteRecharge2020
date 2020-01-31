@@ -2,7 +2,6 @@ package frc.team2412.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotMap;
@@ -10,40 +9,38 @@ import frc.team2412.robot.Commands.IndexerCommands.IntakeBalls;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBalls;
 import frc.team2412.robot.Commands.IndexerCommands.ShootBalls;
 import frc.team2412.robot.Commands.IndexerCommands.SwitchBalls;
+import frc.team2412.robot.Subsystems.constants.IndexerConstants.IntakeDirection;
 
 public class IndexerSubsystem extends SubsystemBase {
-	public CANSparkMax indexBackMotor, indexFrontMotor, indexMidMotor;
-	public SpeedControllerGroup indexMotors, indexSideMotors;
-
-	public DigitalInput back, backMid, mid, frontMid, front, intakeFront, intakeBack;
+	public CANSparkMax m_indexBackMotor, m_indexFrontMotor, m_indexMidMotor;
+	public SpeedControllerGroup m_indexMotors, m_indexSideMotors;
+	public DigitalInput m_back, m_backMid, m_mid, m_frontMid, m_front, m_intakeFront, m_intakeBack;
 
 	// NUMBER OF BALLS IN SYSTEM
-	public int numBalls = 0;
+	private int m_numBalls = 0;
 
 	// SIDE OF INDEXER WITH LESS BALLS
-	public IntakeDirection ballUnbalancedSide;
+	private IntakeDirection m_ballUnbalancedSide;
 
-	// to run function once until reset
-	private int run = 0;
 
-	public IndexerSubsystem() {
+	public IndexerSubsystem(CANSparkMax frontm, CANSparkMax middle, CANSparkMax backm, DigitalInput f, DigitalInput fm, DigitalInput m, DigitalInput bm, DigitalInput b, DigitalInput inf, DigitalInput inb) {
 		// Motors
-		indexBackMotor = RobotMap.indexFrontMotor;
-		indexFrontMotor = RobotMap.indexBackMotor;
-		indexMidMotor = RobotMap.indexMidMotor;
-		indexMotors = new SpeedControllerGroup(indexFrontMotor, indexBackMotor, indexMidMotor);
-		indexSideMotors = new SpeedControllerGroup(indexFrontMotor, indexBackMotor);
+		m_indexBackMotor = backm;
+		m_indexFrontMotor = frontm;
+		m_indexMidMotor = middle;
+		m_indexMotors = new SpeedControllerGroup(frontm, middle, backm);
+		m_indexSideMotors = new SpeedControllerGroup(frontm, backm);
 
 		// Sensors
-		back = RobotMap.back;
-		backMid = RobotMap.backMid;
-		mid = RobotMap.mid;
-		frontMid = RobotMap.frontMid;
-		front = RobotMap.front;
-
-		intakeFront = RobotMap.intakeFront;
-		intakeBack = RobotMap.intakeBack;
-
+		m_back = b;
+		m_backMid = bm;
+		m_mid = m;
+		m_frontMid = fm;
+		m_front = f;
+		
+		m_intakeFront = inf;
+		m_intakeBack = inb;
+		
 		setDefaultCommand(new ProcessBalls(this, new ShootBalls(this), new IntakeBalls(this), new SwitchBalls(this)));
 	}
 
@@ -51,16 +48,16 @@ public class IndexerSubsystem extends SubsystemBase {
 
 	// Motors
 	public void stopAll() {
-		indexMotors.set(0.0);
+		m_indexMotors.set(0.0);
 	}
 
 	public void stopSides() {
-		indexSideMotors.set(0.0);
+		m_indexSideMotors.set(0.0);
 	}
 
 	// Sensors
 	public boolean allSensorsOn() {
-		if (back.get() && backMid.get() && mid.get() && frontMid.get() && front.get()) {
+		if (m_back.get() && m_backMid.get() && m_mid.get() && m_frontMid.get() && m_front.get()) {
 			return true;
 		}
 
@@ -69,7 +66,7 @@ public class IndexerSubsystem extends SubsystemBase {
 	}
 
 	public boolean allSensorsOff() {
-		if (!back.get() && !backMid.get() && !mid.get() && !frontMid.get() && !front.get()) {
+		if (!m_back.get() && !m_backMid.get() && !m_mid.get() && !m_frontMid.get() && !m_front.get()) {
 			return true;
 		}
 
@@ -79,116 +76,112 @@ public class IndexerSubsystem extends SubsystemBase {
 
 	public void shoot() {
 		// allShiftDown();
-		indexMidMotor.set(1);
-		if (ballUnbalancedSide == IntakeDirection.FRONT) {
-			indexBackMotor.set(-1);
+		m_indexMidMotor.set(1);
+		if (getBallUnbalancedSide() == IntakeDirection.FRONT) {
+			m_indexBackMotor.set(-1);
 		} else {
-			indexFrontMotor.set(1);
+			m_indexFrontMotor.set(1);
 		}
-		if (frontMid.get() && front.get()) {
-			indexFrontMotor.set(0);
-			ballUnbalancedSide = IntakeDirection.FRONT;
-		} else if (backMid.get() && back.get()) {
-			indexBackMotor.set(0);
-			ballUnbalancedSide = IntakeDirection.BACK;
+		if (m_frontMid.get() && m_front.get()) {
+			m_indexFrontMotor.set(0);
+			setBallUnbalancedSide(IntakeDirection.FRONT);
+		} else if (m_backMid.get() && m_back.get()) {
+			m_indexBackMotor.set(0);
+			setBallUnbalancedSide(IntakeDirection.BACK);
 		} else if (allSensorsOff()) {
 			stopAll();
-			ballUnbalancedSide = IntakeDirection.NONE;
+			setBallUnbalancedSide(IntakeDirection.NONE);
 		}
 	}
 
 //Switch ball positions
 
-	public enum IntakeDirection {
-		FRONT, BACK, BOTH, NONE;
-	}
-
 	public void intake(int num, IntakeDirection dir) {
 		switch (num) {
 		case 1:
 			if (dir == IntakeDirection.FRONT) {
-				indexFrontMotor.set(1);
+				m_indexFrontMotor.set(1);
 			} else if (dir == IntakeDirection.BACK) {
-				indexBackMotor.set(-1);
+				m_indexBackMotor.set(-1);
 			}
-			if (!mid.get()) {
+			if (!m_mid.get()) {
 				stopAll();
-				numBalls++;
+				setNumBalls(getNumBalls() + 1);
 			}
 			break;
 		case 2:
-			indexFrontMotor.set(1);
-			indexBackMotor.set(-1);
-			if (!frontMid.get()) {
+			m_indexFrontMotor.set(1);
+			m_indexBackMotor.set(-1);
+			if (!m_frontMid.get()) {
 				stopAll();
-				ballUnbalancedSide = IntakeDirection.BACK;
-				numBalls++;
-			} else if (!backMid.get()) {
+				setBallUnbalancedSide(IntakeDirection.BACK);
+				setNumBalls(getNumBalls() + 1);
+			} else if (!m_backMid.get()) {
 				stopAll();
-				ballUnbalancedSide = IntakeDirection.FRONT;
-				numBalls++;
+				setBallUnbalancedSide(IntakeDirection.FRONT);
+				setNumBalls(getNumBalls() + 1);
 			}
 			break;
 		case 3:
-			if (ballUnbalancedSide == IntakeDirection.FRONT) {
-				indexFrontMotor.set(1);
-				if (!frontMid.get()) {
+			if (getBallUnbalancedSide() == IntakeDirection.FRONT) {
+				m_indexFrontMotor.set(1);
+				if (!m_frontMid.get()) {
 					stopAll();
-					numBalls++;
-					ballUnbalancedSide = IntakeDirection.NONE;
+					setNumBalls(getNumBalls() + 1);
+					setBallUnbalancedSide(IntakeDirection.NONE);
 
-				} else if (!intakeBack.get()) {
+				} else if (!m_intakeBack.get()) {
 					stopAll();
-					numBalls++;
+					setNumBalls(getNumBalls() + 1);
 				}
-			} else if (ballUnbalancedSide == IntakeDirection.BACK) {
-				indexBackMotor.set(-1);
-				if (!backMid.get()) {
+			} else if (getBallUnbalancedSide() == IntakeDirection.BACK) {
+				m_indexBackMotor.set(-1);
+				if (!m_backMid.get()) {
 					stopAll();
-					numBalls++;
-					ballUnbalancedSide = IntakeDirection.NONE;
-				} else if (!intakeFront.get()) {
+					setNumBalls(getNumBalls() + 1);
+					setBallUnbalancedSide(IntakeDirection.NONE);
+				} else if (!m_intakeFront.get()) {
 					stopAll();
-					numBalls++;
+					setNumBalls(getNumBalls() + 1);
 				}
 
 			}
 			break;
 		case 4:
 
-			if (ballUnbalancedSide == IntakeDirection.FRONT) {
-				indexFrontMotor.set(1);
-				if (!frontMid.get()) {
+			if (getBallUnbalancedSide() == IntakeDirection.FRONT) {
+				m_indexFrontMotor.set(1);
+				if (!m_frontMid.get()) {
 					stopAll();
-					numBalls++;
-					ballUnbalancedSide = IntakeDirection.NONE;
+					setNumBalls(getNumBalls() + 1);
+					setBallUnbalancedSide(IntakeDirection.NONE);
 
-				} else if (!intakeBack.get()) {
+				} else if (!m_intakeBack.get()) {
 					stopAll();
-					numBalls++;
+					setNumBalls(getNumBalls() + 1);
 				}
-			} else if (ballUnbalancedSide == IntakeDirection.BACK) {
-				indexBackMotor.set(-1);
-				if (!backMid.get()) {
+			} else if (getBallUnbalancedSide() == IntakeDirection.BACK) {
+				m_indexBackMotor.set(-1);
+				if (!m_backMid.get()) {
 					stopAll();
-					numBalls++;
-					ballUnbalancedSide = IntakeDirection.NONE;
-				} else if (!intakeFront.get()) {
+					setNumBalls(getNumBalls() + 1);
+					setBallUnbalancedSide(IntakeDirection.NONE);
+				} else if (!m_intakeFront.get()) {
 					stopAll();
-					numBalls++;
+					setNumBalls(getNumBalls() + 1);
 				}
 
 			}
 			break;
 		case 5:
 			if (dir == IntakeDirection.FRONT) {
-				if (!intakeFront.get()) {
-					numBalls++;
+				if (!m_intakeFront.get()) {
+					setNumBalls(getNumBalls() + 1);
 				}
 			} else if (dir == IntakeDirection.BACK) {
-				indexBackMotor.set(1);
-				if (!intakeBack.get()) {
-					numBalls++;
+				m_indexBackMotor.set(1);
+				if (!m_intakeBack.get()) {
+					setNumBalls(getNumBalls() + 1);
 				}
 			}
 			break;
@@ -207,45 +200,45 @@ public class IndexerSubsystem extends SubsystemBase {
 			break;
 		case 3:
 			if (dir == IntakeDirection.FRONT) {
-				if (!front.get()) {
-					indexFrontMotor.set(0);
+				if (!m_front.get()) {
+					m_indexFrontMotor.set(0);
 				} else {
-					indexFrontMotor.set(-1);
+					m_indexFrontMotor.set(-1);
 				}
-				if (!backMid.get() && !front.get()) {
-					indexBackMotor.set(0);
-					ballUnbalancedSide = IntakeDirection.BACK;
+				if (!m_backMid.get() && !m_front.get()) {
+					m_indexBackMotor.set(0);
+					setBallUnbalancedSide(IntakeDirection.BACK);
 				} else {
-					indexBackMotor.set(-1);
+					m_indexBackMotor.set(-1);
 				}
 			} else if (dir == IntakeDirection.BACK) {
-				if (!back.get()) {
-					indexBackMotor.set(0);
+				if (!m_back.get()) {
+					m_indexBackMotor.set(0);
 				} else {
-					indexBackMotor.set(1);
+					m_indexBackMotor.set(1);
 				}
-				if (!frontMid.get() && !back.get()) {
-					indexFrontMotor.set(0);
-					ballUnbalancedSide = IntakeDirection.FRONT;
+				if (!m_frontMid.get() && !m_back.get()) {
+					m_indexFrontMotor.set(0);
+					setBallUnbalancedSide(IntakeDirection.FRONT);
 				} else {
-					indexFrontMotor.set(1);
+					m_indexFrontMotor.set(1);
 				}
 			}
 			break;
 		case 4:
 			if (dir == IntakeDirection.FRONT) {
-				indexFrontMotor.set(-1);
-				indexBackMotor.set(-1);
-				if (!front.get()) {
+				m_indexFrontMotor.set(-1);
+				m_indexBackMotor.set(-1);
+				if (!m_front.get()) {
 					stopAll();
-					ballUnbalancedSide = IntakeDirection.BACK;
+					setBallUnbalancedSide(IntakeDirection.BACK);
 				}
 			} else if (dir == IntakeDirection.BACK) {
-				indexFrontMotor.set(1);
-				indexBackMotor.set(1);
-				if (!back.get()) {
+				m_indexFrontMotor.set(1);
+				m_indexBackMotor.set(1);
+				if (!m_back.get()) {
 					stopAll();
-					ballUnbalancedSide = IntakeDirection.FRONT;
+					setBallUnbalancedSide(IntakeDirection.FRONT);
 				}
 			}
 			break;
@@ -253,5 +246,21 @@ public class IndexerSubsystem extends SubsystemBase {
 			break;
 		}
 
+	}
+
+	public IntakeDirection getBallUnbalancedSide() {
+		return m_ballUnbalancedSide;
+	}
+
+	public void setBallUnbalancedSide(IntakeDirection m_ballUnbalancedSide) {
+		this.m_ballUnbalancedSide = m_ballUnbalancedSide;
+	}
+
+	public int getNumBalls() {
+		return m_numBalls;
+	}
+
+	public void setNumBalls(int m_numBalls) {
+		this.m_numBalls = m_numBalls;
 	}
 }
