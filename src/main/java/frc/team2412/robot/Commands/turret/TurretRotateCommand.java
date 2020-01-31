@@ -3,6 +3,7 @@ package frc.team2412.robot.Commands.turret;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_MAX_TOLERANCE;
 
 import java.util.function.DoubleSupplier;
 
@@ -27,7 +28,7 @@ public class TurretRotateCommand extends PIDCommand {
 
 		m_TurretSubsystem = turretSubsystem;
 
-		getController().setTolerance(10);
+		getController().setTolerance(TURRET_MAX_TOLERANCE);
 	}
 
 	public void configureSetpoint(double inSetpoint) {
