@@ -30,7 +30,6 @@ public class DriveBaseSubsystemTest {
 	DifferentialDrive mockedDifferntialDrive;
 	ADXRS450_Gyro mockedGyro;
 	GenericHID mockedGenericHID;
-
 	Joystick mockedJoystick;
 
 	// This method is run before the tests begin. initialize all mocks you wish to
@@ -51,25 +50,22 @@ public class DriveBaseSubsystemTest {
 
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
-
+	@Test
 	public void DriveCommandOnDriveBaseSubsystemCallsMotorSet() {
 		// Reset the mocked objects to make sure all mock values are reset
 		reset(mockedGyro);
 		reset(mockedJoystick);
 
 		// Create command
-		DriveCommand driveCommand = new DriveCommand(realDriveBaseSubsystem);
+		DriveCommand driveCommand = new DriveCommand(realDriveBaseSubsystem, mockedJoystick);
 
 		when(mockedGyro.getAngle()).thenReturn(0.5);
-
 		System.out.println(mockedGyro.getAngle());
 
-		when(mockedJoystick.getY(GenericHID.Hand.kRight)).thenReturn(1.0);
-
+		when(mockedJoystick.getY()).thenReturn(1.0);
 		System.out.println(mockedJoystick.getY());
 
 		when(mockedJoystick.getTwist()).thenReturn(0.0);
-
 		System.out.println(mockedJoystick.getTwist());
 
 		// Create a fake button that will be "pressed"

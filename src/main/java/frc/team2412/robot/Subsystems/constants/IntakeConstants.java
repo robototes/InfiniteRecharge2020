@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class IntakeConstants {
 
-	public final static double MAX_INTAKE_SPEED = 1;
+	public static final double MAX_INTAKE_SPEED = 1;
 
 	public static enum IntakeState {
 

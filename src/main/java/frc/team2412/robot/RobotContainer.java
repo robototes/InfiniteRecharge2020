@@ -3,45 +3,40 @@ package frc.team2412.robot;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
-import frc.team2412.robot.Subsystems.IntakeMotorOnOffSubsystem;
+import frc.team2412.robot.Subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer {
-	// OI
-	public OI m_OI;
 
 	// Subsystems
 	public ExampleSubsystem m_ExampleSubsystem;
 
-	public LiftSubsystem liftSubsystem;
+	public LiftSubsystem m_liftSubsystem;
 
-	public DriveBaseSubsystem driveBaseSubsystem;
+	public DriveBaseSubsystem m_driveBaseSubsystem;
 
-	public IntakeMotorOnOffSubsystem intakeMotorOnOffSubsystem;
+	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
-	public IntakeUpDownSubsystem intakeUpDownSubsystem;
+	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
-	public ControlPanelColorSubsystem controlPanelColorSubsystem;
+	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
 
-		liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
 
-		driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro,
-				RobotMap.robotContainer.m_OI.driverStick);
+		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro, RobotMap.m_OI.driverStick);
 
-		intakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(RobotMap.intakeFront, RobotMap.intakeBack);
+		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFront, RobotMap.intakeBack);
 
-		intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
+		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
 
-		controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor,
+		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor,
 				RobotMap.colorMatcher);
 
-		// create an OI object
-		m_OI = new OI();
 	}
 }

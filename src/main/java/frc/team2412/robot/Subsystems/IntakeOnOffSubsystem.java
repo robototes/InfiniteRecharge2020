@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeLastMotor;
 
-public class IntakeMotorOnOffSubsystem extends SubsystemBase {
+public class IntakeOnOffSubsystem extends SubsystemBase {
 
 	private CANSparkMax m_intakeFrontMotor;
 	private CANSparkMax m_intakeBackMotor;
@@ -15,7 +15,7 @@ public class IntakeMotorOnOffSubsystem extends SubsystemBase {
 
 	public IntakeLastMotor m_lastMotor = IntakeLastMotor.BOTH;
 
-	public IntakeMotorOnOffSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
+	public IntakeOnOffSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
 		this.m_intakeFrontMotor = frontMotor;
 		this.m_intakeBackMotor = backMotor;
 	}

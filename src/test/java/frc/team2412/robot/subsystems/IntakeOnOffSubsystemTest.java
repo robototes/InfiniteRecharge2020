@@ -21,13 +21,13 @@ import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.Subsystems.IntakeMotorOnOffSubsystem;
+import frc.team2412.robot.Subsystems.IntakeOnOffSubsystem;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
-public class IntakeMotorOnOffSubsystemTest {
+public class IntakeOnOffSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	IntakeMotorOnOffSubsystem realIntakeMotorOnOffSubsystem;
+	IntakeOnOffSubsystem realIntakeMotorOnOffSubsystem;
 	CANSparkMax mockedIntakeFrontMotor;
 	CANSparkMax mockedIntakeBackMotor;
 
@@ -42,7 +42,7 @@ public class IntakeMotorOnOffSubsystemTest {
 		mockedIntakeFrontMotor = mock(CANSparkMax.class);
 		mockedIntakeBackMotor = mock(CANSparkMax.class);
 
-		realIntakeMotorOnOffSubsystem = new IntakeMotorOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
+		realIntakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
 	}
 
 	// This test makes sure that the example command calls the .subsystemMethod of

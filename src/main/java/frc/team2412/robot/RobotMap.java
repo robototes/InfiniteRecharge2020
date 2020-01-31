@@ -54,16 +54,16 @@ public class RobotMap {
 	public static CANSparkMax intakeBack = new CANSparkMax(INTAKE_BACK_MOTOR_PORT, MotorType.kBrushless);
 
 	// Intake DoubleSolenoid Ports
-	public static int INTAKE_UP_PORT = 1;
-	public static int INTAKE_DOWN_PORT = 1;
+	public static final int INTAKE_UP_PORT = 1;
+	public static final int INTAKE_DOWN_PORT = 1;
 
 	public static DoubleSolenoid intakeUpDown = new DoubleSolenoid(INTAKE_UP_PORT, INTAKE_DOWN_PORT);
 
 	// LIFT SUBSYSTEM
 	// -------------------------------------------------------------------------------
 	// Lift DoubleSolenoid Ports
-	public static int LIFT_UP_PORT = 1;
-	public static int LIFT_DOWN_PORT = 1;
+	public static final int LIFT_UP_PORT = 1;
+	public static final int LIFT_DOWN_PORT = 1;
 
 	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_UP_PORT, LIFT_DOWN_PORT);
 
@@ -81,4 +81,6 @@ public class RobotMap {
 	// ----------------------------------------------------------------------------------------------
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
+
+	public static OI m_OI = new OI(robotContainer);
 }

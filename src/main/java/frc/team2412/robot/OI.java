@@ -73,39 +73,39 @@ public class OI {
 			CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT);
 
 	// Constructor to set all of the commands and buttons
-	public OI() {
+	public OI(RobotContainer robotContainer) {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
 
 		// LIFT
-		liftUpButton.whenPressed(new LiftUpCommand(RobotMap.robotContainer.liftSubsystem));
-		liftDownButton.whenPressed(new LiftDownCommand(RobotMap.robotContainer.liftSubsystem));
+		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
+		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
 		// INTAKE UpDown
-		intakeUpButton.whenPressed(new IntakeUpCommand(RobotMap.robotContainer.intakeUpDownSubsystem));
-		intakeDownButton.whenPressed(new IntakeDownCommand(RobotMap.robotContainer.intakeUpDownSubsystem));
+		intakeUpButton.whenPressed(new IntakeUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeDownButton.whenPressed(new IntakeDownCommand(robotContainer.m_intakeUpDownSubsystem));
 
 		// INTAKE front
-		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
-		intakeFrontOffButton.whenPressed(new IntakeFrontOffCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
+		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOffButton.whenPressed(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// INTAKE back
-		intakeBackOnButton.whenPressed(new IntakeBackOnCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
-		intakeBackOffButton.whenPressed(new IntakeBackOffCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
+		intakeBackOnButton.whenPressed(new IntakeBackOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOffButton.whenPressed(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// INTAKE group on/off
 		intakeFrontOnBackOffButton
-				.whenPressed(new IntakeFrontOnIntakeBackOffCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
+				.whenPressed(new IntakeFrontOnIntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 		intakeFrontOffBackOnButton
-				.whenPressed(new IntakeFrontOffIntakeBackOnCommand(RobotMap.robotContainer.intakeMotorOnOffSubsystem));
+				.whenPressed(new IntakeFrontOffIntakeBackOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// CONTROL PANEL
 		controlPanelSpinThreeTimesButton
-				.whenPressed(new RotateControlPanelCommand(RobotMap.robotContainer.controlPanelColorSubsystem));
+				.whenPressed(new RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
 		controlPanelSetToTargetButton
-				.whenPressed(new SetToTargetColorCommand(RobotMap.robotContainer.controlPanelColorSubsystem));
+				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
 
-		exampleSubsystemMethod.whenPressed(new ExampleCommand(RobotMap.robotContainer.m_ExampleSubsystem));
+		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
 	}
 }
