@@ -28,6 +28,14 @@ public class IntakeUpDownSubsystemTest {
 	IntakeUpDownSubsystem realIntakeUpDownSubsystem;
 	DoubleSolenoid mockedLiftSolenoid;
 
+	// This is called after tests, and makes sure that nothing is left open and
+	// everything is ready for the next test class
+	@After
+	public void after() {
+		TestWithScheduler.schedulerDestroy();
+		MockHardwareExtension.afterAll();
+	}
+
 	// This method is run before the tests begin. initialize all mocks you wish to
 	// use in multiple functions here. Copy and paste this function in your own test
 	@Before
@@ -39,35 +47,6 @@ public class IntakeUpDownSubsystemTest {
 		mockedLiftSolenoid = mock(DoubleSolenoid.class);
 
 		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid);
-	}
-
-	// This test makes sure that the example command calls the .subsystemMethod of
-	// example subsystem
-	@Test
-	public void IntakeUpCommandOnIntakeUpDownSubsystemCallsMotorSet() {
-		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedLiftSolenoid);
-
-		// Create command
-		IntakeUpCommand IntakeUpCommand = new IntakeUpCommand(realIntakeUpDownSubsystem);
-
-		// Create a fake button that will be "pressed"
-		MockButton fakeButton = new MockButton();
-
-		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(IntakeUpCommand);
-
-		// Push the button and run the scheduler once
-		fakeButton.push();
-		CommandScheduler.getInstance().run();
-		fakeButton.release();
-
-		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(IntakeState.WITHDRAWN.value);
-		assertEquals("Lift has the correct state", realIntakeUpDownSubsystem.getCurrentState(), IntakeState.WITHDRAWN);
-
-		// Clear the scheduler
-		TestWithScheduler.schedulerClear();
 	}
 
 	@Test
@@ -97,12 +76,33 @@ public class IntakeUpDownSubsystemTest {
 		TestWithScheduler.schedulerClear();
 	}
 
-	// This is called after tests, and makes sure that nothing is left open and
-	// everything is ready for the next test class
-	@After
-	public void after() {
-		TestWithScheduler.schedulerDestroy();
-		MockHardwareExtension.afterAll();
+	// This test makes sure that the example command calls the .subsystemMethod of
+	// example subsystem
+	@Test
+	public void IntakeUpCommandOnIntakeUpDownSubsystemCallsMotorSet() {
+		// Reset the subsystem to make sure all mock values are reset
+		reset(mockedLiftSolenoid);
+
+		// Create command
+		IntakeUpCommand IntakeUpCommand = new IntakeUpCommand(realIntakeUpDownSubsystem);
+
+		// Create a fake button that will be "pressed"
+		MockButton fakeButton = new MockButton();
+
+		// Tell the button to run example command when pressed
+		fakeButton.whenPressed(IntakeUpCommand);
+
+		// Push the button and run the scheduler once
+		fakeButton.push();
+		CommandScheduler.getInstance().run();
+		fakeButton.release();
+
+		// Verify that the solenoid was set correctly
+		verify(mockedLiftSolenoid, times(1)).set(IntakeState.WITHDRAWN.value);
+		assertEquals("Lift has the correct state", realIntakeUpDownSubsystem.getCurrentState(), IntakeState.WITHDRAWN);
+
+		// Clear the scheduler
+		TestWithScheduler.schedulerClear();
 	}
 
 }

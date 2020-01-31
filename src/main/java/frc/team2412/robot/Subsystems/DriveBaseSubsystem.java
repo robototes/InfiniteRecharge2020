@@ -27,18 +27,9 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		setDefaultCommand(new DriveCommand(this, joystick));
 	}
 
-	@Override
-	public void periodic() {
-		m_motion = new Vector(m_gyro.getAngle() % 360);
-	}
-
 	public void drive(Joystick joystick) {
 		m_robotDrive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
 		CurrentYSpeed = joystick.getY();
-	}
-
-	public void setDriveSpeed(double forwardness, double turn) {
-		m_robotDrive.arcadeDrive(forwardness, turn, true);
 	}
 
 	public double getCurrentRotation() {
@@ -47,6 +38,15 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public double getCurrentYSpeed() {
 		return CurrentYSpeed;
+	}
+
+	@Override
+	public void periodic() {
+		m_motion = new Vector(m_gyro.getAngle() % 360);
+	}
+
+	public void setDriveSpeed(double forwardness, double turn) {
+		m_robotDrive.arcadeDrive(forwardness, turn, true);
 	}
 
 }

@@ -17,7 +17,6 @@ public class FlywheelSubsystem extends SubsystemBase {
 		flywheelMotor2.setInverted(true);
 		this.m_flywheelMotors = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
 
-		
 	}
 
 	public void Shoot() {
