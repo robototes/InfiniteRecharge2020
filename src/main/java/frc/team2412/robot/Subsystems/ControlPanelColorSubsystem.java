@@ -25,6 +25,50 @@ public class ControlPanelColorSubsystem extends SubsystemBase {
 		this.m_colorMatcher = colorMatch;
 	}
 
+	public Color colorMatcher(Color detectedColor) {
+		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+		if (match.color == ControlPanelConstants.blueTarget) {
+			return ControlPanelConstants.blueTarget;
+		} else if (match.color == ControlPanelConstants.redTarget) {
+			return ControlPanelConstants.redTarget;
+		} else if (match.color == ControlPanelConstants.greenTarget) {
+			return ControlPanelConstants.greenTarget;
+		} else if (match.color == ControlPanelConstants.yellowTarget) {
+			return ControlPanelConstants.yellowTarget;
+		}
+
+		return detectedColor;
+
+	}
+
+	public String colorToString(Color m_color) {
+		if (m_color.equals(ControlPanelConstants.blueTarget))
+			return "blue";
+		if (m_color.equals(ControlPanelConstants.greenTarget))
+			return "green";
+		if (m_color.equals(ControlPanelConstants.redTarget))
+			return "red";
+		if (m_color.equals(ControlPanelConstants.yellowTarget))
+			return "yellow";
+		else {
+			return "Unknown";
+		}
+	}
+
+	public Color getColorUnderBar(Color readColor) {
+		if (readColor.equals(ControlPanelConstants.blueTarget)) {
+			return ControlPanelConstants.redTarget;
+		} else if (readColor.equals(ControlPanelConstants.greenTarget)) {
+			return ControlPanelConstants.yellowTarget;
+		} else if (readColor.equals(ControlPanelConstants.redTarget)) {
+			return ControlPanelConstants.blueTarget;
+		} else if (readColor.equals(ControlPanelConstants.yellowTarget)) {
+			return ControlPanelConstants.greenTarget;
+		} else {
+			return Color.kBlack;
+		}
+	}
+
 	public void rotateControlPanel() {
 		rotationCount = 0;
 		m_StartColor = m_colorSensor.getColor();
@@ -50,50 +94,6 @@ public class ControlPanelColorSubsystem extends SubsystemBase {
 		}
 
 		m_wheelMotor.set(0);
-
-	}
-
-	public Color getColorUnderBar(Color readColor) {
-		if (readColor.equals(ControlPanelConstants.blueTarget)) {
-			return ControlPanelConstants.redTarget;
-		} else if (readColor.equals(ControlPanelConstants.greenTarget)) {
-			return ControlPanelConstants.yellowTarget;
-		} else if (readColor.equals(ControlPanelConstants.redTarget)) {
-			return ControlPanelConstants.blueTarget;
-		} else if (readColor.equals(ControlPanelConstants.yellowTarget)) {
-			return ControlPanelConstants.greenTarget;
-		} else {
-			return Color.kBlack;
-		}
-	}
-
-	public String colorToString(Color m_color) {
-		if (m_color.equals(ControlPanelConstants.blueTarget))
-			return "blue";
-		if (m_color.equals(ControlPanelConstants.greenTarget))
-			return "green";
-		if (m_color.equals(ControlPanelConstants.redTarget))
-			return "red";
-		if (m_color.equals(ControlPanelConstants.yellowTarget))
-			return "yellow";
-		else {
-			return "Unknown";
-		}
-	}
-
-	public Color colorMatcher(Color detectedColor) {
-		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-		if (match.color == ControlPanelConstants.blueTarget) {
-			return ControlPanelConstants.blueTarget;
-		} else if (match.color == ControlPanelConstants.redTarget) {
-			return ControlPanelConstants.redTarget;
-		} else if (match.color == ControlPanelConstants.greenTarget) {
-			return ControlPanelConstants.greenTarget;
-		} else if (match.color == ControlPanelConstants.yellowTarget) {
-			return ControlPanelConstants.yellowTarget;
-		}
-
-		return detectedColor;
 
 	}
 }

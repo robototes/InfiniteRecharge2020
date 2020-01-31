@@ -14,4 +14,6 @@ public class LimelightConstants {
 
 	// What is the angle that the limelight is mounted at?
 	public static final Rotations LIMELIGHT_MOUNT_ANGLE = new Rotations(0, RotationUnits.DEGREE);
+
+	public static final Distance INNER_TARGET_DISTANCE = new Distance(29.25, DistanceUnits.INCH);
 }

@@ -8,6 +8,7 @@
 package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -16,12 +17,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-
 @SuppressWarnings("unused")
 public class Robot extends TimedRobot {
 
 	// Have instances of robot container and OI for easy access
-
 	private RobotContainer m_robotContainer = RobotMap.robotContainer;
 	private OI m_OI = RobotMap.m_OI;
 
@@ -41,12 +40,22 @@ public class Robot extends TimedRobot {
 
 	}
 
+	@Override
+	public void disabledInit() {
+
+	}
+
+	@Override
+	public void disabledPeriodic() {
+	}
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+		m_robotContainer.m_TurretSubsystem.initTurretEncoder();
 	}
 
 	/**
@@ -60,7 +69,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
-
+		CommandScheduler.getInstance().run();
 	}
 
 	/**
