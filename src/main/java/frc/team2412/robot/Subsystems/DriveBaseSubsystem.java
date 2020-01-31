@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
 
 public class DriveBaseSubsystem extends SubsystemBase {
 
@@ -17,13 +18,16 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public double CurrentYSpeed;
 
-	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro) {
+	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro, Joystick joystick) {
 		m_motion = new Vector(0);
 		this.m_robotDrive = robotDrive;
 		this.setName("DriveBase Subsystem");
 		m_gyro = gyro;
+
+		setDefaultCommand(new DriveCommand(this, joystick));
 	}
 
+	@Override
 	public void periodic() {
 		m_motion = new Vector(m_gyro.getAngle() % 360);
 	}

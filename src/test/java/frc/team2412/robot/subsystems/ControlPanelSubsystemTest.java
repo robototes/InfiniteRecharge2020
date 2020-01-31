@@ -1,32 +1,36 @@
 package frc.team2412.robot.subsystems;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
 import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
-import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
-import frc.team2412.robot.Subsystems.LiftSubsystem;
-import frc.team2412.robot.Subsystems.constants.LiftConstants.LiftState;
+import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
+import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
+import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
+import frc.team2412.robot.Subsystems.constants.ControlPanelConstants;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
-public class LiftSubsystemTest {
+public class ControlPanelSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	LiftSubsystem realLiftSubsystem;
-	DoubleSolenoid mockedLiftSolenoid;
+	ControlPanelColorSubsystem realControlPanelColorSubsystem;
+	ColorSensorV3 mockedColorSensor;
+	ColorMatch mockedColorMatch;
+	Talon mockedColorMotor;
 
 	// This method is run before the tests begin. initialize all mocks you wish to
 	// use in multiple functions here. Copy and paste this function in your own test
@@ -36,62 +40,73 @@ public class LiftSubsystemTest {
 		TestWithScheduler.schedulerClear();
 		MockHardwareExtension.beforeAll();
 
-		mockedLiftSolenoid = mock(DoubleSolenoid.class);
+		mockedColorSensor = mock(ColorSensorV3.class);
+		mockedColorMotor = mock(Talon.class);
+		mockedColorMatch = mock(ColorMatch.class);
 
-		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid);
+		realControlPanelColorSubsystem = new ControlPanelColorSubsystem(mockedColorSensor, mockedColorMotor,
+				mockedColorMatch);
 	}
 
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
 	@Test
-	public void LiftUpCommandOnLiftSubsystemCallsSolenoidSet() {
+	public void RotateControlPanelCommandOnControlPanelColorSubsystemCallsMotorandSensor() {
 		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedLiftSolenoid);
+		reset(mockedColorMotor);
+		reset(mockedColorSensor);
+		reset(mockedColorMatch);
 
 		// Create command
-		LiftUpCommand liftUpCommand = new LiftUpCommand(realLiftSubsystem);
+		RotateControlPanelCommand rotateControlPanelCommand = new RotateControlPanelCommand(
+				realControlPanelColorSubsystem);
+
+		when(mockedColorSensor.getColor()).thenReturn(ControlPanelConstants.blueTarget);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
 		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(liftUpCommand);
+		fakeButton.whenPressed(rotateControlPanelCommand);
 
 		// Push the button and run the scheduler once
 		fakeButton.push();
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
 
-		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(LiftState.UP.value);
-		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.UP);
+		// Verify that subsystemMethod was called once
+		verify(mockedColorMotor, times(1)).set(0);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
 
 	@Test
-	public void LiftDownCommandOnLiftSubsystemCallsSolenoidSet() {
+	public void SetToTargetColorCommandOnControlPanelColorSubsystemCallsMotorandSensor() {
 		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedLiftSolenoid);
+		reset(mockedColorMotor);
+		reset(mockedColorSensor);
+		reset(mockedColorMatch);
 
 		// Create command
-		LiftDownCommand liftDownCommand = new LiftDownCommand(realLiftSubsystem);
+		SetToTargetColorCommand setToTargetColorCommand = new SetToTargetColorCommand(realControlPanelColorSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
+		when(mockedColorSensor.getColor()).thenReturn(ControlPanelConstants.blueTarget)
+				.thenReturn(ControlPanelConstants.yellowTarget).thenReturn(ControlPanelConstants.redTarget);
+
 		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(liftDownCommand);
+		fakeButton.whenPressed(setToTargetColorCommand);
 
 		// Push the button and run the scheduler once
 		fakeButton.push();
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
 
-		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(LiftState.DOWN.value);
-		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.DOWN);
+		// Verify that subsystemMethod was called once
+		verify(mockedColorMotor, times(1)).set(0);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();

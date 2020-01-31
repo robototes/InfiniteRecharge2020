@@ -1,5 +1,6 @@
 package frc.team2412.robot.Subsystems;
 
+
 import com.robototes.sensors.Limelight;
 import com.robototes.sensors.Limelight.CamMode;
 import com.robototes.sensors.Limelight.LEDMode;
@@ -18,15 +19,14 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
-	private Distance m_distanceToTarget;
-	private Rotations m_yawFromTarget;
+	public Distance m_distanceToTarget;
+	public Rotations m_yawFromTarget;
 
 	// Store the limelight
 	private Limelight m_limelight;
 
 	public LimelightSubsystem(Limelight limelight) {
 		this.m_limelight = limelight;
-
 		m_limelight.setLedMode(LEDMode.ON);
 		m_limelight.setCamMode(CamMode.VISION_PROCESSER);
 		m_limelight.setPipeline(Pipeline.FOUR);
@@ -96,6 +96,7 @@ public class LimelightSubsystem extends SubsystemBase {
 		Rotations angleFromHorizontal = angleUpDownToTarget.add(LimelightConstants.LIMELIGHT_MOUNT_ANGLE);
 
 		// Get the tangent of the angle (opposite/adjacent)
+		double tangentOfAngle = Math.tan(angleFromHorizontal.getValue());
 		double tangentOfAngle = Math.tan(angleFromHorizontal.convertTo(RotationUnits.RADIAN));
 
 		// Divide delta y by the tangent to get the distance (adjacent side)

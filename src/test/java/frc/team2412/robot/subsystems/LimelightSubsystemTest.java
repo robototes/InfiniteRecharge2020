@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
+import com.robototes.math.MathUtils;
 import com.robototes.sensors.Limelight;
 import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
@@ -25,7 +26,6 @@ public class LimelightSubsystemTest {
 	Limelight mockedLimelight;
 	LimelightSubsystem realLimelightSubsystem;
 
-	@After
 	public void after() {
 		TestWithScheduler.schedulerDestroy();
 		MockHardwareExtension.afterAll();
@@ -78,10 +78,6 @@ public class LimelightSubsystemTest {
 		// Register realLimelightSubsystem and run it once
 		CommandScheduler.getInstance().registerSubsystem(realLimelightSubsystem);
 		CommandScheduler.getInstance().run();
-
-		for (int i = 0; i < 60; i++) {
-			realLimelightSubsystem.getValues();
-		}
 
 		// Assert that the passed in rotation value matches a confirmed value
 		assertEquals("Limelight has correct yaw", new Rotations(tx, RotationUnits.DEGREE),
