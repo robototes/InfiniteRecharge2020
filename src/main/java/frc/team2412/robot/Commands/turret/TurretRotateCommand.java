@@ -17,7 +17,7 @@ import frc.team2412.robot.Subsystems.TurretSubsystem;
 public class TurretRotateCommand extends PIDCommand {
 	TurretSubsystem m_TurretSubsystem;
 
-	public double m_doubleSetpoint;
+	private double m_doubleSetpoint;
 
 	public TurretRotateCommand(TurretSubsystem turretSubsystem, Rotations angleToRotate) {
 		super(TURRET_PID_CONTROLLER, turretSubsystem::getMeasurement, 0, output -> turretSubsystem.set(-output),
