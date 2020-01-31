@@ -11,6 +11,15 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.robototes.sensors.Limelight;
+import com.robototes.sensors.Limelight.CamMode;
+import com.robototes.sensors.Limelight.LEDMode;
+import com.robototes.sensors.Limelight.Pipeline;
+import com.robototes.sensors.Limelight.SnapshotMode;
+import com.robototes.sensors.Limelight.StreamMode;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses. 
 //remember to declare robot container at the bottom of this class 
@@ -79,6 +88,11 @@ public class RobotMap {
 	public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
 
 	// ----------------------------------------------------------------------------------------------
+	// Limelight subsystem
+	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
+	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
+			Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
+
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
 
