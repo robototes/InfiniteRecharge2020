@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.HoodSubsystem;
 
 public class HoodExtendCommand extends CommandBase {
-	HoodSubsystem m_HoodSubsystem;
+	private HoodSubsystem m_HoodSubsystem;
 
 	public HoodExtendCommand(HoodSubsystem subsystem) {
 		m_HoodSubsystem = subsystem;
