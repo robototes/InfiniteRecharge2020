@@ -2,7 +2,6 @@ package frc.team2412.robot;
 
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import frc.team2412.robot.Subsystems.IndexerSubsystem;
-
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer {
 	// OI
@@ -18,6 +17,5 @@ public class RobotContainer {
 				RobotMap.indexBackMotor, RobotMap.front, RobotMap.frontMid, RobotMap.mid, RobotMap.backMid,
 				RobotMap.back, RobotMap.intakeFront, RobotMap.intakeBack);
 		// create an OI object
-
 	}
 }

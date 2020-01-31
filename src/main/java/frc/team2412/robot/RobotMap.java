@@ -3,6 +3,15 @@ package frc.team2412.robot;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import com.robototes.sensors.Limelight;
+import com.robototes.sensors.Limelight.CamMode;
+import com.robototes.sensors.Limelight.LEDMode;
+import com.robototes.sensors.Limelight.Pipeline;
+import com.robototes.sensors.Limelight.SnapshotMode;
+import com.robototes.sensors.Limelight.StreamMode;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -45,7 +54,12 @@ public class RobotMap {
 	//INDEXER CONTROLS THESE NOT INTAKE FYI
 	public static DigitalInput intakeFront = new DigitalInput(intakeFrontSensorID);
 	public static DigitalInput intakeBack = new DigitalInput(intakeBackSensorID);
-	
+
+	// Limelight subsystem
+	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
+	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
+			Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
+
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();
 	public static OI m_OI = new OI(m_robotContainer);
