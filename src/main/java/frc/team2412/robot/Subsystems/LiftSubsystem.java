@@ -19,12 +19,17 @@ public class LiftSubsystem extends SubsystemBase {
 		this.setName("Lift Subsystem");
 	}
 
-	public void liftUp() {
-		setLift(LiftState.UP);
+	// gets the current state
+	public LiftState getCurrentState() {
+		return m_currentState;
 	}
 
 	public void liftDown() {
 		setLift(LiftState.DOWN);
+	}
+
+	public void liftUp() {
+		setLift(LiftState.UP);
 	}
 
 	// Takes the passed in LiftState and set the motor to that value. Also changes
@@ -32,11 +37,6 @@ public class LiftSubsystem extends SubsystemBase {
 	private void setLift(LiftState newState) {
 		m_liftUpDown.set(newState.value);
 		m_currentState = newState;
-	}
-
-	// gets the current state
-	public LiftState getCurrentState() {
-		return m_currentState;
 	}
 
 }
