@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 
 	// Have instances of robot container and OI for easy access
-	private RobotContainer m_robotContainer = RobotMap.robotContainer;
+	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	private OI m_OI = RobotMap.m_OI;
 
 	/**
