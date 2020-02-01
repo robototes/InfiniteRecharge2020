@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class DriveBaseSubsystem extends SubsystemBase {
+public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	private DifferentialDrive m_robotDrive;
 	private SpeedControllerGroup m_leftMotors;
@@ -21,6 +24,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public ADXRS450_Gyro m_gyro;
 
+	@Log
 	public double CurrentYSpeed;
 
 	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro, Joystick joystick) {
@@ -50,6 +54,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		m_motion = new Vector(m_gyro.getAngle() % 360);
 	}
 
+	@Config
 	public void setDriveSpeed(double forwardness, double turn) {
 		m_robotDrive.arcadeDrive(forwardness, turn, true);
 	}

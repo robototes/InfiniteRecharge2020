@@ -13,6 +13,13 @@ targetCompatibility = JavaVersion.VERSION_11
 
 def ROBOT_MAIN_CLASS = "frc.team2412.robot.Main"
 
+repositories{
+	maven{
+		name 'jitpack'
+		url 'http://jitpack.io'
+	}
+}
+
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
@@ -59,7 +66,9 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
+
 	implementation "com.github.Oblarg.Oblog:lib:3.1.0"	
+
 
     testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:3.2.0'

@@ -4,10 +4,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.LiftConstants.LiftState;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class LiftSubsystem extends SubsystemBase implements Loggable{
+public class LiftSubsystem extends SubsystemBase implements Loggable {
 
 	// creates a DoubleSolenoid to use, mainly for ease
+	@Log
 	private DoubleSolenoid m_liftUpDown;
 
 	// Sets the state of the lift to down because of init it is down
@@ -35,6 +38,7 @@ public class LiftSubsystem extends SubsystemBase implements Loggable{
 
 	// Takes the passed in LiftState and set the motor to that value. Also changes
 	// the current state to that state
+	@Config
 	private void setLift(LiftState newState) {
 		m_liftUpDown.set(newState.value);
 		m_currentState = newState;

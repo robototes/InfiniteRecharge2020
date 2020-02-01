@@ -14,10 +14,15 @@ import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.team2412.robot.Commands.turret.TurretFollowLimelightCommand;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class TurretSubsystem extends PIDSubsystem {
+public class TurretSubsystem extends PIDSubsystem implements Loggable {
 
+	@Log
 	private Rotations m_currentAngle;
+	@Log
 	private WPI_TalonSRX m_turretMotor;
 	private LimelightSubsystem m_LimelightSubsystem;
 	private int m_TurretOffsetPosition = 0;
@@ -74,6 +79,7 @@ public class TurretSubsystem extends PIDSubsystem {
 		System.out.println(getMeasurement());
 	}
 
+	@Config
 	public void set(double output) {
 		output = MathUtils.constrain(output, -1, 1);
 
