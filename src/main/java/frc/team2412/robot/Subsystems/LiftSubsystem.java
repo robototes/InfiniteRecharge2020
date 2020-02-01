@@ -3,8 +3,9 @@ package frc.team2412.robot.Subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.LiftConstants.LiftState;
+import io.github.oblarg.oblog.Loggable;
 
-public class LiftSubsystem extends SubsystemBase {
+public class LiftSubsystem extends SubsystemBase implements Loggable{
 
 	// creates a DoubleSolenoid to use, mainly for ease
 	private DoubleSolenoid m_liftUpDown;

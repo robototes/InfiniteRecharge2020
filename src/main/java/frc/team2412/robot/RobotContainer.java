@@ -13,10 +13,6 @@ import frc.team2412.robot.Subsystems.LiftSubsystem;
 import frc.team2412.robot.Subsystems.LimelightSubsystem;
 import frc.team2412.robot.Subsystems.TurretSubsystem;
 
-import io.github.oblarg.oblog.*;
-
-
-@SuppressWarnings("unused")
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer {
 
@@ -63,9 +59,6 @@ public class RobotContainer {
 		m_FlywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelMotor1, RobotMap.flywheelMotor2);
 
 		m_HoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
-		
-		// The first argument is the root container
-		// The second argument is whether logging and config should be given separate tabs
-		Logger.configureLoggingAndConfig(this, false);
+
 	}
 }

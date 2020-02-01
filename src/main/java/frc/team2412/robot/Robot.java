@@ -58,6 +58,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_robotContainer.m_TurretSubsystem.initTurretEncoder();
+		// The first argument is the root container
+		// The second argument is whether logging and config should be given separate tabs
+		Logger.configureLoggingAndConfig(m_robotContainer, false);
 
 	}
 
