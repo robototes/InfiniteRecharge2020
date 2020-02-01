@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotMap;
 
 public class ClimbMotorSubsystem extends SubsystemBase {
-	ClimbMotorSubsystem m_ClimbMotor;
 	// private WPI_TalonSRX m_ClimbMotorSubsystem;
 
 	private WPI_TalonSRX leftMotor = RobotMap.leftClimbMotor;
@@ -18,10 +17,6 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 	}
 
-	@Override
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		m_ClimbMotorSubsystem.ClimbRails();
-	}
+	
 
 }
