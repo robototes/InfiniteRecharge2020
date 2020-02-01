@@ -3,11 +3,15 @@ package frc.team2412.robot.Subsystems;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.HoodConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
 // @Author Rahul Singh && Sumedh Panatula
 
-public class HoodSubsystem extends SubsystemBase {
+public class HoodSubsystem extends SubsystemBase implements Loggable {
 
+	@Log
 	private Servo m_hoodServo;
 
 	public HoodSubsystem(Servo hoodServo) {
@@ -26,6 +30,7 @@ public class HoodSubsystem extends SubsystemBase {
 		m_hoodServo.set(HoodConstants.MaxWithdrawal);
 	}
 
+	@Config
 	public void setServo(double angle) {
 		m_hoodServo.set(angle);
 	}
