@@ -18,7 +18,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	private DifferentialDrive m_robotDrive;
 	private SpeedControllerGroup m_leftMotors;
 	private SpeedControllerGroup m_rightMotors;
-	
 
 	public Vector m_motion;
 
@@ -60,8 +59,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void twoJoystickDrive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-		if(button.get()) {
-			double averageY = (rightJoystick.getY() + leftJoystick.getY())/2;
+		if (button.get()) {
+			double averageY = (rightJoystick.getY() + leftJoystick.getY()) / 2;
 			m_rightMotors.set(averageY);
 			m_leftMotors.set(averageY);
 			CurrentYSpeed = averageY;
@@ -69,7 +68,20 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 			m_rightMotors.set(rightJoystick.getY());
 			m_leftMotors.set(leftJoystick.getY());
 		}
-		
-		
+	}
+
+	public void angleDrive(double angle) {
+		if (angle > 0) {
+			while (m_gyro.getAngle() <= angle) {
+				setDriveSpeed(0, 1);
+			}
+			setDriveSpeed(0, 0);
+		} else {
+			while (m_gyro.getAngle() >= angle) {
+				setDriveSpeed(0, -1);
+			}
+			setDriveSpeed(0, 0);
+		}
+
 	}
 }

@@ -1,7 +1,9 @@
 package frc.team2412.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.team2412.robot.Commands.AutonomousCommands.BasicAutoCommand;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
-
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import frc.team2412.robot.Subsystems.FlywheelSubsystem;
@@ -50,7 +52,16 @@ public class RobotContainer {
 	@Log(name = "Indexer Subsystem")
 	public IndexerSubsystem m_IndexerSubsystem;
 
+	// A chooser for autonomous commands
+	SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+	public final Command m_basicAutoCommand = new BasicAutoCommand(m_driveBaseSubsystem, m_liftSubsystem,
+			m_TurretSubsystem, m_FlywheelSubsystem, m_IndexerSubsystem);
+
 	public RobotContainer() {
+		// Add commands to the autonomous command chooser
+		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
+
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
 

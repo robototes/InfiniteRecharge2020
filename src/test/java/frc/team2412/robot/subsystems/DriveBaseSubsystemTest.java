@@ -1,6 +1,11 @@
 package frc.team2412.robot.subsystems;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -86,7 +91,8 @@ public class DriveBaseSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		verify(mockedDifferntialDrive, times(1)).arcadeDrive(1.0, 0, true);
+		verify(mockedDifferntialDrive, times(1));
+		assertEquals("Drive has been powered", realDriveBaseSubsystem.getCurrentRotation());
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
