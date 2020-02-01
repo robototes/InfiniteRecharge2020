@@ -10,6 +10,7 @@ import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerSubsystem extends SubsystemBase implements Loggable {
+
 	@Log
 	public CANSparkMax m_indexBackMotor, m_indexFrontMotor, m_indexMidMotor;
 	public SpeedControllerGroup m_indexMotors, m_indexSideMotors;
