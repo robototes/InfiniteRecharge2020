@@ -13,12 +13,16 @@ import com.robototes.units.UnitTypes.RotationUnits;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.Subsystems.constants.LimelightConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class LimelightSubsystem extends SubsystemBase {
+public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
+	@Log.ToString
 	public Distance m_distanceToTarget;
+	@Log.ToString
 	public Rotations m_yawFromTarget;
 
 	// Store the limelight

@@ -6,10 +6,15 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeLastMotor;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class IntakeOnOffSubsystem extends SubsystemBase {
+public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 
+	@Log
 	private CANSparkMax m_intakeFrontMotor;
+	@Log
 	private CANSparkMax m_intakeBackMotor;
 	private SpeedControllerGroup m_intakes = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);
 
@@ -63,6 +68,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase {
 		m_lastMotor = IntakeLastMotor.BOTH;
 	}
 
+	@Config
 	public void setIntake(double speed) {
 		m_intakes.set(speed);
 	}

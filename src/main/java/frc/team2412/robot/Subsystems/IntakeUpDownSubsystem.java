@@ -3,9 +3,13 @@ package frc.team2412.robot.Subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeState;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class IntakeUpDownSubsystem extends SubsystemBase {
+public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 
+	@Log
 	private DoubleSolenoid m_intakeUpDown;
 
 	private IntakeState m_currentState = IntakeState.WITHDRAWN;
@@ -27,6 +31,7 @@ public class IntakeUpDownSubsystem extends SubsystemBase {
 
 	}
 
+	@Config
 	private void setLift(IntakeState newState) {
 		m_intakeUpDown.set(newState.value);
 		m_currentState = newState;
