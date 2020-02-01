@@ -1,6 +1,7 @@
 package frc.team2412.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -23,9 +24,9 @@ public class RobotMap {
 
 	// Motors
 	public static final int climbMotor1 = 1;
-	public static WPI_TalonSRX leftClimbMotor = new WPI_TalonSRX(climbMotor1);
+	public static CANSparkMax leftClimbMotor = new CANSparkMax(climbMotor1, MotorType.kBrushless);
 	public static final int climbMotor2 = 2;
-	public static WPI_TalonSRX rightClimbMotor = new WPI_TalonSRX(climbMotor2);
+	public static CANSparkMax rightClimbMotor = new CANSparkMax(climbMotor2, MotorType.kBrushless);
 
 	// Robot container
 	public static RobotContainer robotContainer = new RobotContainer();
