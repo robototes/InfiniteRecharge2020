@@ -1,16 +1,16 @@
 package frc.team2412.robot.Commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
 
 public class ClimbRails extends CommandBase {
-	private WPI_TalonSRX m_leftClimbMotor;
-	private WPI_TalonSRX m_rightClimbMotor;
+	//private CANSparkMax m_leftClimbMotor;
+	//private CANSparkMax m_rightClimbMotor;
 
-	public ClimbRails(WPI_TalonSRX leftClimbMotor, WPI_TalonSRX rightClimbMotor) {
+	/*public ClimbRails(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
 		super();
 
 	}
@@ -18,9 +18,9 @@ public class ClimbRails extends CommandBase {
 	public ClimbRails(ClimbMotorSubsystem m_ClimbMotorSubsystem) {
 		// TODO Auto-generated constructor stub
 	}
-
-	private WPI_TalonSRX leftClimbMotor = RobotMap.leftClimbMotor;
-	private WPI_TalonSRX rightClimbMotor = RobotMap.rightClimbMotor;
+	
+	private CANSparkMax leftClimbMotor = RobotMap.leftClimbMotor;
+	private CANSparkMax rightClimbMotor = RobotMap.rightClimbMotor;
 
 	public void climbUp() {
 		leftClimbMotor.set(1.0);
@@ -40,9 +40,11 @@ public class ClimbRails extends CommandBase {
 		System.out.println("Stopped");
 	}
 
-	@Override
+	/*@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		m_ClimbLiftSubsystem.ClimbMotorSubsystem();
-	}
+		m_leftClimbMotor.ClimbMotorSubsystem();
+		m_rightClimbMotor.ClimbMotorSubsystem();
+	}*/
+	
 }
