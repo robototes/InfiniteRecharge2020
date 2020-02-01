@@ -11,27 +11,42 @@ import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 import frc.team2412.robot.Subsystems.LimelightSubsystem;
 import frc.team2412.robot.Subsystems.TurretSubsystem;
+import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer {
 
 	// Subsystems
 	public ExampleSubsystem m_ExampleSubsystem;
+
+	@Log(name = "Limelight Subsystem")
 	public LimelightSubsystem m_LimelightSubsystem;
+
+	@Log(name = "Turret Subsystem")
 	public TurretSubsystem m_TurretSubsystem;
+
+	@Log(name = "Flywheel Subsystem")
 	public FlywheelSubsystem m_FlywheelSubsystem;
+
+	@Log(name = "Hood Subsystem")
 	public HoodSubsystem m_HoodSubsystem;
 
+	@Log(name = "Lift Subsystem")
 	public LiftSubsystem m_liftSubsystem;
 
+	@Log(name = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
+	@Log(name = "Intake motor Subsystem")
 	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
+	@Log(name = "Intake lift Subsystem")
 	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
+	@Log(name = "Control Panel Subsystem")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
+	@Log(name = "Indexer Subsystem")
 	public IndexerSubsystem m_IndexerSubsystem;
 
 	public RobotContainer() {

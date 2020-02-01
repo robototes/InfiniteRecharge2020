@@ -6,12 +6,16 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.IndexerConstants.IndexerDirection;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class IndexerSubsystem extends SubsystemBase {
+public class IndexerSubsystem extends SubsystemBase implements Loggable {
+	@Log
 	public CANSparkMax m_indexBackMotor, m_indexFrontMotor, m_indexMidMotor;
 	public SpeedControllerGroup m_indexMotors, m_indexSideMotors;
 	public DigitalInput m_back, m_backMid, m_mid, m_frontMid, m_front, m_intakeFront, m_intakeBack;
 
+	@Log
 	// NUMBER OF BALLS IN SYSTEM
 	private int m_numBalls = 0;
 
