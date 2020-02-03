@@ -30,7 +30,7 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 		this.m_colorMatcher = colorMatch;
 	}
 
-	public Color colorMatcher(Color detectedColor) {
+	public Color colorMatch(Color detectedColor) {
 		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 		if (match.color == ControlPanelConstants.blueTarget) {
 			return ControlPanelConstants.blueTarget;
@@ -76,10 +76,10 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	public void rotateControlPanel() {
 		rotationCount = 0;
-		m_StartColor = m_colorSensor.getColor();
+		m_StartColor = colorMatch(m_colorSensor.getColor());
 		m_wheelMotor.set(0.5);
 		while (rotationCount <= 7) {
-			m_CurrentColor = m_colorSensor.getColor();
+			m_CurrentColor = colorMatch(m_colorSensor.getColor());
 			if (m_CurrentColor.equals(m_StartColor)) {
 				rotationCount++;
 			}
@@ -89,12 +89,12 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	public void setToTargetColor() {
 
-		m_CurrentColor = m_colorSensor.getColor();
+		m_CurrentColor = colorMatch(m_colorSensor.getColor());
 		m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
 
 		while (m_ColorUnderBar != ControlPanelConstants.TargetColor) {
 			m_wheelMotor.set(0.25);
-			m_CurrentColor = m_colorSensor.getColor();
+			m_CurrentColor = colorMatch(m_colorSensor.getColor());
 			m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
 		}
 

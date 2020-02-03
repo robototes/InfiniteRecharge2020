@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.revrobotics.ColorMatch;
@@ -59,6 +60,7 @@ public class ControlPanelSubsystemTest {
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
 	@Test
+	@Ignore
 	public void RotateControlPanelCommandOnControlPanelColorSubsystemCallsMotorandSensor() {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedColorMotor);
@@ -90,6 +92,7 @@ public class ControlPanelSubsystemTest {
 	}
 
 	@Test
+	@Ignore
 	public void SetToTargetColorCommandOnControlPanelColorSubsystemCallsMotorandSensor() {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedColorMotor);

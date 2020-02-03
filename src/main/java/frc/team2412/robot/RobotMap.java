@@ -52,6 +52,8 @@ public class RobotMap {
 	// DriveBase Gyro
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
+	// INDEX SUBSYSTEM
+	//---------------------------------------------------------------------------
 	// IDs
 	private final static int indexBackMotorID = 1;
 	private final static int indexFrontMotorID = 2;
@@ -89,10 +91,12 @@ public class RobotMap {
 	public static final int exampleID = 1;
 
 	// Turret Subsystem
+	//------------------------------------------------------------------------------
 	public static final int turretMotorID = 1;
 	public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(turretMotorID);
 
 	// Flywheel subsystem
+	//------------------------------------------------------------------------------
 	public static final int flywheelMotorID1 = 0;
 	public static final int flywheelMotorID2 = 2;
 
@@ -102,15 +106,20 @@ public class RobotMap {
 	public static SpeedControllerGroup flywheelSpeedGroup = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
 
 	// Hood Subsystem
+	//-----------------------------------------------------------------------------
 	public static final int HOOD_SERVO_PORT = 1;
 	public static Servo hoodServo = new Servo(HOOD_SERVO_PORT);
 
+	// INTAKE SUBSYSTEM 
 	// Intake DoubleSolenoid Ports
-	public static final int INTAKE_UP_PORT = 1;
-	public static final int INTAKE_DOWN_PORT = 1;
-
-	public static DoubleSolenoid intakeUpDown = new DoubleSolenoid(INTAKE_UP_PORT, INTAKE_DOWN_PORT);
-
+	public static final int INTAKE_FRONT_UP_PORT = 1;
+	public static final int INTAKE_FRONT_DOWN_PORT = 1;
+	public static final int INTAKE_BACK_UP_PORT = 1;
+	public static final int INTAKE_BACK_DOWN_PORT = 1;
+	
+	public static DoubleSolenoid frontIntakeUpDown = new DoubleSolenoid(INTAKE_FRONT_UP_PORT, INTAKE_FRONT_DOWN_PORT);
+	public static DoubleSolenoid backIntakeUpDown = new DoubleSolenoid(INTAKE_BACK_UP_PORT, INTAKE_BACK_DOWN_PORT);
+	
 	public static final int INTAKE_FRONT_PORT = 1;
 	public static final int INTAKE_BACK_PORT = 2;
 

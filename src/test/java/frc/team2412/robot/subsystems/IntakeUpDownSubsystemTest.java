@@ -16,8 +16,8 @@ import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeDownCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeUpCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
 import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeState;
 
@@ -27,6 +27,7 @@ public class IntakeUpDownSubsystemTest {
 	// Mock instance of Example Subsystem
 	IntakeUpDownSubsystem realIntakeUpDownSubsystem;
 	DoubleSolenoid mockedLiftSolenoid;
+	DoubleSolenoid mockedLiftSolenoid2;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -45,8 +46,9 @@ public class IntakeUpDownSubsystemTest {
 		MockHardwareExtension.beforeAll();
 
 		mockedLiftSolenoid = mock(DoubleSolenoid.class);
+		mockedLiftSolenoid2 = mock(DoubleSolenoid.class);
 
-		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid);
+		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
 	}
 
 	@Test
@@ -55,18 +57,20 @@ public class IntakeUpDownSubsystemTest {
 		reset(mockedLiftSolenoid);
 
 		// Create command
-		IntakeDownCommand intakeDownCommand = new IntakeDownCommand(realIntakeUpDownSubsystem);
+		IntakeBackDownCommand intakeBackDownCommand = new IntakeBackDownCommand(realIntakeUpDownSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
 		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(intakeDownCommand);
+		fakeButton.whenPressed(intakeBackDownCommand);
 
 		// Push the button and run the scheduler once
 		fakeButton.push();
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
+
+
 
 		// Verify that the solenoid was set correctly
 		verify(mockedLiftSolenoid, times(1)).set(IntakeState.EXTENDED.value);
@@ -84,13 +88,13 @@ public class IntakeUpDownSubsystemTest {
 		reset(mockedLiftSolenoid);
 
 		// Create command
-		IntakeUpCommand IntakeUpCommand = new IntakeUpCommand(realIntakeUpDownSubsystem);
+		IntakeBackUpCommand IntakeBackUpCommand = new IntakeBackUpCommand(realIntakeUpDownSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
 		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(IntakeUpCommand);
+		fakeButton.whenPressed(IntakeBackUpCommand);
 
 		// Push the button and run the scheduler once
 		fakeButton.push();

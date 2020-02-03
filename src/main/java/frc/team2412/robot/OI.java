@@ -9,12 +9,12 @@ import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeDownCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeUpCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
 
@@ -89,8 +89,8 @@ public class OI {
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
 		// INTAKE UpDown
-		intakeUpButton.whenPressed(new IntakeUpCommand(robotContainer.m_intakeUpDownSubsystem));
-		intakeDownButton.whenPressed(new IntakeDownCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeUpButton.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
 
 		// INTAKE front
 		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
