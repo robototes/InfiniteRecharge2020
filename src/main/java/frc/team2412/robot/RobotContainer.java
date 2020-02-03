@@ -53,7 +53,8 @@ public class RobotContainer {
 	@Log(name = "Indexer Subsystem")
 	public IndexerSubsystem m_IndexerSubsystem;
 
-	@Log(name = "Autonumous Subsystem")
+	@Log(name = "Autonumous Subsystem", tabName = "robotContainer")
+	@Log(tabName = "Robot")
 	public AutonumousSubsystem m_autonumousSubsystem;
 
 	// A chooser for autonomous commands
