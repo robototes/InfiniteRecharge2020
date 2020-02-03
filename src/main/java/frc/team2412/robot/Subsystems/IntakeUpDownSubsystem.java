@@ -13,7 +13,7 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	private DoubleSolenoid m_frontIntakeUpDown;
 	@Log
 	private DoubleSolenoid m_backIntakeUpDown;
-	
+
 	private IntakeState m_currentState = IntakeState.WITHDRAWN;
 
 	public IntakeUpDownSubsystem(DoubleSolenoid frontIntakeUpDown, DoubleSolenoid backIntakeUpDown) {
@@ -28,15 +28,15 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	public void frontIntakeUp() {
 		setLift(IntakeState.WITHDRAWN, m_frontIntakeUpDown);
 	}
-	
+
 	public void frontIntakeDown() {
 		setLift(IntakeState.EXTENDED, m_frontIntakeUpDown);
 	}
-	
+
 	public void backIntakeUp() {
 		setLift(IntakeState.WITHDRAWN, m_backIntakeUpDown);
 	}
-	
+
 	public void backIntakeDown() {
 		setLift(IntakeState.EXTENDED, m_backIntakeUpDown);
 	}

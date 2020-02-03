@@ -70,8 +70,6 @@ public class IntakeUpDownSubsystemTest {
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
 
-
-
 		// Verify that the solenoid was set correctly
 		verify(mockedLiftSolenoid, times(1)).set(IntakeState.EXTENDED.value);
 		assertEquals("Lift has the correct state", realIntakeUpDownSubsystem.getCurrentState(), IntakeState.EXTENDED);

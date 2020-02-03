@@ -7,14 +7,14 @@ import frc.team2412.robot.Commands.ExampleCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
 

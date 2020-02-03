@@ -3,6 +3,7 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.team2412.robot.Commands.AutonomousCommands.BasicAutoCommand;
+import frc.team2412.robot.Subsystems.AutonumousSubsystem;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
@@ -26,13 +27,13 @@ public class RobotContainer {
 	public LimelightSubsystem m_LimelightSubsystem;
 
 	@Log(name = "Turret Subsystem")
-	public TurretSubsystem m_TurretSubsystem;
+	public TurretSubsystem m_turretSubsystem;
 
 	@Log(name = "Flywheel Subsystem")
-	public FlywheelSubsystem m_FlywheelSubsystem;
+	public FlywheelSubsystem m_flywheelSubsystem;
 
 	@Log(name = "Hood Subsystem")
-	public HoodSubsystem m_HoodSubsystem;
+	public HoodSubsystem m_hoodSubsystem;
 
 	@Log(name = "Lift Subsystem")
 	public LiftSubsystem m_liftSubsystem;
@@ -55,13 +56,9 @@ public class RobotContainer {
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-	public final Command m_basicAutoCommand = new BasicAutoCommand(m_driveBaseSubsystem, m_liftSubsystem,
-			m_TurretSubsystem, m_FlywheelSubsystem, m_IndexerSubsystem);
+	public AutonumousSubsystem m_autonumousSubsystem;
 
 	public RobotContainer() {
-		// Add commands to the autonomous command chooser
-		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
-
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
 
@@ -80,11 +77,20 @@ public class RobotContainer {
 		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor,
 				RobotMap.colorMatcher);
 
-		m_TurretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
+		m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
 
-		m_FlywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelMotor1, RobotMap.flywheelMotor2);
+		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelMotor1, RobotMap.flywheelMotor2);
 
-		m_HoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
+		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
+
+		m_autonumousSubsystem = new AutonumousSubsystem(m_driveBaseSubsystem, m_liftSubsystem, m_turretSubsystem,
+				m_flywheelSubsystem, m_hoodSubsystem, m_IndexerSubsystem, m_intakeMotorOnOffSubsystem,
+				m_intakeUpDownSubsystem);
+
+		Command m_basicAutoCommand = new BasicAutoCommand(m_autonumousSubsystem);
+
+		// Add commands to the autonomous command chooser
+		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
 
 	}
 }

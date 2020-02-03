@@ -71,13 +71,14 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void angleDrive(double angle) {
+		double startAngle = m_gyro.getAngle();
 		if (angle > 0) {
-			while (m_gyro.getAngle() <= angle) {
+			while (m_gyro.getAngle() <= startAngle) {
 				setDriveSpeed(0, 1);
 			}
 			setDriveSpeed(0, 0);
 		} else {
-			while (m_gyro.getAngle() >= angle) {
+			while (m_gyro.getAngle() >= startAngle) {
 				setDriveSpeed(0, -1);
 			}
 			setDriveSpeed(0, 0);
