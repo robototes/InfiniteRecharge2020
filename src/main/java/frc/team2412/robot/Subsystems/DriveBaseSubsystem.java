@@ -24,7 +24,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public ADXRS450_Gyro m_gyro;
 
 	@Log
-	public double CurrentYSpeed;
+	public double m_currentYSpeed;
 
 	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro, Joystick joystick) {
 		m_motion = new Vector(0);
@@ -37,7 +37,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public void drive(Joystick joystick) {
 		m_robotDrive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
-		CurrentYSpeed = joystick.getY();
+		m_currentYSpeed = joystick.getY();
 	}
 
 	public double getCurrentRotation() {
@@ -45,7 +45,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public double getCurrentYSpeed() {
-		return CurrentYSpeed;
+		return m_currentYSpeed;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 			double averageY = (rightJoystick.getY() + leftJoystick.getY()) / 2;
 			m_rightMotors.set(averageY);
 			m_leftMotors.set(averageY);
-			CurrentYSpeed = averageY;
+			m_currentYSpeed = averageY;
 		} else {
 			m_rightMotors.set(rightJoystick.getY());
 			m_leftMotors.set(leftJoystick.getY());

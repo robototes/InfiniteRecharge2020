@@ -18,9 +18,9 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	private Talon m_wheelMotor;
 
 	@Log
-	private Color m_CurrentColor;
+	private Color m_currentColor;
 
-	private Color m_StartColor;
+	private Color m_startColor;
 	private Color m_ColorUnderBar;
 	private int rotationCount = 0;
 
@@ -76,11 +76,11 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	public void rotateControlPanel() {
 		rotationCount = 0;
-		m_StartColor = colorMatch(m_colorSensor.getColor());
+		m_startColor = colorMatch(m_colorSensor.getColor());
 		m_wheelMotor.set(0.5);
 		while (rotationCount <= 7) {
-			m_CurrentColor = colorMatch(m_colorSensor.getColor());
-			if (m_CurrentColor.equals(m_StartColor)) {
+			m_currentColor = colorMatch(m_colorSensor.getColor());
+			if (m_currentColor.equals(m_startColor)) {
 				rotationCount++;
 			}
 		}
@@ -89,13 +89,13 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	public void setToTargetColor() {
 
-		m_CurrentColor = colorMatch(m_colorSensor.getColor());
-		m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
+		m_currentColor = colorMatch(m_colorSensor.getColor());
+		m_ColorUnderBar = getColorUnderBar(m_currentColor);
 
 		while (m_ColorUnderBar != ControlPanelConstants.TargetColor) {
 			m_wheelMotor.set(0.25);
-			m_CurrentColor = colorMatch(m_colorSensor.getColor());
-			m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
+			m_currentColor = colorMatch(m_colorSensor.getColor());
+			m_ColorUnderBar = getColorUnderBar(m_currentColor);
 		}
 
 		m_wheelMotor.set(0);

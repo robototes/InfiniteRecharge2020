@@ -13,11 +13,11 @@ public class AutonumousSubsystem extends SubsystemBase {
 	IntakeOnOffSubsystem m_intakeOnOffSubsystem;
 	IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
-	public AutonumousSubsystem(DriveBaseSubsystem driveBase, LiftSubsystem liftSubsystem,
+	public AutonumousSubsystem(DriveBaseSubsystem driveBaseSubsystem, LiftSubsystem liftSubsystem,
 			TurretSubsystem turretSubsystem, FlywheelSubsystem flyweheelSubsystem, HoodSubsystem hoodSubsystem,
 			IndexerSubsystem indexerSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
 			IntakeUpDownSubsystem intakeUpDownSubsystem) {
-		m_driveBaseSubsystem = driveBase;
+		m_driveBaseSubsystem = driveBaseSubsystem;
 		m_liftSubsystem = liftSubsystem;
 		m_turretSubsystem = turretSubsystem;
 		m_flywheelSubsystem = flyweheelSubsystem;
@@ -28,11 +28,11 @@ public class AutonumousSubsystem extends SubsystemBase {
 	}
 
 	public void basicAutoCommand() {
-		m_liftSubsystem.liftUp();
-		m_flywheelSubsystem.Shoot();
+		m_liftSubsystem.liftUp(); // StartUp
+		m_flywheelSubsystem.shoot();
 		m_hoodSubsystem.servoExtend();
 
-		m_driveBaseSubsystem.angleDrive(90);
+		m_driveBaseSubsystem.angleDrive(90); // move to goal
 		m_driveBaseSubsystem.setDriveSpeed(1, 0);
 
 		try {
@@ -40,10 +40,12 @@ public class AutonumousSubsystem extends SubsystemBase {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		m_driveBaseSubsystem.setDriveSpeed(0, 0);
+
+		m_driveBaseSubsystem.setDriveSpeed(0, 0); // stop driving
 		m_driveBaseSubsystem.angleDrive(90);
-		m_indexerSubsystem.shoot();
-		m_intakeUpDownSubsystem.frontIntakeDown();
+		m_indexerSubsystem.shoot(); // Shoot balls
+
+		m_intakeUpDownSubsystem.frontIntakeDown(); // Get ready to intake from the trench run
 		m_intakeOnOffSubsystem.frontIntakeOn();
 		m_driveBaseSubsystem.setDriveSpeed(1, 0);
 

@@ -22,7 +22,7 @@ public class StartUpCommandGroup extends ParallelCommandGroup {
 	@Override
 	public void execute() {
 		m_liftSubsystem.liftUp();
-		m_flywheelSubsystem.Shoot();
+		m_flywheelSubsystem.shoot();
 		m_driveBaseSubsystem.angleDrive(90);
 	}
 

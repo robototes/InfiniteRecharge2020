@@ -53,10 +53,11 @@ public class RobotContainer {
 	@Log(name = "Indexer Subsystem")
 	public IndexerSubsystem m_IndexerSubsystem;
 
+	@Log(name = "Autonumous Subsystem")
+	public AutonumousSubsystem m_autonumousSubsystem;
+
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-	public AutonumousSubsystem m_autonumousSubsystem;
 
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
