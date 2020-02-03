@@ -13,15 +13,6 @@ public class ClimbCommand extends CommandBase {
 		addRequirements(climbLiftSubsystem);
 	}
 
-	public ClimbCommand(DoubleSolenoid leftPneumatic, DoubleSolenoid rightPneumatic) {
-		// TODO Auto-generated constructor stub
-	}
-
-	private void addRequirements(ClimbLiftSubsystem climbLiftSubsystem) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void execute() {
 		// run the example method
