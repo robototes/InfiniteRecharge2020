@@ -3,6 +3,7 @@ package frc.team2412.robot.Subsystems;
 import com.robototes.math.Vector;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -19,6 +20,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	private SpeedControllerGroup m_leftMotors;
 	private SpeedControllerGroup m_rightMotors;
 
+	public WPI_TalonFX m_leftMotor1, m_leftMotor2, m_rightMotor1, m_rightMotor2;
+
 	public Vector m_motion;
 
 	public ADXRS450_Gyro m_gyro;
@@ -26,11 +29,17 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@Log
 	public double m_currentYSpeed;
 
-	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro, Joystick joystick) {
+	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro, Joystick joystick,
+			WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2, WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
 		m_motion = new Vector(0);
 		this.m_robotDrive = robotDrive;
 		this.setName("DriveBase Subsystem");
 		m_gyro = gyro;
+		
+		m_leftMotor1 = leftMotor1;
+		m_leftMotor2 = leftMotor2;
+		m_rightMotor1 = rightMotor1;
+		m_rightMotor2 = rightMotor2;
 
 		setDefaultCommand(new DriveCommand(this, joystick));
 	}
@@ -83,6 +92,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 			}
 			setDriveSpeed(0, 0);
 		}
+	}
 
+	public int getEncoderValue(WPI_TalonFX motor) {
+		return motor.getSelectedSensorPosition();
 	}
 }

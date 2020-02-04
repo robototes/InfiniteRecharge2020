@@ -20,7 +20,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class TurretSubsystem extends PIDSubsystem implements Loggable {
 
-	@Log
+	@Log.ToString
 	private Rotations m_currentAngle;
 	@Log
 	private WPI_TalonSRX m_turretMotor;

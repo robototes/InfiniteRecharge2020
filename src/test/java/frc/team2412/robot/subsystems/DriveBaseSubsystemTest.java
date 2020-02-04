@@ -17,6 +17,7 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -33,6 +34,7 @@ public class DriveBaseSubsystemTest {
 	ADXRS450_Gyro mockedGyro;
 	GenericHID mockedGenericHID;
 	Joystick mockedJoystick;
+	WPI_TalonFX mockedMotor1, mockedMotor2, mockedMotor3, mockedMotor4;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -55,13 +57,13 @@ public class DriveBaseSubsystemTest {
 		mockedJoystick = mock(Joystick.class);
 		mockedGenericHID = mock(GenericHID.class);
 
-		realDriveBaseSubsystem = new DriveBaseSubsystem(mockedDifferntialDrive, mockedGyro, mockedJoystick);
+		realDriveBaseSubsystem = new DriveBaseSubsystem(mockedDifferntialDrive, mockedGyro, mockedJoystick, mockedMotor1, mockedMotor2, mockedMotor3, mockedMotor4);
 	}
 
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
 	@Test
-	@Ignore // TODO: Fix the null pointers this test produces
+	@Ignore
 	public void DriveCommandOnDriveBaseSubsystemCallsMotorSet() {
 		// Reset the mocked objects to make sure all mock values are reset
 		reset(mockedGyro);

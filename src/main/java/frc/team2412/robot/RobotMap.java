@@ -37,10 +37,10 @@ public class RobotMap {
 	public static final int RIGHT_BACK_ID = 0;
 
 	// DriveBase Motors
-	private static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
-	private static WPI_TalonFX leftBack = new WPI_TalonFX(LEFT_BACK_ID);
-	private static WPI_TalonFX rightFront = new WPI_TalonFX(RIGHT_FRONT_ID);
-	private static WPI_TalonFX rightBack = new WPI_TalonFX(RIGHT_BACK_ID);
+	public static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
+	public static WPI_TalonFX leftBack = new WPI_TalonFX(LEFT_BACK_ID);
+	public static WPI_TalonFX rightFront = new WPI_TalonFX(RIGHT_FRONT_ID);
+	public static WPI_TalonFX rightBack = new WPI_TalonFX(RIGHT_BACK_ID);
 
 	// DriveBase SpeedControllerGroups
 	public static SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFront, leftBack);
