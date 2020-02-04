@@ -119,7 +119,7 @@ public class RobotMap {
 	public static SpeedControllerGroup flywheelSpeedGroup = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
 
 	// Hood Subsystem
-	private static final int HOOD_SERVO_PORT = 1;
+	public static final int HOOD_SERVO_PORT = 1;
 	public static Servo hoodServo = new Servo(HOOD_SERVO_PORT);
 
 	// Intake DoubleSolenoid Ports
