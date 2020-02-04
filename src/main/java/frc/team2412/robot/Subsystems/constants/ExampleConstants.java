@@ -10,10 +10,11 @@ public class ExampleConstants {
 	}
 
 	// Example constant
-	public final static double MAX_SPEED = 1;
+	public static final double MAX_SPEED = 1;
+
+	// Testing library implementation works
+	public static final Distance EXAMPLE_DISTANCE = new Distance(1, DistanceUnits.INCH);
 
 	// Enums will go below here
 
-	// Testing library implementation works
-	public final static Distance EXAMPLE_DISTANCE = new Distance(1, DistanceUnits.INCH);
 }

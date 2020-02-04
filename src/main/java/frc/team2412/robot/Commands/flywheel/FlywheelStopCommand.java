@@ -4,17 +4,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.FlywheelSubsystem;
 
 public class FlywheelStopCommand extends CommandBase {
-	FlywheelSubsystem m_Subsystem;
+	private FlywheelSubsystem m_FlywheelSubsystem;
 
 	public FlywheelStopCommand(FlywheelSubsystem subsystem) {
-		m_Subsystem = subsystem;
+		m_FlywheelSubsystem = subsystem;
 		addRequirements(subsystem);
 	}
 
 	@Override
 	public void execute() {
 		// run the example method
-		m_Subsystem.Stop();
+		m_FlywheelSubsystem.Stop();
 	}
 
 	@Override

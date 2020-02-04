@@ -10,4 +10,10 @@ public class TurretConstants {
 	public static final double PID_D_VALUE = 0.0;
 
 	public static final PIDController TURRET_PID_CONTROLLER = new PIDController(PID_P_VALUE, 0, PID_D_VALUE);
+
+	public static final int TURRET_MAX_TOLERANCE = 10;
+
+	public static final int ENCODER_MAX_ERROR_JUMP = 3800;
+
+	public static final int ENCODER_MIN_SMALL_JUMP = 500;
 }

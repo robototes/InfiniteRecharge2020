@@ -13,12 +13,16 @@ import com.robototes.units.UnitTypes.RotationUnits;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.Subsystems.constants.LimelightConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class LimelightSubsystem extends SubsystemBase {
+public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
+	@Log.ToString
 	public Distance m_distanceToTarget;
+	@Log.ToString
 	public Rotations m_yawFromTarget;
 
 	// Store the limelight
@@ -26,7 +30,6 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	public LimelightSubsystem(Limelight limelight) {
 		this.m_limelight = limelight;
-
 		m_limelight.setLedMode(LEDMode.ON);
 		m_limelight.setCamMode(CamMode.VISION_PROCESSER);
 		m_limelight.setPipeline(Pipeline.FOUR);
@@ -44,6 +47,7 @@ public class LimelightSubsystem extends SubsystemBase {
 			setDistanceFromTable();
 			setYawFromTable();
 
+			// Complex equation that wont be explained here because it is really confusing
 			double skewOfTarget = m_limelight.getNetworkTable().getEntry("ts").getDouble(0);
 
 			double cosOfSkew = Math
@@ -55,6 +59,7 @@ public class LimelightSubsystem extends SubsystemBase {
 									+ Math.pow(LimelightConstants.INNER_TARGET_DISTANCE.getValue(), 2)
 									- 2 * m_distanceToTarget.getValue()
 											* LimelightConstants.INNER_TARGET_DISTANCE.getValue() * cosOfSkew));
+
 			m_yawFromTarget = m_yawFromTarget.add(new Rotations(angleFromYawToInner, RotationUnits.RADIAN));
 		}
 	}

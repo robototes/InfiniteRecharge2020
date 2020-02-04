@@ -1,5 +1,6 @@
 package frc.team2412.robot.Subsystems;
 
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.ENCODER_MAX_ERROR_JUMP;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
@@ -13,10 +14,15 @@ import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.team2412.robot.Commands.turret.TurretFollowLimelightCommand;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class TurretSubsystem extends PIDSubsystem {
+public class TurretSubsystem extends PIDSubsystem implements Loggable {
 
+	@Log
 	private Rotations m_currentAngle;
+	@Log
 	private WPI_TalonSRX m_turretMotor;
 	private LimelightSubsystem m_LimelightSubsystem;
 	private int m_TurretOffsetPosition = 0;
@@ -60,10 +66,10 @@ public class TurretSubsystem extends PIDSubsystem {
 	public void periodic() {
 		m_TurretCurrentPosition = m_turretMotor.getSelectedSensorPosition(0);
 
-		if (m_TurretCurrentPosition - m_TurretPastPosition > 3800) {
+		if (m_TurretCurrentPosition - m_TurretPastPosition > ENCODER_MAX_ERROR_JUMP) {
 			m_TurretOffsetPosition += TICKS_PER_REVOLUTION;
 
-		} else if (Math.abs(m_TurretCurrentPosition - m_TurretPastPosition) > 500) {
+		} else if (Math.abs(m_TurretCurrentPosition - m_TurretPastPosition) > ENCODER_MAX_ERROR_JUMP) {
 			m_TurretCurrentPosition = m_TurretPastPosition;
 		}
 
@@ -73,6 +79,7 @@ public class TurretSubsystem extends PIDSubsystem {
 		System.out.println(getMeasurement());
 	}
 
+	@Config
 	public void set(double output) {
 		output = MathUtils.constrain(output, -1, 1);
 
