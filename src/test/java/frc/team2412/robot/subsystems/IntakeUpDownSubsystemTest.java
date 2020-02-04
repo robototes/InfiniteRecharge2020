@@ -50,7 +50,7 @@ public class IntakeUpDownSubsystemTest {
 		mockedLiftSolenoid2 = mock(DoubleSolenoid.class);
 		mockedCompressor = mock(Compressor.class);
 
-		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2, mockedcompressor);
+		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2, mockedCompressor);
 	}
 
 	@Test

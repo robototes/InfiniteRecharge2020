@@ -48,7 +48,7 @@ public class LiftSubsystemTest {
 		mockedLiftSolenoid = mock(DoubleSolenoid.class);
 		mockedCompressor = mock(Compressor.class);
 
-		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, compressor);
+		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, mockedCompressor);
 	}
 
 	@Test

@@ -2,7 +2,7 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.team2412.robot.Commands.AutonomousCommands.BasicAutoCommand;
+//import frc.team2412.robot.Commands.AutonomousCommands.BasicAutoCommand;
 import frc.team2412.robot.Subsystems.AutonumousSubsystem;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
@@ -91,10 +91,9 @@ public class RobotContainer {
 				m_flywheelSubsystem, m_hoodSubsystem, m_IndexerSubsystem, m_intakeMotorOnOffSubsystem,
 				m_intakeUpDownSubsystem);
 
-		Command m_basicAutoCommand = new BasicAutoCommand(m_autonumousSubsystem);
 
 		// Add commands to the autonomous command chooser
-		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
+//		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
 
 	}
 }
