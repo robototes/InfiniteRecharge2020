@@ -1,6 +1,8 @@
 package frc.team2412.robot.Subsystems;
 
-import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
