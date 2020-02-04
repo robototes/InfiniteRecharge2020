@@ -9,6 +9,8 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import io.github.oblarg.oblog.Logger;
+import io.github.oblarg.oblog.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,8 +23,34 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 
 	// Have instances of robot container and OI for easy access
-	private RobotContainer m_RobotContainer = RobotMap.robotContainer;
+	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	private OI m_OI = RobotMap.m_OI;
+
+	/**
+	 * This function is run when the robot is first started up and should be used
+	 * for any initialization code.
+	 */
+	@Override
+	public void robotInit() {
+		m_robotContainer.m_TurretSubsystem.initTurretEncoder();
+		Logger.configureLoggingAndConfig(this, false);
+	}
+
+	/**
+	 * This function is called every robot packet, no matter the mode. Use this for
+	 * items like diagnostics that you want ran during disabled, autonomous,
+	 * teleoperated and test.
+	 *
+	 * <p>
+	 * This runs after the mode specific periodic functions, but before LiveWindow
+	 * and SmartDashboard integrated updating.
+	 */
+
+	@Override
+	public void robotPeriodic() {
+		CommandScheduler.getInstance().run();
+		Logger.updateEntries();
+	}
 
 	/**
 	 * This function is called once when autonomous is started
@@ -37,7 +65,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+	}
 
+	/**
+	 * This function is called periodically during operator control.
+	 */
+	@Override
+	public void teleopPeriodic() {
 	}
 
 	@Override
@@ -47,36 +81,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-	}
-
-	/**
-	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code.
-	 */
-	@Override
-	public void robotInit() {
-		m_RobotContainer.m_TurretSubsystem.initTurretEncoder();
-	}
-
-	/**
-	 * This function is called every robot packet, no matter the mode. Use this for
-	 * items like diagnostics that you want ran during disabled, autonomous,
-	 * teleoperated and test.
-	 *
-	 * <p>
-	 * This runs after the mode specific periodic functions, but before LiveWindow
-	 * and SmartDashboard integrated updating.
-	 */
-	@Override
-	public void robotPeriodic() {
-		CommandScheduler.getInstance().run();
-	}
-
-	/**
-	 * This function is called periodically during operator control.
-	 */
-	@Override
-	public void teleopPeriodic() {
 	}
 
 	/**
