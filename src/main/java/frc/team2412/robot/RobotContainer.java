@@ -68,14 +68,15 @@ public class RobotContainer {
 				RobotMap.indexBackMotor, RobotMap.front, RobotMap.frontMid, RobotMap.mid, RobotMap.backMid,
 				RobotMap.back, RobotMap.intakeFront, RobotMap.intakeBack);
 
-		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
 		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro, RobotMap.m_OI.driverStick,
 				RobotMap.leftFront, RobotMap.leftBack, RobotMap.rightFront, RobotMap.rightBack);
 
 		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeUpDown, RobotMap.backIntakeUpDown);
+		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeUpDown, RobotMap.backIntakeUpDown,
+				RobotMap.compressor);
 
 		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor,
 				RobotMap.colorMatcher);

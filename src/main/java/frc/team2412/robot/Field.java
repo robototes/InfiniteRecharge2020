@@ -30,8 +30,10 @@ public class Field {
 	public void calculateXY() {
 		// Get heading
 		double gyroChange = m_gyro.getAngle() % 360 - gyroVal;
-		double leftEncoderChange = leftEncoderVal + m_driveBaseSubsystem.getEncoderValue(m_driveBaseSubsystem.m_leftMotor1);
-		double rightEncoderChange = rightEncoderVal +m_driveBaseSubsystem.getEncoderValue(m_driveBaseSubsystem.m_rightMotor1);
+		double leftEncoderChange = leftEncoderVal
+				+ m_driveBaseSubsystem.getEncoderValue(m_driveBaseSubsystem.m_leftMotor1);
+		double rightEncoderChange = rightEncoderVal
+				+ m_driveBaseSubsystem.getEncoderValue(m_driveBaseSubsystem.m_rightMotor1);
 
 		double movement = (getFeetMovement(leftEncoderChange) + getFeetMovement(rightEncoderChange)) / 2;
 
@@ -52,7 +54,7 @@ public class Field {
 				robotY -= Math.cos(gyroChange) * movement;
 				robotX -= Math.sin(gyroChange) * movement;
 			}
-			
+
 		}
 
 		gyroVal = m_gyro.getAngle();

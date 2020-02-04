@@ -35,7 +35,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		this.m_robotDrive = robotDrive;
 		this.setName("DriveBase Subsystem");
 		m_gyro = gyro;
-		
+
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
 		m_rightMotor1 = rightMotor1;
@@ -50,7 +50,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public double getCurrentRotation() {
-		return m_motion.angle;
+		return m_gyro.getAngle();
 	}
 
 	public double getCurrentYSpeed() {

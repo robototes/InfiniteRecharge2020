@@ -1,6 +1,6 @@
 package frc.team2412.robot.Subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeState;
 import io.github.oblarg.oblog.Loggable;
@@ -16,9 +16,13 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	@Log
 	private IntakeState m_currentState = IntakeState.WITHDRAWN;
 
-	public IntakeUpDownSubsystem(DoubleSolenoid frontIntakeUpDown, DoubleSolenoid backIntakeUpDown) {
+	private Compressor m_compressor;
+
+	public IntakeUpDownSubsystem(DoubleSolenoid frontIntakeUpDown, DoubleSolenoid backIntakeUpDown,
+			Compressor compressor) {
 		this.m_frontIntakeUpDown = frontIntakeUpDown;
 		this.m_backIntakeUpDown = backIntakeUpDown;
+		this.m_compressor = compressor;
 	}
 
 	public IntakeState getCurrentState() {
@@ -45,6 +49,11 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	private void setLift(IntakeState newState, DoubleSolenoid doubleSolenoid) {
 		m_frontIntakeUpDown.set(newState.value);
 		m_currentState = newState;
+	}
+
+	@Config
+	public void setCompressorStart() {
+		m_compressor.start();
 	}
 
 }

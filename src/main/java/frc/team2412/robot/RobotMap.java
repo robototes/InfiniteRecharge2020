@@ -1,5 +1,7 @@
 package frc.team2412.robot;
 
+import edu.wpi.first.wpilibj.*;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
@@ -111,6 +113,7 @@ public class RobotMap {
 	public static Servo hoodServo = new Servo(HOOD_SERVO_PORT);
 
 	// INTAKE SUBSYSTEM
+
 	// Intake DoubleSolenoid Ports
 	public static final int INTAKE_FRONT_UP_PORT = 1;
 	public static final int INTAKE_FRONT_DOWN_PORT = 1;
@@ -145,11 +148,16 @@ public class RobotMap {
 	public static final int CONTROL_PANEL_MOTOR_PORT = 1;
 	public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
 
-	// ----------------------------------------------------------------------------------------------
 	// Limelight subsystem
+	// ----------------------------------------------------------------------------------------------
 	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
 	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
 			Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
+
+	// Unknown RN
+	// -------------------------------------------------------------------------------------------------
+	// Compressor
+	public static Compressor compressor = new Compressor();
 
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();
