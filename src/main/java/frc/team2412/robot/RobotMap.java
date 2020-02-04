@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -36,10 +37,10 @@ public class RobotMap {
 	public static final int RIGHT_BACK_ID = 0;
 
 	// DriveBase Motors
-	private static Talon leftFront = new Talon(LEFT_FRONT_ID);
-	private static Talon leftBack = new Talon(LEFT_BACK_ID);
-	private static Talon rightFront = new Talon(RIGHT_FRONT_ID);
-	private static Talon rightBack = new Talon(RIGHT_BACK_ID);
+	private static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
+	private static WPI_TalonFX leftBack = new WPI_TalonFX(LEFT_BACK_ID);
+	private static WPI_TalonFX rightFront = new WPI_TalonFX(RIGHT_FRONT_ID);
+	private static WPI_TalonFX rightBack = new WPI_TalonFX(RIGHT_BACK_ID);
 
 	// DriveBase SpeedControllerGroups
 	public static SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFront, leftBack);

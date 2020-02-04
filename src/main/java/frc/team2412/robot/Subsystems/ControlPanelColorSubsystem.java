@@ -8,13 +8,18 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.ControlPanelConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class ControlPanelColorSubsystem extends SubsystemBase {
+public class ControlPanelColorSubsystem extends SubsystemBase implements Loggable {
 
 	private ColorSensorV3 m_colorSensor;
 	private ColorMatch m_colorMatcher;
 	private Talon m_wheelMotor;
+
+	@Log
 	private Color m_CurrentColor;
+
 	private Color m_StartColor;
 	private Color m_ColorUnderBar;
 	private int rotationCount = 0;
