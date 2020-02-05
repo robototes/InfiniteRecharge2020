@@ -1,12 +1,10 @@
 package frc.team2412.robot;
 
-import frc.team2412.robot.Commands.ClimbCommands.ClimbCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbRails;
-import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
-import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.team2412.robot.Subsystems.AutonumousSubsystem;
+import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
+import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
@@ -22,11 +20,6 @@ import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer {
-
-	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
-	public ClimbMotorSubsystem m_ClimbMotorSubsystem;
-	public ClimbCommand m_ClimbCommand;
-	public ClimbRails m_ClimbRails;
 	// Subsystems
 	public ExampleSubsystem m_ExampleSubsystem;
 
@@ -60,6 +53,12 @@ public class RobotContainer {
 	@Log(name = "Indexer Subsystem")
 	public IndexerSubsystem m_IndexerSubsystem;
 
+	@Log(name = "Climb lift Subsystem")
+	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
+	
+	@Log (name = "Climb Motor Subsystem")
+	public ClimbMotorSubsystem m_ClimbMotorSubsystem;
+
 	@Log(name = "Autonumous Subsystem", tabName = "robotContainer")
 	@Log(tabName = "Robot")
 	public AutonumousSubsystem m_autonumousSubsystem;
@@ -71,7 +70,7 @@ public class RobotContainer {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
 
-		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.leftPneumatic, RobotMap.rightPneumatic);
+		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
 		m_ClimbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 
 		m_IndexerSubsystem = new IndexerSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
@@ -80,8 +79,7 @@ public class RobotContainer {
 
 		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
-		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro, RobotMap.m_OI.driverStick,
-				RobotMap.leftFront, RobotMap.leftBack, RobotMap.rightFront, RobotMap.rightBack);
+		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.gyro, RobotMap.leftFront, RobotMap.leftBack, RobotMap.rightFront, RobotMap.rightBack);
 
 		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 

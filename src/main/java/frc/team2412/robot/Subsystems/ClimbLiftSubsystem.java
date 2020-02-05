@@ -2,11 +2,12 @@ package frc.team2412.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.Subsystems.constants.ClimbConstants.ClimbState;
+import io.github.oblarg.oblog.annotations.Config;
 
 public class ClimbLiftSubsystem extends SubsystemBase {
 
 	// For Pneumatics
-
 	private DoubleSolenoid m_leftPneumatic;
 	private DoubleSolenoid m_rightPneumatic;
 
@@ -17,21 +18,17 @@ public class ClimbLiftSubsystem extends SubsystemBase {
 
 	}
 
-	public void DeployRails() {
-		m_leftPneumatic.set(DoubleSolenoid.Value.kForward);
-		m_rightPneumatic.set(DoubleSolenoid.Value.kForward);
-		System.out.println("Deploying Rails");
+	public void deployRails() {
+		setClimb(ClimbState.UP);
 	}
 
-	public void RetractRails() {
-		m_leftPneumatic.set(DoubleSolenoid.Value.kReverse);
-		m_rightPneumatic.set(DoubleSolenoid.Value.kReverse);
-		System.out.println("Retracting Rails");
+	public void retractRails() {
+		setClimb(ClimbState.DOWN);
 	}
 
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-
+	@Config
+	private void setClimb(ClimbState newState) {
+		m_leftPneumatic.set(newState.value);
+		m_rightPneumatic.set(newState.value);
 	}
-
 }

@@ -61,8 +61,8 @@ public class RobotMap {
 	private static final int pneumatic1Closed = 2;
 	private static final int pneumatic2Open = 3;
 	private static final int pneumatic2Closed = 4;
-	public static DoubleSolenoid leftPneumatic = new DoubleSolenoid(pneumatic1Open, pneumatic1Closed);
-	public static DoubleSolenoid rightPneumatic = new DoubleSolenoid(pneumatic2Open, pneumatic2Closed);
+	public static DoubleSolenoid climbLeftPneumatic = new DoubleSolenoid(pneumatic1Open, pneumatic1Closed);
+	public static DoubleSolenoid climbRightPneumatic = new DoubleSolenoid(pneumatic2Open, pneumatic2Closed);
 
 	// Motors
 	private static final int climbMotor1 = 1;

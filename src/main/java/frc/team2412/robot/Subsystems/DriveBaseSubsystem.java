@@ -5,20 +5,13 @@ import com.robototes.math.Vector;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
-
-	private DifferentialDrive m_robotDrive;
-	private SpeedControllerGroup m_leftMotors;
-	private SpeedControllerGroup m_rightMotors;
 
 	public WPI_TalonFX m_leftMotor1, m_leftMotor2, m_rightMotor1, m_rightMotor2;
 
@@ -29,11 +22,10 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@Log
 	public double m_currentYSpeed;
 
-	public DriveBaseSubsystem(DifferentialDrive robotDrive, ADXRS450_Gyro gyro, Joystick joystick,
-			WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2, WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
-		m_motion = new Vector(0);
-		this.m_robotDrive = robotDrive;
+	public DriveBaseSubsystem(ADXRS450_Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
+			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
 		this.setName("DriveBase Subsystem");
+		m_motion = new Vector(0);
 		m_gyro = gyro;
 
 		m_leftMotor1 = leftMotor1;
@@ -41,12 +33,22 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotor1 = rightMotor1;
 		m_rightMotor2 = rightMotor2;
 
-		setDefaultCommand(new DriveCommand(this, joystick));
+		m_leftMotor2.follow(leftMotor1);
+		m_rightMotor2.follow(rightMotor1);
+
 	}
 
-	public void drive(Joystick joystick) {
-		m_robotDrive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
-		m_currentYSpeed = joystick.getY();
+	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
+		if (button.get()) {
+			double averageY = (rightJoystick.getY() + leftJoystick.getY()) / 2;
+			m_rightMotor1.set(averageY);
+			m_leftMotor1.set(averageY);
+			m_currentYSpeed = averageY;
+		} else {
+			m_rightMotor1.set(rightJoystick.getY());
+			m_leftMotor1.set(leftJoystick.getY());
+		}
+		m_currentYSpeed = (rightJoystick.getY() + leftJoystick.getY()) / 2;
 	}
 
 	public double getCurrentRotation() {
@@ -64,19 +66,13 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	@Config
 	public void setDriveSpeed(double forwardness, double turn) {
-		m_robotDrive.arcadeDrive(forwardness, turn, true);
+		m_rightMotor1.set(forwardness - turn);
+		m_leftMotor1.set(forwardness + turn);
+		m_currentYSpeed = forwardness;
 	}
 
 	public void twoJoystickDrive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-		if (button.get()) {
-			double averageY = (rightJoystick.getY() + leftJoystick.getY()) / 2;
-			m_rightMotors.set(averageY);
-			m_leftMotors.set(averageY);
-			m_currentYSpeed = averageY;
-		} else {
-			m_rightMotors.set(rightJoystick.getY());
-			m_leftMotors.set(leftJoystick.getY());
-		}
+
 	}
 
 	public void angleDrive(double angle) {
