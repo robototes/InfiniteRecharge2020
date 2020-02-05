@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.Commands.ExampleCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbRails;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
@@ -52,6 +54,9 @@ public class OI {
 	// Joysticks
 	public Joystick driverStick = new Joystick(DRIVER_STICK_PORT);
 	public Joystick codriverStick = new Joystick(CODRIVER_STICK_PORT);
+
+	public Button climbPneumatics = new JoystickButton(codriverStick, 1);
+	public Button manualClimb = new JoystickButton(codriverStick, 2);
 
 	// Buttons
 	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
@@ -113,5 +118,14 @@ public class OI {
 				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
+
+		// telling the button that when its pressed to execute example command with the
+		// robot container's instance of example subsystem
+		climbPneumatics.whenPressed(new ClimbCommand(robotContainer.m_ClimbLiftSubsystem));
+		manualClimb.whileHeld(new ClimbRails(robotContainer.m_ClimbMotorSubsystem));
+
+		// manualClimb.whenHeld((Command) new ClimbLiftSubsystem());
+		// startClimb.whenPressed(new
+		// ClimbDeployArmCommand(RobotMap.robotContainer.m_ClimbLiftSubsystem));
 	}
 }

@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -23,8 +24,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-//This is the class in charge of all the motors, motor ids, and any other sensors the robot uses. 
-//remember to declare robot container at the bottom of this class 
+//This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
+//remember to declare robot container at the bottom of this class
 public class RobotMap {
 
 	// DRIVEBASE SUBSYSTEM
@@ -36,10 +37,10 @@ public class RobotMap {
 	public static final int RIGHT_BACK_ID = 0;
 
 	// DriveBase Motors
-	private static Talon leftFront = new Talon(LEFT_FRONT_ID);
-	private static Talon leftBack = new Talon(LEFT_BACK_ID);
-	private static Talon rightFront = new Talon(RIGHT_FRONT_ID);
-	private static Talon rightBack = new Talon(RIGHT_BACK_ID);
+	private static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
+	private static WPI_TalonFX leftBack = new WPI_TalonFX(LEFT_BACK_ID);
+	private static WPI_TalonFX rightFront = new WPI_TalonFX(RIGHT_FRONT_ID);
+	private static WPI_TalonFX rightBack = new WPI_TalonFX(RIGHT_BACK_ID);
 
 	// DriveBase SpeedControllerGroups
 	public static SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFront, leftBack);
@@ -50,6 +51,23 @@ public class RobotMap {
 
 	// DriveBase Gyro
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
+	// climb mode
+	static boolean climbMode = false;
+
+	// climb Pneumatics
+	private static final int pneumatic1Open = 1;
+	private static final int pneumatic1Closed = 2;
+	private static final int pneumatic2Open = 3;
+	private static final int pneumatic2Closed = 4;
+	public static DoubleSolenoid leftPneumatic = new DoubleSolenoid(pneumatic1Open, pneumatic1Closed);
+	public static DoubleSolenoid rightPneumatic = new DoubleSolenoid(pneumatic2Open, pneumatic2Closed);
+
+	// Motors
+	private static final int climbMotor1 = 1;
+	private static final int climbMotor2 = 2;
+	public static CANSparkMax leftClimbMotor = new CANSparkMax(climbMotor1, MotorType.kBrushless);
+	public static CANSparkMax rightClimbMotor = new CANSparkMax(climbMotor2, MotorType.kBrushless);
 
 	// IDs
 	private final static int indexBackMotorID = 1;
