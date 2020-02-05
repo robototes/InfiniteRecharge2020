@@ -1,9 +1,10 @@
 package frc.team2412.robot;
 
-import frc.team2412.robot.Subsystems.*;
-import io.github.oblarg.oblog.*;
-import io.github.oblarg.oblog.annotations.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
+import frc.team2412.robot.Subsystems.TurretSubsystem;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
 public class Field implements Loggable {
 

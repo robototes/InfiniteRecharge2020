@@ -14,7 +14,8 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
@@ -50,7 +51,8 @@ public class IntakeUpDownSubsystemTest {
 		mockedLiftSolenoid2 = mock(DoubleSolenoid.class);
 		mockedCompressor = mock(Compressor.class);
 
-		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2, mockedCompressor);
+		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2,
+				mockedCompressor);
 	}
 
 	@Test

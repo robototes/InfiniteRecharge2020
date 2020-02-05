@@ -1,7 +1,7 @@
 package frc.team2412.robot.Subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.LiftConstants.LiftState;
 import io.github.oblarg.oblog.Loggable;

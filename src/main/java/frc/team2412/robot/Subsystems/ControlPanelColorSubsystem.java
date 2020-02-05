@@ -14,7 +14,7 @@ import io.github.oblarg.oblog.annotations.Log;
 public class ControlPanelColorSubsystem extends SubsystemBase implements Loggable {
 
 	private ColorSensorV3 m_colorSensor;
-	private ColorMatch m_colorMatcher;
+	private ColorMatch m_colorMatcher = new ColorMatch();
 	private Talon m_wheelMotor;
 
 	@Log
@@ -24,10 +24,9 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	private Color m_ColorUnderBar;
 	private int rotationCount = 0;
 
-	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor, ColorMatch colorMatch) {
+	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor) {
 		this.m_colorSensor = colorSensor;
 		this.m_wheelMotor = motor;
-		this.m_colorMatcher = colorMatch;
 	}
 
 	public Color colorMatch(Color detectedColor) {

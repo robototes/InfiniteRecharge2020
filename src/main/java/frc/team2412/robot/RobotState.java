@@ -9,7 +9,7 @@ public class RobotState implements Loggable {
 	public static int m_ballCount = 0;
 
 	@Log
-	public static IntakeDirection m_intakeDirection = IntakeDirection.FRONT;
+	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
 	@Log
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
@@ -18,7 +18,7 @@ public class RobotState implements Loggable {
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
 	private static enum IntakeDirection {
-		FRONT, BACK;
+		NONE, FRONT, BACK;
 	}
 
 	private static enum ClimbState {

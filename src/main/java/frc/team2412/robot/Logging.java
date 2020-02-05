@@ -1,9 +1,10 @@
 package frc.team2412.robot;
 
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.*;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class Logging implements Loggable{
+public class Logging implements Loggable {
 
 	@Log
 	private String allianceName;
@@ -11,16 +12,16 @@ public class Logging implements Loggable{
 	private int teamNumber = 2412;
 	@Log
 	private boolean testMatch;
-	@Log 
+	@Log
 	private boolean officialMatch;
-	
+
 	public Logging() {
-		
+
 	}
 
 	@Config
 	public void setMatchType(boolean isTestMatch) {
-		if(isTestMatch = true) {
+		if (isTestMatch = true) {
 			testMatch = true;
 			officialMatch = false;
 		} else {
@@ -28,8 +29,8 @@ public class Logging implements Loggable{
 			testMatch = false;
 		}
 	}
-	
-	@Config 
+
+	@Config
 	public void setAllianceName(String name) {
 		allianceName = name;
 	}

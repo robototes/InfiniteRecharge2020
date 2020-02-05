@@ -78,8 +78,7 @@ public class RobotContainer {
 		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeUpDown, RobotMap.backIntakeUpDown,
 				RobotMap.compressor);
 
-		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor,
-				RobotMap.colorMatcher);
+		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
 
 		m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
 
@@ -90,7 +89,6 @@ public class RobotContainer {
 		m_autonumousSubsystem = new AutonumousSubsystem(m_driveBaseSubsystem, m_liftSubsystem, m_turretSubsystem,
 				m_flywheelSubsystem, m_hoodSubsystem, m_IndexerSubsystem, m_intakeMotorOnOffSubsystem,
 				m_intakeUpDownSubsystem);
-
 
 		// Add commands to the autonomous command chooser
 //		m_chooser.addOption("Basic Auto", m_basicAutoCommand);

@@ -12,12 +12,12 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;

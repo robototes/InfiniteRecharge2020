@@ -115,7 +115,7 @@ public class OI {
 				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
-		
+
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
 		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
 	}

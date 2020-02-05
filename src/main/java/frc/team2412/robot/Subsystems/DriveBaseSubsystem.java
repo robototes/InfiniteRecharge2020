@@ -1,9 +1,9 @@
 package frc.team2412.robot.Subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.robototes.math.Vector;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.buttons.Button;
