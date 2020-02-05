@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.team2412.robot.Commands.ExampleCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbRails;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
@@ -54,6 +56,9 @@ public class OI {
 	// Joysticks
 	public Joystick driverStick = new Joystick(DRIVER_STICK_PORT);
 	public Joystick codriverStick = new Joystick(CODRIVER_STICK_PORT);
+
+	public Button climbPneumatics = new JoystickButton(codriverStick, 1);
+	public Button manualClimb = new JoystickButton(codriverStick, 2);
 
 	// Buttons
 	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
@@ -116,6 +121,10 @@ public class OI {
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
+
+		climbPneumatics.whenPressed(new ClimbCommand(robotContainer.m_ClimbLiftSubsystem));
+		manualClimb.whileHeld(new ClimbRails(robotContainer.m_ClimbMotorSubsystem));
+    
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
 		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
 	}
