@@ -19,7 +19,7 @@ public class ClimbConstants {
 			this.value = value;
 		}
 	}
-	
+
 	public static final int mAX_SPEED = 1;
 
 }

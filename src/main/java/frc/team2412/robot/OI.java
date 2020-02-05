@@ -54,8 +54,8 @@ public class OI {
 	// CONTROL PANEL button ports
 	public static final int CONTROL_PANEL_SPIN_3_TIMES_BUTTON_PORT = 1;
 	public static final int CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT = 1;
-	
-	//CLIMB button ports
+
+	// CLIMB button ports
 	private static final int CLIMB_DEPLOY_RAILS_BUTTON_PORT = 0;
 	private static final int CLIMB_EXTEND_ARM_BUTTON_PORT = 0;
 	private static final int CLIMB_RETRACT_RAILS_BUTTON_PORT = 0;
@@ -66,8 +66,6 @@ public class OI {
 	public Joystick driverStick = new Joystick(DRIVER_STICK_PORT);
 	public Joystick codriverStick = new Joystick(CODRIVER_STICK_PORT);
 
-
-	
 	// Buttons
 	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
 	public Button indexerShootButton = new JoystickButton(driverStick, 2);
@@ -89,13 +87,12 @@ public class OI {
 			CONTROL_PANEL_SPIN_3_TIMES_BUTTON_PORT);
 	public Button controlPanelSetToTargetButton = new JoystickButton(driverStick,
 			CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT);
-	
+
 	public Button climbDeployRailsButton = new JoystickButton(driverStick, CLIMB_DEPLOY_RAILS_BUTTON_PORT);
 	public Button climbExtendArmButton = new JoystickButton(driverStick, CLIMB_EXTEND_ARM_BUTTON_PORT);
 	public Button climbRetractRailsButton = new JoystickButton(driverStick, CLIMB_RETRACT_RAILS_BUTTON_PORT);
 	public Button climbRetractArmButton = new JoystickButton(driverStick, CLIMB_RETRACT_ARM_BUTTON_PORT);
 	public Button climbStopArmButton = new JoystickButton(driverStick, CLIMB_STOP_ARM_BUTTON_PORT);
-	
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
@@ -136,13 +133,12 @@ public class OI {
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
-
 		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_ClimbLiftSubsystem));
-		climbExtendArmButton.whenActive(new  ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
 		climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
 		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_ClimbLiftSubsystem));
 		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_ClimbMotorSubsystem));
-    
+
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
 		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
 	}

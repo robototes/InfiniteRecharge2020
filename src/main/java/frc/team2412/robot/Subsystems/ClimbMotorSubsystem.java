@@ -12,17 +12,17 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 	private CANSparkMax m_leftClimbMotor = RobotMap.leftClimbMotor;
 	private CANSparkMax m_rightClimbMotor = RobotMap.rightClimbMotor;
-	
+
 	private SpeedControllerGroup m_climbLiftMotors;
 
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
 		m_leftClimbMotor = leftClimbMotor;
 		m_rightClimbMotor = rightClimbMotor;
-		
+
 		m_climbLiftMotors = new SpeedControllerGroup(m_leftClimbMotor, m_rightClimbMotor);
 	}
 
-public void climbExtendArm() {
+	public void climbExtendArm() {
 		m_climbLiftMotors.set(ClimbConstants.mAX_SPEED);
 	}
 

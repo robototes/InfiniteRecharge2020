@@ -3,8 +3,6 @@ package frc.team2412.robot.subsystems;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.After;
@@ -20,7 +18,6 @@ import com.robototes.helpers.TestWithScheduler;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
@@ -55,7 +52,8 @@ public class DriveBaseSubsystemTest {
 		mockedJoystick = mock(Joystick.class);
 		mockedGenericHID = mock(GenericHID.class);
 
-		realDriveBaseSubsystem = new DriveBaseSubsystem(mockedGyro, mockedMotor1, mockedMotor2, mockedMotor3, mockedMotor4);
+		realDriveBaseSubsystem = new DriveBaseSubsystem(mockedGyro, mockedMotor1, mockedMotor2, mockedMotor3,
+				mockedMotor4);
 	}
 
 	// This test makes sure that the example command calls the .subsystemMethod of

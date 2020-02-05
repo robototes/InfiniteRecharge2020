@@ -55,8 +55,8 @@ public class RobotContainer {
 
 	@Log(name = "Climb lift Subsystem")
 	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
-	
-	@Log (name = "Climb Motor Subsystem")
+
+	@Log(name = "Climb Motor Subsystem")
 	public ClimbMotorSubsystem m_ClimbMotorSubsystem;
 
 	@Log(name = "Autonumous Subsystem", tabName = "robotContainer")
@@ -79,7 +79,8 @@ public class RobotContainer {
 
 		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
-		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.gyro, RobotMap.leftFront, RobotMap.leftBack, RobotMap.rightFront, RobotMap.rightBack);
+		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.gyro, RobotMap.leftFront, RobotMap.leftBack,
+				RobotMap.rightFront, RobotMap.rightBack);
 
 		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
