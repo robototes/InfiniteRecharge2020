@@ -22,11 +22,11 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	public void Shoot() {
+	public void shoot() {
 		m_flywheelMotors.set(1.0);
 	}
 
-	public void Stop() {
+	public void stop() {
 		m_flywheelMotors.set(0.0);
 	}
 }

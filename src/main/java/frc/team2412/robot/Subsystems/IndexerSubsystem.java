@@ -7,12 +7,14 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.IndexerConstants.IndexerDirection;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerSubsystem extends SubsystemBase implements Loggable {
 	@Log
 	public CANSparkMax m_indexBackMotor, m_indexFrontMotor, m_indexMidMotor;
 	public SpeedControllerGroup m_indexMotors, m_indexSideMotors;
+	@Log(name = "Indexer Sensor")
 	public DigitalInput m_back, m_backMid, m_mid, m_frontMid, m_front, m_intakeFront, m_intakeBack;
 
 	@Log
@@ -20,6 +22,7 @@ public class IndexerSubsystem extends SubsystemBase implements Loggable {
 	private int m_numBalls = 0;
 
 	// SIDE OF INDEXER WITH LESS BALLS
+	@Log
 	private IndexerDirection m_ballUnbalancedSide;
 
 	public IndexerSubsystem(CANSparkMax frontm, CANSparkMax middle, CANSparkMax backm, DigitalInput f, DigitalInput fm,
@@ -42,6 +45,7 @@ public class IndexerSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	// Motors
+	@Log
 	public void stopAll() {
 		m_indexMotors.set(0.0);
 	}
@@ -68,6 +72,7 @@ public class IndexerSubsystem extends SubsystemBase implements Loggable {
 		// check if all sensors are on
 	}
 
+	@Config
 	public void intake(int balls, IndexerDirection dir) {
 		switch (balls) {
 		case 1:
@@ -99,6 +104,7 @@ public class IndexerSubsystem extends SubsystemBase implements Loggable {
 		}
 	}
 
+	@Log
 	public void shoot() {
 		// allShiftDown();
 		m_indexMidMotor.set(1);
@@ -262,6 +268,7 @@ public class IndexerSubsystem extends SubsystemBase implements Loggable {
 		return m_ballUnbalancedSide;
 	}
 
+	@Config
 	public void setBallUnbalancedSide(IndexerDirection m_ballUnbalancedSide) {
 		this.m_ballUnbalancedSide = m_ballUnbalancedSide;
 	}
@@ -270,6 +277,7 @@ public class IndexerSubsystem extends SubsystemBase implements Loggable {
 		return m_numBalls;
 	}
 
+	@Config
 	public void setNumBalls(int m_numBalls) {
 		this.m_numBalls = m_numBalls;
 	}

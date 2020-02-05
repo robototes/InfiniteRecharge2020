@@ -16,8 +16,8 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	private CANSparkMax m_intakeFrontMotor;
 	@Log
 	private CANSparkMax m_intakeBackMotor;
-	private SpeedControllerGroup m_intakes = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);
-
+	private SpeedControllerGroup m_intakeMotorGroup = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);
+	@Log
 	public IntakeLastMotor m_lastMotor = IntakeLastMotor.BOTH;
 
 	public IntakeOnOffSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
@@ -60,17 +60,17 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void intakeOff() {
-		m_intakes.set(0);
+		m_intakeMotorGroup.set(0);
 	}
 
 	public void intakeOn() {
-		m_intakes.set(1);
+		m_intakeMotorGroup.set(1);
 		m_lastMotor = IntakeLastMotor.BOTH;
 	}
 
 	@Config
 	public void setIntake(double speed) {
-		m_intakes.set(speed);
+		m_intakeMotorGroup.set(speed);
 	}
 
 }

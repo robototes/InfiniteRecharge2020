@@ -1,7 +1,10 @@
 package frc.team2412.robot.subsystems;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +14,7 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
@@ -24,6 +28,7 @@ public class LiftSubsystemTest {
 	// Mock instance of Example Subsystem
 	LiftSubsystem realLiftSubsystem;
 	DoubleSolenoid mockedLiftSolenoid;
+	Compressor mockedCompressor;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -42,8 +47,9 @@ public class LiftSubsystemTest {
 		MockHardwareExtension.beforeAll();
 
 		mockedLiftSolenoid = mock(DoubleSolenoid.class);
+		mockedCompressor = mock(Compressor.class);
 
-		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid);
+		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, mockedCompressor);
 	}
 
 	@Test

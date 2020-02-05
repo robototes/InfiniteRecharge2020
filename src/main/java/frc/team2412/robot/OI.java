@@ -3,20 +3,22 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.team2412.robot.Commands.ExampleCommand;
 import frc.team2412.robot.Commands.ClimbCommands.ClimbCommand;
 import frc.team2412.robot.Commands.ClimbCommands.ClimbRails;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeDownCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBothUpCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeUpCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
 
@@ -94,8 +96,8 @@ public class OI {
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
 		// INTAKE UpDown
-		intakeUpButton.whenPressed(new IntakeUpCommand(robotContainer.m_intakeUpDownSubsystem));
-		intakeDownButton.whenPressed(new IntakeDownCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeUpButton.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
 
 		// INTAKE front
 		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
@@ -119,13 +121,11 @@ public class OI {
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
-		// telling the button that when its pressed to execute example command with the
-		// robot container's instance of example subsystem
+
 		climbPneumatics.whenPressed(new ClimbCommand(robotContainer.m_ClimbLiftSubsystem));
 		manualClimb.whileHeld(new ClimbRails(robotContainer.m_ClimbMotorSubsystem));
-
-		// manualClimb.whenHeld((Command) new ClimbLiftSubsystem());
-		// startClimb.whenPressed(new
-		// ClimbDeployArmCommand(RobotMap.robotContainer.m_ClimbLiftSubsystem));
+    
+		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
+		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
 	}
 }
