@@ -1,18 +1,23 @@
 package frc.team2412.robot;
 
 import frc.team2412.robot.Subsystems.*;
+import io.github.oblarg.oblog.*;
+import io.github.oblarg.oblog.annotations.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
-public class Field {
+public class Field implements Loggable {
 
 	private static final Double RATIO_OF_ROTATIONS = 1.0;
 
+	@Log
 	private double robotX;
+	@Log
 	private double robotY = 70;
 
 	private double leftEncoderVal = 0;
 	private double rightEncoderVal = 0;
 
+	@Log
 	private double gyroVal;
 
 	private DriveBaseSubsystem m_driveBaseSubsystem;

@@ -3,6 +3,7 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.team2412.robot.Commands.ExampleCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
@@ -11,6 +12,7 @@ import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBothUpCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
@@ -113,5 +115,8 @@ public class OI {
 				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
+		
+		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
+		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
 	}
 }
