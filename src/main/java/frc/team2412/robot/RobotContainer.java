@@ -1,7 +1,13 @@
 package frc.team2412.robot;
 
+import frc.team2412.robot.Commands.ClimbCommands.ClimbCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbRails;
+import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
+import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.team2412.robot.Subsystems.AutonumousSubsystem;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
-
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import frc.team2412.robot.Subsystems.FlywheelSubsystem;
@@ -17,6 +23,10 @@ import io.github.oblarg.oblog.annotations.Log;
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer {
 
+	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
+	public ClimbMotorSubsystem m_ClimbMotorSubsystem;
+	public ClimbCommand m_ClimbCommand;
+	public ClimbRails m_ClimbRails;
 	// Subsystems
 	public ExampleSubsystem m_ExampleSubsystem;
 
@@ -24,13 +34,13 @@ public class RobotContainer {
 	public LimelightSubsystem m_LimelightSubsystem;
 
 	@Log(name = "Turret Subsystem")
-	public TurretSubsystem m_TurretSubsystem;
+	public TurretSubsystem m_turretSubsystem;
 
 	@Log(name = "Flywheel Subsystem")
-	public FlywheelSubsystem m_FlywheelSubsystem;
+	public FlywheelSubsystem m_flywheelSubsystem;
 
 	@Log(name = "Hood Subsystem")
-	public HoodSubsystem m_HoodSubsystem;
+	public HoodSubsystem m_hoodSubsystem;
 
 	@Log(name = "Lift Subsystem")
 	public LiftSubsystem m_liftSubsystem;
@@ -50,30 +60,48 @@ public class RobotContainer {
 	@Log(name = "Indexer Subsystem")
 	public IndexerSubsystem m_IndexerSubsystem;
 
+	@Log(name = "Autonumous Subsystem", tabName = "robotContainer")
+	@Log(tabName = "Robot")
+	public AutonumousSubsystem m_autonumousSubsystem;
+
+	// A chooser for autonomous commands
+	SendableChooser<Command> m_chooser = new SendableChooser<>();
+
 	public RobotContainer() {
 		// create and instance of example subsystem with the id from robot map
 		m_ExampleSubsystem = new ExampleSubsystem(RobotMap.exampleID);
+
+		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.leftPneumatic, RobotMap.rightPneumatic);
+		m_ClimbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 
 		m_IndexerSubsystem = new IndexerSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
 				RobotMap.indexBackMotor, RobotMap.front, RobotMap.frontMid, RobotMap.mid, RobotMap.backMid,
 				RobotMap.back, RobotMap.intakeFront, RobotMap.intakeBack);
 
-		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
-		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro, RobotMap.m_OI.driverStick);
+		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.robotDrive, RobotMap.gyro, RobotMap.m_OI.driverStick,
+				RobotMap.leftFront, RobotMap.leftBack, RobotMap.rightFront, RobotMap.rightBack);
 
 		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.intakeUpDown);
+		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeUpDown, RobotMap.backIntakeUpDown,
+				RobotMap.compressor);
 
-		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor,
-				RobotMap.colorMatcher);
+		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
 
-		m_TurretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
+		m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
 
-		m_FlywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelMotor1, RobotMap.flywheelMotor2);
+		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelMotor1, RobotMap.flywheelMotor2);
 
-		m_HoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
+		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
+
+		m_autonumousSubsystem = new AutonumousSubsystem(m_driveBaseSubsystem, m_liftSubsystem, m_turretSubsystem,
+				m_flywheelSubsystem, m_hoodSubsystem, m_IndexerSubsystem, m_intakeMotorOnOffSubsystem,
+				m_intakeUpDownSubsystem);
+
+		// Add commands to the autonomous command chooser
+//		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
 
 	}
 }
