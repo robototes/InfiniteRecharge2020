@@ -14,7 +14,7 @@ public class FlywheelStopCommand extends CommandBase {
 	@Override
 	public void execute() {
 		// run the example method
-		m_FlywheelSubsystem.Stop();
+		m_FlywheelSubsystem.stop();
 	}
 
 	@Override

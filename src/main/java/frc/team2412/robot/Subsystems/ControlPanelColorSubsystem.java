@@ -14,23 +14,22 @@ import io.github.oblarg.oblog.annotations.Log;
 public class ControlPanelColorSubsystem extends SubsystemBase implements Loggable {
 
 	private ColorSensorV3 m_colorSensor;
-	private ColorMatch m_colorMatcher;
+	private ColorMatch m_colorMatcher = new ColorMatch();
 	private Talon m_wheelMotor;
 
 	@Log
-	private Color m_CurrentColor;
+	private Color m_currentColor;
 
-	private Color m_StartColor;
+	private Color m_startColor;
 	private Color m_ColorUnderBar;
 	private int rotationCount = 0;
 
-	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor, ColorMatch colorMatch) {
+	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor) {
 		this.m_colorSensor = colorSensor;
 		this.m_wheelMotor = motor;
-		this.m_colorMatcher = colorMatch;
 	}
 
-	public Color colorMatcher(Color detectedColor) {
+	public Color colorMatch(Color detectedColor) {
 		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 		if (match.color == ControlPanelConstants.blueTarget) {
 			return ControlPanelConstants.blueTarget;
@@ -76,11 +75,11 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	public void rotateControlPanel() {
 		rotationCount = 0;
-		m_StartColor = m_colorSensor.getColor();
+		m_startColor = colorMatch(m_colorSensor.getColor());
 		m_wheelMotor.set(0.5);
 		while (rotationCount <= 7) {
-			m_CurrentColor = m_colorSensor.getColor();
-			if (m_CurrentColor.equals(m_StartColor)) {
+			m_currentColor = colorMatch(m_colorSensor.getColor());
+			if (m_currentColor.equals(m_startColor)) {
 				rotationCount++;
 			}
 		}
@@ -89,13 +88,13 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	public void setToTargetColor() {
 
-		m_CurrentColor = m_colorSensor.getColor();
-		m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
+		m_currentColor = colorMatch(m_colorSensor.getColor());
+		m_ColorUnderBar = getColorUnderBar(m_currentColor);
 
 		while (m_ColorUnderBar != ControlPanelConstants.TargetColor) {
 			m_wheelMotor.set(0.25);
-			m_CurrentColor = m_colorSensor.getColor();
-			m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
+			m_currentColor = colorMatch(m_colorSensor.getColor());
+			m_ColorUnderBar = getColorUnderBar(m_currentColor);
 		}
 
 		m_wheelMotor.set(0);
