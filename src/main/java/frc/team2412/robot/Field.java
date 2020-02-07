@@ -22,12 +22,12 @@ public class Field implements Loggable {
 	private double gyroVal;
 
 	private DriveBaseSubsystem m_driveBaseSubsystem;
-	private TurretSubsystem m_turretSubsystem;
+//	private TurretSubsystem m_turretSubsystem;
 	private ADXRS450_Gyro m_gyro;
 
 	public Field(DriveBaseSubsystem driveBase, TurretSubsystem turret, double x) {
 		m_driveBaseSubsystem = driveBase;
-		m_turretSubsystem = turret;
+//	m_turretSubsystem = turret;
 		robotX = x;
 		gyroVal = m_gyro.getAngle();
 //robotY = Math.cos(m_turretSubsystem.getAngle) * m_turretSubsystem.getDistance;
