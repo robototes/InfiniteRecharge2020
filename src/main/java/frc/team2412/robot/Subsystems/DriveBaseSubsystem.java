@@ -152,9 +152,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 			double finalHeading, double vertexX, double vertexY) {
 
 		Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-				new Pose2d(x1, y1, new Rotation2d(Math.toRadians(startHeading))),
-				List.of(new Translation2d(vertexX, vertexY)),
-				new Pose2d(x2, y2, new Rotation2d(Math.toRadians(startHeading))), m_trajectoryConfiguration);
+				new Pose2d(getFeetToMeters(x1), getFeetToMeters(y1), new Rotation2d(Math.toRadians(startHeading))),
+				List.of(new Translation2d(getFeetToMeters(vertexX), getFeetToMeters(vertexY))),
+				new Pose2d(getFeetToMeters(x2), getFeetToMeters(y2), new Rotation2d(Math.toRadians(startHeading))), m_trajectoryConfiguration);
 
 		return trajectory;
 	}
