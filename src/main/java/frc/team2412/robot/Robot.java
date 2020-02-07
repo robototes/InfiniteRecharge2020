@@ -8,6 +8,7 @@
 package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import io.github.oblarg.oblog.Logger;
 
@@ -31,8 +32,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_robotContainer.m_TurretSubsystem.initTurretEncoder();
+		m_robotContainer.m_turretSubsystem.initTurretEncoder();
 		Logger.configureLoggingAndConfig(this, false);
+		Shuffleboard.startRecording();
 	}
 
 	/**
@@ -64,7 +66,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-
 	}
 
 	/**

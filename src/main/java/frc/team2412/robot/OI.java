@@ -3,18 +3,24 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.team2412.robot.Commands.ExampleCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbDeployRailsCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbExtendArmCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbRetractRailsCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbStopArmCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeDownCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
+import frc.team2412.robot.Commands.IntakeCommands.IntakeBothUpCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeUpCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
 
@@ -49,6 +55,13 @@ public class OI {
 	public static final int CONTROL_PANEL_SPIN_3_TIMES_BUTTON_PORT = 1;
 	public static final int CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT = 1;
 
+	// CLIMB button ports
+	private static final int CLIMB_DEPLOY_RAILS_BUTTON_PORT = 0;
+	private static final int CLIMB_EXTEND_ARM_BUTTON_PORT = 0;
+	private static final int CLIMB_RETRACT_RAILS_BUTTON_PORT = 0;
+	private static final int CLIMB_STOP_ARM_BUTTON_PORT = 0;
+	private static final int CLIMB_RETRACT_ARM_BUTTON_PORT = 0;
+
 	// Joysticks
 	public Joystick driverStick = new Joystick(DRIVER_STICK_PORT);
 	public Joystick codriverStick = new Joystick(CODRIVER_STICK_PORT);
@@ -75,6 +88,12 @@ public class OI {
 	public Button controlPanelSetToTargetButton = new JoystickButton(driverStick,
 			CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT);
 
+	public Button climbDeployRailsButton = new JoystickButton(driverStick, CLIMB_DEPLOY_RAILS_BUTTON_PORT);
+	public Button climbExtendArmButton = new JoystickButton(driverStick, CLIMB_EXTEND_ARM_BUTTON_PORT);
+	public Button climbRetractRailsButton = new JoystickButton(driverStick, CLIMB_RETRACT_RAILS_BUTTON_PORT);
+	public Button climbRetractArmButton = new JoystickButton(driverStick, CLIMB_RETRACT_ARM_BUTTON_PORT);
+	public Button climbStopArmButton = new JoystickButton(driverStick, CLIMB_STOP_ARM_BUTTON_PORT);
+
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
 		// telling the button that when its pressed to execute example command with the
@@ -89,8 +108,8 @@ public class OI {
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
 		// INTAKE UpDown
-		intakeUpButton.whenPressed(new IntakeUpCommand(robotContainer.m_intakeUpDownSubsystem));
-		intakeDownButton.whenPressed(new IntakeDownCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeUpButton.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
 
 		// INTAKE front
 		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
@@ -113,5 +132,14 @@ public class OI {
 				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
+
+		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_ClimbLiftSubsystem));
+		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_ClimbLiftSubsystem));
+		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_ClimbMotorSubsystem));
+
+		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
+		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
 	}
 }

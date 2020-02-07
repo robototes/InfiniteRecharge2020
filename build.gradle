@@ -4,6 +4,10 @@ plugins {
     id "eclipse"
 }
 
+repositories {
+  maven { url 'https://jitpack.io' }
+}
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -53,6 +57,8 @@ def includeDesktopSupport = false
 dependencies {
     compile project(":robot_library") //not building until project is updated
     
+    //compile pathfinder()
+    
     implementation wpi.deps.wpilib()
     nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
@@ -62,7 +68,9 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-	compile 'com.github.Oblarg.Oblog:lib:3.1.0'
+
+	implementation "com.github.Oblarg.Oblog:lib:3.1.0"	
+
 
     testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:3.2.0'
