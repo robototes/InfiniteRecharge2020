@@ -115,13 +115,11 @@ public class RobotMap {
 
 	// Flywheel subsystem
 	// ------------------------------------------------------------------------------
-	public static final int flywheelMotorID1 = 0;
-	public static final int flywheelMotorID2 = 2;
+	public static final int flywheelLeftMotorID = 0;
+	public static final int flywheelRightMotorID = 2;
 
-	public static CANSparkMax flywheelMotor1 = new CANSparkMax(flywheelMotorID1, MotorType.kBrushless);
-	public static CANSparkMax flywheelMotor2 = new CANSparkMax(flywheelMotorID2, MotorType.kBrushless);
-
-	public static SpeedControllerGroup flywheelSpeedGroup = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
+	public static CANSparkMax flywheelLeftMotor = new CANSparkMax(flywheelLeftMotorID, MotorType.kBrushless);
+	public static CANSparkMax flywheelRightMotor = new CANSparkMax(flywheelRightMotorID, MotorType.kBrushless);
 
 	// Hood Subsystem
 	// -----------------------------------------------------------------------------
