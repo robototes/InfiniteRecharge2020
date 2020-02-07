@@ -1,13 +1,9 @@
 package frc.team2412.robot.Commands.AutoCommands;
 
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
-
 import com.robototes.PIDControls.PIDConstants;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
