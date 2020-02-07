@@ -91,7 +91,7 @@ public class RobotContainer {
 
 		m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
 
-		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelMotor1, RobotMap.flywheelMotor2);
+		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
 
 		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
 
