@@ -1,13 +1,13 @@
 package frc.team2412.robot.Commands.ClimbCommands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
 
-public class ClimbCommand extends CommandBase {
+public class ClimbRetractRailsCommand extends CommandBase {
+
 	ClimbLiftSubsystem m_ClimbLiftSubsystem;
 
-	public ClimbCommand(ClimbLiftSubsystem climbLiftSubsystem) {
+	public ClimbRetractRailsCommand(ClimbLiftSubsystem climbLiftSubsystem) {
 
 		m_ClimbLiftSubsystem = climbLiftSubsystem;
 		addRequirements(climbLiftSubsystem);
@@ -15,8 +15,7 @@ public class ClimbCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		// run the example method
-		m_ClimbLiftSubsystem.DeployRails();
+		m_ClimbLiftSubsystem.retractRails();
 	}
 
 	@Override

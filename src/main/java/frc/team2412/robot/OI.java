@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.team2412.robot.Commands.ExampleCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbRails;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbDeployRailsCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbExtendArmCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbRetractRailsCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbStopArmCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
 import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
@@ -53,12 +55,16 @@ public class OI {
 	public static final int CONTROL_PANEL_SPIN_3_TIMES_BUTTON_PORT = 1;
 	public static final int CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT = 1;
 
+	// CLIMB button ports
+	private static final int CLIMB_DEPLOY_RAILS_BUTTON_PORT = 0;
+	private static final int CLIMB_EXTEND_ARM_BUTTON_PORT = 0;
+	private static final int CLIMB_RETRACT_RAILS_BUTTON_PORT = 0;
+	private static final int CLIMB_STOP_ARM_BUTTON_PORT = 0;
+	private static final int CLIMB_RETRACT_ARM_BUTTON_PORT = 0;
+
 	// Joysticks
 	public Joystick driverStick = new Joystick(DRIVER_STICK_PORT);
 	public Joystick codriverStick = new Joystick(CODRIVER_STICK_PORT);
-
-	public Button climbPneumatics = new JoystickButton(codriverStick, 1);
-	public Button manualClimb = new JoystickButton(codriverStick, 2);
 
 	// Buttons
 	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
@@ -81,6 +87,12 @@ public class OI {
 			CONTROL_PANEL_SPIN_3_TIMES_BUTTON_PORT);
 	public Button controlPanelSetToTargetButton = new JoystickButton(driverStick,
 			CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT);
+
+	public Button climbDeployRailsButton = new JoystickButton(driverStick, CLIMB_DEPLOY_RAILS_BUTTON_PORT);
+	public Button climbExtendArmButton = new JoystickButton(driverStick, CLIMB_EXTEND_ARM_BUTTON_PORT);
+	public Button climbRetractRailsButton = new JoystickButton(driverStick, CLIMB_RETRACT_RAILS_BUTTON_PORT);
+	public Button climbRetractArmButton = new JoystickButton(driverStick, CLIMB_RETRACT_ARM_BUTTON_PORT);
+	public Button climbStopArmButton = new JoystickButton(driverStick, CLIMB_STOP_ARM_BUTTON_PORT);
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
@@ -121,10 +133,12 @@ public class OI {
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
+		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_ClimbLiftSubsystem));
+		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_ClimbLiftSubsystem));
+		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_ClimbMotorSubsystem));
 
-		climbPneumatics.whenPressed(new ClimbCommand(robotContainer.m_ClimbLiftSubsystem));
-		manualClimb.whileHeld(new ClimbRails(robotContainer.m_ClimbMotorSubsystem));
-    
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
 		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
 	}
