@@ -7,6 +7,7 @@ import com.robototes.math.Vector;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -39,6 +40,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public ADXRS450_Gyro m_gyro;
 
+	public Solenoid m_gearShifter;
+
 	public SimpleMotorFeedforward m_simpleMotorFeedforward = new SimpleMotorFeedforward(DriveBaseConstants.ksVolts,
 			DriveBaseConstants.kvVoltSecondsPerMeter, DriveBaseConstants.kaVoltSecondsSquaredPerMeter);
 
@@ -54,12 +57,13 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	private DifferentialDriveOdometry m_odometry;
 
-	public DriveBaseSubsystem(ADXRS450_Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
+	public DriveBaseSubsystem(Solenoid gearShifter, ADXRS450_Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
 		this.setName("DriveBase Subsystem");
 		m_motion = new Vector(0);
 		m_gyro = gyro;
-
+		m_gearShifter = gearShifter;
+		
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
 		m_rightMotor1 = rightMotor1;
@@ -120,11 +124,13 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public int getEncoderValue(WPI_TalonFX motor) {
 		return motor.getSelectedSensorPosition();
 	}
+	
+	
 
 	// -----------------------------------------------------------------------------------------------
 	// Trajectory stuff
 	// -----------------------------------------------------------------------------------------------
-
+	
 	public void trajectoryDrive() {
 		// Trajectory trajectory = new Trajectory(null);
 	}
@@ -154,7 +160,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
 				new Pose2d(getFeetToMeters(x1), getFeetToMeters(y1), new Rotation2d(Math.toRadians(startHeading))),
 				List.of(new Translation2d(getFeetToMeters(vertexX), getFeetToMeters(vertexY))),
-				new Pose2d(getFeetToMeters(x2), getFeetToMeters(y2), new Rotation2d(Math.toRadians(startHeading))), m_trajectoryConfiguration);
+				new Pose2d(getFeetToMeters(x2), getFeetToMeters(y2), new Rotation2d(Math.toRadians(startHeading))),
+				m_trajectoryConfiguration);
 
 		return trajectory;
 	}
@@ -169,5 +176,5 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
 		return new DifferentialDriveWheelSpeeds();
 	}
-	
+
 }
