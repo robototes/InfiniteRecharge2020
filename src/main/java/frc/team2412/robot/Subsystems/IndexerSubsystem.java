@@ -54,6 +54,7 @@ public class IndexerSubsystem extends SubsystemBase implements Loggable {
 		m_indexMotors.set(-1);
 		m_indexSideMotors.set(-1);
 	}
+
 	public void stopSides() {
 		m_indexSideMotors.set(0.0);
 	}

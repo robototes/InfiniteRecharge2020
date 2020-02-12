@@ -63,7 +63,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_motion = new Vector(0);
 		m_gyro = gyro;
 		m_gearShifter = gearShifter;
-		
+
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
 		m_rightMotor1 = rightMotor1;
@@ -91,14 +91,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_currentYSpeed = (rightJoystick.getY() + leftJoystick.getY()) / 2;
 	}
 
-	public double getCurrentRotation() {
-		return m_gyro.getAngle();
-	}
-
-	public double getCurrentYSpeed() {
-		return m_currentYSpeed;
-	}
-
 	@Config
 	public void setDriveSpeed(double forwardness, double turn) {
 		m_rightMotor1.set(forwardness - turn);
@@ -121,16 +113,30 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		}
 	}
 
+	public void shiftToHighGear() {
+		m_gearShifter.set(true);
+	}
+
+	public void shiftToLowGear() {
+		m_gearShifter.set(false);
+	}
+
+	public double getCurrentRotation() {
+		return m_gyro.getAngle();
+	}
+
+	public double getCurrentYSpeed() {
+		return m_currentYSpeed;
+	}
+
 	public int getEncoderValue(WPI_TalonFX motor) {
 		return motor.getSelectedSensorPosition();
 	}
-	
-	
 
 	// -----------------------------------------------------------------------------------------------
 	// Trajectory stuff
 	// -----------------------------------------------------------------------------------------------
-	
+
 	public void trajectoryDrive() {
 		// Trajectory trajectory = new Trajectory(null);
 	}

@@ -17,19 +17,19 @@ public class RobotState implements Loggable {
 	@Log
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	private static enum IntakeDirection {
-		NONE, FRONT, BACK;
+	public static enum IntakeDirection {
+		NONE, FRONT, BACK, BOTH;
 	}
 
-	private static enum ClimbState {
+	public static enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
 	}
 
-	private static enum LiftState {
+	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
 	}
 
-	private RobotState() {
+	public RobotState() {
 
 	}
 

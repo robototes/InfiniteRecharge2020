@@ -79,8 +79,8 @@ public class RobotContainer {
 
 		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
-		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.gyro, RobotMap.leftFront, RobotMap.leftBack,
-				RobotMap.rightFront, RobotMap.rightBack);
+		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.gyro, RobotMap.leftFront,
+				RobotMap.leftBack, RobotMap.rightFront, RobotMap.rightBack);
 
 		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 

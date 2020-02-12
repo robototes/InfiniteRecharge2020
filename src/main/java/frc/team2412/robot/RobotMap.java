@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -37,6 +38,8 @@ public class RobotMap {
 	public static final int RIGHT_FRONT_ID = 0;
 	public static final int RIGHT_BACK_ID = 0;
 
+	private static final int DRIVE_SOLENOID_PORT = 0;
+
 	// DriveBase Motors
 	public static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
 	public static WPI_TalonFX leftBack = new WPI_TalonFX(LEFT_BACK_ID);
@@ -52,6 +55,9 @@ public class RobotMap {
 
 	// DriveBase Gyro
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
+	// DriveBase Solenoid
+	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
 
 	// climb mode
 	static boolean climbMode = false;
