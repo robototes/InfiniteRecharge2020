@@ -141,7 +141,7 @@ public class RobotMap {
 	public static final int INTAKE_BACK_DOWN_PORT = 1;
 
 	public static DoubleSolenoid frontIntakeliftSolenoid = new DoubleSolenoid(INTAKE_FRONT_UP_PORT, INTAKE_FRONT_DOWN_PORT);
-	public static DoubleSolenoid backIntakeliftSolenoid = new DoubleSolenoid(INTAKE_BACK_UP_PORT, INTAKE_BACK_DOWN_PORT);
+	public static DoubleSolenoid backIntakeLiftSolenoid = new DoubleSolenoid(INTAKE_BACK_UP_PORT, INTAKE_BACK_DOWN_PORT);
 
 	public static final int INTAKE_FRONT_PORT = 1;
 	public static final int INTAKE_BACK_PORT = 2;
