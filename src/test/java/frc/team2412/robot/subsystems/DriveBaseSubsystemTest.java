@@ -90,7 +90,7 @@ public class DriveBaseSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		assertEquals("Drive has been powered", realDriveBaseSubsystem.getCurrentRotation());
+		assertEquals("Drive has been powered", realDriveBaseSubsystem.getGyroHeading());
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();

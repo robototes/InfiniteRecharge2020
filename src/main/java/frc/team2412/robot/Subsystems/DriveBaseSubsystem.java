@@ -1,5 +1,17 @@
 package frc.team2412.robot.Subsystems;
 
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kDriveKinematics;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kGyroReversed;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kMaxAccelerationMetersPerSecondSquared;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kMaxSpeedMetersPerSecond;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kPDriveVel;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kRamseteB;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kRamseteZeta;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kaVoltSecondsSquaredPerMeter;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.ksVolts;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kvVoltSecondsPerMeter;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.metersPerEncoderRevolution;
+
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -10,20 +22,24 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 //mport edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.Subsystems.constants.DriveBaseConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
@@ -32,30 +48,24 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public WPI_TalonFX m_leftMotor1, m_leftMotor2, m_rightMotor1, m_rightMotor2;
 
-	public SpeedControllerGroup m_leftMotors, m_rightMotors;
-
-	public DifferentialDrive m_drive;
-
 	public Vector m_motion;
 
-	public ADXRS450_Gyro m_gyro;
+	public Gyro m_gyro;
 
 	public Solenoid m_gearShifter;
-
-	public SimpleMotorFeedforward m_simpleMotorFeedforward = new SimpleMotorFeedforward(DriveBaseConstants.ksVolts,
-			DriveBaseConstants.kvVoltSecondsPerMeter, DriveBaseConstants.kaVoltSecondsSquaredPerMeter);
-
-	public DifferentialDriveVoltageConstraint m_autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-			m_simpleMotorFeedforward, DriveBaseConstants.kDriveKinematics, DriveBaseConstants.MAX_VOLTAGE);
-
-	TrajectoryConfig m_trajectoryConfiguration = new TrajectoryConfig(DriveBaseConstants.kMaxSpeedMetersPerSecond,
-			DriveBaseConstants.kMaxAccelerationMetersPerSecondSquared)
-					.setKinematics(DriveBaseConstants.kDriveKinematics).addConstraint(m_autoVoltageConstraint);
 
 	@Log
 	public double m_currentYSpeed;
 
+	// Trjectory objects;
+
+	public SpeedControllerGroup m_leftMotors, m_rightMotors;
+
+	public DifferentialDrive m_drive;
+
 	private DifferentialDriveOdometry m_odometry;
+
+	private int m_rightEncoderValue, m_leftEncoderValue;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, ADXRS450_Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
@@ -75,6 +85,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
 		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
+		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
+		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
+
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
 	}
 
@@ -91,6 +104,10 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_currentYSpeed = (rightJoystick.getY() + leftJoystick.getY()) / 2;
 	}
 
+	public void oneJoystickDrive(Joystick joystick) {
+		m_drive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
+	}
+
 	@Config
 	public void setDriveSpeed(double forwardness, double turn) {
 		m_rightMotor1.set(forwardness - turn);
@@ -101,15 +118,17 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public void angleDrive(double angle) {
 		double startAngle = m_gyro.getAngle();
 		if (angle > 0) {
-			while (m_gyro.getAngle() <= startAngle) {
+			if (m_gyro.getAngle() <= startAngle) {
 				setDriveSpeed(0, 1);
+			} else {
+				setDriveSpeed(0, 0);
 			}
-			setDriveSpeed(0, 0);
 		} else {
-			while (m_gyro.getAngle() >= startAngle) {
+			if (m_gyro.getAngle() >= startAngle) {
 				setDriveSpeed(0, -1);
+			} else {
+				setDriveSpeed(0, 0);
 			}
-			setDriveSpeed(0, 0);
 		}
 	}
 
@@ -121,7 +140,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_gearShifter.set(false);
 	}
 
-	public double getCurrentRotation() {
+	public double getGyroHeading() {
 		return m_gyro.getAngle();
 	}
 
@@ -129,24 +148,28 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return m_currentYSpeed;
 	}
 
-	public int getEncoderValue(WPI_TalonFX motor) {
-		return motor.getSelectedSensorPosition();
+	@Override
+	public void periodic() {
+		m_motion = new Vector(m_gyro.getAngle() % 360);
+
+		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
+		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
+
+		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()), m_leftEncoderValue * metersPerEncoderRevolution,
+				m_rightEncoderValue * metersPerEncoderRevolution);
 	}
 
 	// -----------------------------------------------------------------------------------------------
 	// Trajectory stuff
 	// -----------------------------------------------------------------------------------------------
 
-	public void trajectoryDrive() {
-		// Trajectory trajectory = new Trajectory(null);
-	}
-
-	public double getFeetToMeters(double feet) {
-		return feet / 0.3048;
-	}
-
 	public Pose2d getPose() {
 		return m_odometry.getPoseMeters();
+	}
+
+	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+		return new DifferentialDriveWheelSpeeds(m_leftMotor1.getSelectedSensorVelocity(),
+				m_rightMotor1.getSelectedSensorVelocity());
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -155,32 +178,50 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_drive.feed();
 	}
 
-	public double getDistanceMoved(WPI_TalonFX motor) {
-		double distance = getFeetToMeters(getEncoderValue(motor) * DriveBaseConstants.feetPerEncoderRevolution);
-		return distance;
+	public double getHeading() {
+		return Math.IEEEremainder(m_gyro.getAngle(), 360) * (kGyroReversed ? -1.0 : 1.0);
 	}
 
-	public Trajectory makeTrajectory(double x1, double y1, double startHeading, double x2, double y2,
-			double finalHeading, double vertexX, double vertexY) {
-
-		Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-				new Pose2d(getFeetToMeters(x1), getFeetToMeters(y1), new Rotation2d(Math.toRadians(startHeading))),
-				List.of(new Translation2d(getFeetToMeters(vertexX), getFeetToMeters(vertexY))),
-				new Pose2d(getFeetToMeters(x2), getFeetToMeters(y2), new Rotation2d(Math.toRadians(startHeading))),
-				m_trajectoryConfiguration);
-
-		return trajectory;
+	public double getTurnRate() {
+		return m_gyro.getRate() * (kGyroReversed ? -1.0 : 1.0);
 	}
 
-	@Override
-	public void periodic() {
-		m_motion = new Vector(m_gyro.getAngle() % 360);
-		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()), getDistanceMoved(m_leftMotor1),
-				getDistanceMoved(m_rightMotor1));
-	}
+	public Command getAutonomousCommand() {
 
-	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		return new DifferentialDriveWheelSpeeds();
-	}
+		DriveBaseSubsystem thisSub = this;
 
+		// Create a voltage constraint to ensure we don't accelerate too fast
+		var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+				new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
+				kDriveKinematics, 10);
+
+		// Create config for trajectory
+		TrajectoryConfig config = new TrajectoryConfig(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared)
+				// Add kinematics to ensure max speed is actually obeyed
+				.setKinematics(kDriveKinematics)
+				// Apply the voltage constraint
+				.addConstraint(autoVoltageConstraint);
+
+		// An example trajectory to follow. All units in meters.
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+				// Start at the origin facing the +X direction
+				new Pose2d(0, 0, new Rotation2d(0)),
+				// Pass through these two interior waypoints, making an 's' curve path
+				List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+				// End 3 meters straight ahead of where we started, facing forward
+				new Pose2d(3, 0, new Rotation2d(0)),
+				// Pass config
+				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose,
+				new RamseteController(kRamseteB, kRamseteZeta),
+				new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
+				kDriveKinematics, thisSub::getWheelSpeeds, new PIDController(kPDriveVel, 0, 0),
+				new PIDController(kPDriveVel, 0, 0),
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+	}
 }

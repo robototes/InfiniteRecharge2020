@@ -4,10 +4,12 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 public class DriveBaseConstants {
 
-	private static double wheelDiameter = 4;
-	public static final double feetPerEncoderRevolution = wheelDiameter * Math.PI;
+	private static double wheelDiameterMeters = 4;
+	public static final double metersPerEncoderRevolution = wheelDiameterMeters * Math.PI;
 
 	public static final double MAX_VOLTAGE = 10;
+	
+	public static final boolean kGyroReversed = false;
 
 	public static final double ksVolts = 1;
 	public static final double kvVoltSecondsPerMeter = 1;
