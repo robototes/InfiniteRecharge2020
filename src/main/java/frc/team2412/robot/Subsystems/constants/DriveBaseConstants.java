@@ -8,7 +8,7 @@ public class DriveBaseConstants {
 	public static final double metersPerEncoderRevolution = wheelDiameterMeters * Math.PI;
 
 	public static final double MAX_VOLTAGE = 10;
-	
+
 	public static final boolean kGyroReversed = false;
 
 	public static final double ksVolts = 1;
