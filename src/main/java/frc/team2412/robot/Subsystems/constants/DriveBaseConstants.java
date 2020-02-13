@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 public class DriveBaseConstants {
 
-	private static double wheelDiameterMeters = 4;
+	private static double wheelDiameterMeters = 0.1524;
 	public static final double metersPerEncoderRevolution = wheelDiameterMeters * Math.PI;
 
-	public static final double MAX_VOLTAGE = 10;
+	public static final double MAX_VOLTAGE = 12;
 
 	public static final boolean kGyroReversed = false;
 
@@ -17,13 +17,13 @@ public class DriveBaseConstants {
 
 	public static final int kPDriveVel = 8;
 
-	public static final double kTrackwidthMeters = 0.69; // Horizontal distance between wheels
+	public static final double kTrackwidthMeters = 0.5461; // Horizontal distance between wheels
 
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 3; // Max speed we can drive
-	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+	public static final double kMaxSpeedMetersPerSecond = 1; // Max speed we can drive
+	public static final double kMaxAccelerationMetersPerSecondSquared = 1;
 
 	// Ramsete Controller Value
 	public static final double kRamseteB = 2; // makes a more straight curve

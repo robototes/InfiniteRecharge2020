@@ -33,29 +33,29 @@ public class RobotMap {
 	// DRIVEBASE SUBSYSTEM
 	// -------------------------------------------------------------------------
 	// DriveBase Motor ports
-	public static final int LEFT_FRONT_ID = 0;
-	public static final int LEFT_BACK_ID = 0;
-	public static final int RIGHT_FRONT_ID = 0;
-	public static final int RIGHT_BACK_ID = 0;
+	public static final int DRIVE_LEFT_FRONT_ID = 0;
+	public static final int DRIVE_LEFT_BACK_ID = 0;
+	public static final int DRIVE_RIGHT_FRONT_ID = 0;
+	public static final int DRIVE_RIGHT_BACK_ID = 0;
 
 	private static final int DRIVE_SOLENOID_PORT = 0;
-	private static final int GYRO_PORT = 0;
+	private static final int DRIVE_GYRO_PORT = 0;
 
 	// DriveBase Motors
-	public static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
-	public static WPI_TalonFX leftBack = new WPI_TalonFX(LEFT_BACK_ID);
-	public static WPI_TalonFX rightFront = new WPI_TalonFX(RIGHT_FRONT_ID);
-	public static WPI_TalonFX rightBack = new WPI_TalonFX(RIGHT_BACK_ID);
+	public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(DRIVE_LEFT_FRONT_ID);
+	public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(DRIVE_LEFT_BACK_ID);
+	public static WPI_TalonFX driveRightFront = new WPI_TalonFX(DRIVE_RIGHT_FRONT_ID);
+	public static WPI_TalonFX driveRightBack = new WPI_TalonFX(DRIVE_RIGHT_BACK_ID);
 
 	// DriveBase SpeedControllerGroups
-	public static SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFront, leftBack);
-	public static SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFront, rightBack);
+	public static SpeedControllerGroup driveLeftSide = new SpeedControllerGroup(driveLeftFront, driveLeftBack);
+	public static SpeedControllerGroup driveRightSide = new SpeedControllerGroup(driveRightFront, driveRightBack);
 
 	// DriveBase DifferentialDrive
-	public static DifferentialDrive robotDrive = new DifferentialDrive(leftSide, rightSide);
+	public static DifferentialDrive robotDrive = new DifferentialDrive(driveLeftSide, driveRightSide);
 
 	// DriveBase Gyro
-	public static AnalogGyro gyro = new AnalogGyro(GYRO_PORT);
+	public static AnalogGyro driveGyro = new AnalogGyro(DRIVE_GYRO_PORT);
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
@@ -141,8 +141,8 @@ public class RobotMap {
 	public static final int INTAKE_BACK_UP_PORT = 1;
 	public static final int INTAKE_BACK_DOWN_PORT = 1;
 
-	public static DoubleSolenoid frontIntakeUpDown = new DoubleSolenoid(INTAKE_FRONT_UP_PORT, INTAKE_FRONT_DOWN_PORT);
-	public static DoubleSolenoid backIntakeUpDown = new DoubleSolenoid(INTAKE_BACK_UP_PORT, INTAKE_BACK_DOWN_PORT);
+	public static DoubleSolenoid frontIntakeliftSolenoid = new DoubleSolenoid(INTAKE_FRONT_UP_PORT, INTAKE_FRONT_DOWN_PORT);
+	public static DoubleSolenoid backIntakeliftSolenoid = new DoubleSolenoid(INTAKE_BACK_UP_PORT, INTAKE_BACK_DOWN_PORT);
 
 	public static final int INTAKE_FRONT_PORT = 1;
 	public static final int INTAKE_BACK_PORT = 2;
