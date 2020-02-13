@@ -33,11 +33,11 @@ public class RobotState implements Loggable {
 
 	}
 
-	public static int getballCount() {
+	public static int getBallCount() {
 		return m_ballCount;
 	}
 
-	public static void setballCount(int m_ballCount) {
+	public static void setBallCount(int m_ballCount) {
 		RobotState.m_ballCount = m_ballCount;
 	}
 

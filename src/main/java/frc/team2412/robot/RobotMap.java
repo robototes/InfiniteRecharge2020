@@ -61,8 +61,8 @@ public class RobotMap {
 	private static final int pneumatic1Closed = 2;
 	private static final int pneumatic2Open = 3;
 	private static final int pneumatic2Closed = 4;
-	public static DoubleSolenoid leftPneumatic = new DoubleSolenoid(pneumatic1Open, pneumatic1Closed);
-	public static DoubleSolenoid rightPneumatic = new DoubleSolenoid(pneumatic2Open, pneumatic2Closed);
+	public static DoubleSolenoid climbLeftPneumatic = new DoubleSolenoid(pneumatic1Open, pneumatic1Closed);
+	public static DoubleSolenoid climbRightPneumatic = new DoubleSolenoid(pneumatic2Open, pneumatic2Closed);
 
 	// Motors
 	private static final int climbMotor1 = 1;
@@ -115,13 +115,11 @@ public class RobotMap {
 
 	// Flywheel subsystem
 	// ------------------------------------------------------------------------------
-	public static final int flywheelMotorID1 = 0;
-	public static final int flywheelMotorID2 = 2;
+	public static final int flywheelLeftMotorID = 0;
+	public static final int flywheelRightMotorID = 2;
 
-	public static CANSparkMax flywheelMotor1 = new CANSparkMax(flywheelMotorID1, MotorType.kBrushless);
-	public static CANSparkMax flywheelMotor2 = new CANSparkMax(flywheelMotorID2, MotorType.kBrushless);
-
-	public static SpeedControllerGroup flywheelSpeedGroup = new SpeedControllerGroup(flywheelMotor1, flywheelMotor2);
+	public static CANSparkMax flywheelLeftMotor = new CANSparkMax(flywheelLeftMotorID, MotorType.kBrushless);
+	public static CANSparkMax flywheelRightMotor = new CANSparkMax(flywheelRightMotorID, MotorType.kBrushless);
 
 	// Hood Subsystem
 	// -----------------------------------------------------------------------------

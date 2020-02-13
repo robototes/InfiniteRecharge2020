@@ -3,8 +3,6 @@ package frc.team2412.robot.subsystems;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.After;
@@ -20,7 +18,6 @@ import com.robototes.helpers.TestWithScheduler;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
@@ -30,7 +27,6 @@ public class DriveBaseSubsystemTest {
 
 	// Mock instance of Example Subsystem
 	DriveBaseSubsystem realDriveBaseSubsystem;
-	DifferentialDrive mockedDifferntialDrive;
 	ADXRS450_Gyro mockedGyro;
 	GenericHID mockedGenericHID;
 	Joystick mockedJoystick;
@@ -52,13 +48,12 @@ public class DriveBaseSubsystemTest {
 		TestWithScheduler.schedulerClear();
 		MockHardwareExtension.beforeAll();
 
-		mockedDifferntialDrive = mock(DifferentialDrive.class);
 		mockedGyro = mock(ADXRS450_Gyro.class);
 		mockedJoystick = mock(Joystick.class);
 		mockedGenericHID = mock(GenericHID.class);
 
-		realDriveBaseSubsystem = new DriveBaseSubsystem(mockedDifferntialDrive, mockedGyro, mockedJoystick,
-				mockedMotor1, mockedMotor2, mockedMotor3, mockedMotor4);
+		realDriveBaseSubsystem = new DriveBaseSubsystem(mockedGyro, mockedMotor1, mockedMotor2, mockedMotor3,
+				mockedMotor4);
 	}
 
 	// This test makes sure that the example command calls the .subsystemMethod of
@@ -71,7 +66,7 @@ public class DriveBaseSubsystemTest {
 		reset(mockedJoystick);
 
 		// Create command
-		DriveCommand driveCommand = new DriveCommand(realDriveBaseSubsystem, mockedJoystick);
+		DriveCommand driveCommand = new DriveCommand(realDriveBaseSubsystem, mockedJoystick, null, null);
 
 		when(mockedGyro.getAngle()).thenReturn(0.5);
 		System.out.println(mockedGyro.getAngle());
@@ -94,7 +89,6 @@ public class DriveBaseSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		verify(mockedDifferntialDrive, times(1));
 		assertEquals("Drive has been powered", realDriveBaseSubsystem.getCurrentRotation());
 
 		// Clear the scheduler
