@@ -15,7 +15,7 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -33,13 +33,12 @@ public class RobotMap {
 	// DRIVEBASE SUBSYSTEM
 	// -------------------------------------------------------------------------
 	// DriveBase Motor ports
-	public static final int DRIVE_LEFT_FRONT_ID = 0;
-	public static final int DRIVE_LEFT_BACK_ID = 0;
-	public static final int DRIVE_RIGHT_FRONT_ID = 0;
+	public static final int DRIVE_LEFT_FRONT_ID = 14;
+	public static final int DRIVE_LEFT_BACK_ID = 15;
+	public static final int DRIVE_RIGHT_FRONT_ID = 1;
 	public static final int DRIVE_RIGHT_BACK_ID = 0;
 
 	private static final int DRIVE_SOLENOID_PORT = 0;
-	private static final int DRIVE_GYRO_PORT = 0;
 
 	// DriveBase Motors
 	public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(DRIVE_LEFT_FRONT_ID);
@@ -55,7 +54,7 @@ public class RobotMap {
 	public static DifferentialDrive robotDrive = new DifferentialDrive(driveLeftSide, driveRightSide);
 
 	// DriveBase Gyro
-	public static AnalogGyro driveGyro = new AnalogGyro(DRIVE_GYRO_PORT);
+	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro();
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
