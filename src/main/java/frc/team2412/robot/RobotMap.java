@@ -15,7 +15,7 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -39,6 +39,7 @@ public class RobotMap {
 	public static final int RIGHT_BACK_ID = 0;
 
 	private static final int DRIVE_SOLENOID_PORT = 0;
+	private static final int GYRO_PORT = 0;
 
 	// DriveBase Motors
 	public static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
@@ -54,7 +55,7 @@ public class RobotMap {
 	public static DifferentialDrive robotDrive = new DifferentialDrive(leftSide, rightSide);
 
 	// DriveBase Gyro
-	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	public static AnalogGyro gyro = new AnalogGyro(GYRO_PORT);
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);

@@ -17,7 +17,6 @@ import java.util.List;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.robototes.math.Vector;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -68,7 +67,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	private int m_rightEncoderValue, m_leftEncoderValue;
 
-	public DriveBaseSubsystem(Solenoid gearShifter, ADXRS450_Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
+	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
 		this.setName("DriveBase Subsystem");
 		m_motion = new Vector(0);
