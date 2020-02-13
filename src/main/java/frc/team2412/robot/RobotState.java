@@ -16,6 +16,9 @@ public class RobotState implements Loggable {
 
 	@Log
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
+	
+	@Log
+	public static GearState m_gearState = GearState.LOW;
 
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
@@ -27,6 +30,10 @@ public class RobotState implements Loggable {
 
 	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
+	}
+	
+	public static enum GearState{
+		HIGH, LOW;
 	}
 
 	public RobotState() {

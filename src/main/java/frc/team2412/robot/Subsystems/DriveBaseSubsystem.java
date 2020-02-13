@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 //mport edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.RobotState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
@@ -73,6 +74,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_motion = new Vector(0);
 		m_gyro = gyro;
 		m_gearShifter = gearShifter;
+
+		m_rightMotor1.setInverted(true);
 
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
@@ -110,8 +113,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	@Config
 	public void setDriveSpeed(double forwardness, double turn) {
-		m_rightMotor1.set(forwardness - turn);
-		m_leftMotor1.set(forwardness + turn);
+		m_drive.arcadeDrive(forwardness, turn);
 		m_currentYSpeed = forwardness;
 	}
 
@@ -134,10 +136,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public void shiftToHighGear() {
 		m_gearShifter.set(true);
+		RobotState.m_gearState = RobotState.GearState.HIGH;
 	}
 
 	public void shiftToLowGear() {
 		m_gearShifter.set(false);
+		RobotState.m_gearState = RobotState.GearState.LOW;
 	}
 
 	public double getGyroHeading() {
@@ -159,9 +163,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				m_rightEncoderValue * metersPerEncoderRevolution);
 	}
 
-	// -----------------------------------------------------------------------------------------------
 	// Trajectory stuff
-	// -----------------------------------------------------------------------------------------------
+	// _________________________________________________________________________________________________
 
 	public Pose2d getPose() {
 		return m_odometry.getPoseMeters();
@@ -174,7 +177,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		m_leftMotors.setVoltage(leftVolts);
-		m_rightMotors.setVoltage(-rightVolts);
+		m_rightMotors.setVoltage(rightVolts);
 		m_drive.feed();
 	}
 
@@ -186,21 +189,28 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return m_gyro.getRate() * (kGyroReversed ? -1.0 : 1.0);
 	}
 
+	// Create a voltage constraint to ensure we don't accelerate too fast
+	DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+			new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter), kDriveKinematics,
+			10);
+
+	// Create config for trajectory
+	TrajectoryConfig config = new TrajectoryConfig(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared)
+			// Add kinematics to ensure max speed is actually obeyed
+			.setKinematics(kDriveKinematics)
+			// Apply the voltage constraint
+			.addConstraint(autoVoltageConstraint);
+
+	SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter,
+			kaVoltSecondsSquaredPerMeter);
+
+	RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
+
+	PIDController pidController = new PIDController(kPDriveVel, 0, 0);
+
 	public Command getAutonomousCommand() {
 
 		DriveBaseSubsystem thisSub = this;
-
-		// Create a voltage constraint to ensure we don't accelerate too fast
-		var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-				new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
-				kDriveKinematics, 10);
-
-		// Create config for trajectory
-		TrajectoryConfig config = new TrajectoryConfig(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared)
-				// Add kinematics to ensure max speed is actually obeyed
-				.setKinematics(kDriveKinematics)
-				// Apply the voltage constraint
-				.addConstraint(autoVoltageConstraint);
 
 		// An example trajectory to follow. All units in meters.
 		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
@@ -213,11 +223,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				// Pass config
 				config);
 
-		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose,
-				new RamseteController(kRamseteB, kRamseteZeta),
-				new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
-				kDriveKinematics, thisSub::getWheelSpeeds, new PIDController(kPDriveVel, 0, 0),
-				new PIDController(kPDriveVel, 0, 0),
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
 				// RamseteCommand passes volts to the callback
 				thisSub::tankDriveVolts, thisSub);
 
