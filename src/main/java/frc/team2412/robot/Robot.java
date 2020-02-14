@@ -7,9 +7,16 @@
 
 package frc.team2412.robot;
 
+import static java.util.Map.entry;
+
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SelectCommand;
 import io.github.oblarg.oblog.Logger;
 
 /**
@@ -21,6 +28,8 @@ import io.github.oblarg.oblog.Logger;
  */
 @SuppressWarnings("unused")
 public class Robot extends TimedRobot {
+	
+	public static int hi = 5;
 
 	// Have instances of robot container and OI for easy access
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
@@ -59,6 +68,17 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 
+		/*
+		 * Limelight Spin up turret Shoot command
+		 * 
+		 * Move towards tranch
+		 * 
+		 * 
+		 * 
+		 * 
+		 * *
+		 */
+		
 	}
 
 	/**
