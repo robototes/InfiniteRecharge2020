@@ -1,7 +1,12 @@
 package frc.team2412.robot;
 
+import static java.util.Map.entry;
+
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SelectCommand;
 import frc.team2412.robot.Subsystems.AutonumousSubsystem;
 import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
 import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
@@ -21,6 +26,16 @@ import io.github.oblarg.oblog.annotations.Log;
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer {
 	// Subsystems
+	Command m_exampleSelectCommand = new SelectCommand(
+			// Maps selector values to commands
+			Map.ofEntries(entry(1, null), entry(2, null), entry(3, null)), this::select
+
+	);
+	
+	
+	private int select() {
+		return 1;
+	}
 	public ExampleSubsystem m_ExampleSubsystem;
 
 	@Log(name = "Limelight Subsystem")
@@ -79,13 +94,13 @@ public class RobotContainer {
 
 		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
-		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro, RobotMap.driveLeftFront,
-				RobotMap.driveLeftBack, RobotMap.driveRightFront, RobotMap.driveRightBack);
+		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro,
+				RobotMap.driveLeftFront, RobotMap.driveLeftBack, RobotMap.driveRightFront, RobotMap.driveRightBack);
 
 		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid, RobotMap.backIntakeLiftSolenoid,
-				RobotMap.compressor);
+		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
+				RobotMap.backIntakeLiftSolenoid, RobotMap.compressor);
 
 		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
 

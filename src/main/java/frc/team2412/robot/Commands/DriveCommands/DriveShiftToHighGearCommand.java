@@ -10,13 +10,11 @@ public class DriveShiftToHighGearCommand extends CommandBase {
 	public DriveShiftToHighGearCommand(DriveBaseSubsystem driveBaseSubsystem) {
 		addRequirements(driveBaseSubsystem);
 		this.m_driveBaseSubsystem = driveBaseSubsystem;
-
 	}
 
 	@Override
 	public void execute() {
 		m_driveBaseSubsystem.shiftToHighGear();
-
 	}
 
 	@Override

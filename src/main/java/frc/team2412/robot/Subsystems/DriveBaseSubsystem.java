@@ -229,5 +229,54 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 		// Run path following command, then stop at the end.
 		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
 	}
+	
+	public Command getMoveThreeMetersForwardFromStartCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		Pose2d currentPose = getPose();
+		Translation2d currentTranslation = currentPose.getTranslation();
+		
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+				currentPose,
+				List.of(new Translation2d(currentTranslation.getX() + 1.5, 0)),
+				new Pose2d(currentTranslation.getX() + 3, 0, currentPose.getRotation()),
+				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+	
+	public Command getMoveCertainAmountCommand(double finalX, double finalY) {
+
+		DriveBaseSubsystem thisSub = this;
+
+		Pose2d currentPose = getPose();
+		Translation2d currentTranslation = currentPose.getTranslation();
+		
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+				currentPose,
+				List.of(new Translation2d(currentTranslation.getX() + (finalX/2), finalY/2)),
+				new Pose2d(currentTranslation.getX() + finalX, finalY, currentPose.getRotation()),
+				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
+	// GetPose and then get translation and then get x and y and rotation.
 }
