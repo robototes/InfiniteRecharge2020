@@ -5,7 +5,6 @@ import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.TurretSubsystem;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
-import jdk.nashorn.internal.runtime.logging.Loggable;
 
 public class Field implements Loggable {
 
