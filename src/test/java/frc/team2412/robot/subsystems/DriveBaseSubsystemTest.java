@@ -43,6 +43,7 @@ public class DriveBaseSubsystemTest {
 	// This method is run before the tests begin. initialize all mocks you wish to
 	// use in multiple functions here. Copy and paste this function in your own test
 	@Before
+	@Ignore
 	public void before() {
 		TestWithScheduler.schedulerStart();
 		TestWithScheduler.schedulerClear();
@@ -52,7 +53,7 @@ public class DriveBaseSubsystemTest {
 		mockedJoystick = mock(Joystick.class);
 		mockedGenericHID = mock(GenericHID.class);
 
-		realDriveBaseSubsystem = new DriveBaseSubsystem(mockedGyro, mockedMotor1, mockedMotor2, mockedMotor3,
+		realDriveBaseSubsystem = new DriveBaseSubsystem(null, mockedGyro, mockedMotor1, mockedMotor2, mockedMotor3,
 				mockedMotor4);
 	}
 
@@ -89,7 +90,7 @@ public class DriveBaseSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		assertEquals("Drive has been powered", realDriveBaseSubsystem.getCurrentRotation());
+		assertEquals("Drive has been powered", realDriveBaseSubsystem.getGyroHeading());
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
