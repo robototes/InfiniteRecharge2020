@@ -12,7 +12,7 @@ public class DriveBaseConstants {
 
 	public static final double MAX_VOLTAGE = 12;
 
-	public static final boolean kGyroReversed = false;
+	public static final boolean kGyroReversed = true;
 
 	public static final double ksVolts = 0.185;
 	public static final double kvVoltSecondsPerMeter = 0.0754;
@@ -25,8 +25,8 @@ public class DriveBaseConstants {
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 3; // Max speed we can drive
-	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+	public static final double kMaxSpeedMetersPerSecond = 0.25; // Max speed we can drive
+	public static final double kMaxAccelerationMetersPerSecondSquared = 1;
 
 	// Ramsete Controller Value
 	public static final double kRamseteB = 2; // makes a more straight curve

@@ -7,6 +7,8 @@
 
 package frc.team2412.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -34,7 +36,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_robotContainer.m_turretSubsystem.initTurretEncoder();
 		Logger.configureLoggingAndConfig(this, false);
 		Shuffleboard.startRecording();
 	}
@@ -87,10 +88,21 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 	}
+	
+	@Override
+	public void teleopInit() {
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_rightMotor1.setNeutralMode(NeutralMode.Coast);
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_rightMotor2.setNeutralMode(NeutralMode.Coast);
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_leftMotor1.setNeutralMode(NeutralMode.Coast);
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_leftMotor2.setNeutralMode(NeutralMode.Coast);
+	}
 
 	@Override
 	public void disabledInit() {
-
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_rightMotor1.setNeutralMode(NeutralMode.Brake);
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_rightMotor2.setNeutralMode(NeutralMode.Brake);
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_leftMotor1.setNeutralMode(NeutralMode.Brake);
+		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_leftMotor2.setNeutralMode(NeutralMode.Brake);
 	}
 
 	@Override

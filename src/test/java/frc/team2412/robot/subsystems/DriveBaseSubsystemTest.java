@@ -67,8 +67,17 @@ public class DriveBaseSubsystemTest {
 				// Apply the voltage constraint
 				.addConstraint(autoVoltageConstraint);
 
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-				List.of(new Translation2d(5, 5)), new Pose2d(10, 0, new Rotation2d(0)), config);
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+				// start
+				new Pose2d(0, 0, new Rotation2d(0)),
+				// mid
+				List.of(new Translation2d( 3.66 , 1.06),
+						new Translation2d(5.5, 0),
+						new Translation2d(9.15, 0)
+						), 
+				//end
+				new Pose2d(12.8, 0, new Rotation2d(0)),
+				config);
 
 		double time = exampleTrajectory.getTotalTimeSeconds();
 
