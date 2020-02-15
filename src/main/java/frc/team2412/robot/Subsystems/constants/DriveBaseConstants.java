@@ -14,11 +14,11 @@ public class DriveBaseConstants {
 
 	public static final boolean kGyroReversed = false;
 
-	public static final double ksVolts = 0.376;
-	public static final double kvVoltSecondsPerMeter = 0.0102;
-	public static final double kaVoltSecondsSquaredPerMeter = 0.00185;
+	public static final double ksVolts = 0.185;
+	public static final double kvVoltSecondsPerMeter = 0.0754;
+	public static final double kaVoltSecondsSquaredPerMeter = 0.0105;
 
-	public static final int kPDriveVel = 8;
+	public static final double kPDriveVel = 0.488;
 
 	public static final double kTrackwidthMeters = 0.5461; // Horizontal distance between wheels
 
