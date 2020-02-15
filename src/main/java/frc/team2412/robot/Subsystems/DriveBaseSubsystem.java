@@ -70,6 +70,10 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	private double m_rightMotorRotations, m_leftMotorRotations;
 
 	private double m_headingToGoal = 180;
+	
+	public double m_previousGyroHeading;
+	
+	public double m_currentGyroHeading;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
@@ -95,6 +99,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		
 		m_rightMotorRotations = m_rightMotor1.getSelectedSensorPosition() / 4096.0;
 		m_leftMotorRotations = m_leftMotor1.getSelectedSensorPosition() / 4096.0;
+		
+		m_currentGyroHeading = m_gyro.getAngle();
 
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
 	}
@@ -173,8 +179,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				(m_rightMotorRotations * highGearRatio) * metersPerWheelRevolution);
 
 		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
+		
+		m_previousGyroHeading = m_currentGyroHeading;
+		m_currentGyroHeading = m_gyro.getAngle();
 
-		System.out.println(m_odometry.getPoseMeters());
+//		System.out.println(m_odometry.getPoseMeters());
+		
 
 	}
 
@@ -317,6 +327,34 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 						new Translation2d(startTranslation.getX() + 9.15, startTranslation.getY() + 0)),
 				// end
 				new Pose2d(startTranslation.getX() + 12.8, 0, new Rotation2d(0)), config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+	
+	public Command getGoUnderControlPanelCommand() {
+
+		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
+
+		Pose2d startPose = m_odometry.getPoseMeters();
+
+		Translation2d startTranslation = startPose.getTranslation();
+
+		DriveBaseSubsystem thisSub = this;
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+				// start
+				startPose,
+				// mid
+				List.of(new Translation2d(startTranslation.getX() + 3.35, startTranslation.getY() + 2.74)),
+				// end
+				new Pose2d(startTranslation.getX() + 7.01, 0, new Rotation2d(0)), config);
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,

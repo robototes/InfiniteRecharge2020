@@ -24,8 +24,6 @@ import io.github.oblarg.oblog.Logger;
 @SuppressWarnings("unused")
 public class Robot extends TimedRobot {
 
-	public static int hi = 5;
-
 	// Have instances of robot container and OI for easy access
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	private OI m_OI = RobotMap.m_OI;
@@ -52,6 +50,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotPeriodic() {
+	//	System.out.println(RobotMap.m_robotContainer.m_driveBaseSubsystem.getGyroHeading());
+	System.out.println(m_robotContainer.m_driveBaseSubsystem.m_currentGyroHeading - m_robotContainer.m_driveBaseSubsystem.m_previousGyroHeading);
 		CommandScheduler.getInstance().run();
 		Logger.updateEntries();
 	}

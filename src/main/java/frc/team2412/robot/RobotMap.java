@@ -36,7 +36,7 @@ public class RobotMap {
 	public static DifferentialDrive robotDrive = new DifferentialDrive(driveLeftSide, driveRightSide);
 
 	// DriveBase Gyro
-	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS2);
+	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
