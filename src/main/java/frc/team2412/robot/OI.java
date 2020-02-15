@@ -54,7 +54,7 @@ public class OI {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
 		
-		autoCommand.whenPressed(RobotMap.m_robotContainer.m_driveBaseSubsystem.getCartonCommmand());
+		autoCommand.whenPressed(RobotMap.m_robotContainer.m_driveBaseSubsystem.getMoveThreeMetersForwardFromStartCommand());
 	
 	}
 }

@@ -8,7 +8,7 @@ public class DriveBaseConstants {
 	public static final double metersPerWheelRevolution = wheelDiameterMeters * Math.PI;
 
 	public static final double highGearRatio = 1 / 7.08;
-	public static final double lowGearRatio = 1 / 6.13;
+	public static final double lowGearRatio = 1 / 15.32;
 
 	public static final double MAX_VOLTAGE = 12;
 
@@ -25,8 +25,8 @@ public class DriveBaseConstants {
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 0.25; // Max speed we can drive
-	public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+	public static final double kMaxSpeedMetersPerSecond = 2; // Max speed we can drive
+	public static final double kMaxAccelerationMetersPerSecondSquared = 0.2;
 
 	// Ramsete Controller Value
 	public static final double kRamseteB = 2; // makes a more straight curve

@@ -3,6 +3,7 @@ package frc.team2412.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -35,7 +36,7 @@ public class RobotMap {
 	public static DifferentialDrive robotDrive = new DifferentialDrive(driveLeftSide, driveRightSide);
 
 	// DriveBase Gyro
-	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro();
+	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS2);
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
