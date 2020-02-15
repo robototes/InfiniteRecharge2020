@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.RobotState;
+import frc.team2412.robot.RobotState.IntakeDirection;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants;
 import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeLastMotor;
 import io.github.oblarg.oblog.Loggable;
@@ -32,6 +34,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	public void backIntakeOn() {
 		m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.BACK;
+		RobotState.m_intakeDirection = IntakeDirection.BACK;
 	}
 
 	public void frontIntakeOff() {
@@ -42,11 +45,13 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 		m_intakeFrontMotor.set(0);
 		m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.BACK;
+		RobotState.m_intakeDirection = IntakeDirection.BACK;
 	}
 
 	public void frontIntakeOn() {
 		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.FRONT;
+		RobotState.m_intakeDirection = IntakeDirection.FRONT;
 	}
 
 	public void frontIntakeOnBackIntakeOff() {
@@ -66,6 +71,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	public void intakeOn() {
 		m_intakeMotorGroup.set(1);
 		m_lastMotor = IntakeLastMotor.BOTH;
+		RobotState.m_intakeDirection = IntakeDirection.BOTH;
 	}
 
 	@Config

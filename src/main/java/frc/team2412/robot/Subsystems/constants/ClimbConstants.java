@@ -4,6 +4,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class ClimbConstants {
 
+	public static final int MAX_SPEED = 1;
+
+	public static final int CLIMB_OFFSET_HEIGHT = 0;
+
+	public static final int inchesPerRevolution = 0;
+
 	public static enum ClimbState {
 
 		// Creates a value called up which is equal to kForward
@@ -20,6 +26,15 @@ public class ClimbConstants {
 		}
 	}
 
-	public static final int mAX_SPEED = 1;
+	public static enum ClimbHeight {
+		TOP(72), MIDDLE(64), BOTTOM(56);
+
+		public int value;
+
+		private ClimbHeight(int inch) {
+			this.value = inch;
+		}
+
+	}
 
 }

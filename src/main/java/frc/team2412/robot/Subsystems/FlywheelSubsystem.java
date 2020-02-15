@@ -1,5 +1,7 @@
 package frc.team2412.robot.Subsystems;
 
+import static frc.team2412.robot.Subsystems.constants.FlywheelConstants.NEO_RPM_TO_FLYWHEEL_MPS;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -10,8 +12,6 @@ import frc.team2412.robot.Subsystems.constants.FlywheelConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
-
-import static frc.team2412.robot.Subsystems.constants.FlywheelConstants.*;
 
 public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 

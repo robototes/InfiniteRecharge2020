@@ -9,7 +9,7 @@ import com.robototes.units.UnitTypes.RotationUnits;
 import com.robototes.units.UnitTypes.TimeUnits;
 
 public class FlywheelConstants {
-	
+
 	public static final Distance OUTPUT_WHEEL_DIAMETER = new Distance(4, DistanceUnits.INCH);
 	public static final Distance OUTPUT_WHEEL_CIRCUMFRENCE = OUTPUT_WHEEL_DIAMETER.multiply(new Distance(Math.PI));
 
@@ -27,11 +27,9 @@ public class FlywheelConstants {
 
 	public static final InterUnitRatio<RotationUnits, DistanceUnits> NEO_RPM_TO_FLYWHEEL_MPS = new InterUnitRatio<RotationUnits, DistanceUnits>(
 			NEO_RPM_TO_FLYWHEEL_ROTATIONS_PER_SECOND, FLYWHEEL_ROTATIONS_TO_FLYWHEEL_METERS);
-	
+
 	public static final double I = 0;
 	public static final double D = 0;
 	public static final double P = 0;
-	
-	
 
 }
