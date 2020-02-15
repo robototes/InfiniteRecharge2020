@@ -31,11 +31,11 @@ public class RobotContainer {
 			Map.ofEntries(entry(1, null), entry(2, null), entry(3, null)), this::select
 
 	);
-	
-	
+
 	private int select() {
 		return 1;
 	}
+
 	public ExampleSubsystem m_ExampleSubsystem;
 
 	@Log(name = "Limelight Subsystem")
