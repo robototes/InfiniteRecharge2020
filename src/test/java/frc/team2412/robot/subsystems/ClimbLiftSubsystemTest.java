@@ -13,7 +13,7 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.ClimbCommands.ClimbDeployRailsCommand;
 import frc.team2412.robot.Commands.ClimbCommands.ClimbRetractRailsCommand;
@@ -25,8 +25,8 @@ public class ClimbLiftSubsystemTest {
 
 	// Mock instance of Example Subsystem
 	ClimbLiftSubsystem realClimbLiftSubsystem;
-	DoubleSolenoid mockedLiftSolenoid;
-	DoubleSolenoid mockedLiftSolenoid2;
+	Solenoid mockedLiftSolenoid;
+	Solenoid mockedLiftSolenoid2;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -44,8 +44,8 @@ public class ClimbLiftSubsystemTest {
 		TestWithScheduler.schedulerClear();
 		MockHardwareExtension.beforeAll();
 
-		mockedLiftSolenoid = mock(DoubleSolenoid.class);
-		mockedLiftSolenoid2 = mock(DoubleSolenoid.class);
+		mockedLiftSolenoid = mock(Solenoid.class);
+		mockedLiftSolenoid2 = mock(Solenoid.class);
 
 		realClimbLiftSubsystem = new ClimbLiftSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
 	}
