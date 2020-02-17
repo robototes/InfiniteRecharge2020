@@ -35,12 +35,12 @@ public class LiftSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void liftDown() {
-		setLift(false);
+		setLift(LiftState.DOWN);
 		RobotState.m_liftSolenoidState = RobotState.LiftState.WITHDRAWN;
 	}
 
 	public void liftUp() {
-		setLift(true);
+		setLift(LiftState.UP);
 		RobotState.m_liftSolenoidState = RobotState.LiftState.EXTENDED;
 	}
 
@@ -52,8 +52,8 @@ public class LiftSubsystem extends SubsystemBase implements Loggable {
 	// Takes the passed in LiftState and set the motor to that value. Also changes
 	// the current state to that state
 	@Config
-	private void setLift(Boolean value) {
-		m_liftUpDown.set(value);
+	private void setLift(LiftState value) {
+		m_liftUpDown.set(value.value);
 	}
 
 }
