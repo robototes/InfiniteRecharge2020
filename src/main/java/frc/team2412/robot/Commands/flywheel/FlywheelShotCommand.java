@@ -14,7 +14,7 @@ public class FlywheelShotCommand extends CommandBase {
 	@Override
 	public void execute() {
 		// run the example method
-		m_FlywheelSubsystem.Shoot();
+		m_FlywheelSubsystem.shoot();
 	}
 
 	@Override

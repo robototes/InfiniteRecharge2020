@@ -15,8 +15,6 @@ public class ExampleConstants {
 	// Testing library implementation works
 	public static final Distance EXAMPLE_DISTANCE = new Distance(1, DistanceUnits.INCH);
 
-  // Enums will go below here
+	// Enums will go below here
 
-	// Testing library implementation works
-	public final static Distance EXAMPLE_DISTANCE = new Distance(1, DistanceUnits.INCH);
 }

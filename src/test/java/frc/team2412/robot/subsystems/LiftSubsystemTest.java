@@ -14,6 +14,7 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
@@ -27,6 +28,15 @@ public class LiftSubsystemTest {
 	// Mock instance of Example Subsystem
 	LiftSubsystem realLiftSubsystem;
 	DoubleSolenoid mockedLiftSolenoid;
+	Compressor mockedCompressor;
+
+	// This is called after tests, and makes sure that nothing is left open and
+	// everything is ready for the next test class
+	@After
+	public void after() {
+		TestWithScheduler.schedulerDestroy();
+		MockHardwareExtension.afterAll();
+	}
 
 	// This method is run before the tests begin. initialize all mocks you wish to
 	// use in multiple functions here. Copy and paste this function in your own test
@@ -37,37 +47,9 @@ public class LiftSubsystemTest {
 		MockHardwareExtension.beforeAll();
 
 		mockedLiftSolenoid = mock(DoubleSolenoid.class);
+		mockedCompressor = mock(Compressor.class);
 
-		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid);
-	}
-
-	// This test makes sure that the example command calls the .subsystemMethod of
-	// example subsystem
-	@Test
-	public void LiftUpCommandOnLiftSubsystemCallsSolenoidSet() {
-		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedLiftSolenoid);
-
-		// Create command
-		LiftUpCommand liftUpCommand = new LiftUpCommand(realLiftSubsystem);
-
-		// Create a fake button that will be "pressed"
-		MockButton fakeButton = new MockButton();
-
-		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(liftUpCommand);
-
-		// Push the button and run the scheduler once
-		fakeButton.push();
-		CommandScheduler.getInstance().run();
-		fakeButton.release();
-
-		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(LiftState.UP.value);
-		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.UP);
-
-		// Clear the scheduler
-		TestWithScheduler.schedulerClear();
+		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, mockedCompressor);
 	}
 
 	@Test
@@ -97,12 +79,33 @@ public class LiftSubsystemTest {
 		TestWithScheduler.schedulerClear();
 	}
 
-	// This is called after tests, and makes sure that nothing is left open and
-	// everything is ready for the next test class
-	@After
-	public void after() {
-		TestWithScheduler.schedulerDestroy();
-		MockHardwareExtension.afterAll();
+	// This test makes sure that the example command calls the .subsystemMethod of
+	// example subsystem
+	@Test
+	public void LiftUpCommandOnLiftSubsystemCallsSolenoidSet() {
+		// Reset the subsystem to make sure all mock values are reset
+		reset(mockedLiftSolenoid);
+
+		// Create command
+		LiftUpCommand liftUpCommand = new LiftUpCommand(realLiftSubsystem);
+
+		// Create a fake button that will be "pressed"
+		MockButton fakeButton = new MockButton();
+
+		// Tell the button to run example command when pressed
+		fakeButton.whenPressed(liftUpCommand);
+
+		// Push the button and run the scheduler once
+		fakeButton.push();
+		CommandScheduler.getInstance().run();
+		fakeButton.release();
+
+		// Verify that the solenoid was set correctly
+		verify(mockedLiftSolenoid, times(1)).set(LiftState.UP.value);
+		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.UP);
+
+		// Clear the scheduler
+		TestWithScheduler.schedulerClear();
 	}
 
 }

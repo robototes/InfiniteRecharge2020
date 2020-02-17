@@ -1,9 +1,9 @@
 package frc.team2412.robot.Subsystems;
 
+import static frc.team2412.robot.Subsystems.constants.TurretConstants.ENCODER_MAX_ERROR_JUMP;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
 import static frc.team2412.robot.Subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
-import static frc.team2412.robot.Subsystems.constants.TurretConstants.*;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -14,24 +14,30 @@ import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.team2412.robot.Commands.turret.TurretFollowLimelightCommand;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class TurretSubsystem extends PIDSubsystem {
+public class TurretSubsystem extends PIDSubsystem implements Loggable {
 
+	@Log.ToString
 	private Rotations m_currentAngle;
+	@Log
 	private WPI_TalonSRX m_turretMotor;
-	private LimelightSubsystem m_LimelightSubsystem;
-	private int m_TurretOffsetPosition = 0;
-	private int m_TurretPastPosition;
-	private int m_TurretCurrentPosition;
+
+	private LimelightSubsystem m_limelightSubsystem;
+	private int m_turretOffsetPosition = 0;
+	private int m_turretPastPosition;
+	private int m_turretCurrentPosition;
 
 	public TurretSubsystem(WPI_TalonSRX turretMotor, LimelightSubsystem limelightSubsystem) {
 		super(TURRET_PID_CONTROLLER);
 		this.m_turretMotor = turretMotor;
-		m_LimelightSubsystem = limelightSubsystem;
+		m_limelightSubsystem = limelightSubsystem;
 
 		initTurretEncoder();
 
-		setDefaultCommand(new TurretFollowLimelightCommand(this, m_LimelightSubsystem));
+		setDefaultCommand(new TurretFollowLimelightCommand(this, m_limelightSubsystem));
 	}
 
 	public Rotations getCurrentAngle() {
@@ -40,7 +46,7 @@ public class TurretSubsystem extends PIDSubsystem {
 
 	@Override
 	public double getMeasurement() {
-		return m_TurretCurrentPosition - m_TurretOffsetPosition;
+		return m_turretCurrentPosition - m_turretOffsetPosition;
 	}
 
 	public void initTurretEncoder() {
@@ -50,30 +56,31 @@ public class TurretSubsystem extends PIDSubsystem {
 
 		m_turretMotor.setNeutralMode(NeutralMode.Brake);
 
-		m_TurretOffsetPosition = m_turretMotor.getSelectedSensorPosition(0);
-		m_TurretCurrentPosition = 0;
-		m_TurretPastPosition = 0;
+		m_turretOffsetPosition = m_turretMotor.getSelectedSensorPosition(0);
+		m_turretCurrentPosition = 0;
+		m_turretPastPosition = 0;
 
 		periodic();
 	}
 
 	@Override
 	public void periodic() {
-		m_TurretCurrentPosition = m_turretMotor.getSelectedSensorPosition(0);
+		m_turretCurrentPosition = m_turretMotor.getSelectedSensorPosition(0);
 
-		if (m_TurretCurrentPosition - m_TurretPastPosition > ENCODER_MAX_ERROR_JUMP ) {
-			m_TurretOffsetPosition += TICKS_PER_REVOLUTION;
+		if (m_turretCurrentPosition - m_turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
+			m_turretOffsetPosition += TICKS_PER_REVOLUTION;
 
-		} else if (Math.abs(m_TurretCurrentPosition - m_TurretPastPosition) > ENCODER_MAX_ERROR_JUMP ) {
-			m_TurretCurrentPosition = m_TurretPastPosition;
+		} else if (Math.abs(m_turretCurrentPosition - m_turretPastPosition) > ENCODER_MAX_ERROR_JUMP) {
+			m_turretCurrentPosition = m_turretPastPosition;
 		}
 
-		m_TurretPastPosition = m_TurretCurrentPosition;
+		m_turretPastPosition = m_turretCurrentPosition;
 		m_currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
 				RotationUnits.DEGREE);
 		System.out.println(getMeasurement());
 	}
 
+	@Config
 	public void set(double output) {
 		output = MathUtils.constrain(output, -1, 1);
 

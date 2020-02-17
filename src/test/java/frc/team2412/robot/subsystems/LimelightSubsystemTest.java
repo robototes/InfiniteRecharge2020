@@ -4,19 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
-import com.robototes.math.MathUtils;
 import com.robototes.sensors.Limelight;
 import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Subsystems.LimelightSubsystem;
 import frc.team2412.robot.Subsystems.constants.LimelightConstants;;
 
@@ -42,26 +39,6 @@ public class LimelightSubsystemTest {
 		realLimelightSubsystem = new LimelightSubsystem(mockedLimelight);
 	}
 
-	/*
-	 * @Test public void LimelightSubsystemSetsErrorValuesWhenNoTargetIsFound() {
-	 * 
-	 * // Configure the limelight to not find a target
-	 * when(mockedLimelight.hasValidTarget()).thenReturn(false);
-	 * 
-	 * // Register realLimelightSubsystem and run it once
-	 * CommandScheduler.getInstance().registerSubsystem(realLimelightSubsystem);
-	 * CommandScheduler.getInstance().run();
-	 * 
-	 * // Make sure that both yaw and distance have Double.NaN values
-	 * assertEquals("Limelight has NaN yaw", Double.NaN,
-	 * realLimelightSubsystem.getYawFromTarget().getValue(), MathUtils.EPSILON);
-	 * 
-	 * assertEquals("Limelight has NaN distance", Double.NaN,
-	 * realLimelightSubsystem.getDistanceToTarget().getValue(), MathUtils.EPSILON);
-	 * 
-	 * TestWithScheduler.schedulerClear(); }
-	 */
-
 	@Test
 	public void LimelightSubsystemSetsCorrectDistanceAndYawWhenTargetIsFound() {
 
@@ -76,8 +53,7 @@ public class LimelightSubsystemTest {
 		when(mockedLimelight.getTY()).thenReturn(ty);
 
 		// Register realLimelightSubsystem and run it once
-		CommandScheduler.getInstance().registerSubsystem(realLimelightSubsystem);
-		CommandScheduler.getInstance().run();
+		realLimelightSubsystem.getValues();
 
 		// Assert that the passed in rotation value matches a confirmed value
 		assertEquals("Limelight has correct yaw", new Rotations(tx, RotationUnits.DEGREE),

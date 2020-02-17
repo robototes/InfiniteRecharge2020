@@ -4,7 +4,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class IntakeConstants {
 
-	public static final double MAX_INTAKE_SPEED = 1;
+	public static enum IntakeLastMotor {
+		FRONT(1), BOTH(0), BACK(-1);
+
+		public double value;
+
+		private IntakeLastMotor(double value) {
+			this.value = value;
+		}
+	}
 
 	public static enum IntakeState {
 
@@ -22,14 +30,6 @@ public class IntakeConstants {
 		}
 	}
 
-	public static enum IntakeLastMotor {
-		FRONT(1), BOTH(0), BACK(-1);
-
-		public double value;
-
-		private IntakeLastMotor(double value) {
-			this.value = value;
-		}
-	}
+	public static final double MAX_INTAKE_SPEED = 1;
 
 }

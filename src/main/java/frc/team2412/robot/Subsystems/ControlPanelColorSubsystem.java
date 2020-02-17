@@ -8,63 +8,41 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.ControlPanelConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class ControlPanelColorSubsystem extends SubsystemBase {
+public class ControlPanelColorSubsystem extends SubsystemBase implements Loggable {
 
 	private ColorSensorV3 m_colorSensor;
-	private ColorMatch m_colorMatcher;
+	private ColorMatch m_colorMatcher = new ColorMatch();
 	private Talon m_wheelMotor;
-	private Color m_CurrentColor;
-	private Color m_StartColor;
+
+	@Log
+	private Color m_currentColor;
+
+	private Color m_startColor;
 	private Color m_ColorUnderBar;
 	private int rotationCount = 0;
 
-	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor, ColorMatch colorMatch) {
+	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor) {
 		this.m_colorSensor = colorSensor;
 		this.m_wheelMotor = motor;
-		this.m_colorMatcher = colorMatch;
 	}
 
-	public void rotateControlPanel() {
-		rotationCount = 0;
-		m_StartColor = m_colorSensor.getColor();
-		m_wheelMotor.set(0.5);
-		while (rotationCount <= 7) {
-			m_CurrentColor = m_colorSensor.getColor();
-			if (m_CurrentColor.equals(m_StartColor)) {
-				rotationCount++;
-			}
-		}
-		m_wheelMotor.set(0);
-	}
-
-	public void setToTargetColor() {
-
-		m_CurrentColor = m_colorSensor.getColor();
-		m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
-
-		while (m_ColorUnderBar != ControlPanelConstants.TargetColor) {
-			m_wheelMotor.set(0.25);
-			m_CurrentColor = m_colorSensor.getColor();
-			m_ColorUnderBar = getColorUnderBar(m_CurrentColor);
-		}
-
-		m_wheelMotor.set(0);
-
-	}
-
-	public Color getColorUnderBar(Color readColor) {
-		if (readColor.equals(ControlPanelConstants.blueTarget)) {
-			return ControlPanelConstants.redTarget;
-		} else if (readColor.equals(ControlPanelConstants.greenTarget)) {
-			return ControlPanelConstants.yellowTarget;
-		} else if (readColor.equals(ControlPanelConstants.redTarget)) {
+	public Color colorMatch(Color detectedColor) {
+		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+		if (match.color == ControlPanelConstants.blueTarget) {
 			return ControlPanelConstants.blueTarget;
-		} else if (readColor.equals(ControlPanelConstants.yellowTarget)) {
+		} else if (match.color == ControlPanelConstants.redTarget) {
+			return ControlPanelConstants.redTarget;
+		} else if (match.color == ControlPanelConstants.greenTarget) {
 			return ControlPanelConstants.greenTarget;
-		} else {
-			return Color.kBlack;
+		} else if (match.color == ControlPanelConstants.yellowTarget) {
+			return ControlPanelConstants.yellowTarget;
 		}
+
+		return detectedColor;
+
 	}
 
 	public String colorToString(Color m_color) {
@@ -81,19 +59,45 @@ public class ControlPanelColorSubsystem extends SubsystemBase {
 		}
 	}
 
-	public Color colorMatcher(Color detectedColor) {
-		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-		if (match.color == ControlPanelConstants.blueTarget) {
-			return ControlPanelConstants.blueTarget;
-		} else if (match.color == ControlPanelConstants.redTarget) {
+	public Color getColorUnderBar(Color readColor) {
+		if (readColor.equals(ControlPanelConstants.blueTarget)) {
 			return ControlPanelConstants.redTarget;
-		} else if (match.color == ControlPanelConstants.greenTarget) {
-			return ControlPanelConstants.greenTarget;
-		} else if (match.color == ControlPanelConstants.yellowTarget) {
+		} else if (readColor.equals(ControlPanelConstants.greenTarget)) {
 			return ControlPanelConstants.yellowTarget;
+		} else if (readColor.equals(ControlPanelConstants.redTarget)) {
+			return ControlPanelConstants.blueTarget;
+		} else if (readColor.equals(ControlPanelConstants.yellowTarget)) {
+			return ControlPanelConstants.greenTarget;
+		} else {
+			return Color.kBlack;
+		}
+	}
+
+	public void rotateControlPanel() {
+		rotationCount = 0;
+		m_startColor = colorMatch(m_colorSensor.getColor());
+		m_wheelMotor.set(0.5);
+		while (rotationCount <= 7) {
+			m_currentColor = colorMatch(m_colorSensor.getColor());
+			if (m_currentColor.equals(m_startColor)) {
+				rotationCount++;
+			}
+		}
+		m_wheelMotor.set(0);
+	}
+
+	public void setToTargetColor() {
+
+		m_currentColor = colorMatch(m_colorSensor.getColor());
+		m_ColorUnderBar = getColorUnderBar(m_currentColor);
+
+		while (m_ColorUnderBar != ControlPanelConstants.TargetColor) {
+			m_wheelMotor.set(0.25);
+			m_currentColor = colorMatch(m_colorSensor.getColor());
+			m_ColorUnderBar = getColorUnderBar(m_currentColor);
 		}
 
-		return detectedColor;
+		m_wheelMotor.set(0);
 
 	}
 }
