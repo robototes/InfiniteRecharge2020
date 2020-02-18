@@ -1,6 +1,5 @@
 package frc.team2412.robot.subsystems;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -20,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
-import frc.team2412.robot.Subsystems.constants.LiftConstants.LiftState;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class LiftSubsystemTest {
@@ -73,7 +71,6 @@ public class LiftSubsystemTest {
 
 		// Verify that the solenoid was set correctly
 		verify(mockedLiftSolenoid, times(1)).set(false);
-		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.DOWN);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
@@ -102,7 +99,6 @@ public class LiftSubsystemTest {
 
 		// Verify that the solenoid was set correctly
 		verify(mockedLiftSolenoid, times(1)).set(true);
-		assertEquals("Lift has the correct state", realLiftSubsystem.getCurrentState(), LiftState.UP);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
