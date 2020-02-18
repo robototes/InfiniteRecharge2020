@@ -14,7 +14,7 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
 import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
@@ -25,7 +25,7 @@ public class LiftSubsystemTest {
 
 	// Mock instance of Example Subsystem
 	LiftSubsystem realLiftSubsystem;
-	Solenoid mockedLiftSolenoid;
+	DoubleSolenoid mockedLiftSolenoid;
 	Compressor mockedCompressor;
 
 	// This is called after tests, and makes sure that nothing is left open and
@@ -44,7 +44,7 @@ public class LiftSubsystemTest {
 		TestWithScheduler.schedulerClear();
 		MockHardwareExtension.beforeAll();
 
-		mockedLiftSolenoid = mock(Solenoid.class);
+		mockedLiftSolenoid = mock(DoubleSolenoid.class);
 		mockedCompressor = mock(Compressor.class);
 
 		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, mockedCompressor);
@@ -70,7 +70,7 @@ public class LiftSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(false);
+		verify(mockedLiftSolenoid, times(1)).set(DoubleSolenoid.Value.kReverse);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
@@ -98,7 +98,7 @@ public class LiftSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(true);
+		verify(mockedLiftSolenoid, times(1)).set(DoubleSolenoid.Value.kForward);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
