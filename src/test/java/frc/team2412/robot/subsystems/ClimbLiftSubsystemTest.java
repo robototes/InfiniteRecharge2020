@@ -13,20 +13,20 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
-import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
-import frc.team2412.robot.Subsystems.LiftSubsystem;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbDeployRailsCommand;
+import frc.team2412.robot.Commands.ClimbCommands.ClimbRetractRailsCommand;
+import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
+import frc.team2412.robot.Subsystems.constants.ClimbConstants.ClimbState;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
-public class LiftSubsystemTest {
+public class ClimbLiftSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	LiftSubsystem realLiftSubsystem;
+	ClimbLiftSubsystem realClimbLiftSubsystem;
 	Solenoid mockedLiftSolenoid;
-	Compressor mockedCompressor;
+	Solenoid mockedLiftSolenoid2;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -45,18 +45,18 @@ public class LiftSubsystemTest {
 		MockHardwareExtension.beforeAll();
 
 		mockedLiftSolenoid = mock(Solenoid.class);
-		mockedCompressor = mock(Compressor.class);
+		mockedLiftSolenoid2 = mock(Solenoid.class);
 
-		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, mockedCompressor);
+		realClimbLiftSubsystem = new ClimbLiftSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
 	}
 
 	@Test
-	public void LiftDownCommandOnLiftSubsystemCallsSolenoidSet() {
+	public void ClimbUPCommandOnClimbSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedLiftSolenoid);
 
 		// Create command
-		LiftDownCommand liftDownCommand = new LiftDownCommand(realLiftSubsystem);
+		ClimbDeployRailsCommand liftDownCommand = new ClimbDeployRailsCommand(realClimbLiftSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
@@ -70,8 +70,7 @@ public class LiftSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(false);
-
+		verify(mockedLiftSolenoid, times(1)).set(ClimbState.UP.value);
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
@@ -79,18 +78,18 @@ public class LiftSubsystemTest {
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
 	@Test
-	public void LiftUpCommandOnLiftSubsystemCallsSolenoidSet() {
+	public void ClimbDownCommandOnClimbSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedLiftSolenoid);
 
 		// Create command
-		LiftUpCommand liftUpCommand = new LiftUpCommand(realLiftSubsystem);
+		ClimbRetractRailsCommand liftDownCommand = new ClimbRetractRailsCommand(realClimbLiftSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
 
 		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(liftUpCommand);
+		fakeButton.whenPressed(liftDownCommand);
 
 		// Push the button and run the scheduler once
 		fakeButton.push();
@@ -98,8 +97,7 @@ public class LiftSubsystemTest {
 		fakeButton.release();
 
 		// Verify that the solenoid was set correctly
-		verify(mockedLiftSolenoid, times(1)).set(true);
-
+		verify(mockedLiftSolenoid, times(1)).set(ClimbState.DOWN.value);
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
