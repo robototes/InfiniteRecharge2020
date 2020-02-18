@@ -1,13 +1,7 @@
 package frc.team2412.robot;
 
-import static java.util.Map.entry;
-
-import java.util.Map;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SelectCommand;
-import frc.team2412.robot.Subsystems.AutonumousSubsystem;
 import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
 import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
@@ -27,16 +21,6 @@ import io.github.oblarg.oblog.annotations.Log;
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
 	// Subsystems
-	Command m_exampleSelectCommand = new SelectCommand(
-			// Maps selector values to commands
-			Map.ofEntries(entry(1, null), entry(2, null), entry(3, null)), this::select
-
-	);
-
-	private int select() {
-		return 1;
-	}
-
 	public ExampleSubsystem m_ExampleSubsystem;
 
 	@Log(name = "Limelight Subsystem")
@@ -75,10 +59,6 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Climb Motor Subsystem")
 	public ClimbMotorSubsystem m_ClimbMotorSubsystem;
 
-	@Log(name = "Autonumous Subsystem", tabName = "robotContainer")
-	@Log(tabName = "Robot")
-	public AutonumousSubsystem m_autonumousSubsystem;
-
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -110,10 +90,6 @@ public class RobotContainer implements Loggable {
 		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
 
 		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
-
-		m_autonumousSubsystem = new AutonumousSubsystem(m_driveBaseSubsystem, m_liftSubsystem, m_turretSubsystem,
-				m_flywheelSubsystem, m_hoodSubsystem, m_IndexerSubsystem, m_intakeMotorOnOffSubsystem,
-				m_intakeUpDownSubsystem);
 
 		// Add commands to the autonomous command chooser
 //		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
