@@ -1,6 +1,6 @@
 package frc.team2412.robot.Subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.Subsystems.constants.ClimbConstants.ClimbState;
 import io.github.oblarg.oblog.annotations.Config;
@@ -8,10 +8,10 @@ import io.github.oblarg.oblog.annotations.Config;
 public class ClimbLiftSubsystem extends SubsystemBase {
 
 	// For Pneumatics
-	private DoubleSolenoid m_leftPneumatic;
-	private DoubleSolenoid m_rightPneumatic;
+	private Solenoid m_leftPneumatic;
+	private Solenoid m_rightPneumatic;
 
-	public ClimbLiftSubsystem(DoubleSolenoid leftPneumatic, DoubleSolenoid rightPneumatic) {
+	public ClimbLiftSubsystem(Solenoid leftPneumatic, Solenoid rightPneumatic) {
 
 		m_leftPneumatic = leftPneumatic;
 		m_rightPneumatic = rightPneumatic;

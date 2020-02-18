@@ -1,5 +1,6 @@
 package frc.team2412.robot.Subsystems;
 
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.highGearRatio;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kDriveKinematics;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kGyroReversed;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kMaxAccelerationMetersPerSecondSquared;
@@ -10,7 +11,8 @@ import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kRamset
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kaVoltSecondsSquaredPerMeter;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.ksVolts;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kvVoltSecondsPerMeter;
-import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.metersPerEncoderRevolution;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.lowGearRatio;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
 import java.util.List;
 
@@ -66,6 +68,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	private DifferentialDriveOdometry m_odometry;
 
 	private int m_rightEncoderValue, m_leftEncoderValue;
+
+	private double m_headingToGoal = 180;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
@@ -151,6 +155,10 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return m_currentYSpeed;
 	}
 
+	public double getHeadingToGoal() {
+		return m_headingToGoal;
+	}
+
 	@Override
 	public void periodic() {
 		m_motion = new Vector(m_gyro.getAngle() % 360);
@@ -158,8 +166,17 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
 		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
 
-		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()), m_leftEncoderValue * metersPerEncoderRevolution,
-				m_rightEncoderValue * metersPerEncoderRevolution);
+		if (RobotState.m_gearState == RobotState.GearState.HIGH) {
+			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+					m_leftEncoderValue * highGearRatio * metersPerWheelRevolution,
+					m_rightEncoderValue * highGearRatio * metersPerWheelRevolution);
+		} else {
+			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+					m_leftEncoderValue * lowGearRatio * metersPerWheelRevolution,
+					m_rightEncoderValue * lowGearRatio * metersPerWheelRevolution);
+		}
+
+		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
 	}
 
 	// Trajectory stuff
@@ -194,11 +211,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 			10);
 
 	// Create config for trajectory
-	TrajectoryConfig config = new TrajectoryConfig(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared)
-			// Add kinematics to ensure max speed is actually obeyed
-			.setKinematics(kDriveKinematics)
-			// Apply the voltage constraint
-			.addConstraint(autoVoltageConstraint);
+	public TrajectoryConfig config = new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+			kMaxAccelerationMetersPerSecondSquared)
+					// Add kinematics to ensure max speed is actually obeyed
+					.setKinematics(kDriveKinematics)
+					// Apply the voltage constraint
+					.addConstraint(autoVoltageConstraint);
 
 	SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter,
 			kaVoltSecondsSquaredPerMeter);
@@ -231,19 +249,17 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
 
 	}
-	
+
 	public Command getMoveThreeMetersForwardFromStartCommand() {
 
 		DriveBaseSubsystem thisSub = this;
 
 		Pose2d currentPose = getPose();
 		Translation2d currentTranslation = currentPose.getTranslation();
-		
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-				currentPose,
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
 				List.of(new Translation2d(currentTranslation.getX() + 1.5, 0)),
-				new Pose2d(currentTranslation.getX() + 3, 0, currentPose.getRotation()),
-				config);
+				new Pose2d(currentTranslation.getX() + 3, 0, currentPose.getRotation()), config);
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
@@ -254,19 +270,18 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
 
 	}
-	
+
+	@Config
 	public Command getMoveCertainAmountCommand(double finalX, double finalY) {
 
 		DriveBaseSubsystem thisSub = this;
 
 		Pose2d currentPose = getPose();
 		Translation2d currentTranslation = currentPose.getTranslation();
-		
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-				currentPose,
-				List.of(new Translation2d(currentTranslation.getX() + (finalX/2), finalY/2)),
-				new Pose2d(currentTranslation.getX() + finalX, finalY, currentPose.getRotation()),
-				config);
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
+				List.of(new Translation2d(currentTranslation.getX() + (finalX / 2), finalY / 2)),
+				new Pose2d(currentTranslation.getX() + finalX, finalY, currentPose.getRotation()), config);
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,

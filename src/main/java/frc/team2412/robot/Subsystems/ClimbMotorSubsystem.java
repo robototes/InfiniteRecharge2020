@@ -19,6 +19,8 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 	private CANEncoder m_encoder;
 
+	public double m_currentClimbHeight;
+
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
 		m_leftClimbMotor = leftClimbMotor;
 		m_rightClimbMotor = rightClimbMotor;
@@ -47,6 +49,12 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 	public double getEncoderValue() {
 		return m_encoder.getPosition();
+	}
+
+	@Override
+	public void periodic() {
+		m_currentClimbHeight = getEncoderValue() * ClimbConstants.inchesPerRevolution
+				+ ClimbConstants.CLIMB_OFFSET_HEIGHT;
 	}
 
 	public void climbToHeight(ClimbHeight newHeight) {
