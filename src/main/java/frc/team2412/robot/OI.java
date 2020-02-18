@@ -98,7 +98,6 @@ public class OI {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
 
-
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
 		// LIFT
