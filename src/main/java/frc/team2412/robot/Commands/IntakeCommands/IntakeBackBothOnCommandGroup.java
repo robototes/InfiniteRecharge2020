@@ -15,7 +15,7 @@ public class IntakeBackBothOnCommandGroup extends ParallelCommandGroup {
 		m_intakeUpDownSubsystem = intakeUpDownSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
 
-		addCommands(new IntakeBackUpCommand(m_intakeUpDownSubsystem),
+		addCommands(new IntakeBackDownCommand(m_intakeUpDownSubsystem),
 				new IntakeBackOnCommand(m_intakeOnOffSubsystem));
 	}
 

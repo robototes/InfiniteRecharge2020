@@ -15,7 +15,7 @@ public class IntakeFrontBothOffCommandGroup extends ParallelCommandGroup {
 		m_intakeUpDownSubsystem = intakeUpDownSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
 
-		addCommands(new IntakeFrontDownCommand(m_intakeUpDownSubsystem),
+		addCommands(new IntakeFrontUpCommand(m_intakeUpDownSubsystem),
 				new IntakeFrontOffCommand(m_intakeOnOffSubsystem));
 	}
 
