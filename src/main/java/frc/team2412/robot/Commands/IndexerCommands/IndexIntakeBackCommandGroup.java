@@ -41,8 +41,6 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 
 		indexSwitchTwoCommand = new IndexSwitchTwoCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
 		indexSwitchFourCommand = new IndexSwitchFourCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
-	//HI
-//		ConditionalCommand command = new ConditionalCommand();
 		Command command = new SelectCommand(
 				Map.ofEntries(
 						entry(0, indexIntakeOneBackCommand),
@@ -54,7 +52,6 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 				this::numBalls
 		);
 		addCommands(command);
-		//addCommands(indexIntakeOneBackCommand, indexIntakeTwoThreeBackCommand, indexIntakeFourFiveBackCommand, indexSwitchTwoCommand, indexSwitchFourCommand);
 	}
 	public int numBalls(){
 		return numBalls;
