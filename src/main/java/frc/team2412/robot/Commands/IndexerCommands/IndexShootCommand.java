@@ -1,12 +1,12 @@
 package frc.team2412.robot.Commands.IndexerCommands;
 
+import static frc.team2412.robot.Subsystems.constants.IndexerConstants.numBalls;
+import static frc.team2412.robot.Subsystems.constants.IndexerConstants.unbalancedSide;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.Subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.Subsystems.constants.IndexerConstants;
-
-import static frc.team2412.robot.Subsystems.constants.IndexerConstants.numBalls;
-import static frc.team2412.robot.Subsystems.constants.IndexerConstants.unbalancedSide;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexShootCommand extends CommandBase {
@@ -23,15 +23,15 @@ public class IndexShootCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
-		if(!m_indexerSensorSubsystem.getIndexMidSensorValue()){
-			if(unbalancedSide == IndexerConstants.UnbalancedSide.FRONT){
+		if (!m_indexerSensorSubsystem.getIndexMidSensorValue()) {
+			if (unbalancedSide == IndexerConstants.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
-				if(m_indexerSensorSubsystem.allFrontSensorsOff()){
+				if (m_indexerSensorSubsystem.allFrontSensorsOff()) {
 					m_indexerMotorSubsystem.setBackMotor(-1);
 				}
-			}else{
+			} else {
 				m_indexerMotorSubsystem.setBackMotor(-1);
-				if(m_indexerSensorSubsystem.allBackSensorsOff()){
+				if (m_indexerSensorSubsystem.allBackSensorsOff()) {
 					m_indexerMotorSubsystem.setFrontMotor(-1);
 				}
 			}
@@ -40,12 +40,12 @@ public class IndexShootCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		if(m_indexerSensorSubsystem.allInnerSensorsOff()){
+		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
 			m_indexerMotorSubsystem.stopAllMotors();
 			numBalls = 0;
 			return true;
 
-		} else{
+		} else {
 			numBalls = m_indexerSensorSubsystem.totalSensorsOn();
 			return false;
 		}

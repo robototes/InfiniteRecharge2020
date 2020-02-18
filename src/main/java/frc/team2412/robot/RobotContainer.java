@@ -7,7 +7,6 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
-import frc.team2412.robot.Subsystems.AutonumousSubsystem;
 import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
 import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
@@ -15,6 +14,8 @@ import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import frc.team2412.robot.Subsystems.FlywheelSubsystem;
 import frc.team2412.robot.Subsystems.HoodSubsystem;
+import frc.team2412.robot.Subsystems.IndexerMotorSubsystem;
+import frc.team2412.robot.Subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.Subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
@@ -65,18 +66,17 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Control Panel Subsystem")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
-	@Log(name = "Indexer Subsystem")
-	public IndexerSubsystem m_IndexerSubsystem;
+	@Log(name = "Indexer Motor Subsystem")
+	public IndexerMotorSubsystem m_IndexerMotorSubsystem;
+
+	@Log(name = "Indexer Sensor Subsystem")
+	public IndexerSensorSubsystem m_IndexerSensorSubsystem;
 
 	@Log(name = "Climb lift Subsystem")
 	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
 
 	@Log(name = "Climb Motor Subsystem")
 	public ClimbMotorSubsystem m_ClimbMotorSubsystem;
-
-	@Log(name = "Autonumous Subsystem", tabName = "robotContainer")
-	@Log(tabName = "Robot")
-	public AutonumousSubsystem m_autonumousSubsystem;
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -88,9 +88,11 @@ public class RobotContainer implements Loggable {
 		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
 		m_ClimbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 
-		m_IndexerSubsystem = new IndexerSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-				RobotMap.indexBackMotor, RobotMap.front, RobotMap.frontMid, RobotMap.mid, RobotMap.backMid,
-				RobotMap.back, RobotMap.intakeFront, RobotMap.intakeBack);
+		m_IndexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
+				RobotMap.indexBackMotor);
+
+		m_IndexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
+				RobotMap.mid, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
 		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
@@ -109,10 +111,6 @@ public class RobotContainer implements Loggable {
 		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
 
 		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
-
-		m_autonumousSubsystem = new AutonumousSubsystem(m_driveBaseSubsystem, m_liftSubsystem, m_turretSubsystem,
-				m_flywheelSubsystem, m_hoodSubsystem, m_IndexerSubsystem, m_intakeMotorOnOffSubsystem,
-				m_intakeUpDownSubsystem);
 
 		// Add commands to the autonomous command chooser
 //		m_chooser.addOption("Basic Auto", m_basicAutoCommand);

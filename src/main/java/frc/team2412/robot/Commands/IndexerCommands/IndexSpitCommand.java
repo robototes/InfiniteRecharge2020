@@ -1,10 +1,10 @@
 package frc.team2412.robot.Commands.IndexerCommands;
 
+import static frc.team2412.robot.Subsystems.constants.IndexerConstants.numBalls;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.Subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.Subsystems.IndexerSensorSubsystem;
-
-import static frc.team2412.robot.Subsystems.constants.IndexerConstants.numBalls;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexSpitCommand extends CommandBase {
@@ -28,7 +28,7 @@ public class IndexSpitCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		if(m_indexerSensorSubsystem.allInnerSensorsOff()) {
+		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
 			m_indexerMotorSubsystem.stopAllMotors();
 			numBalls = 0;
 			return true;
