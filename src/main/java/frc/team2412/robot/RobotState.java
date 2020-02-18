@@ -18,25 +18,25 @@ public class RobotState implements Loggable {
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
 	@Log
-	public static GearState m_gearState = GearState.LOW;
+	public static GearboxState m_gearState = GearboxState.LOW;
 
-	public enum IntakeDirection {
+	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 	}
 
-	public enum ClimbState {
+	public static enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
 	}
 
-	public enum LiftState {
+	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
 	}
 
-	public static enum GearState {
+	public static enum GearboxState {
 		HIGH, LOW;
 	}
 
-	public RobotState() {
+	private RobotState() {
 
 	}
 
@@ -67,27 +67,27 @@ public class RobotState implements Loggable {
 		}
 	}
 
-	public IntakeDirection getintakeDirection() {
+	public static IntakeDirection getintakeDirection() {
 		return m_intakeDirection;
 	}
 
-	public void setintakeDirection(IntakeDirection m_intakeDirection) {
+	public static void setintakeDirection(IntakeDirection m_intakeDirection) {
 		RobotState.m_intakeDirection = m_intakeDirection;
 	}
 
-	public ClimbState getclimbState() {
+	public static ClimbState getclimbState() {
 		return m_climbState;
 	}
 
-	public void setclimbState(ClimbState m_climbState) {
+	public static void setclimbState(ClimbState m_climbState) {
 		RobotState.m_climbState = m_climbState;
 	}
 
-	public LiftState getliftSolenoidState() {
+	public static LiftState getliftSolenoidState() {
 		return m_liftSolenoidState;
 	}
 
-	public void setliftSolenoidState(LiftState m_liftSolenoidState) {
+	public static void setliftSolenoidState(LiftState m_liftSolenoidState) {
 		RobotState.m_liftSolenoidState = m_liftSolenoidState;
 	}
 

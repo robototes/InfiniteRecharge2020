@@ -139,12 +139,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public void shiftToHighGear() {
 		m_gearShifter.set(true);
-		RobotState.m_gearState = RobotState.GearState.HIGH;
+		RobotState.m_gearState = RobotState.GearboxState.HIGH;
 	}
 
 	public void shiftToLowGear() {
 		m_gearShifter.set(false);
-		RobotState.m_gearState = RobotState.GearState.LOW;
+		RobotState.m_gearState = RobotState.GearboxState.LOW;
 	}
 
 	public double getGyroHeading() {
@@ -166,7 +166,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
 		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
 
-		if (RobotState.m_gearState == RobotState.GearState.HIGH) {
+		if (RobotState.m_gearState == RobotState.GearboxState.HIGH) {
 			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
 					m_leftEncoderValue * highGearRatio * metersPerWheelRevolution,
 					m_rightEncoderValue * highGearRatio * metersPerWheelRevolution);

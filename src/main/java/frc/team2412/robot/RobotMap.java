@@ -79,18 +79,11 @@ public class RobotMap {
 	private final static int frontSensorID = 5;
 	private final static int intakeFrontSensorID = 6;
 	private final static int intakeBackSensorID = 7;
-	private final static int frontSolenoidDown_ID = 1;
-	private final static int frontSolenoidUp_ID = 2;
-	private final static int rearSolenoidDown_ID = 3;
-	private final static int rearSolenoidUp_ID = 4;
 
 	// motors
 	public static CANSparkMax indexFrontMotor = new CANSparkMax(indexFrontMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexBackMotor = new CANSparkMax(indexBackMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexMidMotor = new CANSparkMax(indexMidMotorID, MotorType.kBrushless);
-
-	public static Solenoid frontClutch = new Solenoid(frontSolenoidUp_ID, frontSolenoidDown_ID);
-	public static Solenoid rearClutch = new Solenoid(rearSolenoidUp_ID, rearSolenoidDown_ID);
 
 	// sensors
 	public static DigitalInput back = new DigitalInput(backSensorID);
@@ -102,7 +95,6 @@ public class RobotMap {
 	// INDEXER CONTROLS THESE NOT INTAKE FYI
 	public static DigitalInput intakeFront = new DigitalInput(intakeFrontSensorID);
 	public static DigitalInput intakeBack = new DigitalInput(intakeBackSensorID);
-	public static final int exampleID = 1;
 
 	// Turret Subsystem
 	// ------------------------------------------------------------------------------
