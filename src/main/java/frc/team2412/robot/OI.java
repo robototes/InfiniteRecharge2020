@@ -11,7 +11,6 @@ import frc.team2412.robot.Commands.ClimbCommands.ClimbRetractRailsCommand;
 import frc.team2412.robot.Commands.ClimbCommands.ClimbStopArmCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
 import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
-import frc.team2412.robot.Commands.IndexerCommands.ProcessBallsCommandGroup;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
 import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
@@ -98,8 +97,6 @@ public class OI {
 	public OI(RobotContainer robotContainer) {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
-		indexerStopButton
-				.toggleWhenPressed(new ProcessBallsCommandGroup(robotContainer.m_IndexerSubsystem, indexerShootButton));
 
 		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 

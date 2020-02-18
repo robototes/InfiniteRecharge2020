@@ -9,7 +9,8 @@ import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import frc.team2412.robot.Subsystems.FlywheelSubsystem;
 import frc.team2412.robot.Subsystems.HoodSubsystem;
-import frc.team2412.robot.Subsystems.IndexerSubsystem;
+import frc.team2412.robot.Subsystems.IndexerMotorSubsystem;
+import frc.team2412.robot.Subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.Subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
@@ -50,8 +51,11 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Control Panel Subsystem")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
-	@Log(name = "Indexer Subsystem")
-	public IndexerSubsystem m_IndexerSubsystem;
+	@Log(name = "Indexer Motor Subsystem")
+	public IndexerMotorSubsystem m_IndexerMotorSubsystem;
+
+	@Log(name = "Indexer Sensor Subsystem")
+	public IndexerSensorSubsystem m_IndexerSensorSubsystem;
 
 	@Log(name = "Climb lift Subsystem")
 	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
@@ -69,9 +73,11 @@ public class RobotContainer implements Loggable {
 		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
 		m_ClimbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 
-		m_IndexerSubsystem = new IndexerSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-				RobotMap.indexBackMotor, RobotMap.front, RobotMap.frontMid, RobotMap.mid, RobotMap.backMid,
-				RobotMap.back, RobotMap.intakeFront, RobotMap.intakeBack);
+		m_IndexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
+				RobotMap.indexBackMotor);
+
+		m_IndexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
+				RobotMap.mid, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
 		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
