@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 public class DriveBaseConstants {
 
+	
+	public static final double EncoderTicksPerRevolution = 4096.0;
+	
 	private static double wheelDiameterMeters = 0.1524;
 	public static final double metersPerWheelRevolution = wheelDiameterMeters * Math.PI;
 
