@@ -11,6 +11,7 @@ import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kRamset
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kaVoltSecondsSquaredPerMeter;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.ksVolts;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.kvVoltSecondsPerMeter;
+import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.Subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
 import java.util.List;
@@ -51,7 +52,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public Vector m_motion;
 
-	@Log
 	public Gyro m_gyro;
 
 	public Solenoid m_gearShifter;
@@ -67,13 +67,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	private DifferentialDriveOdometry m_odometry;
 
-	private double m_rightMotorRotations, m_leftMotorRotations;
+	private int m_rightEncoderValue, m_leftEncoderValue;
 
 	private double m_headingToGoal = 180;
-	
-	public double m_previousGyroHeading;
-	
-	public double m_currentGyroHeading;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
@@ -82,25 +78,21 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_gyro = gyro;
 		m_gearShifter = gearShifter;
 
+		m_rightMotor1.setInverted(true);
+
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
 		m_rightMotor1 = rightMotor1;
 		m_rightMotor2 = rightMotor2;
-
 		m_leftMotor2.follow(leftMotor1);
 		m_rightMotor2.follow(rightMotor1);
-
-		m_leftMotor1.setInverted(true);
-		m_leftMotor2.setInverted(true);
 
 		m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
 		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
 		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
-		
-		m_rightMotorRotations = m_rightMotor1.getSelectedSensorPosition() / 4096.0;
-		m_leftMotorRotations = m_leftMotor1.getSelectedSensorPosition() / 4096.0;
-		
-		m_currentGyroHeading = m_gyro.getAngle();
+
+		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
+		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
 
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
 	}
@@ -171,21 +163,20 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public void periodic() {
 		m_motion = new Vector(m_gyro.getAngle() % 360);
 
-		m_rightMotorRotations = m_rightMotor1.getSelectedSensorPosition() / 4096.0;
-		m_leftMotorRotations = m_leftMotor1.getSelectedSensorPosition() / 4096.0;
+		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
+		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
 
-		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
-				(m_leftMotorRotations  * highGearRatio) * metersPerWheelRevolution,
-				(m_rightMotorRotations * highGearRatio) * metersPerWheelRevolution);
+		if (RobotState.m_gearState == RobotState.GearState.HIGH) {
+			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+					m_leftEncoderValue * highGearRatio * metersPerWheelRevolution,
+					m_rightEncoderValue * highGearRatio * metersPerWheelRevolution);
+		} else {
+			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+					m_leftEncoderValue * lowGearRatio * metersPerWheelRevolution,
+					m_rightEncoderValue * lowGearRatio * metersPerWheelRevolution);
+		}
 
 		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
-		
-		m_previousGyroHeading = m_currentGyroHeading;
-		m_currentGyroHeading = m_gyro.getAngle();
-
-//		System.out.println(m_odometry.getPoseMeters());
-		
-
 	}
 
 	// Trajectory stuff
@@ -196,8 +187,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		return new DifferentialDriveWheelSpeeds((m_leftMotor1.getSelectedSensorVelocity() / 4096.0) * metersPerWheelRevolution * 10,
-				(m_rightMotor1.getSelectedSensorVelocity() / 4096.0) * metersPerWheelRevolution * 10);
+		return new DifferentialDriveWheelSpeeds(m_leftMotor1.getSelectedSensorVelocity(),
+				m_rightMotor1.getSelectedSensorVelocity());
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -260,8 +251,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public Command getMoveThreeMetersForwardFromStartCommand() {
-		
-		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
 
 		DriveBaseSubsystem thisSub = this;
 
@@ -270,7 +259,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
 				List.of(new Translation2d(currentTranslation.getX() + 1.5, 0)),
-				new Pose2d(currentTranslation.getX() + 10, 0, currentPose.getRotation()), config);
+				new Pose2d(currentTranslation.getX() + 3, 0, currentPose.getRotation()), config);
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
@@ -293,68 +282,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
 				List.of(new Translation2d(currentTranslation.getX() + (finalX / 2), finalY / 2)),
 				new Pose2d(currentTranslation.getX() + finalX, finalY, currentPose.getRotation()), config);
-
-		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
-				// RamseteCommand passes volts to the callback
-				thisSub::tankDriveVolts, thisSub);
-
-		// Run path following command, then stop at the end.
-		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
-
-	}
-
-	public Command getCartonCommmand() {
-
-		System.out.println("Command got called");
-
-		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
-
-		System.out.println("Odometry got reset");
-
-		Pose2d startPose = m_odometry.getPoseMeters();
-
-		Translation2d startTranslation = startPose.getTranslation();
-
-		DriveBaseSubsystem thisSub = this;
-
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-				// start
-				startPose,
-				// mid
-				List.of(new Translation2d(startTranslation.getX() + 3.66, startTranslation.getY() + 1.06),
-						new Translation2d(startTranslation.getX() + 5.5, startTranslation.getY() + 0),
-						new Translation2d(startTranslation.getX() + 9.15, startTranslation.getY() + 0)),
-				// end
-				new Pose2d(startTranslation.getX() + 12.8, 0, new Rotation2d(0)), config);
-
-		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
-				// RamseteCommand passes volts to the callback
-				thisSub::tankDriveVolts, thisSub);
-
-		// Run path following command, then stop at the end.
-		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
-
-	}
-	
-	public Command getGoUnderControlPanelCommand() {
-
-		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
-
-		Pose2d startPose = m_odometry.getPoseMeters();
-
-		Translation2d startTranslation = startPose.getTranslation();
-
-		DriveBaseSubsystem thisSub = this;
-
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-				// start
-				startPose,
-				// mid
-				List.of(new Translation2d(startTranslation.getX() + 3.35, startTranslation.getY() + 2.74)),
-				// end
-				new Pose2d(startTranslation.getX() + 7.01, 0, new Rotation2d(0)), config);
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
