@@ -9,18 +9,17 @@ public class ClimbToBottomHeightCommand extends CommandBase {
 	ClimbMotorSubsystem m_ClimbMotorSubsystem;
 
 	public ClimbToBottomHeightCommand(ClimbMotorSubsystem climbMotorSubsystem) {
-
 		m_ClimbMotorSubsystem = climbMotorSubsystem;
 		addRequirements(climbMotorSubsystem);
 	}
 
 	@Override
 	public void execute() {
-		m_ClimbMotorSubsystem.climbToHeight(ClimbHeight.BOTTOM);
+		m_ClimbMotorSubsystem.setReference(ClimbHeight.BOTTOM);
 	}
 
 	@Override
 	public boolean isFinished() {
-		return (m_ClimbMotorSubsystem.m_currentClimbHeight >= ClimbHeight.MIDDLE.value);
+		return m_ClimbMotorSubsystem.atReference();
 	}
 }

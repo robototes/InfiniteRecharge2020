@@ -9,18 +9,17 @@ public class ClimbToTopHeightCommand extends CommandBase {
 	ClimbMotorSubsystem m_ClimbMotorSubsystem;
 
 	public ClimbToTopHeightCommand(ClimbMotorSubsystem climbMotorSubsystem) {
-
 		m_ClimbMotorSubsystem = climbMotorSubsystem;
 		addRequirements(climbMotorSubsystem);
 	}
 
 	@Override
 	public void execute() {
-		m_ClimbMotorSubsystem.climbToHeight(ClimbHeight.TOP);
+		m_ClimbMotorSubsystem.setReference(ClimbHeight.TOP);
 	}
 
 	@Override
 	public boolean isFinished() {
-		return (m_ClimbMotorSubsystem.m_currentClimbHeight >= ClimbHeight.MIDDLE.value);
+		return m_ClimbMotorSubsystem.atReference();
 	}
 }

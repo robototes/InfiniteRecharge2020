@@ -12,11 +12,13 @@ public class IntakeBothUpCommand extends ParallelCommandGroup {
 		m_intakeUpDownSubsystem = intakeUpDownSubsystem;
 	}
 
+	@Override
 	public void execute() {
 		m_intakeUpDownSubsystem.frontIntakeUp();
 		m_intakeUpDownSubsystem.backIntakeUp();
 	}
 
+	@Override
 	public boolean isFinished() {
 		return true;
 	}

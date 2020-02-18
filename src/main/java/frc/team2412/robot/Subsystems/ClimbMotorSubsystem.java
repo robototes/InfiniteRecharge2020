@@ -3,36 +3,38 @@ package frc.team2412.robot.Subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotState;
-import frc.team2412.robot.RobotState.ClimbState;
 import frc.team2412.robot.Subsystems.constants.ClimbConstants;
 import frc.team2412.robot.Subsystems.constants.ClimbConstants.ClimbHeight;
 
 public class ClimbMotorSubsystem extends SubsystemBase {
 	// private WPI_TalonSRX m_ClimbMotorSubsystem;
 
+	public Distance m_currentClimbHeight;
+	private CANEncoder m_encoder;
 	private CANSparkMax m_leftClimbMotor;
-	private CANSparkMax m_rightClimbMotor;
+
 	private CANPIDController m_pidController;
 
-	private CANEncoder m_encoder;
-
-	public double m_currentClimbHeight;
+	private CANSparkMax m_rightClimbMotor;
+	private ClimbHeight reference;
 
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
 		m_leftClimbMotor = leftClimbMotor;
 		m_rightClimbMotor = rightClimbMotor;
-
 		m_leftClimbMotor.follow(rightClimbMotor);
 
 		m_pidController = m_rightClimbMotor.getPIDController();
-
 		m_encoder = m_rightClimbMotor.getEncoder();
-
 		m_pidController.setP(0.005);
+	}
 
+	public boolean atReference() {
+		return Math.abs(ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES
+				.calculateReverseRatio(m_currentClimbHeight.subtract(reference.value))) > ClimbConstants.DEADBAND;
 	}
 
 	public void climbExtendArm() {
@@ -53,20 +55,20 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		m_currentClimbHeight = getEncoderValue() * ClimbConstants.inchesPerRevolution
-				+ ClimbConstants.CLIMB_OFFSET_HEIGHT;
+		double heightFromOffset = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateRatio(getEncoderValue());
+		m_currentClimbHeight = new Distance(heightFromOffset).add(ClimbConstants.CLIMB_OFFSET_HEIGHT);
 	}
 
-	public void climbToHeight(ClimbHeight newHeight) {
-		if (getEncoderValue() / ClimbConstants.inchesPerRevolution
-				+ ClimbConstants.CLIMB_OFFSET_HEIGHT < newHeight.value) {
-			RobotState.m_climbState = ClimbState.CLIMBING;
-			climbExtendArm();
-		} else {
-			RobotState.m_climbState = ClimbState.NOT_CLIMBING;
-			climbStop();
-		}
+	public void setMotors(double value) {
+		m_rightClimbMotor.set(value);
+	}
 
+	public void setReference(ClimbHeight newHeight) {
+		this.reference = newHeight;
+		Distance travelFromOffset = newHeight.value.subtract(ClimbConstants.CLIMB_OFFSET_HEIGHT);
+		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
+
+		m_pidController.setReference(wantedRotations, ControlType.kPosition);
 	}
 
 }

@@ -18,6 +18,7 @@ public class AutoMoveAndIntakeCommandGroup extends ParallelCommandGroup {
 		m_driveBaseSubsystem = driveBaseSubsystem;
 	}
 
+	@Override
 	public void execute() {
 		m_driveBaseSubsystem.getMoveCertainAmountCommand(5, 1);
 	}

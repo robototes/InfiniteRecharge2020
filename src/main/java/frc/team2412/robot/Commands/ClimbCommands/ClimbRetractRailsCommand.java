@@ -8,7 +8,6 @@ public class ClimbRetractRailsCommand extends CommandBase {
 	ClimbLiftSubsystem m_ClimbLiftSubsystem;
 
 	public ClimbRetractRailsCommand(ClimbLiftSubsystem climbLiftSubsystem) {
-
 		m_ClimbLiftSubsystem = climbLiftSubsystem;
 		addRequirements(climbLiftSubsystem);
 	}

@@ -8,9 +8,13 @@ public class ClimbExtendArmCommand extends CommandBase {
 	ClimbMotorSubsystem m_ClimbMotorSubsystem;
 
 	public ClimbExtendArmCommand(ClimbMotorSubsystem climbMotorSubsystem) {
-
 		m_ClimbMotorSubsystem = climbMotorSubsystem;
 		addRequirements(climbMotorSubsystem);
+	}
+
+	@Override
+	public void end(boolean canceled) {
+		m_ClimbMotorSubsystem.climbStop();
 	}
 
 	@Override

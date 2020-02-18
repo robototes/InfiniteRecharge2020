@@ -13,6 +13,11 @@ public class ClimbRetractArmCommand extends CommandBase {
 	}
 
 	@Override
+	public void end(boolean canceled) {
+		m_ClimbMotorSubsystem.climbStop();
+	}
+
+	@Override
 	public void execute() {
 		m_ClimbMotorSubsystem.climbRetractArm();
 	}

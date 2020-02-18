@@ -12,10 +12,8 @@ public class ClimbLiftSubsystem extends SubsystemBase {
 	private Solenoid m_rightPneumatic;
 
 	public ClimbLiftSubsystem(Solenoid leftPneumatic, Solenoid rightPneumatic) {
-
 		m_leftPneumatic = leftPneumatic;
 		m_rightPneumatic = rightPneumatic;
-
 	}
 
 	public void deployRails() {

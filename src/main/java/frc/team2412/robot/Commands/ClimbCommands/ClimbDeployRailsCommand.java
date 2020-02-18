@@ -8,7 +8,6 @@ public class ClimbDeployRailsCommand extends CommandBase {
 	ClimbLiftSubsystem m_ClimbLiftSubsystem;
 
 	public ClimbDeployRailsCommand(ClimbLiftSubsystem climbLiftSubsystem) {
-
 		m_ClimbLiftSubsystem = climbLiftSubsystem;
 		addRequirements(climbLiftSubsystem);
 	}
