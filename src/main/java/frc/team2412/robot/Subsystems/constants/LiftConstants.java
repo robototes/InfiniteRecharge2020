@@ -7,7 +7,7 @@ public class LiftConstants {
 	public static enum LiftState {
 
 		// Creates a value called up which is equal to kForward
-		UP(DoubleSolenoid.Value.kForward),
+		UP(DoubleSolenoid.Value.kForward), 
 
 		// Creates a value called down which is equal to kReverse
 		DOWN(DoubleSolenoid.Value.kReverse);
