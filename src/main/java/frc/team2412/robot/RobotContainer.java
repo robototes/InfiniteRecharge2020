@@ -21,21 +21,22 @@ import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.Subsystems.LiftSubsystem;
 import frc.team2412.robot.Subsystems.LimelightSubsystem;
 import frc.team2412.robot.Subsystems.TurretSubsystem;
+import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
-public class RobotContainer {
+public class RobotContainer implements Loggable {
 	// Subsystems
 	Command m_exampleSelectCommand = new SelectCommand(
 			// Maps selector values to commands
 			Map.ofEntries(entry(1, null), entry(2, null), entry(3, null)), this::select
 
 	);
-	
-	
+
 	private int select() {
 		return 1;
 	}
+
 	public ExampleSubsystem m_ExampleSubsystem;
 
 	@Log(name = "Limelight Subsystem")

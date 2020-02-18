@@ -20,15 +20,15 @@ public class RobotState implements Loggable {
 	@Log
 	public static GearState m_gearState = GearState.LOW;
 
-	public static enum IntakeDirection {
+	public enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 	}
 
-	public static enum ClimbState {
+	public enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
 	}
 
-	public static enum LiftState {
+	public enum LiftState {
 		WITHDRAWN, EXTENDED;
 	}
 
@@ -59,7 +59,7 @@ public class RobotState implements Loggable {
 		return m_ballCount == 5;
 	}
 
-	public void removeBall() {
+	public static void removeBall() {
 		m_ballCount -= 1;
 		if (m_ballCount < 0) {
 			m_ballCount = 0;
@@ -67,27 +67,27 @@ public class RobotState implements Loggable {
 		}
 	}
 
-	public static IntakeDirection getintakeDirection() {
+	public IntakeDirection getintakeDirection() {
 		return m_intakeDirection;
 	}
 
-	public static void setintakeDirection(IntakeDirection m_intakeDirection) {
+	public void setintakeDirection(IntakeDirection m_intakeDirection) {
 		RobotState.m_intakeDirection = m_intakeDirection;
 	}
 
-	public static ClimbState getclimbState() {
+	public ClimbState getclimbState() {
 		return m_climbState;
 	}
 
-	public static void setclimbState(ClimbState m_climbState) {
+	public void setclimbState(ClimbState m_climbState) {
 		RobotState.m_climbState = m_climbState;
 	}
 
-	public static LiftState getliftSolenoidState() {
+	public LiftState getliftSolenoidState() {
 		return m_liftSolenoidState;
 	}
 
-	public static void setliftSolenoidState(LiftState m_liftSolenoidState) {
+	public void setliftSolenoidState(LiftState m_liftSolenoidState) {
 		RobotState.m_liftSolenoidState = m_liftSolenoidState;
 	}
 
