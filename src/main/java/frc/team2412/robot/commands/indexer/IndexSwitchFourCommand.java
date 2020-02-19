@@ -1,8 +1,7 @@
 package frc.team2412.robot.commands.indexer;
 
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.unbalancedSide;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
@@ -21,7 +20,7 @@ public class IndexSwitchFourCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (unbalancedSide == IndexerConstants.UnbalancedSide.FRONT) {
+		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 			m_indexerMotorSubsystem.setFrontMotor(-1);
 			m_indexerMotorSubsystem.setBackMotor(1);
 		} else {
@@ -33,11 +32,11 @@ public class IndexSwitchFourCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		if (unbalancedSide == IndexerConstants.UnbalancedSide.FRONT) {
+		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 			if (m_indexerSensorSubsystem.getIndexBackSensorValue()) {
 				m_indexerMotorSubsystem.stopFrontPID();
 				m_indexerMotorSubsystem.stopBackPID();
-				unbalancedSide.flip();
+				RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
 				return true;
 			} else {
 				return false;
@@ -46,7 +45,7 @@ public class IndexSwitchFourCommand extends CommandBase {
 			if (m_indexerSensorSubsystem.getIndexFrontSensorValue()) {
 				m_indexerMotorSubsystem.stopFrontPID();
 				m_indexerMotorSubsystem.stopBackPID();
-				unbalancedSide.flip();
+				RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
 				return true;
 			} else {
 				return false;

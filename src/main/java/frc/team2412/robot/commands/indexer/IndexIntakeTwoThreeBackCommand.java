@@ -1,8 +1,6 @@
 package frc.team2412.robot.commands.indexer;
 
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.numBalls;
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.unbalancedSide;
-
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
@@ -28,9 +26,9 @@ public class IndexIntakeTwoThreeBackCommand extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.getIndexBackMidSensorValue()) {
-			unbalancedSide = IndexerConstants.UnbalancedSide.BACK;
+			RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK;
 			m_indexerMotorSubsystem.stopBackPID();
-			numBalls++;
+			RobotState.m_ballCo++;
 			return true;
 		} else {
 			return false;

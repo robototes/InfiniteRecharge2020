@@ -1,8 +1,7 @@
 package frc.team2412.robot.commands.indexer;
 
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.numBalls;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 
@@ -30,7 +29,7 @@ public class IndexSpitCommand extends CommandBase {
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
 			m_indexerMotorSubsystem.stopAllMotors();
-			numBalls = 0;
+			RobotState.m_ballCount++;
 			return true;
 		} else {
 			return false;

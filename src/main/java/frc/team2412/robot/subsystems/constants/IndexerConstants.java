@@ -1,20 +1,21 @@
 package frc.team2412.robot.subsystems.constants;
 
+import frc.team2412.robot.RobotState;
+
 public class IndexerConstants {
 	// NOT CONSTANTS BUT UNIVERSAL VALUES
-	public static int numBalls = 0;
-	public static UnbalancedSide unbalancedSide;
-
+	
 	//
 	public enum UnbalancedSide {
 		FRONT, BACK;
 		public void flip() {
-			switch (this) {
+			UnbalancedSide s = this;
+			switch (s) {
 			case FRONT:
-				unbalancedSide = UnbalancedSide.BACK;
+				s = UnbalancedSide.BACK;
 				break;
 			case BACK:
-				unbalancedSide = UnbalancedSide.FRONT;
+				s = UnbalancedSide.FRONT;
 				break;
 			}
 		}
