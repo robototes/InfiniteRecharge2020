@@ -298,28 +298,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	@Config
-	public Command getMoveCertainAmountCommand(double finalX, double finalY) {
-
-		DriveBaseSubsystem thisSub = this;
-
-		Pose2d currentPose = getPose();
-		Translation2d currentTranslation = currentPose.getTranslation();
-
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
-				List.of(new Translation2d(currentTranslation.getX() + (finalX / 2), finalY / 2)),
-				new Pose2d(currentTranslation.getX() + finalX, finalY, currentPose.getRotation()), config);
-
-		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
-				// RamseteCommand passes volts to the callback
-				thisSub::tankDriveVolts, thisSub);
-
-		// Run path following command, then stop at the end.
-		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
-
-	}
-
 	public void getMoveFromPowerCellCommand() {
 		// TODO Auto-generated method stub
 		

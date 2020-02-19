@@ -7,18 +7,11 @@ import frc.team2412.robot.Subsystems.ClimbMotorSubsystem;
 import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.Subsystems.ExampleSubsystem;
-import frc.team2412.robot.Subsystems.FlywheelSubsystem;
-import frc.team2412.robot.Subsystems.HoodSubsystem;
 import frc.team2412.robot.Subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.Subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.Subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
-import frc.team2412.robot.Subsystems.LiftSubsystem;
-import frc.team2412.robot.Subsystems.LimelightSubsystem;
-import frc.team2412.robot.Subsystems.TurretSubsystem;
 import io.github.oblarg.oblog.Loggable;
-import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
-import frc.team2412.robot.Subsystems.ExampleSubsystem;
 import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
@@ -68,7 +61,6 @@ public class RobotContainer implements Loggable {
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-	public RobotContainer() {
 //	@Log(name = "Intake motor Subsystem")
 //	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 //

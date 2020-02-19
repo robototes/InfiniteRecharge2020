@@ -6,11 +6,6 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 
-import edu.wpi.first.wpilibj.Talon;
-
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
@@ -37,8 +32,8 @@ public class RobotMap {
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
-=======
-//	// climb mode
+
+	//	// climb mode
 //	static boolean climbMode = false;
 //
 //	// climb Pneumatics
