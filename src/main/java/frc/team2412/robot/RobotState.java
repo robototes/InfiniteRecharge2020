@@ -5,19 +5,19 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
 
-	@Log
+	@Log.Graph
 	public static int m_ballCount = 0;
 
-	@Log
+	@Log.BooleanBox
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
-	@Log
+	@Log.BooleanBox
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
-	@Log
+	@Log.BooleanBox
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	@Log
+	@Log.BooleanBox
 	public static GearboxState m_gearState = GearboxState.LOW;
 
 	public static enum IntakeDirection {

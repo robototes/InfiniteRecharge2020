@@ -10,7 +10,7 @@ public class LiftConstants {
 		UP(DoubleSolenoid.Value.kForward),
 
 		// Creates a value called down which is equal to kReverse
-		DOWN(DoubleSolenoid.Value.kForward);
+		DOWN(DoubleSolenoid.Value.kReverse);
 
 		// Creates a value that can be set to up and down
 		public DoubleSolenoid.Value value;
