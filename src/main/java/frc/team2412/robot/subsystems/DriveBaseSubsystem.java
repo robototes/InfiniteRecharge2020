@@ -1,7 +1,6 @@
 package frc.team2412.robot.subsystems;
 
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kMaxAccelerationMetersPerSecondSquared;
@@ -12,6 +11,7 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kRamset
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kaVoltSecondsSquaredPerMeter;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ksVolts;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kvVoltSecondsPerMeter;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
 import java.util.List;
@@ -21,11 +21,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -39,9 +37,9 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team2412.robot.RobotState;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
@@ -52,12 +50,14 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public Solenoid m_gearShifter;
 
-	@Log
+	@Log.Dial(max = 1, min = -1, showValue = true, tabName = "Drivebase Subsystem")
 	public double m_currentYSpeed;
 
-	public SpeedControllerGroup m_leftMotors, m_rightMotors;
+	@Log.SpeedController(name = "Left Motor Speed", tabName = "Drivebase Subsystem")
+	public SpeedControllerGroup m_leftMotors;
 
-	public DifferentialDrive m_drive;
+	@Log.SpeedController(name = "Right Motor Speed", tabName = "Drivebase Subsystem")
+	public SpeedControllerGroup m_rightMotors;
 
 	private DifferentialDriveOdometry m_odometry;
 
@@ -65,8 +65,13 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	private double m_headingToGoal = 180;
 
-	@Log.PDP
-	public double driveBaseVoltageDraw;
+	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
+	public boolean doItWork = false;
+
+//	DifferentialDrive m_drive;
+
+	@Log(tabName = "Drivebase Subsystem")
+	public double m_driveBaseCurrentDraw;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
@@ -75,12 +80,16 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_leftMotor2 = leftMotor2;
 		m_rightMotor1 = rightMotor1;
 		m_rightMotor2 = rightMotor2;
+
 		m_leftMotor2.follow(leftMotor1);
 		m_rightMotor2.follow(rightMotor1);
 
+		m_rightMotor1.setInverted(true);
+		m_rightMotor2.setInverted(true);
+
 		m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
 		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
-		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+//		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
 		m_gyro = gyro;
 		m_gearShifter = gearShifter;
@@ -93,25 +102,23 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
 		if (button.get()) {
-			double averageY = (rightJoystick.getY() + leftJoystick.getY()) / 2;
-			m_rightMotor1.set(averageY);
-			m_leftMotor1.set(averageY);
-			m_currentYSpeed = averageY;
+			m_rightMotor1.set(rightJoystick.getY());
+			m_leftMotor1.set(rightJoystick.getY());
+			m_currentYSpeed = rightJoystick.getY();
 		} else {
 			m_rightMotor1.set(rightJoystick.getY());
 			m_leftMotor1.set(leftJoystick.getY());
 		}
-		m_currentYSpeed = (rightJoystick.getY() + leftJoystick.getY()) / 2;
+//		m_currentYSpeed = (rightJoystick.getY() + leftJoystick.getY()) / 2;
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
-		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
+//		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
 	}
 
-	@Config
 	public void setDriveSpeed(double forwardness, double turn) {
-		m_drive.arcadeDrive(forwardness, turn);
-		m_currentYSpeed = forwardness;
+//		m_drive.arcadeDrive(forwardness, turn);
+//		m_currentYSpeed = forwardness;
 	}
 
 	public void angleDrive(double angle) {
@@ -155,6 +162,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
+
+		m_currentYSpeed = (m_rightMotor1.get() + m_leftMotor1.get()) / -2.0;
+
 		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition();
 		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition();
 
@@ -164,8 +174,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
 
-		driveBaseVoltageDraw = m_rightMotor1.getBusVoltage() + m_rightMotor2.getBusVoltage()
-				+ m_leftMotor1.getBusVoltage() + m_leftMotor2.getBusVoltage();
+		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
+				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
 	}
 
 	// Trajectory stuff
@@ -186,7 +196,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		m_leftMotors.setVoltage(leftVolts);
 		m_rightMotors.setVoltage(-rightVolts);
-		m_drive.feed();
+//		m_drive.feed();
 	}
 
 	public double getHeading() {
@@ -263,7 +273,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	@Config
 	public Command getMoveCertainAmountCommand(double finalX, double finalY) {
 
 		DriveBaseSubsystem thisSub = this;
@@ -293,11 +302,11 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		Translation2d currentTranslation = currentPose.getTranslation();
 
 		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-				
+
 				currentPose,
-				
+
 				List.of(new Translation2d(currentTranslation.getX() + 2, currentTranslation.getY() - 0.15)),
-				
+
 				new Pose2d(currentTranslation.getX() + 4.85, currentTranslation.getY() - 0.15,
 						currentPose.getRotation()),
 				config);

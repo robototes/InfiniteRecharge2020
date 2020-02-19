@@ -9,7 +9,6 @@ import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
-import frc.team2412.robot.subsystems.TurretSubsystem;
 
 public class SixBallAutoCommandGroup extends SequentialCommandGroup {
 

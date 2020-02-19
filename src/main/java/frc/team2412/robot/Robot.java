@@ -33,7 +33,7 @@ public class Robot extends TimedRobot implements Loggable{
 	 */
 	@Override
 	public void robotInit() {
-		m_robotContainer.m_turretSubsystem.initTurretEncoder();
+	//	m_robotContainer.m_turretSubsystem.initTurretEncoder();
 		Logger.configureLoggingAndConfig(this, false);
 		Shuffleboard.startRecording();
 	}

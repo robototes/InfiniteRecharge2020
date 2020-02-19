@@ -1,5 +1,6 @@
 package frc.team2412.robot.commands.indexer;
 
+import static frc.team2412.robot.subsystems.constants.IndexerConstants.numBalls;
 import static java.util.Map.entry;
 
 import java.util.Map;
@@ -10,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.numBalls;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
