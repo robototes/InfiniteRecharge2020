@@ -1,6 +1,7 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.highGearRatio;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kMaxAccelerationMetersPerSecondSquared;
@@ -11,13 +12,11 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kRamset
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kaVoltSecondsSquaredPerMeter;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ksVolts;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kvVoltSecondsPerMeter;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.robototes.math.Vector;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -39,7 +38,6 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-//mport edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotState;
 import io.github.oblarg.oblog.Loggable;
@@ -50,8 +48,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public WPI_TalonFX m_leftMotor1, m_leftMotor2, m_rightMotor1, m_rightMotor2;
 
-	public Vector m_motion;
-
 	public Gyro m_gyro;
 
 	public Solenoid m_gearShifter;
@@ -59,26 +55,18 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@Log
 	public double m_currentYSpeed;
 
-	// Trjectory objects;
-
 	public SpeedControllerGroup m_leftMotors, m_rightMotors;
 
 	public DifferentialDrive m_drive;
 
 	private DifferentialDriveOdometry m_odometry;
 
-	private int m_rightEncoderValue, m_leftEncoderValue;
+	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
 	private double m_headingToGoal = 180;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
-		this.setName("DriveBase Subsystem");
-		m_motion = new Vector(0);
-		m_gyro = gyro;
-		m_gearShifter = gearShifter;
-
-		m_rightMotor1.setInverted(true);
 
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
@@ -86,13 +74,16 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotor2 = rightMotor2;
 		m_leftMotor2.follow(leftMotor1);
 		m_rightMotor2.follow(rightMotor1);
-
+		
 		m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
 		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
 		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
-		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
+		m_gyro = gyro;
+		m_gearShifter = gearShifter;
+
+		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
+		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
 	}
@@ -111,7 +102,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
-		m_drive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
+		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
 	}
 
 	@Config
@@ -161,20 +152,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
-		m_motion = new Vector(m_gyro.getAngle() % 360);
+		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition();
+		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition();
 
-		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
-		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
-
-		if (RobotState.m_gearState == RobotState.GearboxState.HIGH) {
-			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
-					m_leftEncoderValue * highGearRatio * metersPerWheelRevolution,
-					m_rightEncoderValue * highGearRatio * metersPerWheelRevolution);
-		} else {
-			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
-					m_leftEncoderValue * lowGearRatio * metersPerWheelRevolution,
-					m_rightEncoderValue * lowGearRatio * metersPerWheelRevolution);
-		}
+		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+				(m_leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
+				(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
 	}
@@ -187,13 +170,14 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		return new DifferentialDriveWheelSpeeds(m_leftMotor1.getSelectedSensorVelocity(),
-				m_rightMotor1.getSelectedSensorVelocity());
+		return new DifferentialDriveWheelSpeeds(
+				m_leftMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio * metersPerWheelRevolution * 10,
+				m_rightMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio * metersPerWheelRevolution * 10);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		m_leftMotors.setVoltage(leftVolts);
-		m_rightMotors.setVoltage(rightVolts);
+		m_rightMotors.setVoltage(-rightVolts);
 		m_drive.feed();
 	}
 
