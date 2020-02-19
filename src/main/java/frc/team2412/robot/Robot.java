@@ -19,13 +19,11 @@ import io.github.oblarg.oblog.Logger;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-@SuppressWarnings("unused")
 public class Robot extends TimedRobot {
-
-	public static int hi = 5;
 
 	// Have instances of robot container and OI for easy access
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
+	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
 
 	/**

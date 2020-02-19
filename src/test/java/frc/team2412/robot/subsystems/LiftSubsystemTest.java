@@ -16,9 +16,8 @@ import com.robototes.helpers.TestWithScheduler;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
-import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
-import frc.team2412.robot.Subsystems.LiftSubsystem;
+import frc.team2412.robot.commands.lift.LiftDownCommand;
+import frc.team2412.robot.commands.lift.LiftUpCommand;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class LiftSubsystemTest {

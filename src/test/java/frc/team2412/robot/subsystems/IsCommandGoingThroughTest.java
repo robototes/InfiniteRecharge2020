@@ -15,8 +15,7 @@ import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.hood.HoodExtendCommand;
-import frc.team2412.robot.Subsystems.HoodSubsystem;
+import frc.team2412.robot.commands.hood.HoodExtendCommand;
 
 public class IsCommandGoingThroughTest {
 

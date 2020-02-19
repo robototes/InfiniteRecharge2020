@@ -15,13 +15,12 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.Subsystems.IntakeOnOffSubsystem;
+import frc.team2412.robot.commands.intake.IntakeBackOffCommand;
+import frc.team2412.robot.commands.intake.IntakeBackOnCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOffCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOffIntakeBackOnCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOnCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class IntakeOnOffSubsystemTest {

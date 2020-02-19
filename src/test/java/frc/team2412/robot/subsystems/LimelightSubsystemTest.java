@@ -14,8 +14,7 @@ import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
-import frc.team2412.robot.Subsystems.LimelightSubsystem;
-import frc.team2412.robot.Subsystems.constants.LimelightConstants;;
+import frc.team2412.robot.subsystems.constants.LimelightConstants;;
 
 public class LimelightSubsystemTest {
 

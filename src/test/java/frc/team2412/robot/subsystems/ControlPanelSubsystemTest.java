@@ -18,10 +18,9 @@ import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
-import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
-import frc.team2412.robot.Subsystems.ControlPanelColorSubsystem;
-import frc.team2412.robot.Subsystems.constants.ControlPanelConstants;
+import frc.team2412.robot.commands.controlPanel.RotateControlPanelCommand;
+import frc.team2412.robot.commands.controlPanel.SetToTargetColorCommand;
+import frc.team2412.robot.subsystems.constants.ControlPanelConstants;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class ControlPanelSubsystemTest {
