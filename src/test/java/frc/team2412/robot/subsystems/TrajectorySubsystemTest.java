@@ -19,8 +19,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.DriveCommands.DriveCommand;
-import frc.team2412.robot.Subsystems.DriveBaseSubsystem;
+import frc.team2412.robot.commands.drive.DriveCommand;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class TrajectorySubsystemTest {

@@ -15,10 +15,9 @@ import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbDeployRailsCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbRetractRailsCommand;
-import frc.team2412.robot.Subsystems.ClimbLiftSubsystem;
-import frc.team2412.robot.Subsystems.constants.ClimbConstants.ClimbState;
+import frc.team2412.robot.commands.climb.ClimbDeployRailsCommand;
+import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
+import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbState;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class ClimbLiftSubsystemTest {

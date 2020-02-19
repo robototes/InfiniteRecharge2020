@@ -17,10 +17,9 @@ import com.robototes.helpers.TestWithScheduler;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
-import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
-import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeState;
+import frc.team2412.robot.commands.intake.IntakeBackDownCommand;
+import frc.team2412.robot.commands.intake.IntakeBackUpCommand;
+import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeState;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class IntakeUpDownSubsystemTest {
