@@ -4,24 +4,23 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.team2412.robot.Commands.ExampleCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbDeployRailsCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbExtendArmCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbRetractRailsCommand;
-import frc.team2412.robot.Commands.ClimbCommands.ClimbStopArmCommand;
-import frc.team2412.robot.Commands.ControlPanelCommands.RotateControlPanelCommand;
-import frc.team2412.robot.Commands.ControlPanelCommands.SetToTargetColorCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBothUpCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOffIntakeBackOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.Commands.LiftCommands.LiftDownCommand;
-import frc.team2412.robot.Commands.LiftCommands.LiftUpCommand;
+import frc.team2412.robot.commands.climb.ClimbDeployRailsCommand;
+import frc.team2412.robot.commands.climb.ClimbExtendArmCommand;
+import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
+import frc.team2412.robot.commands.climb.ClimbStopArmCommand;
+import frc.team2412.robot.commands.controlPanel.RotateControlPanelCommand;
+import frc.team2412.robot.commands.controlPanel.SetToTargetColorCommand;
+import frc.team2412.robot.commands.intake.IntakeBackDownCommand;
+import frc.team2412.robot.commands.intake.IntakeBackOffCommand;
+import frc.team2412.robot.commands.intake.IntakeBackOnCommand;
+import frc.team2412.robot.commands.intake.IntakeBackUpCommand;
+import frc.team2412.robot.commands.intake.IntakeBothUpCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOffCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOffIntakeBackOnCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOnCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
+import frc.team2412.robot.commands.lift.LiftDownCommand;
+import frc.team2412.robot.commands.lift.LiftUpCommand;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
@@ -98,9 +97,6 @@ public class OI {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
 
-
-		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
-
 		// LIFT
 		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
@@ -128,8 +124,6 @@ public class OI {
 				.whenPressed(new RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
 		controlPanelSetToTargetButton
 				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
-
-		exampleSubsystemMethod.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
 
 		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_ClimbLiftSubsystem));
 		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));

@@ -15,20 +15,19 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackDownCommand;
-import frc.team2412.robot.Commands.IntakeCommands.IntakeBackUpCommand;
-import frc.team2412.robot.Subsystems.IntakeUpDownSubsystem;
-import frc.team2412.robot.Subsystems.constants.IntakeConstants.IntakeState;
+import frc.team2412.robot.commands.intake.IntakeBackDownCommand;
+import frc.team2412.robot.commands.intake.IntakeBackUpCommand;
+import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeState;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class IntakeUpDownSubsystemTest {
 
 	// Mock instance of Example Subsystem
 	IntakeUpDownSubsystem realIntakeUpDownSubsystem;
-	DoubleSolenoid mockedLiftSolenoid;
-	DoubleSolenoid mockedLiftSolenoid2;
+	Solenoid mockedLiftSolenoid;
+	Solenoid mockedLiftSolenoid2;
 	Compressor mockedCompressor;
 
 	// This is called after tests, and makes sure that nothing is left open and
@@ -47,8 +46,8 @@ public class IntakeUpDownSubsystemTest {
 		TestWithScheduler.schedulerClear();
 		MockHardwareExtension.beforeAll();
 
-		mockedLiftSolenoid = mock(DoubleSolenoid.class);
-		mockedLiftSolenoid2 = mock(DoubleSolenoid.class);
+		mockedLiftSolenoid = mock(Solenoid.class);
+		mockedLiftSolenoid2 = mock(Solenoid.class);
 		mockedCompressor = mock(Compressor.class);
 
 		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2,

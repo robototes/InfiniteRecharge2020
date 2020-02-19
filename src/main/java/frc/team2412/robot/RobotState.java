@@ -17,16 +17,23 @@ public class RobotState implements Loggable {
 	@Log
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	private static enum IntakeDirection {
-		NONE, FRONT, BACK;
+	@Log
+	public static GearboxState m_gearState = GearboxState.LOW;
+
+	public static enum IntakeDirection {
+		NONE, FRONT, BACK, BOTH;
 	}
 
-	private static enum ClimbState {
+	public static enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
 	}
 
-	private static enum LiftState {
+	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
+	}
+
+	public static enum GearboxState {
+		HIGH, LOW;
 	}
 
 	private RobotState() {
@@ -52,7 +59,7 @@ public class RobotState implements Loggable {
 		return m_ballCount == 5;
 	}
 
-	public void removeBall() {
+	public static void removeBall() {
 		m_ballCount -= 1;
 		if (m_ballCount < 0) {
 			m_ballCount = 0;

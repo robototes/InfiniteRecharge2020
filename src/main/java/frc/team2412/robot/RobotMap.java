@@ -18,12 +18,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
@@ -32,26 +30,24 @@ public class RobotMap {
 	// DRIVEBASE SUBSYSTEM
 	// -------------------------------------------------------------------------
 	// DriveBase Motor ports
-	public static final int LEFT_FRONT_ID = 0;
-	public static final int LEFT_BACK_ID = 0;
-	public static final int RIGHT_FRONT_ID = 0;
-	public static final int RIGHT_BACK_ID = 0;
+	public static final int DRIVE_LEFT_FRONT_ID = 14;
+	public static final int DRIVE_LEFT_BACK_ID = 15;
+	public static final int DRIVE_RIGHT_FRONT_ID = 1;
+	public static final int DRIVE_RIGHT_BACK_ID = 0;
+
+	private static final int DRIVE_SOLENOID_PORT = 0;
 
 	// DriveBase Motors
-	public static WPI_TalonFX leftFront = new WPI_TalonFX(LEFT_FRONT_ID);
-	public static WPI_TalonFX leftBack = new WPI_TalonFX(LEFT_BACK_ID);
-	public static WPI_TalonFX rightFront = new WPI_TalonFX(RIGHT_FRONT_ID);
-	public static WPI_TalonFX rightBack = new WPI_TalonFX(RIGHT_BACK_ID);
-
-	// DriveBase SpeedControllerGroups
-	public static SpeedControllerGroup leftSide = new SpeedControllerGroup(leftFront, leftBack);
-	public static SpeedControllerGroup rightSide = new SpeedControllerGroup(rightFront, rightBack);
-
-	// DriveBase DifferentialDrive
-	public static DifferentialDrive robotDrive = new DifferentialDrive(leftSide, rightSide);
+	public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(DRIVE_LEFT_FRONT_ID);
+	public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(DRIVE_LEFT_BACK_ID);
+	public static WPI_TalonFX driveRightFront = new WPI_TalonFX(DRIVE_RIGHT_FRONT_ID);
+	public static WPI_TalonFX driveRightBack = new WPI_TalonFX(DRIVE_RIGHT_BACK_ID);
 
 	// DriveBase Gyro
-	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro();
+
+	// DriveBase Solenoid
+	public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
 
 	// climb mode
 	static boolean climbMode = false;
@@ -61,8 +57,8 @@ public class RobotMap {
 	private static final int pneumatic1Closed = 2;
 	private static final int pneumatic2Open = 3;
 	private static final int pneumatic2Closed = 4;
-	public static DoubleSolenoid climbLeftPneumatic = new DoubleSolenoid(pneumatic1Open, pneumatic1Closed);
-	public static DoubleSolenoid climbRightPneumatic = new DoubleSolenoid(pneumatic2Open, pneumatic2Closed);
+	public static Solenoid climbLeftPneumatic = new Solenoid(pneumatic1Open, pneumatic1Closed);
+	public static Solenoid climbRightPneumatic = new Solenoid(pneumatic2Open, pneumatic2Closed);
 
 	// Motors
 	private static final int climbMotor1 = 1;
@@ -83,18 +79,11 @@ public class RobotMap {
 	private final static int frontSensorID = 5;
 	private final static int intakeFrontSensorID = 6;
 	private final static int intakeBackSensorID = 7;
-	private final static int frontDoubleSolenoidDown_ID = 1;
-	private final static int frontDoubleSolenoidUp_ID = 2;
-	private final static int rearDoubleSolenoidDown_ID = 3;
-	private final static int rearDoubleSolenoidUp_ID = 4;
 
 	// motors
 	public static CANSparkMax indexFrontMotor = new CANSparkMax(indexFrontMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexBackMotor = new CANSparkMax(indexBackMotorID, MotorType.kBrushless);
 	public static CANSparkMax indexMidMotor = new CANSparkMax(indexMidMotorID, MotorType.kBrushless);
-
-	public static DoubleSolenoid frontClutch = new DoubleSolenoid(frontDoubleSolenoidUp_ID, frontDoubleSolenoidDown_ID);
-	public static DoubleSolenoid rearClutch = new DoubleSolenoid(rearDoubleSolenoidUp_ID, rearDoubleSolenoidDown_ID);
 
 	// sensors
 	public static DigitalInput back = new DigitalInput(backSensorID);
@@ -106,7 +95,6 @@ public class RobotMap {
 	// INDEXER CONTROLS THESE NOT INTAKE FYI
 	public static DigitalInput intakeFront = new DigitalInput(intakeFrontSensorID);
 	public static DigitalInput intakeBack = new DigitalInput(intakeBackSensorID);
-	public static final int exampleID = 1;
 
 	// Turret Subsystem
 	// ------------------------------------------------------------------------------
@@ -128,28 +116,25 @@ public class RobotMap {
 
 	// INTAKE SUBSYSTEM
 
-	// Intake DoubleSolenoid Ports
-	public static final int INTAKE_FRONT_UP_PORT = 1;
-	public static final int INTAKE_FRONT_DOWN_PORT = 1;
-	public static final int INTAKE_BACK_UP_PORT = 1;
-	public static final int INTAKE_BACK_DOWN_PORT = 1;
+	// Intake Solenoid Ports
+	public static final int INTAKE_FRONT_LIFT_PORT = 1;
+	public static final int INTAKE_BACK_LIFT_PORT = 1;
 
-	public static DoubleSolenoid frontIntakeUpDown = new DoubleSolenoid(INTAKE_FRONT_UP_PORT, INTAKE_FRONT_DOWN_PORT);
-	public static DoubleSolenoid backIntakeUpDown = new DoubleSolenoid(INTAKE_BACK_UP_PORT, INTAKE_BACK_DOWN_PORT);
+	public static Solenoid frontIntakeliftSolenoid = new Solenoid(INTAKE_FRONT_LIFT_PORT);
+	public static Solenoid backIntakeLiftSolenoid = new Solenoid(INTAKE_BACK_LIFT_PORT);
 
-	public static final int INTAKE_FRONT_PORT = 1;
-	public static final int INTAKE_BACK_PORT = 2;
+	public static final int INTAKE_FRONT_MOTOR_PORT = 1;
+	public static final int INTAKE_BACK_MOTOR_PORT = 2;
 
-	public static CANSparkMax intakeFrontMotor = new CANSparkMax(INTAKE_FRONT_PORT, MotorType.kBrushless);
-	public static CANSparkMax intakeBackMotor = new CANSparkMax(INTAKE_BACK_PORT, MotorType.kBrushless);
+	public static CANSparkMax intakeFrontMotor = new CANSparkMax(INTAKE_FRONT_MOTOR_PORT, MotorType.kBrushless);
+	public static CANSparkMax intakeBackMotor = new CANSparkMax(INTAKE_BACK_MOTOR_PORT, MotorType.kBrushless);
 
 	// LIFT SUBSYSTEM
 	// -------------------------------------------------------------------------------
-	// Lift DoubleSolenoid Ports
-	public static final int LIFT_UP_PORT = 1;
-	public static final int LIFT_DOWN_PORT = 1;
+	// Lift Solenoid Ports
+	public static final int LIFT_PORT = 1;
 
-	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_UP_PORT, LIFT_DOWN_PORT);
+	public static Solenoid liftUpDown = new Solenoid(LIFT_PORT);
 
 	// CONTROL PANEL SUBSYSTEM
 	// ----------------------------------------------------------------------
