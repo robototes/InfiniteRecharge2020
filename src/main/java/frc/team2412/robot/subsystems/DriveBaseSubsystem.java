@@ -64,7 +64,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
 	private double m_headingToGoal = 180;
-	
+
 	@Log.PDP
 	public double driveBaseVoltageDraw;
 
@@ -77,7 +77,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotor2 = rightMotor2;
 		m_leftMotor2.follow(leftMotor1);
 		m_rightMotor2.follow(rightMotor1);
-		
+
 		m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
 		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
 		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
@@ -163,8 +163,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
-		
-		driveBaseVoltageDraw = m_rightMotor1.getBusVoltage() + m_rightMotor2.getBusVoltage() + m_leftMotor1.getBusVoltage() + m_leftMotor2.getBusVoltage();
+
+		driveBaseVoltageDraw = m_rightMotor1.getBusVoltage() + m_rightMotor2.getBusVoltage()
+				+ m_leftMotor1.getBusVoltage() + m_leftMotor2.getBusVoltage();
 	}
 
 	// Trajectory stuff
@@ -176,8 +177,10 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
 		return new DifferentialDriveWheelSpeeds(
-				m_leftMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio * metersPerWheelRevolution * 10,
-				m_rightMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio * metersPerWheelRevolution * 10);
+				m_leftMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
+						* metersPerWheelRevolution * 10,
+				m_rightMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
+						* metersPerWheelRevolution * 10);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -282,5 +285,31 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	// GetPose and then get translation and then get x and y and rotation.
+	public Command getMoveToPowerCellCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		Pose2d currentPose = getPose();
+		Translation2d currentTranslation = currentPose.getTranslation();
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+				
+				currentPose,
+				
+				List.of(new Translation2d(currentTranslation.getX() + 2, currentTranslation.getY() - 0.15)),
+				
+				new Pose2d(currentTranslation.getX() + 4.85, currentTranslation.getY() - 0.15,
+						currentPose.getRotation()),
+				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
 }
