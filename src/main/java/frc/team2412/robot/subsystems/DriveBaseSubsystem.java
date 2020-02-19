@@ -64,6 +64,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
 	private double m_headingToGoal = 180;
+	
+	@Log.PDP
+	public double driveBaseVoltageDraw;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
@@ -160,6 +163,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
+		
+		driveBaseVoltageDraw = m_rightMotor1.getBusVoltage() + m_rightMotor2.getBusVoltage() + m_leftMotor1.getBusVoltage() + m_leftMotor2.getBusVoltage();
 	}
 
 	// Trajectory stuff
