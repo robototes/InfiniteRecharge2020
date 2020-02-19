@@ -18,6 +18,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -132,9 +133,10 @@ public class RobotMap {
 	// LIFT SUBSYSTEM
 	// -------------------------------------------------------------------------------
 	// Lift Solenoid Ports
-	public static final int LIFT_PORT = 1;
+	public static final int LIFT_DOWN_PORT = 1;
+	public static final int LIFT_UP_PORT = 1;
 
-	public static Solenoid liftUpDown = new Solenoid(LIFT_PORT);
+	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_DOWN_PORT, LIFT_UP_PORT);
 
 	// CONTROL PANEL SUBSYSTEM
 	// ----------------------------------------------------------------------
