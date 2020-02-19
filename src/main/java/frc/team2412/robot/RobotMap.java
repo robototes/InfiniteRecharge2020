@@ -55,11 +55,9 @@ public class RobotMap {
 
 	// climb Pneumatics
 	private static final int pneumatic1Open = 1;
-	private static final int pneumatic1Closed = 2;
-	private static final int pneumatic2Open = 3;
-	private static final int pneumatic2Closed = 4;
-	public static Solenoid climbLeftPneumatic = new Solenoid(pneumatic1Open, pneumatic1Closed);
-	public static Solenoid climbRightPneumatic = new Solenoid(pneumatic2Open, pneumatic2Closed);
+	private static final int pneumatic2Open = 2;
+	public static Solenoid climbLeftPneumatic = new Solenoid(pneumatic1Open);
+	public static Solenoid climbRightPneumatic = new Solenoid(pneumatic2Open);
 
 	// Motors
 	private static final int climbMotor1 = 1;
@@ -118,8 +116,8 @@ public class RobotMap {
 	// INTAKE SUBSYSTEM
 
 	// Intake Solenoid Ports
-	public static final int INTAKE_FRONT_LIFT_PORT = 1;
-	public static final int INTAKE_BACK_LIFT_PORT = 1;
+	public static final int INTAKE_FRONT_LIFT_PORT = 3;
+	public static final int INTAKE_BACK_LIFT_PORT = 4;
 
 	public static Solenoid frontIntakeliftSolenoid = new Solenoid(INTAKE_FRONT_LIFT_PORT);
 	public static Solenoid backIntakeLiftSolenoid = new Solenoid(INTAKE_BACK_LIFT_PORT);
@@ -133,8 +131,8 @@ public class RobotMap {
 	// LIFT SUBSYSTEM
 	// -------------------------------------------------------------------------------
 	// Lift Solenoid Ports
-	public static final int LIFT_DOWN_PORT = 1;
-	public static final int LIFT_UP_PORT = 1;
+	public static final int LIFT_DOWN_PORT = 5;
+	public static final int LIFT_UP_PORT = 6;
 
 	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_DOWN_PORT, LIFT_UP_PORT);
 
