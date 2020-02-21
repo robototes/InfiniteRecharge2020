@@ -19,7 +19,7 @@ public class RobotContainer implements Loggable {
 //
 //	public LiftSubsystem m_liftSubsystem;
 
-//	@Log(tabName = "Drivebase Subsystem", name = "Drivebase Subsystem")
+	@Log(tabName = "Drivebase Subsystem", name = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
 //	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;

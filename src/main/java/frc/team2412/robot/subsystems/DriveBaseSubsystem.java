@@ -14,10 +14,13 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kvVoltS
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -33,6 +36,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -320,6 +324,87 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				new Pose2d(currentTranslation.getX() + 4.85, currentTranslation.getY() - 0.15,
 						currentPose.getRotation()),
 				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
+//	m_odometry.resetPosition(new Pose2d( new Translation2d(3.186, -0.263), new Rotation2d(0)), new Rotation2d(0));
+
+	public Command getMoveFromPowerCellCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		Pose2d currentPose = getPose();
+		Translation2d currentTranslation = currentPose.getTranslation();
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+
+				currentPose,
+
+				List.of(new Translation2d(currentTranslation.getX() + 2, currentTranslation.getY() - 0.15)),
+
+				new Pose2d(currentTranslation.getX() + 4.85, currentTranslation.getY() - 0.15,
+						currentPose.getRotation()),
+				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
+	public Command getMoveToPowerCellPathFromPathWeaverCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		m_odometry.resetPosition(new Pose2d(new Translation2d(3.18, -0.26), new Rotation2d(0)), new Rotation2d());
+
+		Path trajectoryPath = Filesystem.getDeployDirectory().toPath()
+				.resolve("c:/Users/s-panatulas/git/InfiniteRecharge2020/src/main/deploy/MoveToPowerCell.wpilib.json");
+		Trajectory exampleTrajectory = null;
+
+		try {
+			exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+		} catch (IOException e) {
+			System.out.println("There is no path available");
+		}
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
+	public Command getMoveFromPowerCellPathFromPathWeaverCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		m_odometry.resetPosition(new Pose2d(new Translation2d(5.38, -2.29), new Rotation2d(0)), new Rotation2d());
+
+		Path trajectoryPath = Filesystem.getDeployDirectory().toPath()
+				.resolve("c:/Users/s-panatulas/git/InfiniteRecharge2020/src/main/deploy/MoveFromPowerCell.wpilib.json");
+		Trajectory exampleTrajectory = null;
+
+		try {
+			exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+		} catch (IOException e) {
+			System.out.println("There is no path available");
+		}
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,

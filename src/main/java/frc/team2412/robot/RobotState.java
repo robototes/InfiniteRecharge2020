@@ -19,6 +19,14 @@ public class RobotState implements Loggable {
 
 	@Log.BooleanBox
 	public static GearboxState m_gearState = GearboxState.LOW;
+	
+	public static boolean sixBallAuto = true;
+	
+	public static boolean threeBallAuto = false;
+	
+	public static boolean justMoveAuto = true;
+	
+	
 
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
