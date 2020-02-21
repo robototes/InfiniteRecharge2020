@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.robototes.helpers.MockHardwareExtension;
@@ -53,6 +54,8 @@ public class DriveBaseSubsystemTest {
 
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
+
+	@Ignore
 	@Test
 	public void DriveCommandOnDriveBaseSubsystemCallsMotorSet() {
 

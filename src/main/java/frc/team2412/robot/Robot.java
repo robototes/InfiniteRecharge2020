@@ -23,7 +23,7 @@ import io.github.oblarg.oblog.Logger;
 public class Robot extends TimedRobot implements Loggable {
 
 	// Have instances of robot container and OI for easy access
-//	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
+	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
 
@@ -36,6 +36,7 @@ public class Robot extends TimedRobot implements Loggable {
 		// m_robotContainer.m_turretSubsystem.initTurretEncoder();
 		Logger.configureLoggingAndConfig(this, false);
 		Shuffleboard.startRecording();
+
 	}
 
 	/**

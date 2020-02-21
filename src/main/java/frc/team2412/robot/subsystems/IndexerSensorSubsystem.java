@@ -54,8 +54,8 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allInnerSensorsOff() {
-		if (!m_indexFrontSensor.get() && !m_indexFrontMidSensor.get() && !m_indexMidSensor.get()
-				&& !m_indexBackMidSensor.get() && !m_intakeBackSensor.get()) {
+		if (!m_indexFrontSensor.get() && !m_indexFrontMidSensor.get() && !m_indexBackMidSensor.get()
+				&& !m_intakeBackSensor.get()) {
 			return true;
 		} else {
 			return false;

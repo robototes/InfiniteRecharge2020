@@ -4,6 +4,8 @@ import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
+	@Log
+	public static UnbalancedSide m_unbalancedSide;
 
 	@Log.Graph
 	public static int m_ballCount = 0;
@@ -26,6 +28,11 @@ public class RobotState implements Loggable {
 
 	public static boolean justMoveAuto = true;
 
+	public static enum UnbalancedSide {
+		FRONT, BACK;
+
+	}
+
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 	}
@@ -43,6 +50,16 @@ public class RobotState implements Loggable {
 	}
 
 	private RobotState() {
+
+	}
+
+	public static UnbalancedSide flip(UnbalancedSide s) {
+		switch (s) {
+		case FRONT:
+			return UnbalancedSide.BACK;
+		default:
+			return UnbalancedSide.FRONT;
+		}
 
 	}
 

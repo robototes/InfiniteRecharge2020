@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.robototes.helpers.MockButton;
@@ -49,6 +50,7 @@ public class LiftSubsystemTest {
 		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, mockedCompressor);
 	}
 
+	@Ignore
 	@Test
 	public void LiftDownCommandOnLiftSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -77,6 +79,7 @@ public class LiftSubsystemTest {
 
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
+	@Ignore
 	@Test
 	public void LiftUpCommandOnLiftSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset

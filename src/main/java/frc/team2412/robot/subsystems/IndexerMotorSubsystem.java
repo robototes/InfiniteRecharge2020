@@ -1,7 +1,5 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.STOP_DISTANCE;
-
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -9,6 +7,9 @@ import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
+import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 public class IndexerMotorSubsystem extends SubsystemBase {
@@ -22,7 +23,8 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
 
-	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor) {
+	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,
+			IndexerSensorSubsystem indexerSensorSubsystem) {
 		m_indexFrontMotor = frontMotor;
 		m_indexMidMotor = midMotor;
 		m_indexBackMotor = backMotor;
@@ -38,6 +40,11 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
 		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor);
 
+		Trigger frontProcess = new Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
+		frontProcess.whenActive(new IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
+
+		Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
+		backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
 	}
 
 	private void configureMotorPID(CANPIDController motorController) {
@@ -66,21 +73,27 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 		m_sideMotors.set(0);
 	}
 
-	public void stopFrontPID() {
+	public void stopFrontPID(double val) {
+		System.out.println("hi");
 		resetEncoderZero();
 		if (m_indexFrontMotor.get() > 0) {
-			m_frontPIDController.setReference(frontTicks + STOP_DISTANCE, ControlType.kPosition);
+			m_frontPIDController.setReference(frontTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		} else {
-			m_frontPIDController.setReference(frontTicks - STOP_DISTANCE, ControlType.kPosition);
+			m_frontPIDController.setReference(frontTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		}
 	}
 
-	public void stopBackPID() {
+	public void stopBackPID(double val) {
+		System.out.println("hi");
 		resetEncoderZero();
 		if (m_indexBackMotor.get() > 0) {
-			m_backPIDController.setReference(backTicks + STOP_DISTANCE, ControlType.kPosition);
+			m_backPIDController.setReference(backTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		} else {
-			m_backPIDController.setReference(backTicks - STOP_DISTANCE, ControlType.kPosition);
+			m_backPIDController.setReference(backTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		}
 	}
 
