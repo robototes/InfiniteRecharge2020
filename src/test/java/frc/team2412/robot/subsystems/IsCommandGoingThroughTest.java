@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.robototes.helpers.MockButton;
@@ -41,7 +42,7 @@ public class IsCommandGoingThroughTest {
 		realHoodSubsystem = new HoodSubsystem(mockedServo);
 
 	}
-
+	@Ignore
 	@Test
 	public void ExampleCommandOnExampleSubsystem() {
 		// Reset the subsystem to make sure all mock values are reset

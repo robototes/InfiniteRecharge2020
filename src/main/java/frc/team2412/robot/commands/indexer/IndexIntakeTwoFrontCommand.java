@@ -7,12 +7,12 @@ import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
-public class IndexIntakeTwoThreeFrontCommand extends CommandBase {
+public class IndexIntakeTwoFrontCommand extends CommandBase {
 
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
 
-	public IndexIntakeTwoThreeFrontCommand(IndexerSensorSubsystem sensorSubsystem,
+	public IndexIntakeTwoFrontCommand(IndexerSensorSubsystem sensorSubsystem,
 			IndexerMotorSubsystem motorSubsystem) {
 		m_indexerSensorSubsystem = sensorSubsystem;
 		m_indexerMotorSubsystem = motorSubsystem;
@@ -21,6 +21,7 @@ public class IndexIntakeTwoThreeFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
+		if(m_indexerSensorSubsystem.getIntakeFrontSensorValue())
 		m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
@@ -28,7 +29,7 @@ public class IndexIntakeTwoThreeFrontCommand extends CommandBase {
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.getIndexFrontMidSensorValue()) {
 			RobotState.m_unbalancedSide = RobotState.UnbalancedSide.FRONT;
-			m_indexerMotorSubsystem.stopFrontPID();
+			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.LONG_STOP_DISTANCE);
 			RobotState.m_ballCount++;
 			return true;
 		} else {

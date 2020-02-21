@@ -17,15 +17,17 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
 
 	private IndexIntakeOneBackCommand indexIntakeOneBackCommand;
-	private IndexIntakeTwoThreeBackCommand indexIntakeTwoThreeBackCommand;
-	private IndexIntakeFourFiveBackCommand indexIntakeFourFiveBackCommand;
+
+	private IndexIntakeTwoBackCommand indexIntakeTwoBackCommand;
+	private IndexIntakeThreeBackCommand indexIntakeThreeBackCommand;
+
+	private IndexIntakeFourBackCommand indexIntakeFourBackCommand;
+	private IndexIntakeFiveBackCommand indexIntakeFiveBackCommand;
+
 	private IndexSwitchTwoCommand indexSwitchTwoCommand;
 	private IndexSwitchFourCommand indexSwitchFourCommand;
 
-	private SequentialCommandGroup indexSequenceTwo = new SequentialCommandGroup(indexSwitchTwoCommand,
-			indexIntakeTwoThreeBackCommand);
-	private SequentialCommandGroup indexSequenceFour = new SequentialCommandGroup(indexSwitchFourCommand,
-			indexIntakeFourFiveBackCommand);
+	private SequentialCommandGroup indexSequenceTwo, indexSequenceFour;
 
 	public IndexIntakeBackCommandGroup(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
 
@@ -33,15 +35,20 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 		m_indexerMotorSubsystem = motorSubsystem;
 
 		indexIntakeOneBackCommand = new IndexIntakeOneBackCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
-		indexIntakeTwoThreeBackCommand = new IndexIntakeTwoThreeBackCommand(m_indexerSensorSubsystem,
-				m_indexerMotorSubsystem);
-		indexIntakeFourFiveBackCommand = new IndexIntakeFourFiveBackCommand(m_indexerSensorSubsystem);
+		indexIntakeTwoBackCommand = new IndexIntakeTwoBackCommand(m_indexerSensorSubsystem,	m_indexerMotorSubsystem);
+		indexIntakeThreeBackCommand = new IndexIntakeThreeBackCommand(m_indexerSensorSubsystem,	m_indexerMotorSubsystem);
+		indexIntakeFourBackCommand = new IndexIntakeFourBackCommand(m_indexerSensorSubsystem);
+		indexIntakeFiveBackCommand = new IndexIntakeFiveBackCommand(m_indexerSensorSubsystem);
 
 		indexSwitchTwoCommand = new IndexSwitchTwoCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
 		indexSwitchFourCommand = new IndexSwitchFourCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
+
+		indexSequenceTwo = new SequentialCommandGroup(indexSwitchTwoCommand, indexIntakeThreeBackCommand);
+		indexSequenceFour = new SequentialCommandGroup(indexSwitchFourCommand, indexIntakeFiveBackCommand);
+
 		Command command = new SelectCommand(Map.ofEntries(entry(0, indexIntakeOneBackCommand),
-				entry(1, indexIntakeTwoThreeBackCommand), entry(2, indexSequenceTwo),
-				entry(3, indexIntakeFourFiveBackCommand), entry(4, indexSequenceFour)), this::numBalls);
+				entry(1, indexIntakeTwoBackCommand), entry(2, indexSequenceTwo),
+				entry(3, indexIntakeFourBackCommand), entry(4, indexSequenceFour)), this::numBalls);
 		addCommands(command);
 	}
 

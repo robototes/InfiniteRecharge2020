@@ -69,14 +69,14 @@ public class RobotMap {
 	// INDEX SUBSYSTEM
 	// ---------------------------------------------------------------------------
 	// IDs
-	private final static int indexBackMotorID = 1;
-	private final static int indexFrontMotorID = 2;
+	private final static int indexBackMotorID = 2;
+	private final static int indexFrontMotorID = 1;
 	private final static int indexMidMotorID = 3;
-	private final static int backSensorID = 1;
-	private final static int backMidSensorID = 2;
+	private final static int backSensorID = 5;
+	private final static int backMidSensorID = 4;
 	private final static int midSensorID = 3;
-	private final static int frontMidSensorID = 4;
-	private final static int frontSensorID = 5;
+	private final static int frontMidSensorID = 2;
+	private final static int frontSensorID = 1;
 	private final static int intakeFrontSensorID = 6;
 	private final static int intakeBackSensorID = 7;
 

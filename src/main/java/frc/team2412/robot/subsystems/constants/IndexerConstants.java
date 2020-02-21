@@ -22,13 +22,23 @@ public class IndexerConstants {
 	}
 
 	// PID FOR AFTER A SENSOR PICKS UP A BALL
-	public static final double PID_P = 0.01;
+	public static final double PID_P = 0.03;
 	public static final double PID_I = 0;
 	public static final double PID_D = 0;
 
 	// RATIO
-	// GEARBOX = 5:1, SPINDLE DIA = ???
-	// STOP 1 INCH AFTER SENSOR SIGNAL
-	private static final double SPINDLE_DIAMETER = 1.0;
-	public static final double STOP_DISTANCE = 5 * SPINDLE_DIAMETER * Math.PI;
+	// GEARBOX = 5:1, SPINDLE DIA = 1.2
+
+	//FOR OUTER SENSORS
+	public static final double NORMAL_STOP_DISTANCE = 3;
+	
+	//FOR INNER SENSORS
+	public static final double SHORT_STOP_DISTANCE = 2;
+	public static final double LONG_STOP_DISTANCE = 4;
+
+	//FOR MIDDLE
+	public static final double EXTRA_LONG_STOP_DISTANCE = 10;
+
+	private static final double SPINDLE_DIAMETER = 1.2;
+	public static final double INCH_STOP_DISTANCE = 2;
 }

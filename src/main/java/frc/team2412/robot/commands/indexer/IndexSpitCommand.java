@@ -22,14 +22,14 @@ public class IndexSpitCommand extends CommandBase {
 	public void execute() {
 		m_indexerMotorSubsystem.setFrontMotor(1);
 		m_indexerMotorSubsystem.setBackMotor(1);
-		m_indexerMotorSubsystem.setMidMotor(-0.1);
+		//m_indexerMotorSubsystem.setMidMotor(-0.1);
 	}
 
 	@Override
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
 			m_indexerMotorSubsystem.stopAllMotors();
-			RobotState.m_ballCount++;
+			RobotState.m_ballCount = 0;
 			return true;
 		} else {
 			return false;

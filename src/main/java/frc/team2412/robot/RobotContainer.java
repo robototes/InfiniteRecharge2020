@@ -66,12 +66,14 @@ public class RobotContainer implements Loggable {
 		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
 		m_ClimbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 
-		m_IndexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-				RobotMap.indexBackMotor);
+		
 
 		m_IndexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
 				RobotMap.mid, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
+		m_IndexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
+				RobotMap.indexBackMotor, m_IndexerSensorSubsystem);
+		
 		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
 
 		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro,
@@ -91,7 +93,7 @@ public class RobotContainer implements Loggable {
 		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
 
 		// Add commands to the autonomous command chooser
-//		m_chooser.addOption("Basic Auto", m_basicAutoCommand);
-
+		//m_chooser.addOption("Basic Auto", m_basicAutoCommand);
+		
 	}
 }

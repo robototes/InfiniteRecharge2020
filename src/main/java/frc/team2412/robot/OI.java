@@ -10,6 +10,9 @@ import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
 import frc.team2412.robot.commands.climb.ClimbStopArmCommand;
 import frc.team2412.robot.commands.controlPanel.RotateControlPanelCommand;
 import frc.team2412.robot.commands.controlPanel.SetToTargetColorCommand;
+import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
+import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
+import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.commands.intake.IntakeBackDownCommand;
 import frc.team2412.robot.commands.intake.IntakeBackOffCommand;
 import frc.team2412.robot.commands.intake.IntakeBackOnCommand;
@@ -66,8 +69,10 @@ public class OI {
 
 	// Buttons
 	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
+	public Button indexerIntakeFrontButton = new JoystickButton(driverStick, 3);
+	public Button indexerIntakeBackButton = new JoystickButton(driverStick, 4);
 	public Button indexerShootButton = new JoystickButton(driverStick, 2);
-	public Button indexerStopButton = new JoystickButton(driverStick, 3);
+	public Button indexerStopButton = new JoystickButton(driverStick, 1);
 
 	public Button liftUpButton = new JoystickButton(codriverStick, LIFT_UP_BUTTON_PORT);
 	public Button liftDownButton = new JoystickButton(codriverStick, LIFT_DOWN_BUTTON_PORT);
@@ -96,7 +101,7 @@ public class OI {
 	public OI(RobotContainer robotContainer) {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
-
+		/*
 		// LIFT
 		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
@@ -133,5 +138,9 @@ public class OI {
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
 		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		*/
+		//indexerIntakeFrontButton.whileHeld(new IndexIntakeFrontCommandGroup(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
+		//indexerIntakeBackButton.whileHeld(new IndexIntakeBackCommandGroup(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
+		//indexerStopButton.whenPressed(new IndexSpitCommand(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
 	}
 }
