@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
@@ -54,10 +53,10 @@ public class RobotMap {
 	static boolean climbMode = false;
 
 	// climb Pneumatics
-	private static final int pneumatic1Open = 1;
-	private static final int pneumatic2Open = 2;
-	public static Solenoid climbLeftPneumatic = new Solenoid(pneumatic1Open);
-	public static Solenoid climbRightPneumatic = new Solenoid(pneumatic2Open);
+	private static final int CLIMB_LEFT_SOLENOID_PORT = 1;
+	private static final int CLIMB_RIGHT_SOLENOID_PORT = 2;
+	public static Solenoid climbLeftPneumatic = new Solenoid(CLIMB_LEFT_SOLENOID_PORT);
+	public static Solenoid climbRightPneumatic = new Solenoid(CLIMB_RIGHT_SOLENOID_PORT);
 
 	// Motors
 	private static final int climbMotor1 = 1;
@@ -145,7 +144,7 @@ public class RobotMap {
 	public static ColorMatch colorMatcher = new ColorMatch();
 
 	public static final int CONTROL_PANEL_MOTOR_PORT = 1;
-	public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
+	public static WPI_TalonFX colorSensorMotor = new WPI_TalonFX(CONTROL_PANEL_MOTOR_PORT);
 
 	// Limelight subsystem
 	// ----------------------------------------------------------------------------------------------

@@ -158,6 +158,10 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return m_currentYSpeed;
 	}
 
+	public double getCurrentDraw() {
+		return m_driveBaseCurrentDraw;
+	}
+
 	// OBLOG
 	// ---------------------------------------------------------------------------------
 
@@ -168,6 +172,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	// Periodic
 	// ------------------------------------------------------------------------------
+
 	@Override
 	public void periodic() {
 

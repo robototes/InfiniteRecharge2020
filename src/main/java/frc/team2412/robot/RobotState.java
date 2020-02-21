@@ -4,6 +4,9 @@ import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
+
+	private RobotContainer robotContainer = RobotMap.m_robotContainer;
+
 	@Log
 	public static UnbalancedSide m_unbalancedSide;
 
@@ -28,9 +31,12 @@ public class RobotState implements Loggable {
 
 	public static boolean justMoveAuto = true;
 
+	public RobotState() {
+
+	}
+
 	public static enum UnbalancedSide {
 		FRONT, BACK;
-
 	}
 
 	public static enum IntakeDirection {
@@ -47,10 +53,6 @@ public class RobotState implements Loggable {
 
 	public static enum GearboxState {
 		HIGH, LOW;
-	}
-
-	private RobotState() {
-
 	}
 
 	public static UnbalancedSide flip(UnbalancedSide s) {
@@ -112,6 +114,20 @@ public class RobotState implements Loggable {
 
 	public static void setliftSolenoidState(LiftState m_liftSolenoidState) {
 		RobotState.m_liftSolenoidState = m_liftSolenoidState;
+	}
+
+	public double getTotalCurrentDraw() {
+		double currentDraw = 
+				robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+				+ robotContainer.m_driveBaseSubsystem.getCurrentDraw()
+				+ robotContainer.m_flywheelSubsystem.getCurrentDraw()
+				+ robotContainer.m_indexerMotorSubsystem.getCurrentDraw()
+				+ robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
+				+ robotContainer.m_turretSubsystem.getCurrentDraw()
+				+ RobotMap.compressor.getCompressorCurrent()
+				;
+		
+		return currentDraw;
 	}
 
 }

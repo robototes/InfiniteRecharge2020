@@ -142,14 +142,14 @@ public class OI {
 		controlPanelSetToTargetButton
 				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
 
-		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_ClimbLiftSubsystem));
-		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
-		climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
-		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_ClimbLiftSubsystem));
-		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));
+		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
+		climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
+		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
+		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_climbMotorSubsystem));
 
 		indexerStopButton.whenPressed(
-				new IndexSpitCommand(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
+				new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem, robotContainer.m_indexerMotorSubsystem));
 
 		MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick, codriverStick,
 				JoystickEqualizerButton));

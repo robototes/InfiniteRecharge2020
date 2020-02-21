@@ -39,36 +39,36 @@ public class RobotContainer implements Loggable {
 
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
-	public IndexerMotorSubsystem m_IndexerMotorSubsystem;
+	public IndexerMotorSubsystem m_indexerMotorSubsystem;
 
-	public IndexerSensorSubsystem m_IndexerSensorSubsystem;
+	public IndexerSensorSubsystem m_indexerSensorSubsystem;
 
-	public ClimbLiftSubsystem m_ClimbLiftSubsystem;
+	public ClimbLiftSubsystem m_climbLiftSubsystem;
 
-	public ClimbMotorSubsystem m_ClimbMotorSubsystem;
+	public ClimbMotorSubsystem m_climbMotorSubsystem;
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	public RobotContainer() {
-		m_ClimbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
-		m_ClimbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
+		m_climbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
+		m_climbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 
-		m_IndexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
+		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
 				RobotMap.mid, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
-		m_IndexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-				RobotMap.indexBackMotor, m_IndexerSensorSubsystem);
+		m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
+				RobotMap.indexBackMotor, m_indexerSensorSubsystem);
 
-		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
+		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
 
-		m_IndexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
+		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
 				RobotMap.mid, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
-		m_IndexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-				RobotMap.indexBackMotor, m_IndexerSensorSubsystem);
+		m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
+				RobotMap.indexBackMotor, m_indexerSensorSubsystem);
 
-		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown, RobotMap.compressor);
+		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
 
 		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro,
 				RobotMap.driveLeftFront, RobotMap.driveLeftBack, RobotMap.driveRightFront, RobotMap.driveRightBack);
@@ -76,7 +76,7 @@ public class RobotContainer implements Loggable {
 		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
 		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
-				RobotMap.backIntakeLiftSolenoid, RobotMap.compressor);
+				RobotMap.backIntakeLiftSolenoid);
 
 		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
 

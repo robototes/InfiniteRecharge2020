@@ -71,4 +71,8 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
 	}
 
+	public double getCurrentDraw() {
+		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
+	}
+
 }

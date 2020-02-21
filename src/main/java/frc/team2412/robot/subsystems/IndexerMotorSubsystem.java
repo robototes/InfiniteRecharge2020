@@ -102,4 +102,9 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 		backTicks = m_backEncoder.getPosition();
 	}
 
+	public double getCurrentDraw() {
+		return m_indexBackMotor.getOutputCurrent() + m_indexFrontMotor.getOutputCurrent()
+				+ m_indexMidMotor.getOutputCurrent();
+	}
+
 }

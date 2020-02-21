@@ -74,4 +74,8 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	public void setD(double newD) {
 		m_pidController.setP(newD);
 	}
+
+	public double getCurrentDraw() {
+		return m_flywheelLeftMotor.getOutputCurrent() + m_flywheelRightMotor.getOutputCurrent();
+	}
 }
