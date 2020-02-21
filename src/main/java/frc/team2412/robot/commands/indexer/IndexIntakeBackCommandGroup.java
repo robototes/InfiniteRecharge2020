@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 
-//This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
@@ -24,10 +23,10 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 	private IndexSwitchTwoCommand indexSwitchTwoCommand;
 	private IndexSwitchFourCommand indexSwitchFourCommand;
 
-	private SequentialCommandGroup indexSequenceTwo = new SequentialCommandGroup(indexIntakeTwoThreeBackCommand,
-			indexSwitchTwoCommand);
-	private SequentialCommandGroup indexSequenceFour = new SequentialCommandGroup(indexIntakeFourFiveBackCommand,
-			indexSwitchFourCommand);
+	private SequentialCommandGroup indexSequenceTwo = new SequentialCommandGroup(indexSwitchTwoCommand,
+			indexIntakeTwoThreeBackCommand);
+	private SequentialCommandGroup indexSequenceFour = new SequentialCommandGroup(indexSwitchFourCommand,
+			indexIntakeFourFiveBackCommand);
 
 	public IndexIntakeBackCommandGroup(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
 
@@ -42,8 +41,8 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 		indexSwitchTwoCommand = new IndexSwitchTwoCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
 		indexSwitchFourCommand = new IndexSwitchFourCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
 		Command command = new SelectCommand(Map.ofEntries(entry(0, indexIntakeOneBackCommand),
-				entry(1, indexSequenceTwo), entry(2, indexIntakeTwoThreeBackCommand), entry(3, indexSequenceFour),
-				entry(4, indexIntakeFourFiveBackCommand)), this::numBalls);
+				entry(1, indexIntakeTwoThreeBackCommand), entry(2, indexSequenceTwo),
+				entry(3, indexIntakeFourFiveBackCommand), entry(4, indexSequenceFour)), this::numBalls);
 		addCommands(command);
 	}
 
