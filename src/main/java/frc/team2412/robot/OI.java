@@ -24,6 +24,7 @@ import frc.team2412.robot.commands.intake.IntakeFrontOnCommand;
 import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
+import frc.team2412.robot.commands.drive.DriveCommand;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
@@ -32,7 +33,10 @@ public class OI {
 	public static final int DRIVER_STICK_PORT = 0;
 	public static final int CODRIVER_STICK_PORT = 1;
 
-	// LIFT button ports
+	public static final int MOTOR_TEST_BUTTON_PORT = 1;
+	public static final int JOYSTICK_TEST_BUTTON_PORT = 3;
+	
+//	// LIFT button ports
 	public static final int LIFT_UP_BUTTON_PORT = 1;
 	public static final int LIFT_DOWN_BUTTON_PORT = 1;
 
@@ -52,16 +56,19 @@ public class OI {
 	public static final int INTAKE_FRONT_ON_BACK_OFF_BUTTON_PORT = 1;
 	public static final int INTAKE_BACK_ON_FRONT_OFF_BUTTON_PORT = 1;
 
+	public static final int INTAKE_FRONT_BUTTON = 1;
+	public static final int INTAKE_BACK_BUTTON = 1;
+
 	// CONTROL PANEL button ports
 	public static final int CONTROL_PANEL_SPIN_3_TIMES_BUTTON_PORT = 1;
 	public static final int CONTROL_PANEL_SET_TO_TARGET_COLOR_BUTTON_PORT = 1;
 
 	// CLIMB button ports
-	private static final int CLIMB_DEPLOY_RAILS_BUTTON_PORT = 0;
-	private static final int CLIMB_EXTEND_ARM_BUTTON_PORT = 0;
-	private static final int CLIMB_RETRACT_RAILS_BUTTON_PORT = 0;
-	private static final int CLIMB_STOP_ARM_BUTTON_PORT = 0;
-	private static final int CLIMB_RETRACT_ARM_BUTTON_PORT = 0;
+	public static final int CLIMB_DEPLOY_RAILS_BUTTON_PORT = 1;
+	public static final int CLIMB_EXTEND_ARM_BUTTON_PORT = 1;
+	public static final int CLIMB_RETRACT_RAILS_BUTTON_PORT = 1;
+	public static final int CLIMB_STOP_ARM_BUTTON_PORT = 1;
+	public static final int CLIMB_RETRACT_ARM_BUTTON_PORT = 1;
 
 	// Joysticks
 	public Joystick driverStick = new Joystick(DRIVER_STICK_PORT);
@@ -97,11 +104,15 @@ public class OI {
 	public Button climbRetractArmButton = new JoystickButton(driverStick, CLIMB_RETRACT_ARM_BUTTON_PORT);
 	public Button climbStopArmButton = new JoystickButton(driverStick, CLIMB_STOP_ARM_BUTTON_PORT);
 
+	public Button MotorTestButton = new JoystickButton(driverStick, MOTOR_TEST_BUTTON_PORT);
+	
+	public Button JoystickEqualizerButton = new JoystickButton(codriverStick, JOYSTICK_TEST_BUTTON_PORT);
+
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
 		// telling the button that when its pressed to execute example command with the
 		// robot container's instance of example subsystem
-		/*
+		
 		// LIFT
 		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
@@ -138,9 +149,44 @@ public class OI {
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
 		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
-		*/
-		//indexerIntakeFrontButton.whileHeld(new IndexIntakeFrontCommandGroup(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
-		//indexerIntakeBackButton.whileHeld(new IndexIntakeBackCommandGroup(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
-		//indexerStopButton.whenPressed(new IndexSpitCommand(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
+		indexerStopButton.whenPressed(new IndexSpitCommand(robotContainer.m_IndexerSensorSubsystem, robotContainer.m_IndexerMotorSubsystem));
+		
+		MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick, codriverStick, JoystickEqualizerButton));
+
+		// LIFT
+		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
+		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
+
+		// INTAKE UpDown
+		intakeUpButton.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
+
+		// INTAKE front
+		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOffButton.whenPressed(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+
+		// INTAKE back
+		intakeBackOnButton.whenPressed(new IntakeBackOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOffButton.whenPressed(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+
+		// INTAKE group on/off
+		intakeFrontOnBackOffButton
+				.whenPressed(new IntakeFrontOnIntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOffBackOnButton
+				.whenPressed(new IntakeFrontOffIntakeBackOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+
+		// CONTROL PANEL
+		controlPanelSpinThreeTimesButton
+				.whenPressed(new RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
+		controlPanelSetToTargetButton
+				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
+
+		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_ClimbLiftSubsystem));
+		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_ClimbLiftSubsystem));
+		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_ClimbMotorSubsystem));
+		
+		
 	}
 }

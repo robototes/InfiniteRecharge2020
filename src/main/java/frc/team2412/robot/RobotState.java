@@ -7,20 +7,28 @@ public class RobotState implements Loggable {
 	@Log
 	public static UnbalancedSide m_unbalancedSide;
 
-	@Log
+	@Log.Graph
 	public static int m_ballCount = 0;
 
-	@Log
+	@Log.BooleanBox
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
-	@Log
+	@Log.BooleanBox
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
-	@Log
+	@Log.BooleanBox
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	@Log
+	@Log.BooleanBox
 	public static GearboxState m_gearState = GearboxState.LOW;
+	
+	public static boolean sixBallAuto = true;
+	
+	public static boolean threeBallAuto = false;
+	
+	public static boolean justMoveAuto = true;
+	
+	
 
 	public static enum UnbalancedSide {
 		FRONT, BACK;
