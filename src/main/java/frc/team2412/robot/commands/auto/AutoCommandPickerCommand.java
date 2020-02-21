@@ -25,16 +25,18 @@ public class AutoCommandPickerCommand extends CommandBase {
 	IndexerMotorSubsystem m_indexerMotorSubsystem;
 	HoodSubsystem m_hoodSubsystem;
 
+	Command command;
+
 	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
 			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
 			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
-		
+
 		m_driveBaseSubsystem = driveBaseSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
 		m_intakeUpDownSubsystem = intakeUpDownSubsystem;
 		m_liftSubsystem = liftSubsystem;
-		m_flywheelSubsystem= flywheelSubsystem;
+		m_flywheelSubsystem = flywheelSubsystem;
 		m_indexerMotorSubsystem = indexerMotorSubsystem;
 		m_indexerSensorSubsystem = indexerSensorSubsystem;
 		m_hoodSubsystem = hoodSubsystem;
@@ -43,38 +45,38 @@ public class AutoCommandPickerCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		
-		Command command;
-		if (RobotState.sixBallAuto == true) {
-			
-			command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
-					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
-					m_indexerMotorSubsystem, m_hoodSubsystem);
-			CommandScheduler.getInstance()
-					.schedule(new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
-							m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
-							m_indexerMotorSubsystem, m_hoodSubsystem));
-		} else if (RobotState.threeBallAuto == true) {
-			
-			command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
-					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
-					m_indexerMotorSubsystem, m_hoodSubsystem);
-			
-			CommandScheduler.getInstance()
-			.schedule(new ThreeBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
-					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
-					m_indexerMotorSubsystem, m_hoodSubsystem));
-		} else if (RobotState.justMoveAuto == true) {
-			CommandScheduler.getInstance()
-			.schedule(new MoveToPowerCellsCommand(m_driveBaseSubsystem));
-		} else {
 
-		}
-	}
-	
-	@Override
-	public void isFinished() {
+		if (RobotState.sixBallAuto == true) {
+
+			command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
+					m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem, m_indexerMotorSubsystem,
+					m_hoodSubsystem);
+
+		} else if (RobotState.threeBallAuto == true) {
+
+			command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
+					m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem, m_indexerMotorSubsystem,
+					m_hoodSubsystem);
+
+		} else if (RobotState.justMoveAuto == true) {
+
+			command = new MoveToPowerCellsCommand(m_driveBaseSubsystem);
+
+		} else {
+			
+			command = null;
 		
+		}
+
+		if (command != null) {
+			CommandScheduler.getInstance().schedule(command);
+		}
+
+	}
+
+	@Override
+	public boolean isFinished() {
+		return command.isFinished();
 	}
 
 }

@@ -2,8 +2,8 @@ package frc.team2412.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.commands.auto.subsistentCommands.MoveToIntakePowerCellsCommandGroup;
-import frc.team2412.robot.commands.auto.subsistentCommands.StartUpCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
+import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
@@ -22,7 +22,7 @@ public class ThreeBallAutoCommandGroup extends SequentialCommandGroup {
 		
 		addCommands(
 				
-				new StartUpCommand(liftSubsystem, flywheelSubsystem, hoodSubsystem),
+				new LiftUpCommand(liftSubsystem),
 				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem),
 				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem, intakeUpDownSubsystem)
 				);
