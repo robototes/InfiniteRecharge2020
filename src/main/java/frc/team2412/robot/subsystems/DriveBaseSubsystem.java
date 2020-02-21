@@ -160,6 +160,16 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return m_headingToGoal;
 	}
 
+	// OBLOG
+	// ---------------------------------------------------------------------------------
+
+	@Override
+	public String configureLogName() {
+		return "Drivebase Subsystem";
+	}
+
+	// Periodic
+	// ------------------------------------------------------------------------------
 	@Override
 	public void periodic() {
 
