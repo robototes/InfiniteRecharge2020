@@ -7,9 +7,11 @@
 
 package frc.team2412.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.team2412.robot.subsystems.constants.ControlPanelConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.Logger;
 
@@ -26,6 +28,8 @@ public class Robot extends TimedRobot implements Loggable {
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
+	
+	public DriverStation ds = DriverStation.getInstance();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -86,6 +90,17 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		String color = ds.getGameSpecificMessage();
+		if(color != null) {
+			if(color.equalsIgnoreCase("R")) {
+				ControlPanelConstants.TargetColor = ControlPanelConstants.redTarget;
+			} else if(color.equalsIgnoreCase("G")) {
+				ControlPanelConstants.TargetColor = ControlPanelConstants.greenTarget;
+			} if(color.equalsIgnoreCase("B")) {
+				ControlPanelConstants.TargetColor = ControlPanelConstants.blueTarget;
+			}
+		}
+		
 	}
 
 	@Override
