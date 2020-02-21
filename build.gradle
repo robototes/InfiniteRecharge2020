@@ -1,13 +1,24 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2020.1.2"
+    id "edu.wpi.first.GradleRIO" version "2020.2.2"
     id "eclipse"
+}
+
+repositories {
+  maven { url 'https://jitpack.io' }
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
 def ROBOT_MAIN_CLASS = "frc.team2412.robot.Main"
+
+repositories{
+	maven{
+		name 'jitpack'
+		url 'http://jitpack.io'
+	}
+}
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -44,6 +55,10 @@ def includeDesktopSupport = false
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
+    compile project(":robot_library") //not building until project is updated
+    
+    //compile pathfinder()
+    
     implementation wpi.deps.wpilib()
     nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
@@ -53,7 +68,9 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-	compile project(":robot_library") //not building until project is updated
+
+	implementation "com.github.Oblarg.Oblog:lib:3.1.0"	
+
 
     testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:3.2.0'

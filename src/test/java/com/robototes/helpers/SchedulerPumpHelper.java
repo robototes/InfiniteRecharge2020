@@ -13,21 +13,6 @@ public final class SchedulerPumpHelper {
 	private static int defaultHeartbeatInMs = 20;
 
 	/**
-	 * Static class. Do not initialize.
-	 */
-	private SchedulerPumpHelper() {
-	}
-
-	/**
-	 * Change the default heartbeat for the scheduler pump.
-	 * 
-	 * @param defaultHeartbeatInMs Heartbeat in milliseconds
-	 */
-	public static void setDefaultHeartbeat(int defaultHeartbeatInMs) {
-		SchedulerPumpHelper.defaultHeartbeatInMs = defaultHeartbeatInMs;
-	}
-
-	/**
 	 * Helper to figure out what heartbeat to use.
 	 * 
 	 * @param optionalHeartbeatInMs Optional heartbeat in array form to simulate
@@ -61,5 +46,20 @@ public final class SchedulerPumpHelper {
 			CommandScheduler.getInstance().run();
 			Thread.sleep(heartbeatToUseInMs);
 		}
+	}
+
+	/**
+	 * Change the default heartbeat for the scheduler pump.
+	 * 
+	 * @param defaultHeartbeatInMs Heartbeat in milliseconds
+	 */
+	public static void setDefaultHeartbeat(int defaultHeartbeatInMs) {
+		SchedulerPumpHelper.defaultHeartbeatInMs = defaultHeartbeatInMs;
+	}
+
+	/**
+	 * Static class. Do not initialize.
+	 */
+	private SchedulerPumpHelper() {
 	}
 }
