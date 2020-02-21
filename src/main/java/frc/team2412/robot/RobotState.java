@@ -10,7 +10,7 @@ public class RobotState implements Loggable {
 	@Log
 	public static UnbalancedSide m_unbalancedSide;
 
-	@Log.Graph
+	@Log.Dial(min = 0, max = 5, showValue = true)
 	public static int m_ballCount = 0;
 
 	@Log.BooleanBox

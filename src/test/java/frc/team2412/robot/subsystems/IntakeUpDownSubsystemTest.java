@@ -15,7 +15,6 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.commands.intake.IntakeBackDownCommand;
@@ -29,7 +28,6 @@ public class IntakeUpDownSubsystemTest {
 	IntakeUpDownSubsystem realIntakeUpDownSubsystem;
 	Solenoid mockedLiftSolenoid;
 	Solenoid mockedLiftSolenoid2;
-	Compressor mockedCompressor;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -49,10 +47,8 @@ public class IntakeUpDownSubsystemTest {
 
 		mockedLiftSolenoid = mock(Solenoid.class);
 		mockedLiftSolenoid2 = mock(Solenoid.class);
-		mockedCompressor = mock(Compressor.class);
 
-		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2,
-				mockedCompressor);
+		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
 	}
 
 	@Ignore

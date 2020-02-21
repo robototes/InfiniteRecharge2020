@@ -14,7 +14,6 @@ import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
@@ -26,7 +25,6 @@ public class LiftSubsystemTest {
 	// Mock instance of Example Subsystem
 	LiftSubsystem realLiftSubsystem;
 	DoubleSolenoid mockedLiftSolenoid;
-	Compressor mockedCompressor;
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -45,9 +43,8 @@ public class LiftSubsystemTest {
 		MockHardwareExtension.beforeAll();
 
 		mockedLiftSolenoid = mock(DoubleSolenoid.class);
-		mockedCompressor = mock(Compressor.class);
 
-		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid, mockedCompressor);
+		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid);
 	}
 
 	@Ignore
