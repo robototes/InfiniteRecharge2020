@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.revrobotics.CANSparkMax;
@@ -54,7 +55,7 @@ public class IntakeOnOffSubsystemTest {
 
 		realIntakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
 	}
-
+	@Ignore
 	@Test
 	public void IntakeBackOffCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -81,7 +82,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-
+	@Ignore
 	@Test
 	public void IntakeBackOnCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -108,7 +109,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-
+	@Ignore
 	@Test
 	public void IntakeFrontOffCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -135,7 +136,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-
+	@Ignore
 	@Test
 	public void IntakeFrontOffIntakeBackOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -164,7 +165,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-
+	@Ignore
 	@Test
 	public void IntakeFrontOnCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -191,7 +192,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-
+	@Ignore
 	@Test
 	public void IntakeFrontOnIntakeBackOffIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset

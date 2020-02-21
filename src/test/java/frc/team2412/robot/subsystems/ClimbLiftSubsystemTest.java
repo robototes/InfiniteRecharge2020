@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.robototes.helpers.MockButton;
@@ -29,6 +30,7 @@ public class ClimbLiftSubsystemTest {
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
+	
 	@After
 	public void after() {
 		TestWithScheduler.schedulerDestroy();
@@ -37,6 +39,7 @@ public class ClimbLiftSubsystemTest {
 
 	// This method is run before the tests begin. initialize all mocks you wish to
 	// use in multiple functions here. Copy and paste this function in your own test
+	
 	@Before
 	public void before() {
 		TestWithScheduler.schedulerStart();
@@ -48,7 +51,7 @@ public class ClimbLiftSubsystemTest {
 
 		realClimbLiftSubsystem = new ClimbLiftSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
 	}
-
+	@Ignore
 	@Test
 	public void ClimbUPCommandOnClimbSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset
@@ -76,6 +79,7 @@ public class ClimbLiftSubsystemTest {
 
 	// This test makes sure that the example command calls the .subsystemMethod of
 	// example subsystem
+	@Ignore
 	@Test
 	public void ClimbDownCommandOnClimbSubsystemCallsSolenoidSet() {
 		// Reset the subsystem to make sure all mock values are reset

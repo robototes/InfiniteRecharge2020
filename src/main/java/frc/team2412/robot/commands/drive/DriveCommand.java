@@ -1,8 +1,8 @@
 package frc.team2412.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 
 public class DriveCommand extends CommandBase {

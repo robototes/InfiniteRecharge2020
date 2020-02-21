@@ -1,6 +1,6 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.highGearRatio;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kMaxAccelerationMetersPerSecondSquared;
@@ -14,19 +14,19 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kvVoltS
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.robototes.math.Vector;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -36,88 +36,93 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-//mport edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team2412.robot.RobotState;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public WPI_TalonFX m_leftMotor1, m_leftMotor2, m_rightMotor1, m_rightMotor2;
 
-	public Vector m_motion;
-
 	public Gyro m_gyro;
 
 	public Solenoid m_gearShifter;
 
-	@Log
+	@Log.Dial(max = 1, min = -1, showValue = true, tabName = "Drivebase Subsystem")
 	public double m_currentYSpeed;
 
-	// Trjectory objects;
+	@Log.SpeedController(name = "Left Motor Speed", tabName = "Drivebase Subsystem")
+	public SpeedControllerGroup m_leftMotors;
 
-	public SpeedControllerGroup m_leftMotors, m_rightMotors;
-
-	public DifferentialDrive m_drive;
+	@Log.SpeedController(name = "Right Motor Speed", tabName = "Drivebase Subsystem")
+	public SpeedControllerGroup m_rightMotors;
 
 	private DifferentialDriveOdometry m_odometry;
 
-	private int m_rightEncoderValue, m_leftEncoderValue;
+	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
 	private double m_headingToGoal = 180;
 
+	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
+	public boolean doItWork = false;
+
+//	DifferentialDrive m_drive;
+
+	@Log(tabName = "Drivebase Subsystem")
+	public double m_driveBaseCurrentDraw;
+
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
 			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
-		this.setName("DriveBase Subsystem");
-		m_motion = new Vector(0);
-		m_gyro = gyro;
-		m_gearShifter = gearShifter;
-
-		m_rightMotor1.setInverted(true);
 
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
 		m_rightMotor1 = rightMotor1;
 		m_rightMotor2 = rightMotor2;
+
 		m_leftMotor2.follow(leftMotor1);
 		m_rightMotor2.follow(rightMotor1);
 
+		m_rightMotor1.setInverted(true);
+		m_rightMotor2.setInverted(true);
+
 		m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
 		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
-		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+//		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
-		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
+		m_gyro = gyro;
+		m_gearShifter = gearShifter;
+
+		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
+		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
 		if (button.get()) {
-			double averageY = (rightJoystick.getY() + leftJoystick.getY()) / 2;
-			m_rightMotor1.set(averageY);
-			m_leftMotor1.set(averageY);
-			m_currentYSpeed = averageY;
+			m_rightMotor1.set(rightJoystick.getY());
+			m_leftMotor1.set(rightJoystick.getY());
+			m_currentYSpeed = rightJoystick.getY();
 		} else {
 			m_rightMotor1.set(rightJoystick.getY());
 			m_leftMotor1.set(leftJoystick.getY());
 		}
-		m_currentYSpeed = (rightJoystick.getY() + leftJoystick.getY()) / 2;
+//		m_currentYSpeed = (rightJoystick.getY() + leftJoystick.getY()) / 2;
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
-		m_drive.arcadeDrive(joystick.getY(), joystick.getTwist(), true);
+//		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
 	}
 
-	@Config
 	public void setDriveSpeed(double forwardness, double turn) {
-		m_drive.arcadeDrive(forwardness, turn);
-		m_currentYSpeed = forwardness;
+//		m_drive.arcadeDrive(forwardness, turn);
+//		m_currentYSpeed = forwardness;
 	}
 
 	public void angleDrive(double angle) {
@@ -159,24 +164,32 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return m_headingToGoal;
 	}
 
+	// OBLOG
+	// ---------------------------------------------------------------------------------
+
+	@Override
+	public String configureLogName() {
+		return "Drivebase Subsystem";
+	}
+
+	// Periodic
+	// ------------------------------------------------------------------------------
 	@Override
 	public void periodic() {
-		m_motion = new Vector(m_gyro.getAngle() % 360);
 
-		m_rightEncoderValue = m_rightMotor1.getSelectedSensorPosition();
-		m_leftEncoderValue = m_leftMotor1.getSelectedSensorPosition();
+		m_currentYSpeed = (m_rightMotor1.get() + m_leftMotor1.get()) / -2.0;
 
-		if (RobotState.m_gearState == RobotState.GearboxState.HIGH) {
-			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
-					m_leftEncoderValue * highGearRatio * metersPerWheelRevolution,
-					m_rightEncoderValue * highGearRatio * metersPerWheelRevolution);
-		} else {
-			m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
-					m_leftEncoderValue * lowGearRatio * metersPerWheelRevolution,
-					m_rightEncoderValue * lowGearRatio * metersPerWheelRevolution);
-		}
+		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition();
+		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition();
+
+		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+				(m_leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
+				(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
+
+		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
+				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
 	}
 
 	// Trajectory stuff
@@ -187,14 +200,17 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		return new DifferentialDriveWheelSpeeds(m_leftMotor1.getSelectedSensorVelocity(),
-				m_rightMotor1.getSelectedSensorVelocity());
+		return new DifferentialDriveWheelSpeeds(
+				m_leftMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
+						* metersPerWheelRevolution * 10,
+				m_rightMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
+						* metersPerWheelRevolution * 10);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		m_leftMotors.setVoltage(leftVolts);
-		m_rightMotors.setVoltage(rightVolts);
-		m_drive.feed();
+		m_rightMotors.setVoltage(-rightVolts);
+//		m_drive.feed();
 	}
 
 	public double getHeading() {
@@ -271,7 +287,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	@Config
 	public Command getMoveCertainAmountCommand(double finalX, double finalY) {
 
 		DriveBaseSubsystem thisSub = this;
@@ -293,5 +308,112 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	// GetPose and then get translation and then get x and y and rotation.
+	public Command getMoveToPowerCellCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		Pose2d currentPose = getPose();
+		Translation2d currentTranslation = currentPose.getTranslation();
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+
+				currentPose,
+
+				List.of(new Translation2d(currentTranslation.getX() + 2, currentTranslation.getY() - 0.15)),
+
+				new Pose2d(currentTranslation.getX() + 4.85, currentTranslation.getY() - 0.15,
+						currentPose.getRotation()),
+				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
+//	m_odometry.resetPosition(new Pose2d( new Translation2d(3.186, -0.263), new Rotation2d(0)), new Rotation2d(0));
+
+	public Command getMoveFromPowerCellCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		Pose2d currentPose = getPose();
+		Translation2d currentTranslation = currentPose.getTranslation();
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+
+				currentPose,
+
+				List.of(new Translation2d(currentTranslation.getX() + 2, currentTranslation.getY() - 0.15)),
+
+				new Pose2d(currentTranslation.getX() + 4.85, currentTranslation.getY() - 0.15,
+						currentPose.getRotation()),
+				config);
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
+	public Command getMoveToPowerCellPathFromPathWeaverCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		m_odometry.resetPosition(new Pose2d(new Translation2d(3.18, -0.26), new Rotation2d(0)), new Rotation2d());
+
+		Path trajectoryPath = Filesystem.getDeployDirectory().toPath()
+				.resolve("c:/Users/s-panatulas/git/InfiniteRecharge2020/src/main/deploy/MoveToPowerCell.wpilib.json");
+		Trajectory exampleTrajectory = null;
+
+		try {
+			exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+		} catch (IOException e) {
+			System.out.println("There is no path available");
+		}
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
+	public Command getMoveFromPowerCellPathFromPathWeaverCommand() {
+
+		DriveBaseSubsystem thisSub = this;
+
+		m_odometry.resetPosition(new Pose2d(new Translation2d(5.38, -2.29), new Rotation2d(0)), new Rotation2d());
+
+		Path trajectoryPath = Filesystem.getDeployDirectory().toPath()
+				.resolve("c:/Users/s-panatulas/git/InfiniteRecharge2020/src/main/deploy/MoveFromPowerCell.wpilib.json");
+		Trajectory exampleTrajectory = null;
+
+		try {
+			exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+		} catch (IOException e) {
+			System.out.println("There is no path available");
+		}
+
+		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+				// RamseteCommand passes volts to the callback
+				thisSub::tankDriveVolts, thisSub);
+
+		// Run path following command, then stop at the end.
+		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+
+	}
+
 }

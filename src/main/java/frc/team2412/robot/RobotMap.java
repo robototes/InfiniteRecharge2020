@@ -2,27 +2,14 @@ package frc.team2412.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorSensorV3;
 import com.robototes.sensors.Limelight;
-import com.robototes.sensors.Limelight.CamMode;
-import com.robototes.sensors.Limelight.LEDMode;
-import com.robototes.sensors.Limelight.Pipeline;
-import com.robototes.sensors.Limelight.SnapshotMode;
-import com.robototes.sensors.Limelight.StreamMode;
+import com.robototes.sensors.Limelight.*;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
-
+import edu.wpi.first.wpilibj.*;
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
@@ -30,10 +17,10 @@ public class RobotMap {
 	// DRIVEBASE SUBSYSTEM
 	// -------------------------------------------------------------------------
 	// DriveBase Motor ports
-	public static final int DRIVE_LEFT_FRONT_ID = 14;
-	public static final int DRIVE_LEFT_BACK_ID = 15;
-	public static final int DRIVE_RIGHT_FRONT_ID = 1;
-	public static final int DRIVE_RIGHT_BACK_ID = 0;
+	public static final int DRIVE_LEFT_FRONT_ID = 4;
+	public static final int DRIVE_LEFT_BACK_ID = 3;
+	public static final int DRIVE_RIGHT_FRONT_ID = 2;
+	public static final int DRIVE_RIGHT_BACK_ID = 1;
 
 	private static final int DRIVE_SOLENOID_PORT = 0;
 
@@ -42,7 +29,7 @@ public class RobotMap {
 	public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(DRIVE_LEFT_BACK_ID);
 	public static WPI_TalonFX driveRightFront = new WPI_TalonFX(DRIVE_RIGHT_FRONT_ID);
 	public static WPI_TalonFX driveRightBack = new WPI_TalonFX(DRIVE_RIGHT_BACK_ID);
-
+	
 	// DriveBase Gyro
 	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro();
 
@@ -69,14 +56,14 @@ public class RobotMap {
 	// INDEX SUBSYSTEM
 	// ---------------------------------------------------------------------------
 	// IDs
-	private final static int indexBackMotorID = 1;
-	private final static int indexFrontMotorID = 2;
+	private final static int indexBackMotorID = 2;
+	private final static int indexFrontMotorID = 1;
 	private final static int indexMidMotorID = 3;
-	private final static int backSensorID = 1;
-	private final static int backMidSensorID = 2;
+	private final static int backSensorID = 5;
+	private final static int backMidSensorID = 4;
 	private final static int midSensorID = 3;
-	private final static int frontMidSensorID = 4;
-	private final static int frontSensorID = 5;
+	private final static int frontMidSensorID = 2;
+	private final static int frontSensorID = 1;
 	private final static int intakeFrontSensorID = 6;
 	private final static int intakeBackSensorID = 7;
 
@@ -132,13 +119,15 @@ public class RobotMap {
 	// LIFT SUBSYSTEM
 	// -------------------------------------------------------------------------------
 	// Lift Solenoid Ports
-	public static final int LIFT_PORT = 1;
+	public static final int LIFT_UP_PORT = 1;
+	public static final int LIFT_DOWN_PORT = 2;
 
-	public static Solenoid liftUpDown = new Solenoid(LIFT_PORT);
+	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_UP_PORT, LIFT_DOWN_PORT);
 
 	// CONTROL PANEL SUBSYSTEM
 	// ----------------------------------------------------------------------
 	// Control Panel I2C
+	/*
 	public static I2C.Port COLOR_SESNOR_PORT = I2C.Port.kOnboard;
 
 	public static ColorSensorV3 colorSensor = new ColorSensorV3(COLOR_SESNOR_PORT);
@@ -146,7 +135,7 @@ public class RobotMap {
 
 	public static final int CONTROL_PANEL_MOTOR_PORT = 1;
 	public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
-
+	*/
 	// Limelight subsystem
 	// ----------------------------------------------------------------------------------------------
 	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
