@@ -67,8 +67,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
-	private double m_headingToGoal = 180;
-
 	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
 	public boolean doItWork = false;
 
@@ -153,15 +151,11 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public double getGyroHeading() {
-		return m_gyro.getAngle();
+		return Math.IEEEremainder(m_gyro.getAngle(), 360) * (kGyroReversed ? -1.0 : 1.0);
 	}
 
 	public double getCurrentYSpeed() {
 		return m_currentYSpeed;
-	}
-
-	public double getHeadingToGoal() {
-		return m_headingToGoal;
 	}
 
 	// OBLOG
@@ -185,8 +179,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
 				(m_leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
 				(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
-
-		m_headingToGoal = (m_headingToGoal + m_gyro.getAngle()) % 360;
 
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();

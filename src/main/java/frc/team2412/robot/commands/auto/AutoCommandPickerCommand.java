@@ -63,9 +63,9 @@ public class AutoCommandPickerCommand extends CommandBase {
 			command = new MoveToPowerCellsCommand(m_driveBaseSubsystem);
 
 		} else {
-			
+
 			command = null;
-		
+
 		}
 
 		if (command != null) {

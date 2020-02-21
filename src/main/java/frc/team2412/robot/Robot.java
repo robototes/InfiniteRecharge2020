@@ -20,7 +20,7 @@ import io.github.oblarg.oblog.Logger;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot implements Loggable{
+public class Robot extends TimedRobot implements Loggable {
 
 	// Have instances of robot container and OI for easy access
 //	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
@@ -33,7 +33,7 @@ public class Robot extends TimedRobot implements Loggable{
 	 */
 	@Override
 	public void robotInit() {
-	//	m_robotContainer.m_turretSubsystem.initTurretEncoder();
+		// m_robotContainer.m_turretSubsystem.initTurretEncoder();
 		Logger.configureLoggingAndConfig(this, false);
 		Shuffleboard.startRecording();
 	}

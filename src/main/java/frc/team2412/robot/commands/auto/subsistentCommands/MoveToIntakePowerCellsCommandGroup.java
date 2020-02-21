@@ -9,13 +9,11 @@ import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 
 public class MoveToIntakePowerCellsCommandGroup extends ParallelCommandGroup {
 
-	public MoveToIntakePowerCellsCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
-			IntakeUpDownSubsystem intakeUpDownSubsystem) {
-		
-		addCommands(
-				new IntakeFrontBothOnCommandGroup(intakeUpDownSubsystem, intakeOnOffSubsystem),
-				new MoveToPowerCellsCommand(driveBaseSubsystem)				
-				);
+	public MoveToIntakePowerCellsCommandGroup(DriveBaseSubsystem driveBaseSubsystem,
+			IntakeOnOffSubsystem intakeOnOffSubsystem, IntakeUpDownSubsystem intakeUpDownSubsystem) {
+
+		addCommands(new IntakeFrontBothOnCommandGroup(intakeUpDownSubsystem, intakeOnOffSubsystem),
+				new MoveToPowerCellsCommand(driveBaseSubsystem));
 	}
 
 }
