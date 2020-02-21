@@ -14,10 +14,7 @@ public class SetToTargetColorCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		// run the example method
 		m_controlPanelColorSubsystem.setToTargetColor();
-		;
-
 	}
 
 	@Override

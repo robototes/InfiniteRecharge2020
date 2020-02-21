@@ -19,28 +19,31 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 	private CANPIDController m_frontPIDController, m_backPIDController;
 
 	private CANSparkMax m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor;
-	private SpeedControllerGroup m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor,
-			m_indexBackMotor);
-	private SpeedControllerGroup m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
+	private SpeedControllerGroup m_allMotors;
+	private SpeedControllerGroup m_sideMotors;
 
 	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor) {
 		m_indexFrontMotor = frontMotor;
 		m_indexMidMotor = midMotor;
 		m_indexBackMotor = backMotor;
+
 		m_frontEncoder = m_indexFrontMotor.getEncoder();
 		m_frontPIDController = m_indexFrontMotor.getPIDController();
-
-		m_frontPIDController.setP(IndexerConstants.PID_P);
-		m_frontPIDController.setI(IndexerConstants.PID_I);
-		m_frontPIDController.setD(IndexerConstants.PID_D);
+		configureMotorPID(m_frontPIDController);
 
 		m_backEncoder = m_indexBackMotor.getEncoder();
 		m_backPIDController = m_indexBackMotor.getPIDController();
+		configureMotorPID(m_backPIDController);
 
-		m_backPIDController.setP(IndexerConstants.PID_P);
-		m_backPIDController.setI(IndexerConstants.PID_I);
-		m_backPIDController.setD(IndexerConstants.PID_D);
+		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
+		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor);
 
+	}
+
+	private void configureMotorPID(CANPIDController motorController) {
+		motorController.setP(IndexerConstants.PID_P);
+		motorController.setI(IndexerConstants.PID_I);
+		motorController.setD(IndexerConstants.PID_D);
 	}
 
 	public void setFrontMotor(double val) {
