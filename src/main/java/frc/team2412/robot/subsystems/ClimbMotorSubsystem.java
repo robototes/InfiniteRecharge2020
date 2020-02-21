@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 
+
 public class ClimbMotorSubsystem extends SubsystemBase {
-	// private WPI_TalonSRX m_ClimbMotorSubsystem;
 
 	public Distance m_currentClimbHeight;
 	private CANEncoder m_encoder;
