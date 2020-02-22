@@ -168,8 +168,10 @@ public class RobotMap {
 
     // Hood Subsystem
     // -----------------------------------------------------------------------------
-    public static final int HOOD_SERVO_PORT = 1;
-    public static Servo hoodServo = new Servo(HOOD_SERVO_PORT);
+    public static final int HOOD_SERVO_PORT_1 = 0;
+	public static final int HOOD_SERVO_PORT_2 = 1;
+	public static Servo hoodServo1 = new Servo(HOOD_SERVO_PORT_1);
+	public static Servo hoodServo2 = new Servo(HOOD_SERVO_PORT_2);
 
     // INTAKE SUBSYSTEM
 
