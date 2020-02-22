@@ -11,28 +11,39 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class HoodSubsystem extends SubsystemBase implements Loggable {
 
-	@Log
-	private Servo m_hoodServo;
+	@Log(name = "Right Servo", tabName = "Hood Subsystem")
+	private Servo m_hoodServo1;
 
-	public HoodSubsystem(Servo hoodServo) {
-		this.m_hoodServo = hoodServo;
+	@Log(name = "Left Servo", tabName = "Hood Subsystem")
+	private Servo m_hoodServo2;
+
+	public HoodSubsystem(Servo hoodServo1, Servo hoodServo2) {
+		this.m_hoodServo1 = hoodServo1;
+		this.m_hoodServo2 = hoodServo2;
 	}
 
 	public double getServo() {
-		return m_hoodServo.get();
+		return m_hoodServo1.get();
 	}
 
+	@Config.ToggleButton(name = "Extend Servos Fully", tabName = "Hood Subsystem")
 	public void servoExtend() {
-		m_hoodServo.set(HoodConstants.MaxExtension);
+		m_hoodServo1.set(1-HoodConstants.MaxExtension);
+		m_hoodServo2.set(HoodConstants.MaxExtension);
 	}
 
+	@Config.ToggleButton(name = "Retract Servos Fully", tabName = "Hood Subsystem")
 	public void servoWithdraw() {
-		m_hoodServo.set(HoodConstants.MaxWithdrawal);
+		m_hoodServo1.set(1-HoodConstants.MaxWithdrawal);
+		m_hoodServo2.set(HoodConstants.MaxWithdrawal);
+
 	}
 
-	@Config
+	@Config.NumberSlider(max = 0.65, min = 0, name ="Set Servo Angle", tabName = "Hood Subsystem")
 	public void setServo(double angle) {
-		m_hoodServo.set(angle);
+		System.out.println(angle);
+		m_hoodServo2.set(angle);
+		m_hoodServo1.set(1-angle);
 	}
 
 }

@@ -28,8 +28,9 @@ public class FlywheelConstants {
 	public static final InterUnitRatio<RotationUnits, DistanceUnits> NEO_RPM_TO_FLYWHEEL_MPS = new InterUnitRatio<RotationUnits, DistanceUnits>(
 			NEO_RPM_TO_FLYWHEEL_ROTATIONS_PER_SECOND, FLYWHEEL_ROTATIONS_TO_FLYWHEEL_METERS);
 
-	public static final double I = 0;
-	public static final double D = 0;
-	public static final double P = 0;
+	public static final double I = 0.000001;
+	public static final double D = 0.0001;
+	public static final double P = 0.0004;
+	public static final double FF = 0;
 
 }

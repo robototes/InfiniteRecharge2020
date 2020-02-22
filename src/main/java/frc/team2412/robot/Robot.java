@@ -10,8 +10,6 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
-import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.Logger;
 import io.github.oblarg.oblog.annotations.Log;
