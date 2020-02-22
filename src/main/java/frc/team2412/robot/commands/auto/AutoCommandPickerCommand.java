@@ -25,7 +25,7 @@ public class AutoCommandPickerCommand extends CommandBase {
 	IndexerMotorSubsystem m_indexerMotorSubsystem;
 	HoodSubsystem m_hoodSubsystem;
 
-	Command command;
+	Command m_command;
 
 	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
 			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
@@ -48,35 +48,35 @@ public class AutoCommandPickerCommand extends CommandBase {
 
 		if (RobotState.sixBallAuto == true) {
 
-			command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
+			m_command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
 					m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem, m_indexerMotorSubsystem,
 					m_hoodSubsystem);
 
 		} else if (RobotState.threeBallAuto == true) {
 
-			command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
+			m_command = new ThreeBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
 					m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem, m_indexerMotorSubsystem,
 					m_hoodSubsystem);
 
 		} else if (RobotState.justMoveAuto == true) {
 
-			command = new MoveToPowerCellsCommand(m_driveBaseSubsystem);
+			m_command = new MoveToPowerCellsCommand(m_driveBaseSubsystem);
 
 		} else {
 
-			command = null;
+			m_command = null;
 
 		}
 
-		if (command != null) {
-			CommandScheduler.getInstance().schedule(command);
+		if (m_command != null) {
+			CommandScheduler.getInstance().schedule(m_command);
 		}
 
 	}
 
 	@Override
 	public boolean isFinished() {
-		return command.isFinished();
+		return m_command.isFinished();
 	}
 
 }
