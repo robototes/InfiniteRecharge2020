@@ -42,6 +42,7 @@ public class IsCommandGoingThroughTest {
 		realHoodSubsystem = new HoodSubsystem(mockedServo);
 
 	}
+
 	@Ignore
 	@Test
 	public void ExampleCommandOnExampleSubsystem() {

@@ -44,7 +44,7 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	public void stop() {
 		m_flywheelLeftMotor.set(0.0);
 	}
-	
+
 	public double getSpeed() {
 		return m_flywheelLeftMotor.get();
 	}
@@ -73,5 +73,9 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	@Config(defaultValueNumeric = FlywheelConstants.D, name = "Set Flywheel D")
 	public void setD(double newD) {
 		m_pidController.setP(newD);
+	}
+
+	public double getCurrentDraw() {
+		return m_flywheelLeftMotor.getOutputCurrent() + m_flywheelRightMotor.getOutputCurrent();
 	}
 }

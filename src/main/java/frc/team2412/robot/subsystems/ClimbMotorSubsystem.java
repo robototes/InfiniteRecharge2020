@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 
+
 public class ClimbMotorSubsystem extends SubsystemBase {
-	// private WPI_TalonSRX m_ClimbMotorSubsystem;
 
 	public Distance m_currentClimbHeight;
 	private CANEncoder m_encoder;
@@ -69,6 +69,10 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
+	}
+
+	public double getCurrentDraw() {
+		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
 	}
 
 }

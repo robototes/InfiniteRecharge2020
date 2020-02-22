@@ -14,12 +14,11 @@ public class StartUpCommand extends ParallelCommandGroup {
 			HoodSubsystem hoodSubsystem) {
 
 		addCommands(
-				
-				new LiftUpCommand(liftSubsystem),
-				new FlywheelShootCommand(flywheelSubsystem),
+
+				new LiftUpCommand(liftSubsystem), new FlywheelShootCommand(flywheelSubsystem),
 				new HoodExtendCommand(hoodSubsystem)
-				
-				);
+
+		);
 	}
 
 }

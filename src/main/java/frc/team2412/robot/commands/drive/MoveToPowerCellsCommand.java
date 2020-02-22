@@ -7,7 +7,6 @@ import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 public class MoveToPowerCellsCommand extends CommandBase {
 
 	private DriveBaseSubsystem m_driveBaseSubsystem;
-	
 
 	public MoveToPowerCellsCommand(DriveBaseSubsystem driveBaseSubsystem) {
 		addRequirements(driveBaseSubsystem);

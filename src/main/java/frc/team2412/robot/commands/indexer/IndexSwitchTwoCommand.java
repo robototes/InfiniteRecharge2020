@@ -1,6 +1,5 @@
 package frc.team2412.robot.commands.indexer;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
@@ -21,15 +20,16 @@ public class IndexSwitchTwoCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if(m_indexerSensorSubsystem.getIntakeFrontSensorValue() || m_indexerSensorSubsystem.getIntakeBackSensorValue()){
-		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-			m_indexerMotorSubsystem.setFrontMotor(-1);
-			m_indexerMotorSubsystem.setBackMotor(1);
-		} else {
-			m_indexerMotorSubsystem.setFrontMotor(1);
-			m_indexerMotorSubsystem.setBackMotor(-1);
+		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue()
+				|| m_indexerSensorSubsystem.getIntakeBackSensorValue()) {
+			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
+				m_indexerMotorSubsystem.setFrontMotor(-1);
+				m_indexerMotorSubsystem.setBackMotor(1);
+			} else {
+				m_indexerMotorSubsystem.setFrontMotor(1);
+				m_indexerMotorSubsystem.setBackMotor(-1);
+			}
 		}
-	}
 	}
 
 	@Override
