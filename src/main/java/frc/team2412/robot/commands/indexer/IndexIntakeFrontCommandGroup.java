@@ -1,10 +1,10 @@
 package frc.team2412.robot.commands.indexer;
+
 import static java.util.Map.entry;
 
 import java.util.Map;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -31,13 +31,14 @@ public class IndexIntakeFrontCommandGroup extends ParallelCommandGroup {
 	private SequentialCommandGroup indexSequenceTwo, indexSequenceFour;
 
 	public IndexIntakeFrontCommandGroup(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
-		
+
 		m_indexerSensorSubsystem = sensorSubsystem;
 		m_indexerMotorSubsystem = motorSubsystem;
 
 		indexIntakeOneFrontCommand = new IndexIntakeOneFrontCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
-		indexIntakeTwoFrontCommand = new IndexIntakeTwoFrontCommand(m_indexerSensorSubsystem,	m_indexerMotorSubsystem);
-		indexIntakeThreeFrontCommand = new IndexIntakeThreeFrontCommand(m_indexerSensorSubsystem,	m_indexerMotorSubsystem);
+		indexIntakeTwoFrontCommand = new IndexIntakeTwoFrontCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
+		indexIntakeThreeFrontCommand = new IndexIntakeThreeFrontCommand(m_indexerSensorSubsystem,
+				m_indexerMotorSubsystem);
 		indexIntakeFourFrontCommand = new IndexIntakeFourFrontCommand(m_indexerSensorSubsystem);
 		indexIntakeFiveFrontCommand = new IndexIntakeFiveFrontCommand(m_indexerSensorSubsystem);
 
@@ -47,9 +48,10 @@ public class IndexIntakeFrontCommandGroup extends ParallelCommandGroup {
 		indexSequenceTwo = new SequentialCommandGroup(indexSwitchTwoCommand, indexIntakeThreeFrontCommand);
 		indexSequenceFour = new SequentialCommandGroup(indexSwitchFourCommand, indexIntakeFiveFrontCommand);
 
-		Command command = new SelectCommand(Map.ofEntries(entry(0, indexIntakeOneFrontCommand),
-				entry(1, indexIntakeTwoFrontCommand), entry(2, indexSequenceTwo),
-				entry(3, indexIntakeFourFrontCommand), entry(4, indexSequenceFour)), this::numBalls);
+		Command command = new SelectCommand(
+				Map.ofEntries(entry(0, indexIntakeOneFrontCommand), entry(1, indexIntakeTwoFrontCommand),
+						entry(2, indexSequenceTwo), entry(3, indexIntakeFourFrontCommand), entry(4, indexSequenceFour)),
+				this::numBalls);
 		addCommands(command);
 	}
 

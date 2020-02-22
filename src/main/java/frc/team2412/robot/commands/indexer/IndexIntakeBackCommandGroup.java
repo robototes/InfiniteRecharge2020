@@ -36,8 +36,9 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 		m_indexerMotorSubsystem = motorSubsystem;
 
 		indexIntakeOneBackCommand = new IndexIntakeOneBackCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
-		indexIntakeTwoBackCommand = new IndexIntakeTwoBackCommand(m_indexerSensorSubsystem,	m_indexerMotorSubsystem);
-		indexIntakeThreeBackCommand = new IndexIntakeThreeBackCommand(m_indexerSensorSubsystem,	m_indexerMotorSubsystem);
+		indexIntakeTwoBackCommand = new IndexIntakeTwoBackCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem);
+		indexIntakeThreeBackCommand = new IndexIntakeThreeBackCommand(m_indexerSensorSubsystem,
+				m_indexerMotorSubsystem);
 		indexIntakeFourBackCommand = new IndexIntakeFourBackCommand(m_indexerSensorSubsystem);
 		indexIntakeFiveBackCommand = new IndexIntakeFiveBackCommand(m_indexerSensorSubsystem);
 
@@ -47,9 +48,10 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 		indexSequenceTwo = new SequentialCommandGroup(indexSwitchTwoCommand, indexIntakeThreeBackCommand);
 		indexSequenceFour = new SequentialCommandGroup(indexSwitchFourCommand, indexIntakeFiveBackCommand);
 
-		Command command = new SelectCommand(Map.ofEntries(entry(0, indexIntakeOneBackCommand),
-				entry(1, indexIntakeTwoBackCommand), entry(2, indexSequenceTwo),
-				entry(3, indexIntakeFourBackCommand), entry(4, indexSequenceFour)), this::numBalls);
+		Command command = new SelectCommand(
+				Map.ofEntries(entry(0, indexIntakeOneBackCommand), entry(1, indexIntakeTwoBackCommand),
+						entry(2, indexSequenceTwo), entry(3, indexIntakeFourBackCommand), entry(4, indexSequenceFour)),
+				this::numBalls);
 		addCommands(command);
 	}
 

@@ -11,8 +11,7 @@ public class IndexIntakeThreeBackCommand extends CommandBase {
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
 
-	public IndexIntakeThreeBackCommand(IndexerSensorSubsystem sensorSubsystem,
-			IndexerMotorSubsystem motorSubsystem) {
+	public IndexIntakeThreeBackCommand(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
 		m_indexerSensorSubsystem = sensorSubsystem;
 		m_indexerMotorSubsystem = motorSubsystem;
 		addRequirements(sensorSubsystem, motorSubsystem);
@@ -20,8 +19,8 @@ public class IndexIntakeThreeBackCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if(m_indexerSensorSubsystem.getIntakeBackSensorValue())
-		m_indexerMotorSubsystem.setBackMotor(-1);
+		if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
+			m_indexerMotorSubsystem.setBackMotor(-1);
 	}
 
 	@Override

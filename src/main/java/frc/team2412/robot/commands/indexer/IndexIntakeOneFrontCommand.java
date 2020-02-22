@@ -1,6 +1,5 @@
 package frc.team2412.robot.commands.indexer;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
@@ -20,13 +19,13 @@ public class IndexIntakeOneFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if(m_indexerSensorSubsystem.getIntakeFrontSensorValue())
-		m_indexerMotorSubsystem.setFrontMotor(-1);
+		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
+			m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
 	@Override
 	public boolean isFinished() {
-		//System.out.println("pppp");
+		// System.out.println("pppp");
 		if (m_indexerSensorSubsystem.getIndexFrontMidSensorValue()) {
 			RobotState.m_ballCount++;
 			System.out.println("pppp");

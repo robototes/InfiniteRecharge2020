@@ -1,10 +1,8 @@
 package frc.team2412.robot.subsystems.constants;
 
-import frc.team2412.robot.RobotState;
-
 public class IndexerConstants {
 	// NOT CONSTANTS BUT UNIVERSAL VALUES
-	
+
 	//
 	public enum UnbalancedSide {
 		FRONT, BACK;
@@ -29,16 +27,16 @@ public class IndexerConstants {
 	// RATIO
 	// GEARBOX = 5:1, SPINDLE DIA = 1.2
 
-	//FOR OUTER SENSORS
+	// FOR OUTER SENSORS
 	public static final double NORMAL_STOP_DISTANCE = 3;
-	
-	//FOR INNER SENSORS
+
+	// FOR INNER SENSORS
 	public static final double SHORT_STOP_DISTANCE = 2;
 	public static final double LONG_STOP_DISTANCE = 4;
 
-	//FOR MIDDLE
+	// FOR MIDDLE
 	public static final double EXTRA_LONG_STOP_DISTANCE = 10;
 
-	private static final double SPINDLE_DIAMETER = 1.2;
+	public static final double SPINDLE_DIAMETER = 1.2;
 	public static final double INCH_STOP_DISTANCE = 2;
 }

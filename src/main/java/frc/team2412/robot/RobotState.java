@@ -1,13 +1,19 @@
 package frc.team2412.robot;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
+
+	private RobotContainer robotContainer = RobotMap.m_robotContainer;
+
 	@Log
 	public static UnbalancedSide m_unbalancedSide;
 
-	@Log.Graph
+	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count")
 	public static int m_ballCount = 0;
 
 	@Log.BooleanBox
@@ -21,19 +27,39 @@ public class RobotState implements Loggable {
 
 	@Log.BooleanBox
 	public static GearboxState m_gearState = GearboxState.LOW;
-	
+
+	@Config.ToggleSwitch
 	public static boolean sixBallAuto = true;
 	
+	@Config.ToggleSwitch
 	public static boolean threeBallAuto = false;
 	
+	@Config.ToggleSwitch
 	public static boolean justMoveAuto = true;
-	
-	
+
+	@Log(tabName = "Misc.")
+	public static String eventName = "N/A";
+
+	@Log(tabName = "Misc.")
+	public static MatchType matchType = MatchType.None;
+
+	@Log(tabName = "Misc.")
+	public static int matchNumber = 0;
+
+	@Log(tabName = "Misc.")
+	public static Alliance alliance = Alliance.Invalid;
+
+	@Log(tabName = "Misc.")
+	public static int location = 0;
+
+	public RobotState() {
+
+	}
 
 	public static enum UnbalancedSide {
 		FRONT, BACK;
-		
 	}
+
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 	}
@@ -50,18 +76,16 @@ public class RobotState implements Loggable {
 		HIGH, LOW;
 	}
 
-	private RobotState() {
+	public static UnbalancedSide flip(UnbalancedSide s) {
+		switch (s) {
+		case FRONT:
+			return UnbalancedSide.BACK;
+		default:
+			return UnbalancedSide.FRONT;
+		}
 
 	}
-	public static UnbalancedSide flip(UnbalancedSide s){
-		switch (s) {
-			case FRONT:
-				return UnbalancedSide.BACK;
-			default:
-				return UnbalancedSide.FRONT;
-		}
-		
-	}
+
 	public static int getBallCount() {
 		return m_ballCount;
 	}
@@ -111,6 +135,17 @@ public class RobotState implements Loggable {
 
 	public static void setliftSolenoidState(LiftState m_liftSolenoidState) {
 		RobotState.m_liftSolenoidState = m_liftSolenoidState;
+	}
+
+	public double getTotalCurrentDraw() {
+		double currentDraw = robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+				+ robotContainer.m_driveBaseSubsystem.getCurrentDraw()
+				+ robotContainer.m_flywheelSubsystem.getCurrentDraw()
+				+ robotContainer.m_indexerMotorSubsystem.getCurrentDraw()
+				+ robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
+				+ robotContainer.m_turretSubsystem.getCurrentDraw() + RobotMap.compressor.getCompressorCurrent();
+
+		return currentDraw;
 	}
 
 }

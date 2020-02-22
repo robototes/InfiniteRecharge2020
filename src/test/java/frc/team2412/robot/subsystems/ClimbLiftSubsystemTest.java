@@ -30,7 +30,7 @@ public class ClimbLiftSubsystemTest {
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
-	
+
 	@After
 	public void after() {
 		TestWithScheduler.schedulerDestroy();
@@ -39,7 +39,7 @@ public class ClimbLiftSubsystemTest {
 
 	// This method is run before the tests begin. initialize all mocks you wish to
 	// use in multiple functions here. Copy and paste this function in your own test
-	
+
 	@Before
 	public void before() {
 		TestWithScheduler.schedulerStart();
@@ -51,6 +51,7 @@ public class ClimbLiftSubsystemTest {
 
 		realClimbLiftSubsystem = new ClimbLiftSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
 	}
+
 	@Ignore
 	@Test
 	public void ClimbUPCommandOnClimbSubsystemCallsSolenoidSet() {

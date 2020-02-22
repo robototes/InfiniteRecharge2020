@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexShootCommand extends CommandBase {
@@ -21,7 +20,7 @@ public class IndexShootCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
-		if (!m_indexerSensorSubsystem.getIndexMidSensorValue()) {
+		if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
 			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
 				if (m_indexerSensorSubsystem.allFrontSensorsOff()) {
