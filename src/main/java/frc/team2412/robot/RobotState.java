@@ -4,22 +4,36 @@ import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
-
 	@Log
+	public static UnbalancedSide m_unbalancedSide;
+
+	@Log.Graph
 	public static int m_ballCount = 0;
 
-	@Log
+	@Log.BooleanBox
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
-	@Log
+	@Log.BooleanBox
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
-	@Log
+	@Log.BooleanBox
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	@Log
-	public static GearState m_gearState = GearState.LOW;
+	@Log.BooleanBox
+	public static GearboxState m_gearState = GearboxState.LOW;
+	
+	public static boolean sixBallAuto = true;
+	
+	public static boolean threeBallAuto = false;
+	
+	public static boolean justMoveAuto = true;
+	
+	
 
+	public static enum UnbalancedSide {
+		FRONT, BACK;
+		
+	}
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 	}
@@ -32,14 +46,22 @@ public class RobotState implements Loggable {
 		WITHDRAWN, EXTENDED;
 	}
 
-	public static enum GearState {
+	public static enum GearboxState {
 		HIGH, LOW;
 	}
 
-	public RobotState() {
+	private RobotState() {
 
 	}
-
+	public static UnbalancedSide flip(UnbalancedSide s){
+		switch (s) {
+			case FRONT:
+				return UnbalancedSide.BACK;
+			default:
+				return UnbalancedSide.FRONT;
+		}
+		
+	}
 	public static int getBallCount() {
 		return m_ballCount;
 	}
@@ -59,7 +81,7 @@ public class RobotState implements Loggable {
 		return m_ballCount == 5;
 	}
 
-	public void removeBall() {
+	public static void removeBall() {
 		m_ballCount -= 1;
 		if (m_ballCount < 0) {
 			m_ballCount = 0;

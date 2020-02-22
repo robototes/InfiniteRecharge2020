@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.robototes.helpers.MockHardwareExtension;
@@ -14,8 +15,7 @@ import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
-import frc.team2412.robot.Subsystems.LimelightSubsystem;
-import frc.team2412.robot.Subsystems.constants.LimelightConstants;;
+import frc.team2412.robot.subsystems.constants.LimelightConstants;;
 
 public class LimelightSubsystemTest {
 
@@ -38,7 +38,7 @@ public class LimelightSubsystemTest {
 		mockedLimelight = mock(Limelight.class);
 		realLimelightSubsystem = new LimelightSubsystem(mockedLimelight);
 	}
-
+	@Ignore
 	@Test
 	public void LimelightSubsystemSetsCorrectDistanceAndYawWhenTargetIsFound() {
 
