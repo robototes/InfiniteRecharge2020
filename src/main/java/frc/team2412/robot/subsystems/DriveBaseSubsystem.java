@@ -104,27 +104,13 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
 		
-		double num = Math.random()*100;
-		
-		if(num >= 50) {
+		if (button.get()) {
+			m_rightMotor1.set(rightJoystick.getY());
+			m_leftMotor1.set(rightJoystick.getY());
+		} else {
 			m_rightMotor1.set(rightJoystick.getY());
 			m_leftMotor1.set(leftJoystick.getY());
-		} else if(num >= 25) {
-			m_rightMotor1.set(-rightJoystick.getY());
-			m_leftMotor1.set(-leftJoystick.getY());
-		} else {
-			m_rightMotor1.set(-rightJoystick.getX());
 		}
-		
-		
-		
-//		if (button.get()) {
-//			m_rightMotor1.set(rightJoystick.getY());
-//			m_leftMotor1.set(rightJoystick.getY());
-//		} else {
-//			m_rightMotor1.set(rightJoystick.getY());
-//			m_leftMotor1.set(leftJoystick.getY());
-//		}
 
 	}
 
