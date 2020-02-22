@@ -55,6 +55,7 @@ public class IntakeOnOffSubsystemTest {
 
 		realIntakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
 	}
+
 	@Ignore
 	@Test
 	public void IntakeBackOffCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
@@ -82,6 +83,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
+
 	@Ignore
 	@Test
 	public void IntakeBackOnCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
@@ -109,6 +111,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
+
 	@Ignore
 	@Test
 	public void IntakeFrontOffCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
@@ -136,6 +139,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
+
 	@Ignore
 	@Test
 	public void IntakeFrontOffIntakeBackOnIntakeMotorOnOffSubsystemCallsMotorSet() {
@@ -165,6 +169,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
+
 	@Ignore
 	@Test
 	public void IntakeFrontOnCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
@@ -192,6 +197,7 @@ public class IntakeOnOffSubsystemTest {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
+
 	@Ignore
 	@Test
 	public void IntakeFrontOnIntakeBackOffIntakeMotorOnOffSubsystemCallsMotorSet() {

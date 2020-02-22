@@ -39,9 +39,10 @@ public class IsCommandGoingThroughTest {
 		MockHardwareExtension.beforeAll();
 
 		mockedServo = mock(Servo.class);
-		realHoodSubsystem = new HoodSubsystem(mockedServo);
+		realHoodSubsystem = new HoodSubsystem(mockedServo, mockedServo);
 
 	}
+
 	@Ignore
 	@Test
 	public void ExampleCommandOnExampleSubsystem() {

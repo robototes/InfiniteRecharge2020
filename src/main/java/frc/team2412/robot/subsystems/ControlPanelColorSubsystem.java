@@ -1,10 +1,10 @@
 package frc.team2412.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ControlPanelConstants;
@@ -15,7 +15,7 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	private ColorSensorV3 m_colorSensor;
 	private ColorMatch m_colorMatcher = new ColorMatch();
-	private Talon m_wheelMotor;
+	private WPI_TalonFX m_wheelMotor;
 
 	@Log
 	private Color m_currentColor;
@@ -24,7 +24,7 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	private Color m_ColorUnderBar;
 	private int rotationCount = 0;
 
-	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, Talon motor) {
+	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, WPI_TalonFX motor) {
 		this.m_colorSensor = colorSensor;
 		this.m_wheelMotor = motor;
 	}

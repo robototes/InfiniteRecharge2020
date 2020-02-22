@@ -19,6 +19,6 @@ public class HoodExtendCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_hoodSubsystem.getServo() >= 0.9;
+		return true;
 	}
 }

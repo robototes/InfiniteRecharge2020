@@ -12,8 +12,7 @@ public class IndexIntakeThreeFrontCommand extends CommandBase {
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
 
-	public IndexIntakeThreeFrontCommand(IndexerSensorSubsystem sensorSubsystem,
-			IndexerMotorSubsystem motorSubsystem) {
+	public IndexIntakeThreeFrontCommand(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
 		m_indexerSensorSubsystem = sensorSubsystem;
 		m_indexerMotorSubsystem = motorSubsystem;
 		addRequirements(sensorSubsystem, motorSubsystem);
@@ -21,8 +20,8 @@ public class IndexIntakeThreeFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if(m_indexerSensorSubsystem.getIntakeFrontSensorValue())
-		m_indexerMotorSubsystem.setFrontMotor(-1);
+		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
+			m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
 	@Override

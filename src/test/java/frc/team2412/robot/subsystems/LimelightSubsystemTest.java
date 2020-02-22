@@ -38,6 +38,7 @@ public class LimelightSubsystemTest {
 		mockedLimelight = mock(Limelight.class);
 		realLimelightSubsystem = new LimelightSubsystem(mockedLimelight);
 	}
+
 	@Ignore
 	@Test
 	public void LimelightSubsystemSetsCorrectDistanceAndYawWhenTargetIsFound() {

@@ -23,7 +23,8 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
 
-	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor, IndexerSensorSubsystem indexerSensorSubsystem) {
+	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,
+			IndexerSensorSubsystem indexerSensorSubsystem) {
 		m_indexFrontMotor = frontMotor;
 		m_indexMidMotor = midMotor;
 		m_indexBackMotor = backMotor;
@@ -76,9 +77,11 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 		System.out.println("hi");
 		resetEncoderZero();
 		if (m_indexFrontMotor.get() > 0) {
-			m_frontPIDController.setReference(frontTicks+(val*IndexerConstants.INCH_STOP_DISTANCE), ControlType.kPosition);
+			m_frontPIDController.setReference(frontTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		} else {
-			m_frontPIDController.setReference(frontTicks-(val*IndexerConstants.INCH_STOP_DISTANCE), ControlType.kPosition);
+			m_frontPIDController.setReference(frontTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		}
 	}
 
@@ -86,15 +89,22 @@ public class IndexerMotorSubsystem extends SubsystemBase {
 		System.out.println("hi");
 		resetEncoderZero();
 		if (m_indexBackMotor.get() > 0) {
-			m_backPIDController.setReference(backTicks+(val*IndexerConstants.INCH_STOP_DISTANCE), ControlType.kPosition);
+			m_backPIDController.setReference(backTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		} else {
-			m_backPIDController.setReference(backTicks-(val*IndexerConstants.INCH_STOP_DISTANCE), ControlType.kPosition);
+			m_backPIDController.setReference(backTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
+					ControlType.kPosition);
 		}
 	}
 
 	public void resetEncoderZero() {
 		frontTicks = m_frontEncoder.getPosition();
 		backTicks = m_backEncoder.getPosition();
+	}
+
+	public double getCurrentDraw() {
+		return m_indexBackMotor.getOutputCurrent() + m_indexFrontMotor.getOutputCurrent()
+				+ m_indexMidMotor.getOutputCurrent();
 	}
 
 }

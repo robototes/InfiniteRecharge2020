@@ -19,14 +19,14 @@ public class EliMemeAutoCommandGroup extends SequentialCommandGroup {
 			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
 			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
-		
+
 		addCommands(
-				
+
 				new StartUpCommand(liftSubsystem, flywheelSubsystem, hoodSubsystem),
 				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem),
 				new MoveToPowerCellsCommand(driveBaseSubsystem)
-				
-				);
+
+		);
 	}
 
 }
