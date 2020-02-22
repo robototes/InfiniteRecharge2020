@@ -16,9 +16,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
-	//@Log(name = "Left Flywheel Motor", tabName = "Flywheel Subsystem")
 	private CANSparkMax m_flywheelLeftMotor;
-	//@Log(name = "Right Flywheel Motor", tabName = "Flywheel Subsystem")
 	private CANSparkMax m_flywheelRightMotor;
 
 	private CANEncoder m_leftEncoder;
@@ -56,8 +54,8 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	@Config.NumberSlider(min = -1, max = 1, name = "Set speed", tabName = "Flywheel Subsystem")
-	public void setSpeed(double speed){
+	@Config.NumberSlider(min = -1, max = 1, name = "Set speed", tabName = "Flywheel Subsystem", width = 3, height = 1, columnIndex = 2, rowIndex = 0)
+	public void setSpeed(double speed) {
 		System.out.println(speed);
 
 		m_flywheelLeftMotor.set(speed);
@@ -71,12 +69,12 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	public void stop() {
 		m_flywheelLeftMotor.set(0.0);
 	}
-	
+
 	public double getSpeed() {
 		return m_flywheelLeftMotor.get();
 	}
 
-	@Config.NumberSlider(name = "Set Flywheel speed in Meters per Second", tabName = "Flywheel Subsystem", min = -100, max = 0)
+	@Config.NumberSlider(name = "Set Flywheel speed in Meters per Second", tabName = "Flywheel Subsystem", min = -100, max = 0, width = 3, height = 1, rowIndex = 1, columnIndex = 2)
 	public void setRPMFromMPS(double wantedVelocity) {
 		double wantedRPM = NEO_RPM_TO_FLYWHEEL_MPS.calculateRatio(wantedVelocity);
 
@@ -84,35 +82,35 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		m_pidRightController.setReference(wantedRPM, ControlType.kVelocity);
 	}
 
-	@Log.NumberBar(min = 0, max = 30, name= "Left Flywheel Motor", tabName = "Flywheel Subsystem")
+	@Log.NumberBar(min = 0, max = 30, name = "Left Flywheel Motor", tabName = "Flywheel Subsystem", width = 2, height = 1, rowIndex = 0, columnIndex = 0)
 	public double currentLeftSpeedInMetersPerSecond() {
 		return NEO_RPM_TO_FLYWHEEL_MPS.calculateReverseRatio(m_leftEncoder.getVelocity());
 	}
 
-	@Log.NumberBar(min = 0, max = 30, name = "Right Flywheel Motor", tabName = "Flywheel Subsystem")
-	public double currentRightSpeedInMetersPerSecond(){
+	@Log.NumberBar(min = 0, max = 30, name = "Right Flywheel Motor", tabName = "Flywheel Subsystem", width = 2, height = 1, rowIndex = 1, columnIndex = 0)
+	public double currentRightSpeedInMetersPerSecond() {
 		return NEO_RPM_TO_FLYWHEEL_MPS.calculateReverseRatio(m_rightEncoder.getVelocity());
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.P, name = "Set Flywheel P", tabName = "Flywheel Subsystem")
+	@Config(defaultValueNumeric = FlywheelConstants.P, name = "Set Flywheel P", tabName = "Flywheel Subsystem", width = 1, height = 1, columnIndex = 5, rowIndex = 0)
 	public void setP(double newP) {
 		m_pidLeftController.setP(newP);
 		m_pidRightController.setP(newP);
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.I, name = "Set Flywheel I", tabName = "Flywheel Subsystem")
+	@Config(defaultValueNumeric = FlywheelConstants.I, name = "Set Flywheel I", tabName = "Flywheel Subsystem", width = 1, height = 1, columnIndex = 5, rowIndex = 1)
 	public void setI(double newI) {
 		m_pidLeftController.setI(newI);
 		m_pidRightController.setI(newI);
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.D, name = "Set Flywheel D", tabName = "Flywheel Subsystem")
+	@Config(defaultValueNumeric = FlywheelConstants.D, name = "Set Flywheel D", tabName = "Flywheel Subsystem", width = 1, height = 1, columnIndex = 5, rowIndex = 2)
 	public void setD(double newD) {
 		m_pidLeftController.setD(newD);
 		m_pidRightController.setD(newD);
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.FF, name = "Set Flywheel FF", tabName = "Flywheel Subsystem")
+	@Config(defaultValueNumeric = FlywheelConstants.FF, name = "Set Flywheel FF", tabName = "Flywheel Subsystem", width = 1, height = 1, columnIndex = 5, rowIndex = 3)
 	public void setFF(double newFF) {
 		m_pidLeftController.setFF(newFF);
 		m_pidRightController.setFF(newFF);
