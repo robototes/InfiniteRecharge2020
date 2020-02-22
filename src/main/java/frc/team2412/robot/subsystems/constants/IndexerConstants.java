@@ -37,6 +37,6 @@ public class IndexerConstants {
 	// FOR MIDDLE
 	public static final double EXTRA_LONG_STOP_DISTANCE = 10;
 
-	private static final double SPINDLE_DIAMETER = 1.2;
+	public static final double SPINDLE_DIAMETER = 1.2;
 	public static final double INCH_STOP_DISTANCE = 2;
 }
