@@ -55,15 +55,7 @@ public class RobotContainer implements Loggable {
 		m_climbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 
 		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
-				RobotMap.mid, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
-
-		m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-				RobotMap.indexBackMotor, m_indexerSensorSubsystem);
-
-		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
-
-		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
-				RobotMap.mid, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
+				RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
 		m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
 				RobotMap.indexBackMotor, m_indexerSensorSubsystem);

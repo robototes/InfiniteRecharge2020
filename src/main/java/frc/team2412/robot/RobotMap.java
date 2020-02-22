@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
@@ -99,12 +98,14 @@ public class RobotMap {
     // ---------------------------------------------------------------------------
     // IDs
     private final static int indexMidMotorID = 3;
-    private final static int backSensorID = 1;
-    private final static int backMidSensorID = 2;
-    private final static int midSensorID = 3;
-    private final static int frontMidSensorID = 4;
-    private final static int frontSensorID = 5;
-    private final static int intakeFrontSensorID = 6;
+    
+    private final static int backSensorID = 6;
+    private final static int backMidSensorID = 5;
+    private final static int backInnerSensorID = 4;
+    private final static int frontInnerSensorID = 3;
+    private final static int frontMidSensorID = 2;
+    private final static int frontSensorID = 1;
+    private final static int intakeFrontSensorID = 0;
     private final static int intakeBackSensorID = 7;
 
     // motors
@@ -116,7 +117,8 @@ public class RobotMap {
     // sensors
     public static DigitalInput back = new DigitalInput(backSensorID);
     public static DigitalInput backMid = new DigitalInput(backMidSensorID);
-    public static DigitalInput mid = new DigitalInput(midSensorID);
+    public static DigitalInput backInner = new DigitalInput(backInnerSensorID);
+    public static DigitalInput frontInner= new DigitalInput(frontInnerSensorID);
     public static DigitalInput frontMid = new DigitalInput(frontMidSensorID);
     public static DigitalInput front = new DigitalInput(frontSensorID);
 
@@ -198,7 +200,7 @@ public class RobotMap {
     public static ColorMatch colorMatcher = new ColorMatch();
 
     public static final int CONTROL_PANEL_MOTOR_PORT = 1;
-    public static Talon colorSensorMotor = new Talon(CONTROL_PANEL_MOTOR_PORT);
+    public static WPI_TalonFX colorSensorMotor = new WPI_TalonFX(CONTROL_PANEL_MOTOR_PORT);
 
     // Limelight subsystem
     // ----------------------------------------------------------------------------------------------

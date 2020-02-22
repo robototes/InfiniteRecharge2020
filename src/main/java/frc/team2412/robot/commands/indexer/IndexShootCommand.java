@@ -20,7 +20,7 @@ public class IndexShootCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
-		if (!m_indexerSensorSubsystem.getIndexMidSensorValue()) {
+		if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
 			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
 				if (m_indexerSensorSubsystem.allFrontSensorsOff()) {

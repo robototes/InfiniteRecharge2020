@@ -80,7 +80,7 @@ public class OI {
 	public Button intakeFrontOffButton = new JoystickButton(driverStick, INTAKE_FRONT_OFF_BUTTON_PORT);
 	public Button intakeBackOnButton = new JoystickButton(driverStick, INTAKE_BACK_ON_BUTTON_PORT);
 	public Button intakeBackOffButton = new JoystickButton(driverStick, INTAKE_BACK_OFF_BUTTON_PORT);
-		
+
 	public Button indexerIntakeFrontButton = new JoystickButton(driverStick, 3);
 	public Button indexerIntakeBackButton = new JoystickButton(driverStick, 4);
 
@@ -109,12 +109,16 @@ public class OI {
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
 		// INTAKE front
-		intakeFrontOnButton.whenPressed(new IntakeFrontBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeFrontOffButton.whenPressed(new IntakeFrontBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOnButton.whenPressed(new IntakeFrontBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+				robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOffButton.whenPressed(new IntakeFrontBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+				robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// INTAKE back
-		intakeBackOnButton.whenPressed(new IntakeBackBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOnButton.whenPressed(new IntakeBackBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+				robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+				robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// CONTROL PANEL
 		controlPanelSpinThreeTimesButton
@@ -128,8 +132,8 @@ public class OI {
 		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
 		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_climbMotorSubsystem));
 
-		indexerStopButton.whenPressed(
-				new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem, robotContainer.m_indexerMotorSubsystem));
+		indexerStopButton.whenPressed(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
+				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
 		MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick, codriverStick,
 				JoystickEqualizerButton));
@@ -139,7 +143,8 @@ public class OI {
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
-		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem,
+				robotContainer.m_intakeMotorOnOffSubsystem));
 
 	}
 }
