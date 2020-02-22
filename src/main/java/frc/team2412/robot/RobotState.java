@@ -1,5 +1,7 @@
 package frc.team2412.robot;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
@@ -30,6 +32,21 @@ public class RobotState implements Loggable {
 	public static boolean threeBallAuto = false;
 
 	public static boolean justMoveAuto = true;
+
+	@Log(tabName = "Misc.")
+	public static String eventName = "N/A";
+
+	@Log(tabName = "Misc.")
+	public static MatchType matchType = MatchType.None;
+
+	@Log(tabName = "Misc.")
+	public static int matchNumber = 0;
+
+	@Log(tabName = "Misc.")
+	public static Alliance alliance = Alliance.Invalid;
+
+	@Log(tabName = "Misc.")
+	public static int location = 0;
 
 	public RobotState() {
 
@@ -117,16 +134,13 @@ public class RobotState implements Loggable {
 	}
 
 	public double getTotalCurrentDraw() {
-		double currentDraw = 
-				robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+		double currentDraw = robotContainer.m_climbMotorSubsystem.getCurrentDraw()
 				+ robotContainer.m_driveBaseSubsystem.getCurrentDraw()
 				+ robotContainer.m_flywheelSubsystem.getCurrentDraw()
 				+ robotContainer.m_indexerMotorSubsystem.getCurrentDraw()
 				+ robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
-				+ robotContainer.m_turretSubsystem.getCurrentDraw()
-				+ RobotMap.compressor.getCompressorCurrent()
-				;
-		
+				+ robotContainer.m_turretSubsystem.getCurrentDraw() + RobotMap.compressor.getCompressorCurrent();
+
 		return currentDraw;
 	}
 

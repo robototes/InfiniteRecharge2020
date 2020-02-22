@@ -12,15 +12,11 @@ import frc.team2412.robot.commands.controlPanel.RotateControlPanelCommand;
 import frc.team2412.robot.commands.controlPanel.SetToTargetColorCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
-import frc.team2412.robot.commands.intake.IntakeBackDownCommand;
-import frc.team2412.robot.commands.intake.IntakeBackOffCommand;
-import frc.team2412.robot.commands.intake.IntakeBackOnCommand;
-import frc.team2412.robot.commands.intake.IntakeBackUpCommand;
+import frc.team2412.robot.commands.intake.IntakeBackBothOffCommandGroup;
+import frc.team2412.robot.commands.intake.IntakeBackBothOnCommandGroup;
 import frc.team2412.robot.commands.intake.IntakeBothUpCommand;
-import frc.team2412.robot.commands.intake.IntakeFrontOffCommand;
-import frc.team2412.robot.commands.intake.IntakeFrontOffIntakeBackOnCommand;
-import frc.team2412.robot.commands.intake.IntakeFrontOnCommand;
-import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
+import frc.team2412.robot.commands.intake.IntakeFrontBothOffCommandGroup;
+import frc.team2412.robot.commands.intake.IntakeFrontBothOnCommandGroup;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
 
@@ -84,13 +80,7 @@ public class OI {
 	public Button intakeFrontOffButton = new JoystickButton(driverStick, INTAKE_FRONT_OFF_BUTTON_PORT);
 	public Button intakeBackOnButton = new JoystickButton(driverStick, INTAKE_BACK_ON_BUTTON_PORT);
 	public Button intakeBackOffButton = new JoystickButton(driverStick, INTAKE_BACK_OFF_BUTTON_PORT);
-	public Button intakeUpButton = new JoystickButton(driverStick, INTAKE_UP_BUTTON_PORT);
-	public Button intakeDownButton = new JoystickButton(driverStick, INTAKE_DOWN_BUTTON_PORT);
-	public Button intakeFrontOnBackOffButton = new JoystickButton(driverStick, INTAKE_FRONT_ON_BACK_OFF_BUTTON_PORT);
-	public Button intakeFrontOffBackOnButton = new JoystickButton(driverStick, INTAKE_BACK_ON_FRONT_OFF_BUTTON_PORT);
-
-	public Button intakeFrontButton = new JoystickButton(driverStick, INTAKE_FRONT_BUTTON);
-	public Button intakeBackButton = new JoystickButton(driverStick, INTAKE_BACK_BUTTON);
+		
 	public Button indexerIntakeFrontButton = new JoystickButton(driverStick, 3);
 	public Button indexerIntakeBackButton = new JoystickButton(driverStick, 4);
 
@@ -118,23 +108,13 @@ public class OI {
 		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
-		// INTAKE UpDown
-		intakeUpButton.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
-		intakeDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
-
 		// INTAKE front
-		intakeFrontOnButton.whenPressed(new IntakeFrontOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeFrontOffButton.whenPressed(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOnButton.whenPressed(new IntakeFrontBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOffButton.whenPressed(new IntakeFrontBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// INTAKE back
-		intakeBackOnButton.whenPressed(new IntakeBackOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeBackOffButton.whenPressed(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-
-		// INTAKE group on/off
-		intakeFrontOnBackOffButton
-				.whenPressed(new IntakeFrontOnIntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeFrontOffBackOnButton
-				.whenPressed(new IntakeFrontOffIntakeBackOnCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOnButton.whenPressed(new IntakeBackBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// CONTROL PANEL
 		controlPanelSpinThreeTimesButton
@@ -159,7 +139,7 @@ public class OI {
 		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
-		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
 	}
 }

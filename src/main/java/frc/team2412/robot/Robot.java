@@ -29,17 +29,25 @@ public class Robot extends TimedRobot implements Loggable {
 	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
 	
-	public DriverStation ds = DriverStation.getInstance();
-
+	public DriverStation driverStation = DriverStation.getInstance();
+	
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+		
 		m_robotContainer.m_turretSubsystem.initTurretEncoder();
 		Logger.configureLoggingAndConfig(this, false);
 		Shuffleboard.startRecording();
+		
+		RobotState.eventName = driverStation.getEventName();
+		RobotState.matchType = driverStation.getMatchType();
+		RobotState.matchNumber = driverStation.getMatchNumber();
+		RobotState.alliance = driverStation.getAlliance();
+		RobotState.location = driverStation.getLocation();
+		
 
 	}
 
@@ -90,7 +98,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		String color = ds.getGameSpecificMessage();
+		String color = driverStation.getGameSpecificMessage();
 		if(color != null) {
 			if(color.equalsIgnoreCase("R")) {
 				ControlPanelConstants.TargetColor = ControlPanelConstants.redTarget;
