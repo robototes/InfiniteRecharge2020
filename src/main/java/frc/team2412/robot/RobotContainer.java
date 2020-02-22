@@ -64,7 +64,7 @@ public class RobotContainer implements Loggable {
 
 		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
 
-		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo);
+		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
 
 	}
 }
