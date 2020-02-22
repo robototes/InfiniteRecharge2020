@@ -3,6 +3,7 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
@@ -27,10 +28,13 @@ public class RobotState implements Loggable {
 	@Log.BooleanBox
 	public static GearboxState m_gearState = GearboxState.LOW;
 
+	@Config.ToggleSwitch
 	public static boolean sixBallAuto = true;
-
+	
+	@Config.ToggleSwitch
 	public static boolean threeBallAuto = false;
-
+	
+	@Config.ToggleSwitch
 	public static boolean justMoveAuto = true;
 
 	@Log(tabName = "Misc.")
