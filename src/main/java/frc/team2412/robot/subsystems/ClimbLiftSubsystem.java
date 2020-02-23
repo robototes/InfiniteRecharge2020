@@ -3,12 +3,16 @@ package frc.team2412.robot.subsystems;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbState;
+import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class ClimbLiftSubsystem extends SubsystemBase {
+public class ClimbLiftSubsystem extends SubsystemBase implements Loggable{
 
 	// For Pneumatics
+	@Log
 	private Solenoid m_leftPneumatic;
+	@Log
 	private Solenoid m_rightPneumatic;
 
 	public ClimbLiftSubsystem(Solenoid leftPneumatic, Solenoid rightPneumatic) {

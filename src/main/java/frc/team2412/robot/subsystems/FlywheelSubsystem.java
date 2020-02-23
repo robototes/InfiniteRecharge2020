@@ -16,13 +16,17 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
+	@Log
 	private CANSparkMax m_flywheelLeftMotor;
+	@Log
 	private CANSparkMax m_flywheelRightMotor;
-
+	@Log.Encoder
 	private CANEncoder m_leftEncoder;
+	@Config.PIDController
 	private CANPIDController m_pidLeftController;
-
+	@Log.Encoder
 	private CANEncoder m_rightEncoder;
+	@Config.PIDController
 	private CANPIDController m_pidRightController;
 
 	public FlywheelSubsystem(CANSparkMax flywheelLeftMotor, CANSparkMax flywheelRightMotor) {

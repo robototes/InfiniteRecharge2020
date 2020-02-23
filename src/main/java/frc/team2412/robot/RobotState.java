@@ -10,43 +10,41 @@ public class RobotState implements Loggable {
 
 	private RobotContainer robotContainer = RobotMap.m_robotContainer;
 
-	@Log
+	@Log.ToString
 	public static UnbalancedSide m_unbalancedSide;
 
 	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count")
 	public static int m_ballCount = 0;
 
-	@Log.BooleanBox
+	@Log.ToString
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
-	@Log.BooleanBox
+	@Log.ToString
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
-	@Log.BooleanBox
+	@Log.ToString
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	@Log.BooleanBox
+	@Log.ToString
 	public static GearboxState m_gearState = GearboxState.LOW;
 
 	@Config.ToggleSwitch
 	public static boolean sixBallAuto = true;
-	
+
 	@Config.ToggleSwitch
 	public static boolean threeBallAuto = false;
-	
+
 	@Config.ToggleSwitch
 	public static boolean justMoveAuto = true;
 
 	@Log(tabName = "Misc.")
 	public static String eventName = "N/A";
 
-	@Log(tabName = "Misc.")
 	public static MatchType matchType = MatchType.None;
 
 	@Log(tabName = "Misc.")
 	public static int matchNumber = 0;
 
-	@Log(tabName = "Misc.")
 	public static Alliance alliance = Alliance.Invalid;
 
 	@Log(tabName = "Misc.")
@@ -58,22 +56,65 @@ public class RobotState implements Loggable {
 
 	public static enum UnbalancedSide {
 		FRONT, BACK;
+
+		public String toString() {
+			if (this.equals(FRONT)) {
+				return "Front";
+			} else {
+				return "Back";
+			}
+		}
 	}
 
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
+		
+		public String toString() {
+			if (this.equals(FRONT)) {
+				return "Front";
+			} else if (this.equals(BACK)){
+				return "Back";
+			} else if (this.equals(BOTH)){
+				return "Both";
+			}else {
+				return "None";
+			}
+		}
 	}
 
 	public static enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
+		
+		public String toString(){
+			if(this.equals(NOT_CLIMBING)) {
+				return "Not Climbing, woohoo";
+			} else {
+				return "We climbin boiz";
+			}
+		}
 	}
 
 	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
+		
+		public String toString(){
+			if(this.equals(WITHDRAWN)) {
+				return "Withdrawn";
+			} else {
+				return "Extended";
+			}
+		}
 	}
 
 	public static enum GearboxState {
 		HIGH, LOW;
+		public String toString(){
+			if(this.equals(HIGH)) {
+				return "High";
+			} else {
+				return "Low";
+			}
+		}
 	}
 
 	public static UnbalancedSide flip(UnbalancedSide s) {

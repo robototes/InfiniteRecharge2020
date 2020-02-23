@@ -17,7 +17,6 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	private ColorMatch m_colorMatcher = new ColorMatch();
 	private WPI_TalonFX m_wheelMotor;
 
-	@Log
 	private Color m_currentColor;
 
 	private Color m_startColor;
