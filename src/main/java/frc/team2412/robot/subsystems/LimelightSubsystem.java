@@ -1,5 +1,7 @@
 package frc.team2412.robot.subsystems;
 
+import org.opencv.core.Mat;
+
 import com.robototes.sensors.Limelight;
 import com.robototes.sensors.Limelight.CamMode;
 import com.robototes.sensors.Limelight.LEDMode;
@@ -10,6 +12,11 @@ import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.HttpCamera.HttpCameraKind;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.subsystems.constants.LimelightConstants;
@@ -41,6 +48,23 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 		this.setDefaultCommand(new LimelightReadCommand(this));
 	}
+
+	public void getCameraStream() {
+				
+		HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.3.22.11:5800/stream.mjpg", HttpCameraKind.kMJPGStreamer);
+		
+		limelightFeed.setResolution(320, 240);
+		
+		CameraServer.getInstance().startAutomaticCapture(limelightFeed);
+		CvSink cvSink = CameraServer.getInstance().getVideo();
+		
+		CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
+		
+	    Mat source = new Mat();
+	    Mat output = new Mat();
+
+	    
+	}	
 
 	public void accurateAim() {
 		if (m_limelight.hasValidTarget()) {

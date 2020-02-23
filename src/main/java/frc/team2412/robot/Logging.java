@@ -17,12 +17,15 @@ public class Logging implements Loggable {
 	public static boolean outerGoalAble = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2)
 	public static boolean innerGoalAble = false;
+	
 	// Goal Aimed
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2)
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2)
 	public static boolean outerGoalAimed= false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2)
 	public static boolean innerGoalAimed = false;
+	
+	
 	
 
 	@Log
