@@ -69,7 +69,6 @@ public class OI {
 	public Joystick codriverStick = new Joystick(CODRIVER_STICK_PORT);
 
 	// Buttons
-	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
 	public Button indexerShootButton = new JoystickButton(driverStick, 2);
 	public Button indexerStopButton = new JoystickButton(driverStick, 3);
 
@@ -101,8 +100,6 @@ public class OI {
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
-		// telling the button that when its pressed to execute example command with the
-		// robot container's instance of example subsystem
 
 		// LIFT
 		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
@@ -120,17 +117,21 @@ public class OI {
 		intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
 				robotContainer.m_intakeMotorOnOffSubsystem));
 
-		// CONTROL PANEL
-		controlPanelSpinThreeTimesButton
-				.whenPressed(new RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
-		controlPanelSetToTargetButton
-				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
+		if (RobotMap.CONTROL_PANEL_CONNECTED) {
+			// CONTROL PANEL
+			controlPanelSpinThreeTimesButton
+					.whenPressed(new RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
+			controlPanelSetToTargetButton
+					.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
+		}
 
-		climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));
-		climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
-		climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
-		climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
-		climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_climbMotorSubsystem));
+		if (RobotMap.CLIMB_CONNECTED) {
+			climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));
+			climbExtendArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
+			climbRetractArmButton.whenActive(new ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
+			climbRetractRailsButton.whenActive(new ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
+			climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_climbMotorSubsystem));
+		}
 
 		indexerStopButton.whenPressed(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
 				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
