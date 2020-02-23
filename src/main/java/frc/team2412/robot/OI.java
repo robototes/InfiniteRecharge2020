@@ -117,11 +117,13 @@ public class OI {
 		intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
 				robotContainer.m_intakeMotorOnOffSubsystem));
 
-		// CONTROL PANEL
-		controlPanelSpinThreeTimesButton
-				.whenPressed(new RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
-		controlPanelSetToTargetButton
-				.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
+		if (RobotMap.CONTROL_PANEL_CONNECTED) {
+			// CONTROL PANEL
+			controlPanelSpinThreeTimesButton
+					.whenPressed(new RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
+			controlPanelSetToTargetButton
+					.whenPressed(new SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
+		}
 
 		if (RobotMap.CLIMB_CONNECTED) {
 			climbDeployRailsButton.whenActive(new ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));

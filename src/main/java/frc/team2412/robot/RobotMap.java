@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class RobotMap {
 
     public static boolean CLIMB_CONNECTED = false;
+    public static boolean CONTROL_PANEL_CONNECTED = false;
 
     public static enum CANBus {
         INTAKE1(11),
@@ -226,12 +227,12 @@ public class RobotMap {
     // CONTROL PANEL SUBSYSTEM
     // ----------------------------------------------------------------------
     // Control Panel I2C
-    public static I2C.Port COLOR_SESNOR_PORT = I2C.Port.kOnboard;
+    public static I2C.Port COLOR_SENSOR_PORT = I2C.Port.kOnboard;
 
-    public static ColorSensorV3 colorSensor = new ColorSensorV3(COLOR_SESNOR_PORT);
+    public static ColorSensorV3 colorSensor = CONTROL_PANEL_CONNECTED ? new ColorSensorV3(COLOR_SENSOR_PORT) : null;
     public static ColorMatch colorMatcher = new ColorMatch();
 
-    public static WPI_TalonFX colorSensorMotor = new WPI_TalonFX(CANBus.CONTROL_PANEL.id);
+    public static WPI_TalonFX colorSensorMotor = CONTROL_PANEL_CONNECTED ? new WPI_TalonFX(CANBus.CONTROL_PANEL.id) : null;
 
     // Limelight subsystem
     // ----------------------------------------------------------------------------------------------

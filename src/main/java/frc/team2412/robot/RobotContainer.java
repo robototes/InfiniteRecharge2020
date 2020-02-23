@@ -60,7 +60,9 @@ public class RobotContainer implements Loggable {
 		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
 				RobotMap.backIntakeLiftSolenoid);
 
-		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
+		if (RobotMap.CONTROL_PANEL_CONNECTED) {
+			m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
+		}
 
 		m_LimelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
 		m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
