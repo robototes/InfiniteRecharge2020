@@ -69,7 +69,6 @@ public class OI {
 	public Joystick codriverStick = new Joystick(CODRIVER_STICK_PORT);
 
 	// Buttons
-	public Button exampleSubsystemMethod = new JoystickButton(driverStick, 1);
 	public Button indexerShootButton = new JoystickButton(driverStick, 2);
 	public Button indexerStopButton = new JoystickButton(driverStick, 3);
 
@@ -101,8 +100,6 @@ public class OI {
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
-		// telling the button that when its pressed to execute example command with the
-		// robot container's instance of example subsystem
 
 		// LIFT
 		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));

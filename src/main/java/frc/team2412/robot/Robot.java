@@ -92,6 +92,13 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void autonomousPeriodic() {
 	}
+	
+	/**
+	 * This function is called once when autonomous is started
+	 */
+	@Override
+	public void teleopInit() {
+	}
 
 	/**
 	 * This function is called periodically during operator control.
