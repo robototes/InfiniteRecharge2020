@@ -52,7 +52,7 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 		HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.3.22.11:5800/stream.mjpg",
 				HttpCameraKind.kMJPGStreamer);
-		
+
 		limeCam = limelightFeed;
 
 	}

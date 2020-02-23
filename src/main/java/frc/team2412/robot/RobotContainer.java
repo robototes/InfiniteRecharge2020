@@ -2,7 +2,19 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.team2412.robot.subsystems.*;
+import frc.team2412.robot.subsystems.ClimbLiftSubsystem;
+import frc.team2412.robot.subsystems.ClimbMotorSubsystem;
+import frc.team2412.robot.subsystems.ControlPanelColorSubsystem;
+import frc.team2412.robot.subsystems.DriveBaseSubsystem;
+import frc.team2412.robot.subsystems.FlywheelSubsystem;
+import frc.team2412.robot.subsystems.HoodSubsystem;
+import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
+import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
+import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.LiftSubsystem;
+import frc.team2412.robot.subsystems.LimelightSubsystem;
+import frc.team2412.robot.subsystems.TurretSubsystem;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 

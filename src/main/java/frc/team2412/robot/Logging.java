@@ -7,7 +7,7 @@ import io.github.oblarg.oblog.annotations.Log;
 public class Logging implements Loggable {
 
 	Robot m_robot;
-	
+
 	// 4 rows, 10 col
 
 	private static final String green = "#7FFF00";
@@ -65,11 +65,11 @@ public class Logging implements Loggable {
 
 	@Log(columnIndex = 9, rowIndex = 3, tabName = "Dwivew view >~<")
 	public static double totalCurrentDraw = 0;
-	
+
 	public Logging(Robot robot) {
 		this.m_robot = robot;
 	}
-	
+
 	public void periodic() {
 		// WIP: OuterGoalAble, innerGoalAble, outerGoalAimed, innerGoalAimed
 
@@ -87,13 +87,13 @@ public class Logging implements Loggable {
 				+ RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
 				+ RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw()
 				+ RobotMap.compressor.getCompressorCurrent();
-		
+
 		// 6.8 V is the warning level for brownout
 		brownoutWarning = (RobotController.getInputVoltage() < 7 || RobotController.isBrownedOut());
-		
+
 		double time = m_robot.timeRemaining;
 		timer = time / 60 + " : " + time % 60;
-		
+
 		driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
 	}
 

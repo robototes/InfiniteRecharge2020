@@ -40,11 +40,11 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	public void backIntakeDown() {
 		setLift(IntakeState.EXTENDED, m_backIntakeUpDown);
 	}
-	
+
 	public boolean isFrontIntakeUp() {
 		return m_frontIntakeUpDown.get();
 	}
-	
+
 	public boolean isBackIntakeUp() {
 		return m_frontIntakeUpDown.get();
 	}

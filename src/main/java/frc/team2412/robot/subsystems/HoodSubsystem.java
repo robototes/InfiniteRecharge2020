@@ -38,22 +38,21 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 	Command retractServoCommand;
 
 	public void servoExtend() {
-		m_hoodServo1.set(1-HoodConstants.MaxExtension);
+		m_hoodServo1.set(1 - HoodConstants.MaxExtension);
 		m_hoodServo2.set(HoodConstants.MaxExtension);
 	}
 
-	
 	public void servoWithdraw() {
-		m_hoodServo1.set(1-HoodConstants.MaxWithdrawal);
+		m_hoodServo1.set(1 - HoodConstants.MaxWithdrawal);
 		m_hoodServo2.set(HoodConstants.MaxWithdrawal);
 
 	}
 
-	@Config.NumberSlider(max = 0.65, min = 0, name ="Set Servo Angle", tabName = "Hood Subsystem", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
+	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood Subsystem", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setServo(double angle) {
 		System.out.println(angle);
 		m_hoodServo2.set(angle);
-		m_hoodServo1.set(1-angle);
+		m_hoodServo1.set(1 - angle);
 	}
 
 }

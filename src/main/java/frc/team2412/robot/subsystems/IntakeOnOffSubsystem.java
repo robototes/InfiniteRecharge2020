@@ -78,7 +78,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	public void setIntake(double speed) {
 		m_intakeMotorGroup.set(speed);
 	}
-	
+
 	public double getCurrentDraw() {
 		return m_intakeBackMotor.getOutputCurrent() + m_intakeFrontMotor.getOutputCurrent();
 	}
@@ -86,7 +86,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	public boolean backMotorOn() {
 		return (m_intakeBackMotor.get() != 0);
 	}
-	
+
 	public boolean FrontMotorOn() {
 		return (m_intakeFrontMotor.get() != 0);
 	}

@@ -18,7 +18,7 @@ public class IndexSpitCommand extends CommandBase {
 		m_indexerSensorSubsystem = sensorSubsystem;
 		m_indexerMotorSubsystem = motorSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
-		
+
 		addRequirements(sensorSubsystem, motorSubsystem, intakeOnOffSubsystem);
 	}
 

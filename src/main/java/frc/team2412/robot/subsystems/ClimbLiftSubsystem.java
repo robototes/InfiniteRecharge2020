@@ -7,7 +7,7 @@ import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
-public class ClimbLiftSubsystem extends SubsystemBase implements Loggable{
+public class ClimbLiftSubsystem extends SubsystemBase implements Loggable {
 
 	// For Pneumatics
 	@Log

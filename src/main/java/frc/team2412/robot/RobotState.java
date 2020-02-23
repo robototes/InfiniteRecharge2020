@@ -68,15 +68,15 @@ public class RobotState implements Loggable {
 
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
-		
+
 		public String toString() {
 			if (this.equals(FRONT)) {
 				return "Front";
-			} else if (this.equals(BACK)){
+			} else if (this.equals(BACK)) {
 				return "Back";
-			} else if (this.equals(BOTH)){
+			} else if (this.equals(BOTH)) {
 				return "Both";
-			}else {
+			} else {
 				return "None";
 			}
 		}
@@ -84,9 +84,9 @@ public class RobotState implements Loggable {
 
 	public static enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
-		
-		public String toString(){
-			if(this.equals(NOT_CLIMBING)) {
+
+		public String toString() {
+			if (this.equals(NOT_CLIMBING)) {
 				return "Not Climbing, woohoo";
 			} else {
 				return "We climbin boiz";
@@ -96,9 +96,9 @@ public class RobotState implements Loggable {
 
 	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
-		
-		public String toString(){
-			if(this.equals(WITHDRAWN)) {
+
+		public String toString() {
+			if (this.equals(WITHDRAWN)) {
 				return "Withdrawn";
 			} else {
 				return "Extended";
@@ -108,8 +108,8 @@ public class RobotState implements Loggable {
 
 	public static enum GearboxState {
 		HIGH, LOW;
-		public String toString(){
-			if(this.equals(HIGH)) {
+		public String toString() {
+			if (this.equals(HIGH)) {
 				return "High";
 			} else {
 				return "Low";
