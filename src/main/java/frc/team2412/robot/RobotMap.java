@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
 
+    public static boolean CLIMB_CONNECTED = false;
+
     public static enum CANBus {
         INTAKE1(11),
         INDEX1(12),
@@ -144,12 +146,12 @@ public class RobotMap {
 
 
     // climb Pneumatics
-    public static Solenoid climbLeftPneumatic = new Solenoid(PneumaticPort.CLIMB_LEFT.id);
-    public static Solenoid climbRightPneumatic = new Solenoid(PneumaticPort.CLIMB_RIGHT.id);
+    public static Solenoid climbLeftPneumatic = CLIMB_CONNECTED ? new Solenoid(PneumaticPort.CLIMB_LEFT.id) : null;
+    public static Solenoid climbRightPneumatic = CLIMB_CONNECTED ? new Solenoid(PneumaticPort.CLIMB_RIGHT.id) : null;
 
     // Motors
-    public static CANSparkMax leftClimbMotor = new CANSparkMax(CANBus.CLIMB1.id, MotorType.kBrushless);
-    public static CANSparkMax rightClimbMotor = new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless);
+    public static CANSparkMax leftClimbMotor = CLIMB_CONNECTED ? new CANSparkMax(CANBus.CLIMB1.id, MotorType.kBrushless) : null;
+    public static CANSparkMax rightClimbMotor = CLIMB_CONNECTED  ? new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless) : null;
 
     // INDEX SUBSYSTEM
     // ---------------------------------------------------------------------------
