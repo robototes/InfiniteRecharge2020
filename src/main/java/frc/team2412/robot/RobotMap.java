@@ -1,12 +1,253 @@
 package frc.team2412.robot;
 
-//This is the class in charge of all the motors, motor ids, and any other sensors the robot uses. 
-//remember to declare robot container at the bottom of this class 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
+import com.robototes.sensors.Limelight;
+import com.robototes.sensors.Limelight.CamMode;
+import com.robototes.sensors.Limelight.LEDMode;
+import com.robototes.sensors.Limelight.Pipeline;
+import com.robototes.sensors.Limelight.SnapshotMode;
+import com.robototes.sensors.Limelight.StreamMode;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+//This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
+//remember to declare robot container at the bottom of this class
 public class RobotMap {
 
-	// IDs
-	public static int exampleID = 1;
+    public static boolean CLIMB_CONNECTED = false;
+    public static boolean CONTROL_PANEL_CONNECTED = false;
 
-	// Robot container
-	public static RobotContainer robotContainer = new RobotContainer();
+    public static enum CANBus {
+        INTAKE1(11),
+        INDEX1(12),
+        INTAKE2(21),
+        INDEX2(22),
+        INTAKE3(31),
+        INDEX3(32),
+        INDEX_MID(40),
+        DRIVE_LEFT_FRONT(1),
+        DRIVE_LEFT_BACK(2),
+        DRIVE_RIGHT_FRONT(3),
+        DRIVE_RIGHT_BACK(4),
+        CLIMB1(5),
+        CLIMB2(6),
+        TURRET(7),
+        FLYWHEEL_LEFT(8),
+        FLYWHEEL_RIGHT(9),
+        CONTROL_PANEL(10);
+
+        public final int id;
+        private CANBus(int canBusId) {
+            id = canBusId;
+        }
+    }
+
+    public static enum PneumaticPort {
+        DRIVE(0),
+        CLIMB_LEFT(1),
+        CLIMB_RIGHT(2),
+        INTAKE_FRONT_UP(3),
+        INTAKE_BACK_UP(4),
+        LIFT_UP(5),
+        LIFT_DOWN(6);
+
+        public final int id;
+        private PneumaticPort(int pneumaticPortId) {
+            id = pneumaticPortId;
+        }
+    }
+
+    public static enum DIOPort {
+        BACK_SENSOR(6),
+        BACK_MID_SENSOR(5),
+        BACK_INNER_SENSOR(4),
+        FRONT_INNER_SENSOR(3),
+        FRONT_MID_SENSOR(2),
+        FRONT_SENSOR(1),
+        INTAKE_FRONT_SENSOR(0),
+        INTAKE_BACK_SENSOR(7);
+
+        public final int id;
+        private DIOPort(int dioPortId) {
+            id = dioPortId;
+        }
+    }
+
+    public static enum PWMPort {
+        HOOD_SERVO_1(0),
+        HOOD_SERVO_2(1);
+    
+        public final int id;
+        private PWMPort(int pwmPortId) {
+            id = pwmPortId;
+        }
+    }
+
+    //CHOICE FOR INDEX/INTAKE MODULE
+    public static enum IndexIntakeModule{
+        ONE(CANBus.INTAKE1.id, CANBus.INDEX1.id),
+        TWO(CANBus.INTAKE2.id, CANBus.INDEX2.id),
+        THREE(CANBus.INTAKE3.id, CANBus.INDEX3.id);
+        private int indexCANID, intakeCANID;
+        IndexIntakeModule(int intakeID, int indexID){
+            indexCANID = indexID;
+            intakeCANID = intakeID;
+        }
+        public int getIntakeCANID(){
+            return intakeCANID;
+        }
+        public int getIndexCANID(){
+            return indexCANID;
+        }
+    }
+
+    //SET THESE TO CHANGE MODULE
+    public static IndexIntakeModule frontIndexIntakeModule = IndexIntakeModule.ONE;
+    public static IndexIntakeModule backIndexIntakeModule = IndexIntakeModule.TWO;
+
+    //NOT THIS ONE
+    public static IndexIntakeModule spareIndexIntakeModule = IndexIntakeModule.THREE;
+
+    // DRIVEBASE SUBSYSTEM
+    // -------------------------------------------------------------------------
+
+    // DriveBase Motors
+    public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(CANBus.DRIVE_LEFT_FRONT.id);
+    public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(CANBus.DRIVE_LEFT_BACK.id);
+    public static WPI_TalonFX driveRightFront = new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id);
+    public static WPI_TalonFX driveRightBack = new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id);
+
+    // DriveBase SpeedControllerGroups
+    public static SpeedControllerGroup driveLeftSide = new SpeedControllerGroup(driveLeftFront, driveLeftBack);
+    public static SpeedControllerGroup driveRightSide = new SpeedControllerGroup(driveRightFront, driveRightBack);
+
+    // DriveBase DifferentialDrive
+    public static DifferentialDrive robotDrive = new DifferentialDrive(driveLeftSide, driveRightSide);
+
+    // DriveBase Gyro
+    public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro();
+
+    // DriveBase Solenoid
+    public static Solenoid driveSolenoid = new Solenoid(PneumaticPort.DRIVE.id);
+
+
+    // climb Pneumatics
+    public static Solenoid climbLeftPneumatic = CLIMB_CONNECTED ? new Solenoid(PneumaticPort.CLIMB_LEFT.id) : null;
+    public static Solenoid climbRightPneumatic = CLIMB_CONNECTED ? new Solenoid(PneumaticPort.CLIMB_RIGHT.id) : null;
+
+    // Motors
+    public static CANSparkMax leftClimbMotor = CLIMB_CONNECTED ? new CANSparkMax(CANBus.CLIMB1.id, MotorType.kBrushless) : null;
+    public static CANSparkMax rightClimbMotor = CLIMB_CONNECTED  ? new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless) : null;
+
+    // INDEX SUBSYSTEM
+    // ---------------------------------------------------------------------------
+
+    // motors
+    public static CANSparkMax indexFrontMotor, indexBackMotor;
+    public static CANSparkMax indexMidMotor = new CANSparkMax(CANBus.INDEX_MID.id, MotorType.kBrushless);
+    
+    public static CANSparkMax intakeFrontMotor, intakeBackMotor;
+
+    // sensors
+    public static DigitalInput back = new DigitalInput(DIOPort.BACK_SENSOR.id);
+    public static DigitalInput backMid = new DigitalInput(DIOPort.BACK_MID_SENSOR.id);
+    public static DigitalInput backInner = new DigitalInput(DIOPort.BACK_INNER_SENSOR.id);
+    public static DigitalInput frontInner= new DigitalInput(DIOPort.FRONT_INNER_SENSOR.id);
+    public static DigitalInput frontMid = new DigitalInput(DIOPort.FRONT_MID_SENSOR.id);
+    public static DigitalInput front = new DigitalInput(DIOPort.FRONT_SENSOR.id);
+
+    private static class IndexIntakeSelector {
+        IndexIntakeSelector() {
+            indexFrontMotor = tryGetMotor(IndexIntakeModule.ONE.getIndexCANID());
+            indexBackMotor = tryGetMotor(IndexIntakeModule.TWO.getIndexCANID());
+            intakeFrontMotor = tryGetMotor(IndexIntakeModule.ONE.getIntakeCANID());
+            intakeBackMotor = tryGetMotor(IndexIntakeModule.TWO.getIntakeCANID());
+            if (indexFrontMotor == null) {
+                indexFrontMotor = tryGetMotor(IndexIntakeModule.THREE.getIndexCANID());
+                intakeFrontMotor = tryGetMotor(IndexIntakeModule.THREE.getIntakeCANID());
+            } else if (indexBackMotor == null) {
+                indexBackMotor = tryGetMotor(IndexIntakeModule.THREE.getIndexCANID());
+                intakeBackMotor = tryGetMotor(IndexIntakeModule.THREE.getIntakeCANID());
+            }
+        }
+
+        private CANSparkMax tryGetMotor(int motorId) {
+            try {
+                return new CANSparkMax(motorId, MotorType.kBrushless);
+            } catch (Exception ignored) {
+                return null;
+            }
+        }
+    }
+
+    public static IndexIntakeSelector indexSelector = new IndexIntakeSelector();
+
+    // INDEXER CONTROLS THESE NOT INTAKE FYI
+    public static DigitalInput intakeFront = new DigitalInput(DIOPort.INTAKE_FRONT_SENSOR.id);
+    public static DigitalInput intakeBack = new DigitalInput(DIOPort.INTAKE_BACK_SENSOR.id);
+
+    // Turret Subsystem
+    // ------------------------------------------------------------------------------
+    public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(CANBus.TURRET.id);
+
+    // Flywheel Subsystem
+    // ------------------------------------------------------------------------------
+    public static CANSparkMax flywheelLeftMotor = new CANSparkMax(CANBus.FLYWHEEL_LEFT.id, MotorType.kBrushless);
+    public static CANSparkMax flywheelRightMotor = new CANSparkMax(CANBus.FLYWHEEL_RIGHT.id, MotorType.kBrushless);
+
+    // Hood Subsystem
+    // -----------------------------------------------------------------------------
+	public static Servo hoodServo1 = new Servo(PWMPort.HOOD_SERVO_1.id);
+	public static Servo hoodServo2 = new Servo(PWMPort.HOOD_SERVO_2.id);
+
+    // Intake Subsystem
+    // -------------------------------------------------------------------------------
+    public static Solenoid frontIntakeliftSolenoid = new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id);
+    public static Solenoid backIntakeLiftSolenoid = new Solenoid(PneumaticPort.INTAKE_BACK_UP.id);
+
+    // Lift Subsystem
+    // -------------------------------------------------------------------------------
+    public static DoubleSolenoid liftUpDown = new DoubleSolenoid(PneumaticPort.LIFT_UP.id, PneumaticPort.LIFT_DOWN.id);
+
+    // CONTROL PANEL SUBSYSTEM
+    // ----------------------------------------------------------------------
+    // Control Panel I2C
+    public static I2C.Port COLOR_SENSOR_PORT = I2C.Port.kOnboard;
+
+    public static ColorSensorV3 colorSensor = CONTROL_PANEL_CONNECTED ? new ColorSensorV3(COLOR_SENSOR_PORT) : null;
+    public static ColorMatch colorMatcher = new ColorMatch();
+
+    public static WPI_TalonFX colorSensorMotor = CONTROL_PANEL_CONNECTED ? new WPI_TalonFX(CANBus.CONTROL_PANEL.id) : null;
+
+    // Limelight subsystem
+    // ----------------------------------------------------------------------------------------------
+    public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
+    public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER,
+            Pipeline.ZERO, StreamMode.STANDARD, SnapshotMode.OFF);
+
+    // Unknown RN
+    // -------------------------------------------------------------------------------------------------
+    // Compressor
+    public static Compressor compressor = new Compressor();
+
+    // Robot container
+    public static RobotContainer m_robotContainer = new RobotContainer();
+
+    // OI
+    public static OI m_OI = new OI(m_robotContainer);
 }

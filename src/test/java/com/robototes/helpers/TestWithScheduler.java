@@ -10,10 +10,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;;
  */
 public class TestWithScheduler {
 
-	public static void schedulerStart() {
-		CommandScheduler.getInstance().enable();
-	}
-
 	public static void schedulerClear() {
 		CommandScheduler.getInstance().cancelAll();
 		CommandScheduler.getInstance().clearButtons();
@@ -21,5 +17,9 @@ public class TestWithScheduler {
 
 	public static void schedulerDestroy() {
 		CommandScheduler.getInstance().disable();
+	}
+
+	public static void schedulerStart() {
+		CommandScheduler.getInstance().enable();
 	}
 }
