@@ -29,9 +29,77 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
 
+    public static enum CANBus {
+        INTAKE1(11),
+        INDEX1(12),
+        INTAKE2(21),
+        INDEX2(22),
+        INTAKE3(31),
+        INDEX3(32),
+        INDEX_MID(40),
+        DRIVE_LEFT_FRONT(1),
+        DRIVE_LEFT_BACK(2),
+        DRIVE_RIGHT_FRONT(3),
+        DRIVE_RIGHT_BACK(4),
+        CLIMB1(5),
+        CLIMB2(6),
+        TURRET(7),
+        FLYWHEEL_LEFT(8),
+        FLYWHEEL_RIGHT(9),
+        CONTROL_PANEL(10);
+
+        public final int id;
+        private CANBus(int canBusId) {
+            id = canBusId;
+        }
+    }
+
+    public static enum PneumaticPort {
+        DRIVE(0),
+        CLIMB_LEFT(1),
+        CLIMB_RIGHT(2),
+        INTAKE_FRONT_UP(3),
+        INTAKE_BACK_UP(4),
+        LIFT_UP(5),
+        LIFT_DOWN(6);
+
+        public final int id;
+        private PneumaticPort(int pneumaticPortId) {
+            id = pneumaticPortId;
+        }
+    }
+
+    public static enum DIOPort {
+        BACK_SENSOR(6),
+        BACK_MID_SENSOR(5),
+        BACK_INNER_SENSOR(4),
+        FRONT_INNER_SENSOR(3),
+        FRONT_MID_SENSOR(2),
+        FRONT_SENSOR(1),
+        INTAKE_FRONT_SENSOR(0),
+        INTAKE_BACK_SENSOR(7);
+
+        public final int id;
+        private DIOPort(int dioPortId) {
+            id = dioPortId;
+        }
+    }
+
+    public static enum PWMPort {
+        HOOD_SERVO_1(0),
+        HOOD_SERVO_2(1);
+    
+        public final int id;
+        private PWMPort(int pwmPortId) {
+            id = pwmPortId;
+        }
+    }
+
     //CHOICE FOR INDEX/INTAKE MODULE
     public static enum IndexIntakeModule{
-        ONE(11, 12), TWO(21, 22), THREE(31, 32);
+        ONE(CANBus.INTAKE1.id, CANBus.INDEX1.id),
+        TWO(CANBus.INTAKE2.id, CANBus.INDEX2.id),
+        THREE(CANBus.INTAKE3.id, CANBus.INDEX3.id);
         private int indexCANID, intakeCANID;
         IndexIntakeModule(int intakeID, int indexID){
             indexCANID = indexID;
@@ -54,19 +122,12 @@ public class RobotMap {
 
     // DRIVEBASE SUBSYSTEM
     // -------------------------------------------------------------------------
-    // DriveBase Motor ports
-    public static final int DRIVE_LEFT_FRONT_ID = 14;
-    public static final int DRIVE_LEFT_BACK_ID = 15;
-    public static final int DRIVE_RIGHT_FRONT_ID = 1;
-    public static final int DRIVE_RIGHT_BACK_ID = 0;
-
-    private static final int DRIVE_SOLENOID_PORT = 0;
 
     // DriveBase Motors
-    public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(DRIVE_LEFT_FRONT_ID);
-    public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(DRIVE_LEFT_BACK_ID);
-    public static WPI_TalonFX driveRightFront = new WPI_TalonFX(DRIVE_RIGHT_FRONT_ID);
-    public static WPI_TalonFX driveRightBack = new WPI_TalonFX(DRIVE_RIGHT_BACK_ID);
+    public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(CANBus.DRIVE_LEFT_FRONT.id);
+    public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(CANBus.DRIVE_LEFT_BACK.id);
+    public static WPI_TalonFX driveRightFront = new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id);
+    public static WPI_TalonFX driveRightBack = new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id);
 
     // DriveBase SpeedControllerGroups
     public static SpeedControllerGroup driveLeftSide = new SpeedControllerGroup(driveLeftFront, driveLeftBack);
@@ -79,48 +140,33 @@ public class RobotMap {
     public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro();
 
     // DriveBase Solenoid
-    public static Solenoid driveSolenoid = new Solenoid(DRIVE_SOLENOID_PORT);
+    public static Solenoid driveSolenoid = new Solenoid(PneumaticPort.DRIVE.id);
 
 
     // climb Pneumatics
-    private static final int pneumatic1Open = 1;
-    private static final int pneumatic2Open = 3;
-    public static Solenoid climbLeftPneumatic = new Solenoid(pneumatic1Open);
-    public static Solenoid climbRightPneumatic = new Solenoid(pneumatic2Open);
+    public static Solenoid climbLeftPneumatic = new Solenoid(PneumaticPort.CLIMB_LEFT.id);
+    public static Solenoid climbRightPneumatic = new Solenoid(PneumaticPort.CLIMB_RIGHT.id);
 
     // Motors
-    private static final int climbMotor1 = 1;
-    private static final int climbMotor2 = 2;
-    public static CANSparkMax leftClimbMotor = new CANSparkMax(climbMotor1, MotorType.kBrushless);
-    public static CANSparkMax rightClimbMotor = new CANSparkMax(climbMotor2, MotorType.kBrushless);
+    public static CANSparkMax leftClimbMotor = new CANSparkMax(CANBus.CLIMB1.id, MotorType.kBrushless);
+    public static CANSparkMax rightClimbMotor = new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless);
 
     // INDEX SUBSYSTEM
     // ---------------------------------------------------------------------------
-    // IDs
-    private final static int indexMidMotorID = 3;
-    
-    private final static int backSensorID = 6;
-    private final static int backMidSensorID = 5;
-    private final static int backInnerSensorID = 4;
-    private final static int frontInnerSensorID = 3;
-    private final static int frontMidSensorID = 2;
-    private final static int frontSensorID = 1;
-    private final static int intakeFrontSensorID = 0;
-    private final static int intakeBackSensorID = 7;
 
     // motors
     public static CANSparkMax indexFrontMotor, indexBackMotor;
-    public static CANSparkMax indexMidMotor = new CANSparkMax(indexMidMotorID, MotorType.kBrushless);
+    public static CANSparkMax indexMidMotor = new CANSparkMax(CANBus.INDEX_MID.id, MotorType.kBrushless);
     
     public static CANSparkMax intakeFrontMotor, intakeBackMotor;
 
     // sensors
-    public static DigitalInput back = new DigitalInput(backSensorID);
-    public static DigitalInput backMid = new DigitalInput(backMidSensorID);
-    public static DigitalInput backInner = new DigitalInput(backInnerSensorID);
-    public static DigitalInput frontInner= new DigitalInput(frontInnerSensorID);
-    public static DigitalInput frontMid = new DigitalInput(frontMidSensorID);
-    public static DigitalInput front = new DigitalInput(frontSensorID);
+    public static DigitalInput back = new DigitalInput(DIOPort.BACK_SENSOR.id);
+    public static DigitalInput backMid = new DigitalInput(DIOPort.BACK_MID_SENSOR.id);
+    public static DigitalInput backInner = new DigitalInput(DIOPort.BACK_INNER_SENSOR.id);
+    public static DigitalInput frontInner= new DigitalInput(DIOPort.FRONT_INNER_SENSOR.id);
+    public static DigitalInput frontMid = new DigitalInput(DIOPort.FRONT_MID_SENSOR.id);
+    public static DigitalInput front = new DigitalInput(DIOPort.FRONT_SENSOR.id);
 
     private static class IndexIntakeSelector {
         IndexIntakeSelector() {
@@ -149,49 +195,31 @@ public class RobotMap {
     public static IndexIntakeSelector indexSelector = new IndexIntakeSelector();
 
     // INDEXER CONTROLS THESE NOT INTAKE FYI
-    public static DigitalInput intakeFront = new DigitalInput(intakeFrontSensorID);
-    public static DigitalInput intakeBack = new DigitalInput(intakeBackSensorID);
-    public static final int exampleID = 1;
+    public static DigitalInput intakeFront = new DigitalInput(DIOPort.INTAKE_FRONT_SENSOR.id);
+    public static DigitalInput intakeBack = new DigitalInput(DIOPort.INTAKE_BACK_SENSOR.id);
 
     // Turret Subsystem
     // ------------------------------------------------------------------------------
-    public static final int turretMotorID = 1;
-    public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(turretMotorID);
+    public static WPI_TalonSRX turretMotor = new WPI_TalonSRX(CANBus.TURRET.id);
 
-    // Flywheel subsystem
+    // Flywheel Subsystem
     // ------------------------------------------------------------------------------
-    public static final int flywheelLeftMotorID = 0;
-    public static final int flywheelRightMotorID = 2;
-
-    public static CANSparkMax flywheelLeftMotor = new CANSparkMax(flywheelLeftMotorID, MotorType.kBrushless);
-    public static CANSparkMax flywheelRightMotor = new CANSparkMax(flywheelRightMotorID, MotorType.kBrushless);
+    public static CANSparkMax flywheelLeftMotor = new CANSparkMax(CANBus.FLYWHEEL_LEFT.id, MotorType.kBrushless);
+    public static CANSparkMax flywheelRightMotor = new CANSparkMax(CANBus.FLYWHEEL_RIGHT.id, MotorType.kBrushless);
 
     // Hood Subsystem
     // -----------------------------------------------------------------------------
-    public static final int HOOD_SERVO_PORT_1 = 0;
-	public static final int HOOD_SERVO_PORT_2 = 1;
-	public static Servo hoodServo1 = new Servo(HOOD_SERVO_PORT_1);
-	public static Servo hoodServo2 = new Servo(HOOD_SERVO_PORT_2);
+	public static Servo hoodServo1 = new Servo(PWMPort.HOOD_SERVO_1.id);
+	public static Servo hoodServo2 = new Servo(PWMPort.HOOD_SERVO_2.id);
 
-    // INTAKE SUBSYSTEM
-
-    // Intake DoubleSolenoid Ports
-    public static final int INTAKE_FRONT_UP_PORT = 1;
-    public static final int INTAKE_FRONT_DOWN_PORT = 1;
-    public static final int INTAKE_BACK_UP_PORT = 1;
-    public static final int INTAKE_BACK_DOWN_PORT = 1;
-
-    public static Solenoid frontIntakeliftSolenoid = new Solenoid(INTAKE_FRONT_UP_PORT);
-    public static Solenoid backIntakeLiftSolenoid = new Solenoid(INTAKE_BACK_UP_PORT);
-
-
-    // LIFT SUBSYSTEM
+    // Intake Subsystem
     // -------------------------------------------------------------------------------
-    // Lift DoubleSolenoid Ports
-    public static final int LIFT_UP_PORT = 1;
-    public static final int LIFT_DOWN_PORT = 1;
+    public static Solenoid frontIntakeliftSolenoid = new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id);
+    public static Solenoid backIntakeLiftSolenoid = new Solenoid(PneumaticPort.INTAKE_BACK_UP.id);
 
-    public static DoubleSolenoid liftUpDown = new DoubleSolenoid(LIFT_UP_PORT, LIFT_DOWN_PORT);
+    // Lift Subsystem
+    // -------------------------------------------------------------------------------
+    public static DoubleSolenoid liftUpDown = new DoubleSolenoid(PneumaticPort.LIFT_UP.id, PneumaticPort.LIFT_DOWN.id);
 
     // CONTROL PANEL SUBSYSTEM
     // ----------------------------------------------------------------------
@@ -201,8 +229,7 @@ public class RobotMap {
     public static ColorSensorV3 colorSensor = new ColorSensorV3(COLOR_SESNOR_PORT);
     public static ColorMatch colorMatcher = new ColorMatch();
 
-    public static final int CONTROL_PANEL_MOTOR_PORT = 1;
-    public static WPI_TalonFX colorSensorMotor = new WPI_TalonFX(CONTROL_PANEL_MOTOR_PORT);
+    public static WPI_TalonFX colorSensorMotor = new WPI_TalonFX(CANBus.CONTROL_PANEL.id);
 
     // Limelight subsystem
     // ----------------------------------------------------------------------------------------------

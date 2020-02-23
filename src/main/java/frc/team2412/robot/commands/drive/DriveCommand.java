@@ -12,12 +12,12 @@ public class DriveCommand extends CommandBase {
 	private Joystick m_joystick2;
 	private Button m_button;
 
-	public DriveCommand(DriveBaseSubsystem driveBaseSubsystem, Joystick joystick, Joystick joystick2, Button button) {
+	public DriveCommand(DriveBaseSubsystem driveBaseSubsystem, Joystick joystick, Joystick joystick2, Button indexerShootButton) {
 		addRequirements(driveBaseSubsystem);
 		this.m_driveBaseSubsystem = driveBaseSubsystem;
 		this.m_joystick = joystick;
 		m_joystick2 = joystick2;
-		m_button = button;
+		m_button = indexerShootButton;
 	}
 
 	@Override
