@@ -41,6 +41,14 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 		setLift(IntakeState.EXTENDED, m_backIntakeUpDown);
 	}
 
+	public boolean isFrontIntakeUp() {
+		return m_frontIntakeUpDown.get();
+	}
+
+	public boolean isBackIntakeUp() {
+		return m_frontIntakeUpDown.get();
+	}
+
 	@Config
 	private void setLift(IntakeState newState, Solenoid Solenoid) {
 		m_frontIntakeUpDown.set(newState.value);

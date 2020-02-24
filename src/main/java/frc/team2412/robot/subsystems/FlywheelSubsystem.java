@@ -5,8 +5,8 @@ import static frc.team2412.robot.subsystems.constants.FlywheelConstants.NEO_RPM_
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.FlywheelConstants;
@@ -16,13 +16,17 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
+	@Log
 	private CANSparkMax m_flywheelLeftMotor;
+	@Log
 	private CANSparkMax m_flywheelRightMotor;
-
+	@Log.Encoder
 	private CANEncoder m_leftEncoder;
+	@Config.PIDController
 	private CANPIDController m_pidLeftController;
-
+	@Log.Encoder
 	private CANEncoder m_rightEncoder;
+	@Config.PIDController
 	private CANPIDController m_pidRightController;
 
 	public FlywheelSubsystem(CANSparkMax flywheelLeftMotor, CANSparkMax flywheelRightMotor) {
