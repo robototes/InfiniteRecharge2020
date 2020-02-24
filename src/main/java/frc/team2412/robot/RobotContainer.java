@@ -56,21 +56,30 @@ public class RobotContainer implements Loggable {
 			m_climbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 		}
 
-		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
-				RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
+		if (RobotMap.INDEX_CONNECTED) {
+			m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front,
+					RobotMap.frontMid, RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back,
+					RobotMap.intakeBack);
 
-		m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-				RobotMap.indexBackMotor, m_indexerSensorSubsystem);
+			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
+					RobotMap.indexBackMotor, m_indexerSensorSubsystem);
+		}
 
-		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+		if (RobotMap.LIFT_CONNECTED) {
+			m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+		}
 
-		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro,
-				RobotMap.driveLeftFront, RobotMap.driveLeftBack, RobotMap.driveRightFront, RobotMap.driveRightBack);
+		if (RobotMap.DRIVE_BASE_CONNECTED) {
+			m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro,
+					RobotMap.driveLeftFront, RobotMap.driveLeftBack, RobotMap.driveRightFront, RobotMap.driveRightBack);
+		}
 
-		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
+		if (RobotMap.INTAKE_CONNECTED) {
+			m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
-				RobotMap.backIntakeLiftSolenoid);
+			m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
+					RobotMap.backIntakeLiftSolenoid);
+		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
 			m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor,

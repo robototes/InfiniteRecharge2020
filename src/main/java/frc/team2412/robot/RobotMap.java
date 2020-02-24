@@ -32,6 +32,10 @@ public class RobotMap {
 	public static boolean CLIMB_CONNECTED = false;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
 	public static boolean SHOOTER_CONNECTED = false;
+	public static boolean INDEX_CONNECTED = false;
+	public static boolean INTAKE_CONNECTED = false;
+	public static boolean LIFT_CONNECTED = false;
+	public static boolean DRIVE_BASE_CONNECTED = false;
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_MID(40), DRIVE_LEFT_FRONT(1),
@@ -107,23 +111,19 @@ public class RobotMap {
 	// -------------------------------------------------------------------------
 
 	// DriveBase Motors
-	public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(CANBus.DRIVE_LEFT_FRONT.id);
-	public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(CANBus.DRIVE_LEFT_BACK.id);
-	public static WPI_TalonFX driveRightFront = new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id);
-	public static WPI_TalonFX driveRightBack = new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id);
-
-	// DriveBase SpeedControllerGroups
-	public static SpeedControllerGroup driveLeftSide = new SpeedControllerGroup(driveLeftFront, driveLeftBack);
-	public static SpeedControllerGroup driveRightSide = new SpeedControllerGroup(driveRightFront, driveRightBack);
-
-	// DriveBase DifferentialDrive
-	public static DifferentialDrive robotDrive = new DifferentialDrive(driveLeftSide, driveRightSide);
+	public static WPI_TalonFX driveLeftFront = DRIVE_BASE_CONNECTED ? new WPI_TalonFX(CANBus.DRIVE_LEFT_FRONT.id)
+			: null;
+	public static WPI_TalonFX driveLeftBack = DRIVE_BASE_CONNECTED ? new WPI_TalonFX(CANBus.DRIVE_LEFT_BACK.id) : null;
+	public static WPI_TalonFX driveRightFront = DRIVE_BASE_CONNECTED ? new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id)
+			: null;
+	public static WPI_TalonFX driveRightBack = DRIVE_BASE_CONNECTED ? new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id)
+			: null;
 
 	// DriveBase Gyro
-	public static ADXRS450_Gyro driveGyro = new ADXRS450_Gyro();
+	public static ADXRS450_Gyro driveGyro = DRIVE_BASE_CONNECTED ? new ADXRS450_Gyro() : null;
 
 	// DriveBase Solenoid
-	public static Solenoid driveSolenoid = new Solenoid(PneumaticPort.DRIVE.id);
+	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;
 
 	// climb Pneumatics
 	public static Solenoid climbLeftPneumatic = CLIMB_CONNECTED ? new Solenoid(PneumaticPort.CLIMB_LEFT.id) : null;
@@ -141,17 +141,19 @@ public class RobotMap {
 
 	// motors
 	public static CANSparkMax indexFrontMotor, indexBackMotor;
-	public static CANSparkMax indexMidMotor = new CANSparkMax(CANBus.INDEX_MID.id, MotorType.kBrushless);
+	public static CANSparkMax indexMidMotor = INDEX_CONNECTED
+			? new CANSparkMax(CANBus.INDEX_MID.id, MotorType.kBrushless)
+			: null;
 
 	public static CANSparkMax intakeFrontMotor, intakeBackMotor;
 
 	// sensors
-	public static DigitalInput back = new DigitalInput(DIOPort.BACK_SENSOR.id);
-	public static DigitalInput backMid = new DigitalInput(DIOPort.BACK_MID_SENSOR.id);
-	public static DigitalInput backInner = new DigitalInput(DIOPort.BACK_INNER_SENSOR.id);
-	public static DigitalInput frontInner = new DigitalInput(DIOPort.FRONT_INNER_SENSOR.id);
-	public static DigitalInput frontMid = new DigitalInput(DIOPort.FRONT_MID_SENSOR.id);
-	public static DigitalInput front = new DigitalInput(DIOPort.FRONT_SENSOR.id);
+	public static DigitalInput back = INDEX_CONNECTED ? new DigitalInput(DIOPort.BACK_SENSOR.id) : null;
+	public static DigitalInput backMid = INDEX_CONNECTED ? new DigitalInput(DIOPort.BACK_MID_SENSOR.id) : null;
+	public static DigitalInput backInner = INDEX_CONNECTED ? new DigitalInput(DIOPort.BACK_INNER_SENSOR.id) : null;
+	public static DigitalInput frontInner = INDEX_CONNECTED ? new DigitalInput(DIOPort.FRONT_INNER_SENSOR.id) : null;
+	public static DigitalInput frontMid = INDEX_CONNECTED ? new DigitalInput(DIOPort.FRONT_MID_SENSOR.id) : null;
+	public static DigitalInput front = INDEX_CONNECTED ? new DigitalInput(DIOPort.FRONT_SENSOR.id) : null;
 
 	private static class IndexIntakeSelector {
 		IndexIntakeSelector() {
@@ -180,8 +182,8 @@ public class RobotMap {
 	public static IndexIntakeSelector indexSelector = new IndexIntakeSelector();
 
 	// INDEXER CONTROLS THESE NOT INTAKE FYI
-	public static DigitalInput intakeFront = new DigitalInput(DIOPort.INTAKE_FRONT_SENSOR.id);
-	public static DigitalInput intakeBack = new DigitalInput(DIOPort.INTAKE_BACK_SENSOR.id);
+	public static DigitalInput intakeFront = INTAKE_CONNECTED ? new DigitalInput(DIOPort.INTAKE_FRONT_SENSOR.id) : null;
+	public static DigitalInput intakeBack = INTAKE_CONNECTED ? new DigitalInput(DIOPort.INTAKE_BACK_SENSOR.id) : null;
 
 	// Turret Subsystem
 	// ------------------------------------------------------------------------------
@@ -204,12 +206,16 @@ public class RobotMap {
 
 	// Intake Subsystem
 	// -------------------------------------------------------------------------------
-	public static Solenoid frontIntakeliftSolenoid = new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id);
-	public static Solenoid backIntakeLiftSolenoid = new Solenoid(PneumaticPort.INTAKE_BACK_UP.id);
+	public static Solenoid frontIntakeliftSolenoid = INTAKE_CONNECTED ? new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id)
+			: null;
+	public static Solenoid backIntakeLiftSolenoid = INTAKE_CONNECTED ? new Solenoid(PneumaticPort.INTAKE_BACK_UP.id)
+			: null;
 
 	// Lift Subsystem
 	// -------------------------------------------------------------------------------
-	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(PneumaticPort.LIFT_UP.id, PneumaticPort.LIFT_DOWN.id);
+	public static DoubleSolenoid liftUpDown = LIFT_CONNECTED
+			? new DoubleSolenoid(PneumaticPort.LIFT_UP.id, PneumaticPort.LIFT_DOWN.id)
+			: null;
 
 	// CONTROL PANEL SUBSYSTEM
 	// ----------------------------------------------------------------------
@@ -217,7 +223,7 @@ public class RobotMap {
 	public static I2C.Port COLOR_SENSOR_PORT = I2C.Port.kOnboard;
 
 	public static ColorSensorV3 colorSensor = CONTROL_PANEL_CONNECTED ? new ColorSensorV3(COLOR_SENSOR_PORT) : null;
-	public static ColorMatch colorMatcher = new ColorMatch();
+	public static ColorMatch colorMatcher = CONTROL_PANEL_CONNECTED ? new ColorMatch() : null;
 
 	public static WPI_TalonFX colorSensorMotor = CONTROL_PANEL_CONNECTED ? new WPI_TalonFX(CANBus.CONTROL_PANEL.id)
 			: null;

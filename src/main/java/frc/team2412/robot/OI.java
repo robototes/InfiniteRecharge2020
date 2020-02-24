@@ -101,21 +101,19 @@ public class OI {
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
 
-		// LIFT
-		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
-		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
+		if (RobotMap.INTAKE_CONNECTED) {
+			// INTAKE front
+			intakeFrontOnButton.whenPressed(new IntakeFrontBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+					robotContainer.m_intakeMotorOnOffSubsystem));
+			intakeFrontOffButton.whenPressed(new IntakeFrontBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+					robotContainer.m_intakeMotorOnOffSubsystem));
 
-		// INTAKE front
-		intakeFrontOnButton.whenPressed(new IntakeFrontBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeFrontOffButton.whenPressed(new IntakeFrontBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
-
-		// INTAKE back
-		intakeBackOnButton.whenPressed(new IntakeBackBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
+			// INTAKE back
+			intakeBackOnButton.whenPressed(new IntakeBackBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+					robotContainer.m_intakeMotorOnOffSubsystem));
+			intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
+					robotContainer.m_intakeMotorOnOffSubsystem));
+		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
 			// CONTROL PANEL
@@ -133,19 +131,25 @@ public class OI {
 			climbStopArmButton.whenActive(new ClimbStopArmCommand(robotContainer.m_climbMotorSubsystem));
 		}
 
-		indexerStopButton.whenPressed(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
-				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		if (RobotMap.INDEX_CONNECTED) {
+			indexerStopButton.whenPressed(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
+					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		}
 
 		MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick, codriverStick,
 				JoystickEqualizerButton));
 
 		// LIFT
-		liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
-		liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
+		if (RobotMap.LIFT_CONNECTED) {
+			liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
+			liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem));
+		}
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
-		intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
+		if (RobotMap.INTAKE_CONNECTED) {
+			intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem,
+					robotContainer.m_intakeMotorOnOffSubsystem));
+		}
 
 	}
 }
