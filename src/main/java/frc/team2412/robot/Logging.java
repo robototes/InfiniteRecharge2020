@@ -80,12 +80,12 @@ public class Logging implements Loggable {
 
 		powerCellCount = RobotState.m_ballCount;
 
-		currentDrawDial = RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw()
+		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 
 		// 6.8 V is the warning level for brownout

@@ -12,6 +12,7 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kaVoltS
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ksVolts;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kvVoltSecondsPerMeter;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.maxSpeedInBrownout;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.team2412.robot.Logging;
 import frc.team2412.robot.RobotState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -69,6 +71,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
 	public boolean doItWork = false;
+
+	public boolean brownoutWarning = false;
 
 //	DifferentialDrive m_drive;
 
@@ -103,13 +107,22 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-
-		if (button.get()) {
-			m_rightMotor1.set(rightJoystick.getY());
-			m_leftMotor1.set(rightJoystick.getY());
+		if (brownoutWarning != true) {
+			if (button.get()) {
+				m_rightMotor1.set(rightJoystick.getY());
+				m_leftMotor1.set(rightJoystick.getY());
+			} else {
+				m_rightMotor1.set(rightJoystick.getY());
+				m_leftMotor1.set(leftJoystick.getY());
+			}
 		} else {
-			m_rightMotor1.set(rightJoystick.getY());
-			m_leftMotor1.set(leftJoystick.getY());
+			if (button.get()) {
+				m_rightMotor1.set(Math.max(rightJoystick.getY(), maxSpeedInBrownout));
+				m_leftMotor1.set(Math.max(rightJoystick.getY(),maxSpeedInBrownout));
+			} else {
+				m_rightMotor1.set(Math.max(rightJoystick.getY(),maxSpeedInBrownout ));
+				m_leftMotor1.set(Math.max(leftJoystick.getY(), maxSpeedInBrownout));
+			}
 		}
 
 	}
@@ -187,6 +200,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
+
+		brownoutWarning = Logging.brownoutWarning;
 	}
 
 	// Trajectory stuff
