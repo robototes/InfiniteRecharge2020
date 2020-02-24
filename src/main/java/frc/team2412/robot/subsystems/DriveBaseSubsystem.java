@@ -99,7 +99,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 
-		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
+		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
@@ -181,9 +181,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition();
 		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition();
 
-		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
-				(m_leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
-				(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
+		// m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+		// 		(m_leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
+		// 		(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();

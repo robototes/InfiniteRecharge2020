@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
@@ -32,10 +33,10 @@ public class RobotMap {
 	public static boolean CLIMB_CONNECTED = false;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
 	public static boolean SHOOTER_CONNECTED = false;
-	public static boolean INDEX_CONNECTED = false;
-	public static boolean INTAKE_CONNECTED = false;
-	public static boolean LIFT_CONNECTED = false;
-	public static boolean DRIVE_BASE_CONNECTED = false;
+	public static boolean INDEX_CONNECTED = true;
+	public static boolean INTAKE_CONNECTED = true;
+	public static boolean LIFT_CONNECTED = true;
+	public static boolean DRIVE_BASE_CONNECTED = true;
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_MID(40), DRIVE_LEFT_FRONT(1),
@@ -84,6 +85,7 @@ public class RobotMap {
 	public static enum IndexIntakeModule {
 		ONE(CANBus.INTAKE1.id, CANBus.INDEX1.id), TWO(CANBus.INTAKE2.id, CANBus.INDEX2.id),
 		THREE(CANBus.INTAKE3.id, CANBus.INDEX3.id);
+
 		private int indexCANID, intakeCANID;
 
 		IndexIntakeModule(int intakeID, int indexID) {
@@ -120,7 +122,7 @@ public class RobotMap {
 			: null;
 
 	// DriveBase Gyro
-	public static ADXRS450_Gyro driveGyro = DRIVE_BASE_CONNECTED ? new ADXRS450_Gyro() : null;
+	public static Gyro driveGyro = DRIVE_BASE_CONNECTED ? null : null;
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;
