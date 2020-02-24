@@ -9,16 +9,21 @@ import com.robototes.units.Distance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
+public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
-public class ClimbMotorSubsystem extends SubsystemBase {
-
+	@Log
 	public Distance m_currentClimbHeight;
+	@Log.Encoder
 	private CANEncoder m_encoder;
+	@Log
 	private CANSparkMax m_leftClimbMotor;
-
+	@Config.PIDController
 	private CANPIDController m_pidController;
-
+	@Log
 	private CANSparkMax m_rightClimbMotor;
 	private ClimbHeight reference;
 

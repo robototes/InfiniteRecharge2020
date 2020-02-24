@@ -8,7 +8,7 @@ public class IntakeBothUpCommand extends ParallelCommandGroup {
 
 	private IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
-	
+
 	public IntakeBothUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem) {
 		addRequirements(intakeUpDownSubsystem);
 		m_intakeUpDownSubsystem = intakeUpDownSubsystem;

@@ -103,7 +103,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-		
+
 		if (button.get()) {
 			m_rightMotor1.set(rightJoystick.getY());
 			m_leftMotor1.set(rightJoystick.getY());
