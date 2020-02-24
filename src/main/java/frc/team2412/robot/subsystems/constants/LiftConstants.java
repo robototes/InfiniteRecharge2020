@@ -18,6 +18,15 @@ public class LiftConstants {
 		private LiftState(DoubleSolenoid.Value value) {
 			this.value = value;
 		}
+
+		public String toString() {
+			if (this.equals(DOWN)) {
+				return "Down";
+			} else {
+				return "Up";
+			}
+
+		}
 	}
 
 }

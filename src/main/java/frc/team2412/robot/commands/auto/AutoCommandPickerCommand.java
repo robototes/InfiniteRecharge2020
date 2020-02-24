@@ -48,15 +48,15 @@ public class AutoCommandPickerCommand extends CommandBase {
 
 		if (RobotState.sixBallAuto == true) {
 
-			m_command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
-					m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem, m_indexerMotorSubsystem,
-					m_hoodSubsystem);
+			m_command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
+					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
+					m_indexerMotorSubsystem, m_hoodSubsystem);
 
 		} else if (RobotState.threeBallAuto == true) {
 
-			m_command = new ThreeBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem, m_intakeUpDownSubsystem,
-					m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem, m_indexerMotorSubsystem,
-					m_hoodSubsystem);
+			m_command = new ThreeBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
+					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
+					m_indexerMotorSubsystem, m_hoodSubsystem);
 
 		} else if (RobotState.justMoveAuto == true) {
 

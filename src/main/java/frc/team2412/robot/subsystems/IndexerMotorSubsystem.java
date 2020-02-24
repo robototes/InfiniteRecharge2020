@@ -11,15 +11,22 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class IndexerMotorSubsystem extends SubsystemBase {
+public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	private double frontTicks, backTicks;
 
 	private CANEncoder m_frontEncoder, m_backEncoder;
 	private CANPIDController m_frontPIDController, m_backPIDController;
+	@Log
+	private CANSparkMax m_indexFrontMotor;
+	@Log
+	private CANSparkMax m_indexMidMotor;
+	@Log
+	private CANSparkMax m_indexBackMotor;
 
-	private CANSparkMax m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor;
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
 

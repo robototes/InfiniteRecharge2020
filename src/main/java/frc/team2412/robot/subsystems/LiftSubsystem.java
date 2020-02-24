@@ -15,7 +15,7 @@ public class LiftSubsystem extends SubsystemBase implements Loggable {
 	private DoubleSolenoid m_liftUpDown;
 
 	// Sets the state of the lift to down because of init it is down
-	@Log
+	@Log.ToString
 	private LiftState m_currentState = LiftState.DOWN;
 
 	// For when we create a liftSubsystem, it makes a liftSubsystem which uses our
