@@ -1,8 +1,6 @@
 package frc.team2412.robot.subsystems;
 
 import com.robototes.sensors.Limelight;
-
-import edu.wpi.cscore.HttpCamera;
 import com.robototes.sensors.Limelight.CamMode;
 import com.robototes.sensors.Limelight.LEDMode;
 import com.robototes.sensors.Limelight.Pipeline;
@@ -17,7 +15,6 @@ import frc.team2412.robot.commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.subsystems.constants.LimelightConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
-import io.github.oblarg.oblog.annotations.Log.CameraStream;
 
 public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
@@ -28,7 +25,6 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 	@Log.ToString
 	public Rotations m_yawFromTarget;
 
-	public HttpCamera limeCam;
 	// Store the limelight
 	private Limelight m_limelight;
 
@@ -50,7 +46,7 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 		if (m_limelight.hasValidTarget()) {
 			setDistanceFromTable();
 			setYawFromTable();
-			
+
 			// Complex equation that wont be explained here because it is really confusing
 			double skewOfTarget = m_limelight.getNetworkTable().getEntry("ts").getDouble(0);
 
@@ -67,7 +63,7 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 			m_yawFromTarget = m_yawFromTarget.add(new Rotations(angleFromYawToInner, RotationUnits.RADIAN));
 		}
 	}
-	
+
 	public Distance getDistanceToTarget() {
 		return m_distanceToTarget;
 	}
