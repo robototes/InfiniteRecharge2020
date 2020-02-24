@@ -1,12 +1,9 @@
 package frc.team2412.robot.commands.indexer;
 
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.numBalls;
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.unbalancedSide;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexShootCommand extends CommandBase {
@@ -23,8 +20,8 @@ public class IndexShootCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
-		if (!m_indexerSensorSubsystem.getIndexMidSensorValue()) {
-			if (unbalancedSide == IndexerConstants.UnbalancedSide.FRONT) {
+		if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
+			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
 				if (m_indexerSensorSubsystem.allFrontSensorsOff()) {
 					m_indexerMotorSubsystem.setBackMotor(-1);
@@ -42,11 +39,11 @@ public class IndexShootCommand extends CommandBase {
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
 			m_indexerMotorSubsystem.stopAllMotors();
-			numBalls = 0;
+			RobotState.m_ballCount = 0;
 			return true;
 
 		} else {
-			numBalls = m_indexerSensorSubsystem.totalSensorsOn();
+			RobotState.m_ballCount = m_indexerSensorSubsystem.totalSensorsOn();
 			return false;
 		}
 

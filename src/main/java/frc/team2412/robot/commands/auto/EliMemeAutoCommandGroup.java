@@ -1,10 +1,9 @@
 package frc.team2412.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.team2412.robot.commands.auto.subsistentCommands.MoveToIntakePowerCellsCommandGroup;
-import frc.team2412.robot.commands.drive.MoveFromPowerCellsCommand;
+import frc.team2412.robot.commands.auto.subsistentCommands.StartUpCommand;
+import frc.team2412.robot.commands.drive.MoveToPowerCellsCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
-import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
@@ -14,19 +13,20 @@ import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 
-public class SixBallAutoCommandGroup extends SequentialCommandGroup {
+public class EliMemeAutoCommandGroup extends SequentialCommandGroup {
 
-	public SixBallAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
+	public EliMemeAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
 			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
 			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 
-				new LiftUpCommand(liftSubsystem), new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem),
-				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem, intakeUpDownSubsystem),
-				new MoveFromPowerCellsCommand(driveBaseSubsystem),
-				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem));
+				new StartUpCommand(liftSubsystem, flywheelSubsystem, hoodSubsystem),
+				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem),
+				new MoveToPowerCellsCommand(driveBaseSubsystem)
+
+		);
 	}
 
 }

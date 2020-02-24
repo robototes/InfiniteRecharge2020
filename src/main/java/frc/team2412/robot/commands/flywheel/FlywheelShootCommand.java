@@ -19,6 +19,6 @@ public class FlywheelShootCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return true;
+		return m_FlywheelSubsystem.getSpeed() > 0.75;
 	}
 }

@@ -5,22 +5,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IndexerSensorSubsystem extends SubsystemBase {
 
-	private DigitalInput m_intakeFrontSensor, m_indexFrontSensor, m_indexFrontMidSensor, m_indexMidSensor,
+	private DigitalInput m_intakeFrontSensor, m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor, m_indexBackInnerSensor,
 			m_indexBackMidSensor, m_indexBackSensor, m_intakeBackSensor;
 
 	private DigitalInput[] m_sensorArray;
 
-	public IndexerSensorSubsystem(DigitalInput intakeFront, DigitalInput front, DigitalInput frontMid, DigitalInput mid,
+	public IndexerSensorSubsystem(DigitalInput intakeFront, DigitalInput front, DigitalInput frontMid, DigitalInput frontInner, DigitalInput backInner,
 			DigitalInput backMid, DigitalInput back, DigitalInput intakeBack) {
 		m_intakeFrontSensor = intakeFront;
 		m_indexFrontSensor = front;
 		m_indexFrontMidSensor = frontMid;
-		m_indexMidSensor = mid;
+		m_indexFrontInnerSensor = frontInner;
+		m_indexBackInnerSensor = backInner;
 		m_indexBackMidSensor = backMid;
 		m_indexBackSensor = back;
 		m_intakeBackSensor = intakeBack;
 
-		m_sensorArray = new DigitalInput[] { m_indexFrontSensor, m_indexFrontMidSensor, m_indexMidSensor,
+		m_sensorArray = new DigitalInput[] {m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor, m_indexBackInnerSensor,
 				m_indexBackMidSensor, m_indexBackSensor };
 
 	}
@@ -37,10 +38,12 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 		return !m_indexFrontMidSensor.get();
 	}
 
-	public boolean getIndexMidSensorValue() {
-		return !m_indexMidSensor.get();
+	public boolean getIndexFrontInnerSensorValue() {
+		return !m_indexFrontInnerSensor.get();
 	}
-
+	public boolean getIndexBackInnerSensorValue() {
+		return !m_indexBackInnerSensor.get();
+	}
 	public boolean getIndexBackMidSensorValue() {
 		return !m_indexBackMidSensor.get();
 	}
@@ -54,25 +57,25 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allInnerSensorsOff() {
-		if (!m_indexFrontSensor.get() && !m_indexFrontMidSensor.get() && !m_indexMidSensor.get()
-				&& !m_indexBackMidSensor.get() && !m_intakeBackSensor.get()) {
-			return true;
-		} else {
-			return false;
+		for(DigitalInput d : m_sensorArray) {
+			if(!d.get()) {
+				return false;
+			}
 		}
+		return true;
 	}
 
 	public boolean allInnerSensorsOn() {
-		if (m_indexFrontSensor.get() && m_indexFrontMidSensor.get() && m_indexMidSensor.get()
-				&& m_indexBackMidSensor.get() && m_intakeBackSensor.get()) {
-			return true;
-		} else {
-			return false;
+		for(DigitalInput d : m_sensorArray) {
+			if(d.get()) {
+				return false;
+			}
 		}
+		return true;
 	}
 
 	public boolean allFrontSensorsOff() {
-		if (!m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()) {
+		if (!m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get() && !m_indexFrontInnerSensor.get()) {
 			return true;
 		} else {
 			return false;
@@ -80,7 +83,7 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allBackSensorsOff() {
-		if (!m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()) {
+		if (!m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get() && !m_indexBackInnerSensor.get()) {
 			return true;
 		} else {
 			return false;
@@ -89,8 +92,12 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 
 	public int totalSensorsOn() {
 		int total = 0;
-		for (DigitalInput d : m_sensorArray) {
-			if (!d.get()) {
+		for (int i = 0; i < m_sensorArray.length; i++) {
+			if (!m_sensorArray[i].get()) {
+				//TO DEAL WITH 2 CENTER SENSORS
+				if(i == 2) {
+					i++;
+				}
 				total++;
 			}
 		}

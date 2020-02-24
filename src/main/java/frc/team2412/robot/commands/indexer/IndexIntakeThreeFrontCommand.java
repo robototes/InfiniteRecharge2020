@@ -7,11 +7,12 @@ import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
-public class IndexIntakeOneBackCommand extends CommandBase {
+public class IndexIntakeThreeFrontCommand extends CommandBase {
+
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
 
-	public IndexIntakeOneBackCommand(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
+	public IndexIntakeThreeFrontCommand(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
 		m_indexerSensorSubsystem = sensorSubsystem;
 		m_indexerMotorSubsystem = motorSubsystem;
 		addRequirements(sensorSubsystem, motorSubsystem);
@@ -19,15 +20,15 @@ public class IndexIntakeOneBackCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
-			m_indexerMotorSubsystem.setBackMotor(-1);
+		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
+			m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
 	@Override
 	public boolean isFinished() {
-		if (m_indexerSensorSubsystem.getIndexBackMidSensorValue()) {
-			System.out.println("pppp");
-			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
+		if (m_indexerSensorSubsystem.getIndexFrontMidSensorValue()) {
+			RobotState.m_unbalancedSide = RobotState.UnbalancedSide.FRONT;
+			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.LONG_STOP_DISTANCE);
 			RobotState.m_ballCount++;
 			return true;
 		} else {
