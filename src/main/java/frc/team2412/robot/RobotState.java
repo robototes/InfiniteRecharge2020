@@ -8,7 +8,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
 
-	private RobotContainer robotContainer = RobotMap.m_robotContainer;
+	private RobotContainer m_robotContainer;
 
 	@Log.ToString
 	public static UnbalancedSide m_unbalancedSide;
@@ -50,8 +50,8 @@ public class RobotState implements Loggable {
 	@Log(tabName = "Misc.")
 	public static int location = 0;
 
-	public RobotState() {
-
+	public RobotState(RobotContainer robotContainer) {
+		m_robotContainer = robotContainer;
 	}
 
 	public static enum UnbalancedSide {
@@ -179,12 +179,13 @@ public class RobotState implements Loggable {
 	}
 
 	public double getTotalCurrentDraw() {
-		double currentDraw = robotContainer.m_climbMotorSubsystem.getCurrentDraw()
-				+ robotContainer.m_driveBaseSubsystem.getCurrentDraw()
-				+ robotContainer.m_flywheelSubsystem.getCurrentDraw()
-				+ robotContainer.m_indexerMotorSubsystem.getCurrentDraw()
-				+ robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
-				+ robotContainer.m_turretSubsystem.getCurrentDraw() + RobotMap.compressor.getCompressorCurrent();
+		double currentDraw = (RobotMap.CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.DRIVE_BASE_CONNECTED ? m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INDEX_CONNECTED ? m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
+				+ RobotMap.compressor.getCompressorCurrent();
 
 		return currentDraw;
 	}
