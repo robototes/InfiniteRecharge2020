@@ -1,9 +1,6 @@
 package frc.team2412.robot.subsystems.constants;
 
 public class IndexerConstants {
-	// NOT CONSTANTS BUT UNIVERSAL VALUES
-
-	//
 	public enum UnbalancedSide {
 		FRONT, BACK;
 		public void flip() {
