@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
@@ -15,7 +16,6 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -117,8 +117,8 @@ public class RobotMap {
 	public static WPI_TalonFX driveRightBack = DRIVE_BASE_CONNECTED ? new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id)
 			: null;
 
-	// DriveBase Gyro
-	public static ADXRS450_Gyro driveGyro = DRIVE_BASE_CONNECTED ? new ADXRS450_Gyro() : null;
+	// DriveBase
+	public static final ADIS16448_IMU driveGyro = DRIVE_BASE_CONNECTED ? new ADIS16448_IMU() : null;
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;

@@ -80,11 +80,13 @@ public class Logging implements Loggable {
 
 		powerCellCount = RobotState.m_ballCount;
 
-		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
+		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+				: 0)
 				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
+						: 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 

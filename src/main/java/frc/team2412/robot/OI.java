@@ -136,11 +136,11 @@ public class OI {
 					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 		}
 
-		if(RobotMap.DRIVE_BASE_CONNECTED) {
-		MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick, codriverStick,
-				JoystickEqualizerButton));
+		if (RobotMap.DRIVE_BASE_CONNECTED) {
+			MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick,
+					codriverStick, JoystickEqualizerButton));
 		}
-		
+
 		// LIFT
 		if (RobotMap.LIFT_CONNECTED) {
 			liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));

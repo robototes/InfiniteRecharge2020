@@ -27,7 +27,7 @@ public class RobotContainer implements Loggable {
 
 	@Log(tabName = "Flywheeeeeee Subsystem", name = "Flywheeee Subsystem")
 	public FlywheelSubsystem m_flywheelSubsystem;
-	
+
 	@Log(tabName = "Hood Subsystem", name = "Hood Subsystem")
 	public HoodSubsystem m_hoodSubsystem;
 
@@ -104,6 +104,6 @@ public class RobotContainer implements Loggable {
 
 			m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
 		}
-		
+
 	}
 }

@@ -1,5 +1,6 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.brownoutFactor;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
@@ -12,7 +13,6 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kaVoltS
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ksVolts;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kvVoltSecondsPerMeter;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.maxSpeedInBrownout;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
 import java.io.IOException;
@@ -72,6 +72,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
 	public boolean doItWork = false;
 
+	@Log
 	public boolean brownoutWarning = false;
 
 //	DifferentialDrive m_drive;
@@ -117,11 +118,11 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 			}
 		} else {
 			if (button.get()) {
-				m_rightMotor1.set(Math.max(rightJoystick.getY(), maxSpeedInBrownout));
-				m_leftMotor1.set(Math.max(rightJoystick.getY(),maxSpeedInBrownout));
+				m_rightMotor1.set(Math.pow(rightJoystick.getY(), brownoutFactor));
+				m_leftMotor1.set(Math.pow(rightJoystick.getY(), brownoutFactor));
 			} else {
-				m_rightMotor1.set(Math.max(rightJoystick.getY(),maxSpeedInBrownout ));
-				m_leftMotor1.set(Math.max(leftJoystick.getY(), maxSpeedInBrownout));
+				m_rightMotor1.set(Math.pow(rightJoystick.getY(), brownoutFactor));
+				m_leftMotor1.set(Math.pow(leftJoystick.getY(), brownoutFactor));
 			}
 		}
 
