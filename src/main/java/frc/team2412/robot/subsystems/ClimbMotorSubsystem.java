@@ -16,15 +16,10 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
-	@Log
 	public Distance m_currentClimbHeight;
-	@Log.Encoder
 	private CANEncoder m_encoder;
-	@Log
 	private CANSparkMax m_leftClimbMotor;
-	@Config.PIDController
 	private CANPIDController m_pidController;
-	@Log
 	private CANSparkMax m_rightClimbMotor;
 	
 	private ClimbHeight reference;

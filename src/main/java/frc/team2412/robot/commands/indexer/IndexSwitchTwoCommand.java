@@ -31,29 +31,24 @@ public class IndexSwitchTwoCommand extends CommandBase {
 			}
 		}
 	}
-
+	@Override
+	public void end(boolean cancel){
+		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
+			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.SHORT_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.SHORT_STOP_DISTANCE);
+			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
+		} else {
+			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.SHORT_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.SHORT_STOP_DISTANCE);
+			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
+		}
+	}
 	@Override
 	public boolean isFinished() {
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-			if (m_indexerSensorSubsystem.getIndexBackMidSensorValue()) {
-				m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.SHORT_STOP_DISTANCE);
-				m_indexerMotorSubsystem.stopBackPID(IndexerConstants.SHORT_STOP_DISTANCE);
-				RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
-
-				return true;
-			} else {
-				return false;
-			}
+			return m_indexerSensorSubsystem.getIndexBackMidSensorValue();
 		} else {
-			if (m_indexerSensorSubsystem.getIndexFrontMidSensorValue()) {
-				m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.SHORT_STOP_DISTANCE);
-				m_indexerMotorSubsystem.stopBackPID(IndexerConstants.SHORT_STOP_DISTANCE);
-				RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
-
-				return true;
-			} else {
-				return false;
-			}
+			return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
 		}
 
 	}

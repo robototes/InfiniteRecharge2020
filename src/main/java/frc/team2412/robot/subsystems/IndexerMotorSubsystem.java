@@ -20,11 +20,8 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
 	private CANPIDController m_frontPIDController, m_backPIDController, m_midPIDController;;
-	@Log
 	private CANSparkMax m_indexFrontMotor;
-	@Log
 	private CANSparkMax m_indexMidMotor;
-	@Log
 	private CANSparkMax m_indexBackMotor;
 
 	private SpeedControllerGroup m_allMotors;

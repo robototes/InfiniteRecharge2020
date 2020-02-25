@@ -22,17 +22,15 @@ public class IndexIntakeThreeBackCommand extends CommandBase {
 		if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
 			m_indexerMotorSubsystem.setBackMotor(-1);
 	}
-
+	@Override
+	public void end(boolean cancel){
+		RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK;
+		m_indexerMotorSubsystem.stopBackPID(IndexerConstants.LONG_STOP_DISTANCE);
+		RobotState.m_ballCount++;
+	}
 	@Override
 	public boolean isFinished() {
-		if (m_indexerSensorSubsystem.getIndexBackMidSensorValue()) {
-			RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK;
-			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.LONG_STOP_DISTANCE);
-			RobotState.m_ballCount++;
-			return true;
-		} else {
-			return false;
-		}
+		return m_indexerSensorSubsystem.getIndexBackMidSensorValue();
 	}
 
 }
