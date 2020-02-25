@@ -7,7 +7,6 @@ import com.revrobotics.ControlType;
 import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 import io.github.oblarg.oblog.Loggable;
@@ -28,8 +27,6 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	private CANSparkMax m_rightClimbMotor;
 	private ClimbHeight reference;
 
-	public int brownoutStage;
-
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
 		m_leftClimbMotor = leftClimbMotor;
 		m_rightClimbMotor = rightClimbMotor;
@@ -46,27 +43,11 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void climbExtendArm() {
-		if (brownoutStage == 1) {
-			m_rightClimbMotor.set(ClimbConstants.MAX_SPEED * RobotState.Stage1Limitation);
-		} else if (brownoutStage == 2) {
-			m_rightClimbMotor.set(ClimbConstants.MAX_SPEED * RobotState.Stage2Limitation);
-		} else if (brownoutStage == 3) {
-			m_rightClimbMotor.set(ClimbConstants.MAX_SPEED * RobotState.Stage3Limitation);
-		} else {
-			m_rightClimbMotor.set(ClimbConstants.MAX_SPEED);
-		}
+		m_rightClimbMotor.set(ClimbConstants.MAX_SPEED);
 	}
 
 	public void climbRetractArm() {
-		if (brownoutStage == 1) {
-			m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED * RobotState.Stage1Limitation);
-		} else if (brownoutStage == 2) {
-			m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED * RobotState.Stage2Limitation);
-		} else if (brownoutStage == 3) {
-			m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED * RobotState.Stage3Limitation);
-		} else {
-			m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED);
-		}
+		m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED);
 	}
 
 	public void climbStop() {
@@ -81,19 +62,10 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	public void periodic() {
 		double heightFromOffset = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateRatio(getEncoderValue());
 		m_currentClimbHeight = new Distance(heightFromOffset).add(ClimbConstants.CLIMB_OFFSET_HEIGHT);
-		brownoutStage = RobotState.brownoutStage;
 	}
 
 	public void setMotors(double value) {
-		if (brownoutStage == 1) {
-			m_rightClimbMotor.set(value * RobotState.Stage1Limitation);
-		} else if (brownoutStage == 2) {
-			m_rightClimbMotor.set(value * RobotState.Stage2Limitation);
-		} else if (brownoutStage == 3) {
-			m_rightClimbMotor.set(value * RobotState.Stage3Limitation);
-		} else {
-			m_rightClimbMotor.set(value);
-		}
+		m_rightClimbMotor.set(value);
 	}
 
 	public void setReference(ClimbHeight newHeight) {
@@ -102,16 +74,6 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
-
-		if (brownoutStage == 1) {
-			m_pidController.setReference(wantedRotations * RobotState.Stage1Limitation, ControlType.kPosition);
-		} else if (brownoutStage == 2) {
-			m_pidController.setReference(wantedRotations * RobotState.Stage2Limitation, ControlType.kPosition);
-		} else if (brownoutStage == 3) {
-			m_pidController.setReference(wantedRotations * RobotState.Stage3Limitation, ControlType.kPosition);
-		} else {
-			m_pidController.setReference(wantedRotations, ControlType.kPosition);
-		}
 
 	}
 

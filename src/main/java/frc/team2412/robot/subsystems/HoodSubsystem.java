@@ -3,7 +3,6 @@ package frc.team2412.robot.subsystems;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotState;
 import frc.team2412.robot.commands.hood.HoodExtendCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.subsystems.constants.HoodConstants;
@@ -20,8 +19,6 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 
 	@Log(name = "Left Servo", tabName = "Hood Subsystem", width = 8, height = 1, columnIndex = 0, rowIndex = 1)
 	private Servo m_hoodServo2;
-
-	public int brownoutStage;
 
 	public HoodSubsystem(Servo hoodServo1, Servo hoodServo2) {
 		this.m_hoodServo1 = hoodServo1;
@@ -54,17 +51,11 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood Subsystem", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setServo(double angle) {
 		System.out.println(angle);
-		if (brownoutStage != 0) {
-			m_hoodServo2.set(angle);
-			m_hoodServo1.set(1 - angle);
-		} else {
-			m_hoodServo2.set(0);
-			m_hoodServo1.set(0);
-		}
+		m_hoodServo2.set(angle);
+		m_hoodServo1.set(1 - angle);
 	}
 
 	public void periodic() {
-		brownoutStage = RobotState.brownoutStage;
 	}
 
 }

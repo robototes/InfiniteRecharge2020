@@ -1,6 +1,5 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.brownoutFactor;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
@@ -71,7 +70,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
 	public boolean doItWork = false;
 
-
 //	DifferentialDrive m_drive;
 
 	@Log(tabName = "Drivebase Subsystem")
@@ -105,15 +103,14 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-			if (button.get()) {
-				m_rightMotor1.set(rightJoystick.getY());
-				m_leftMotor1.set(rightJoystick.getY());
-			} else {
-				m_rightMotor1.set(rightJoystick.getY());
-				m_leftMotor1.set(leftJoystick.getY());
-			}
-		} 
-
+		if (button.get()) {
+			m_rightMotor1.set(rightJoystick.getY());
+			m_leftMotor1.set(rightJoystick.getY());
+		} else {
+			m_rightMotor1.set(rightJoystick.getY());
+			m_leftMotor1.set(leftJoystick.getY());
+		}
+	}
 
 	public void oneJoystickDrive(Joystick joystick) {
 //		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);

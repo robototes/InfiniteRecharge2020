@@ -8,7 +8,6 @@ import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.team2412.robot.RobotState;
 import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
@@ -30,8 +29,6 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
-
-	public int brownoutStage;
 
 	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,
 			IndexerSensorSubsystem indexerSensorSubsystem) {
@@ -69,9 +66,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void setFrontMotor(double val) {
-		if (brownoutStage == 1) {
-			m_indexFrontMotor.set(val * RobotState.Stage1Limitation);
-		}
+		m_indexFrontMotor.set(val);
 	}
 
 	public void setMidMotor(double val) {
@@ -95,7 +90,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void stopFrontPID(double val) {
-	
+
 		resetEncoderZero();
 		if (m_indexFrontMotor.get() > 0) {
 			m_frontPIDController.setReference(frontTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
@@ -107,7 +102,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void stopBackPID(double val) {
-		
+
 		resetEncoderZero();
 		if (m_indexBackMotor.get() > 0) {
 			m_backPIDController.setReference(backTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
@@ -120,10 +115,10 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void setMidPID(boolean upOrDown) {
 		if (upOrDown) {
-			m_midPIDController.setReference(midTicks+IndexerConstants.TOP_TICKS, ControlType.kPosition);
+			m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
 		} else {
-			m_midPIDController.setReference(midTicks+IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
-			
+			m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
+
 		}
 	}
 
@@ -138,7 +133,6 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void periodic() {
-		brownoutStage = RobotState.brownoutStage;
 
 	}
 

@@ -18,11 +18,11 @@ public class IntakeFrontDownCommand extends CommandBase {
 	}
 
 	public void end(boolean cancelled) {
-		if(cancelled) {
+		if (cancelled) {
 			m_intakeUpDownSubsystem.frontIntakeUp();
 		}
 	}
-	
+
 	@Override
 	public boolean isFinished() {
 		return true;
