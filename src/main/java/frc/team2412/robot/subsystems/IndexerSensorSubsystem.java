@@ -3,11 +3,26 @@ package frc.team2412.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 
-	private DigitalInput m_intakeFrontSensor, m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor,
-			m_indexBackInnerSensor, m_indexBackMidSensor, m_indexBackSensor, m_intakeBackSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_intakeFrontSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontMidSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontInnerSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexBackInnerSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexBackMidSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexBackSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_intakeBackSensor;
 
 	private DigitalInput[] m_sensorArray;
 
@@ -88,6 +103,7 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 				&& !m_indexBackInnerSensor.get();
 	}
 
+	@Log.Dial(tabName = "Indexer", min = 0, max = 8)
 	public int totalSensorsOn() {
 		int total = 0;
 		for (int i = 0; i < m_sensorArray.length; i++) {

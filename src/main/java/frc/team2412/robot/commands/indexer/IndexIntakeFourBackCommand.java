@@ -19,14 +19,14 @@ public class IndexIntakeFourBackCommand extends CommandBase {
 	}
 
 	@Override
-	public void end(boolean cancel){
+	public void end(boolean cancel) {
 		RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK;
 		RobotState.m_ballCount++;
 	}
 
 	@Override
 	public boolean isFinished() {
-	    return m_indexerSensorSubsystem.getIndexBackSensorValue();
+		return m_indexerSensorSubsystem.getIndexBackSensorValue();
 	}
 
 }

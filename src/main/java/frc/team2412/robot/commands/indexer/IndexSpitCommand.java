@@ -26,16 +26,17 @@ public class IndexSpitCommand extends CommandBase {
 	public void execute() {
 		m_indexerMotorSubsystem.setFrontMotor(1);
 		m_indexerMotorSubsystem.setBackMotor(1);
-		// m_indexerMotorSubsystem.setMidMotor(-0.1);
+		m_indexerMotorSubsystem.setMidMotor(-0.1);
 		m_intakeOnOffSubsystem.setIntake(1);
 	}
 
 	@Override
-	public void end(boolean cancel){
+	public void end(boolean cancel) {
 		m_indexerMotorSubsystem.stopAllMotors();
 		m_intakeOnOffSubsystem.intakeOff();
 		RobotState.m_ballCount = 0;
 	}
+
 	@Override
 	public boolean isFinished() {
 		return m_indexerSensorSubsystem.allBackSensorsOff() && m_indexerSensorSubsystem.allFrontSensorsOff();

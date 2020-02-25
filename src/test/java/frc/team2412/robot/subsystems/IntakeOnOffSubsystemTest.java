@@ -16,12 +16,12 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.commands.intake.IntakeBackOffCommand;
-import frc.team2412.robot.commands.intake.IntakeBackOnCommand;
-import frc.team2412.robot.commands.intake.IntakeFrontOffCommand;
 import frc.team2412.robot.commands.intake.IntakeFrontOffIntakeBackOnCommand;
-import frc.team2412.robot.commands.intake.IntakeFrontOnCommand;
 import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class IntakeOnOffSubsystemTest {
@@ -92,7 +92,7 @@ public class IntakeOnOffSubsystemTest {
 		reset(mockedIntakeBackMotor);
 
 		// Create command
-		IntakeBackOnCommand intakeBackOnCommand = new IntakeBackOnCommand(realIntakeMotorOnOffSubsystem);
+		IntakeBackInCommand intakeBackOnCommand = new IntakeBackInCommand(realIntakeMotorOnOffSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
@@ -178,7 +178,7 @@ public class IntakeOnOffSubsystemTest {
 		reset(mockedIntakeBackMotor);
 
 		// Create command
-		IntakeFrontOnCommand intakeFrontOnCommand = new IntakeFrontOnCommand(realIntakeMotorOnOffSubsystem);
+		IntakeFrontInCommand intakeFrontOnCommand = new IntakeFrontInCommand(realIntakeMotorOnOffSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();

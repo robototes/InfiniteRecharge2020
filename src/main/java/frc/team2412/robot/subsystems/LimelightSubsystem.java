@@ -22,9 +22,9 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
-	@Log.ToString
+	@Log.ToString(tabName = "Turret")
 	public Distance m_distanceToTarget;
-	@Log.ToString
+	@Log.ToString(tabName = "turret")
 	public Rotations m_yawFromTarget;
 
 	@Log.CameraStream

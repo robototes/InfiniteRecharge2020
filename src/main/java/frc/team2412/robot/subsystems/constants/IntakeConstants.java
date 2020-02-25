@@ -14,13 +14,13 @@ public class IntakeConstants {
 
 	public static enum IntakeState {
 
-		// Creates a value called up which is equal to kForward
+		/** Creates a value called up which is equal to kForward */
 		EXTENDED(true),
 
-		// Creates a value called down which is equal to kReverse
+		/** Creates a value called down which is equal to kReverse */
 		WITHDRAWN(false);
 
-		// Creates a value that can be set to up and down
+		/** Creates a value that can be set to up and down */
 		public boolean value;
 
 		private IntakeState(boolean value) {
