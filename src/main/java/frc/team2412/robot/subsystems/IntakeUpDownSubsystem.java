@@ -26,19 +26,19 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void frontIntakeUp() {
-		setLift(IntakeState.WITHDRAWN, m_frontIntakeUpDown);
+		setIntake(IntakeState.WITHDRAWN, m_frontIntakeUpDown);
 	}
 
 	public void frontIntakeDown() {
-		setLift(IntakeState.EXTENDED, m_frontIntakeUpDown);
+		setIntake(IntakeState.EXTENDED, m_frontIntakeUpDown);
 	}
 
 	public void backIntakeUp() {
-		setLift(IntakeState.WITHDRAWN, m_backIntakeUpDown);
+		setIntake(IntakeState.WITHDRAWN, m_backIntakeUpDown);
 	}
 
 	public void backIntakeDown() {
-		setLift(IntakeState.EXTENDED, m_backIntakeUpDown);
+		setIntake(IntakeState.EXTENDED, m_backIntakeUpDown);
 	}
 
 	public boolean isFrontIntakeUp() {
@@ -50,7 +50,7 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	@Config
-	private void setLift(IntakeState newState, Solenoid Solenoid) {
+	private void setIntake(IntakeState newState, Solenoid Solenoid) {
 		m_frontIntakeUpDown.set(newState.value);
 		m_currentState = newState;
 	}

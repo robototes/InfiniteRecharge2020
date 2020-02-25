@@ -2,6 +2,7 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
+import edu.wpi.first.wpilibj.RobotController;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
@@ -27,6 +28,8 @@ public class RobotState implements Loggable {
 
 	@Log.ToString
 	public static GearboxState m_gearState = GearboxState.LOW;
+
+	public static BrownoutStage m_brownoutStage = BrownoutStage.ZERO;
 
 	@Config.ToggleSwitch
 	public static boolean sixBallAuto = true;
@@ -201,16 +204,19 @@ public class RobotState implements Loggable {
 
 	}
 
-//	public void brownoutWarning() {
-//		double voltage = RobotController.getInputVoltage();
-//
-//		climbOff = (voltage < 9) ? true : false;
-//		intakeOff = (voltage < 8) ? true : false;
-//		shooterSlow = (voltage < 7.5) ? true : false;
-//		shooterOff = (voltage < 7) ? true : false;
-//		indexOff = (voltage < 6.8) ? true : false;
-//		drivebaseOff = (voltage < 5.25) ? true : false;
-//
-//	}
+	public void brownoutWarning() {
+		double voltage = RobotController.getInputVoltage();
+
+		if (voltage < 7) {
+			m_brownoutStage = BrownoutStage.ONE;
+		} else if (voltage < 6) {
+			m_brownoutStage = BrownoutStage.TWO;
+		} else if (voltage < 5) {
+			m_brownoutStage = BrownoutStage.THREE;
+		} else {
+			m_brownoutStage = BrownoutStage.ZERO;
+		}
+
+	}
 
 }
