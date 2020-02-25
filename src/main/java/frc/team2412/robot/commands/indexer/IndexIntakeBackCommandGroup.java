@@ -58,10 +58,4 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 	public int numBalls() {
 		return RobotState.m_ballCount;
 	}
-
-	@Override
-	public boolean isFinished() {
-		return m_indexerSensorSubsystem.allInnerSensorsOn();
-	}
-
 }

@@ -20,32 +20,43 @@ import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
+	@Log(tabName = "Limelight subsystem")
 	public LimelightSubsystem m_LimelightSubsystem;
 
+	@Log(tabName = "Turret Subsystem")
 	public TurretSubsystem m_turretSubsystem;
 
+	@Log(tabName = "Flywheel Subsystem")
 	public FlywheelSubsystem m_flywheelSubsystem;
 
+	@Log(tabName = "Hood Subsystem")
 	public HoodSubsystem m_hoodSubsystem;
 
+	@Log(tabName = "Lift Subsystem")
 	public LiftSubsystem m_liftSubsystem;
 
 	@Log(tabName = "Drivebase Subsystem", name = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
+	@Log(tabName = "Intake Subsystem")
 	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
+	@Log(tabName = "Intake Subsystem")
 	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
+	@Log(tabName = "Index Subsystem")
 	public IndexerMotorSubsystem m_indexerMotorSubsystem;
 
+	@Log(tabName = "Index Subsystem")
 	public IndexerSensorSubsystem m_indexerSensorSubsystem;
 
 	public ClimbLiftSubsystem m_climbLiftSubsystem;
 
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
+
+	public RobotState robotState = new RobotState();
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();

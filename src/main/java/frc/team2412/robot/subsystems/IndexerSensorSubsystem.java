@@ -2,11 +2,27 @@ package frc.team2412.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class IndexerSensorSubsystem extends SubsystemBase {
+public class IndexerSensorSubsystem extends SubsystemBase implements Loggable{
 
-	private DigitalInput m_intakeFrontSensor, m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor,
-			m_indexBackInnerSensor, m_indexBackMidSensor, m_indexBackSensor, m_intakeBackSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_intakeFrontSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_indexFrontSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_indexFrontMidSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_indexFrontInnerSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_indexBackInnerSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_indexBackMidSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_indexBackSensor;
+	@Log.BooleanBox(tabName = "Index Subsystem", methodName = "get")
+	private DigitalInput m_intakeBackSensor;
 
 	private DigitalInput[] m_sensorArray;
 
@@ -78,21 +94,13 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allFrontSensorsOff() {
-		if (!m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()
-				&& !m_indexFrontInnerSensor.get()) {
-			return true;
-		} else {
-			return false;
-		}
+		return !m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()
+				&& !m_indexFrontInnerSensor.get();
 	}
 
 	public boolean allBackSensorsOff() {
-		if (!m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
-				&& !m_indexBackInnerSensor.get()) {
-			return true;
-		} else {
-			return false;
-		}
+		return !m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
+				&& !m_indexBackInnerSensor.get();
 	}
 
 	public int totalSensorsOn() {

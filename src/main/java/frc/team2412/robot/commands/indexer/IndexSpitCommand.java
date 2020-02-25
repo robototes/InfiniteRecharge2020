@@ -27,20 +27,19 @@ public class IndexSpitCommand extends CommandBase {
 		m_indexerMotorSubsystem.setFrontMotor(1);
 		m_indexerMotorSubsystem.setBackMotor(1);
 		// m_indexerMotorSubsystem.setMidMotor(-0.1);
-		m_intakeOnOffSubsystem.setIntake(-1);
+		m_intakeOnOffSubsystem.setIntake(1);
+	}
+
+	public void end(){
+		System.out.println("end");
+		m_indexerMotorSubsystem.stopAllMotors();
+		m_intakeOnOffSubsystem.intakeOff();
+		RobotState.m_ballCount = 0;
 	}
 
 	@Override
 	public boolean isFinished() {
-		if (m_indexerSensorSubsystem.allBackSensorsOff() && m_indexerSensorSubsystem.allFrontSensorsOff()) {
-			m_indexerMotorSubsystem.stopAllMotors();
-			m_intakeOnOffSubsystem.intakeOff();
-			RobotState.m_ballCount = 0;
-			return true;
-		} else {
-			return false;
-		}
-
+		return m_indexerSensorSubsystem.allBackSensorsOff() && m_indexerSensorSubsystem.allFrontSensorsOff();
 	}
 
 }
