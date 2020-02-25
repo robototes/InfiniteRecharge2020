@@ -46,7 +46,7 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public boolean isBackIntakeUp() {
-		return m_frontIntakeUpDown.get();
+		return m_backIntakeUpDown.get();
 	}
 
 	@Config
