@@ -43,7 +43,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
-import frc.team2412.robot.Logging;
 import frc.team2412.robot.RobotState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -202,7 +201,11 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
 
-		brownoutWarning = Logging.brownoutWarning;
+		brownoutWarning = RobotState.drivebaseOff;
+		
+		if(brownoutWarning) {
+			tankDriveVolts(0, 0);
+		}
 	}
 
 	// Trajectory stuff

@@ -8,6 +8,10 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
 
+	public static final double Stage1Limitation = 0.75;
+	public static final double Stage2Limitation = 0.50;
+	public static final double Stage3Limitation = 0.0;
+	
 	private RobotContainer m_robotContainer;
 
 	@Log.ToString
@@ -189,7 +193,20 @@ public class RobotState implements Loggable {
 
 		return currentDraw;
 	}
+
+	public static int brownoutStage = 0; 
 	
-	
+
+//	public void brownoutWarning() {
+//		double voltage = RobotController.getInputVoltage();
+//
+//		climbOff = (voltage < 9) ? true : false;
+//		intakeOff = (voltage < 8) ? true : false;
+//		shooterSlow = (voltage < 7.5) ? true : false;
+//		shooterOff = (voltage < 7) ? true : false;
+//		indexOff = (voltage < 6.8) ? true : false;
+//		drivebaseOff = (voltage < 5.25) ? true : false;
+//
+//	}
 
 }

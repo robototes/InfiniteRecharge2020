@@ -8,6 +8,7 @@ import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
@@ -29,6 +30,8 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
+
+	public int brownoutStage;
 
 	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,
 			IndexerSensorSubsystem indexerSensorSubsystem) {
@@ -61,7 +64,9 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void setFrontMotor(double val) {
-		m_indexFrontMotor.set(val);
+		if (brownoutStage == 1) {
+			m_indexFrontMotor.set(val * RobotState.Stage1Limitation);
+		}
 	}
 
 	public void setMidMotor(double val) {
@@ -74,6 +79,10 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void stopAllMotors() {
 		m_allMotors.set(0);
+	}
+
+	public void stopMidMotor() {
+		m_indexMidMotor.set(0);
 	}
 
 	public void stopSideMotors() {
@@ -112,6 +121,11 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	public double getCurrentDraw() {
 		return m_indexBackMotor.getOutputCurrent() + m_indexFrontMotor.getOutputCurrent()
 				+ m_indexMidMotor.getOutputCurrent();
+	}
+
+	public void periodic() {
+		brownoutStage = RobotState.brownoutStage;
+
 	}
 
 }

@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.FlywheelConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
@@ -28,6 +29,8 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	private CANEncoder m_rightEncoder;
 	@Config.PIDController
 	private CANPIDController m_pidRightController;
+
+	public int brownoutStage;
 
 	public FlywheelSubsystem(CANSparkMax flywheelLeftMotor, CANSparkMax flywheelRightMotor) {
 		m_flywheelLeftMotor = flywheelLeftMotor;
@@ -82,8 +85,19 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	public void setRPMFromMPS(double wantedVelocity) {
 		double wantedRPM = NEO_RPM_TO_FLYWHEEL_MPS.calculateRatio(wantedVelocity);
 
-		m_pidLeftController.setReference(wantedRPM, ControlType.kVelocity);
-		m_pidRightController.setReference(wantedRPM, ControlType.kVelocity);
+		if (brownoutStage == 1) {
+			m_pidLeftController.setReference(wantedRPM * RobotState.Stage1Limitation, ControlType.kVelocity);
+			m_pidRightController.setReference(wantedRPM * RobotState.Stage1Limitation, ControlType.kVelocity);
+		} else if (brownoutStage == 2) {
+			m_pidLeftController.setReference(wantedRPM * RobotState.Stage2Limitation, ControlType.kVelocity);
+			m_pidRightController.setReference(wantedRPM * RobotState.Stage2Limitation, ControlType.kVelocity);
+		} else if (brownoutStage == 3) {
+			m_pidLeftController.setReference(wantedRPM * RobotState.Stage3Limitation, ControlType.kVelocity);
+			m_pidRightController.setReference(wantedRPM * RobotState.Stage3Limitation, ControlType.kVelocity);
+		} else {
+			m_pidLeftController.setReference(wantedRPM, ControlType.kVelocity);
+			m_pidRightController.setReference(wantedRPM, ControlType.kVelocity);
+		}
 	}
 
 	@Log.NumberBar(min = 0, max = 30, name = "Left Flywheel Motor", tabName = "Flywheel Subsystem", width = 2, height = 1, rowIndex = 0, columnIndex = 0)
@@ -122,5 +136,9 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
 	public double getCurrentDraw() {
 		return m_flywheelLeftMotor.getOutputCurrent() + m_flywheelRightMotor.getOutputCurrent();
+	}
+
+	public void periodic() {
+		brownoutStage = RobotState.brownoutStage;
 	}
 }
