@@ -71,8 +71,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
 	public boolean doItWork = false;
 
-	@Log
-	public boolean brownoutWarning = false;
 
 //	DifferentialDrive m_drive;
 
@@ -107,7 +105,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-		if (brownoutWarning != true) {
 			if (button.get()) {
 				m_rightMotor1.set(rightJoystick.getY());
 				m_leftMotor1.set(rightJoystick.getY());
@@ -115,17 +112,8 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				m_rightMotor1.set(rightJoystick.getY());
 				m_leftMotor1.set(leftJoystick.getY());
 			}
-		} else {
-			if (button.get()) {
-				m_rightMotor1.set(Math.pow(rightJoystick.getY(), brownoutFactor));
-				m_leftMotor1.set(Math.pow(rightJoystick.getY(), brownoutFactor));
-			} else {
-				m_rightMotor1.set(Math.pow(rightJoystick.getY(), brownoutFactor));
-				m_leftMotor1.set(Math.pow(leftJoystick.getY(), brownoutFactor));
-			}
-		}
+		} 
 
-	}
 
 	public void oneJoystickDrive(Joystick joystick) {
 //		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
@@ -201,11 +189,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
 
-		brownoutWarning = RobotState.drivebaseOff;
-		
-		if(brownoutWarning) {
-			tankDriveVolts(0, 0);
-		}
 	}
 
 	// Trajectory stuff
