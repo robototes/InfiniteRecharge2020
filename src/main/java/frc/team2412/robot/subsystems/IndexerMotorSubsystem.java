@@ -16,10 +16,10 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
-	private double frontTicks, backTicks;
+	private double frontTicks, backTicks, midTicks;
 
-	private CANEncoder m_frontEncoder, m_backEncoder;
-	private CANPIDController m_frontPIDController, m_backPIDController;
+	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
+	private CANPIDController m_frontPIDController, m_backPIDController, m_midPIDController;;
 	@Log
 	private CANSparkMax m_indexFrontMotor;
 	@Log
@@ -44,6 +44,10 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		m_backPIDController = m_indexBackMotor.getPIDController();
 		configureMotorPID(m_backPIDController);
 
+		m_midEncoder = m_indexMidMotor.getEncoder();
+		m_midPIDController = m_indexMidMotor.getPIDController();
+		configureMotorPID(m_midPIDController);
+
 		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
 		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor);
 
@@ -52,6 +56,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 		Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
 		backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
+		midTicks = m_midEncoder.getPosition();
 	}
 
 	private void configureMotorPID(CANPIDController motorController) {
@@ -81,7 +86,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void stopFrontPID(double val) {
-		System.out.println("hi");
+	
 		resetEncoderZero();
 		if (m_indexFrontMotor.get() > 0) {
 			m_frontPIDController.setReference(frontTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
@@ -93,7 +98,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void stopBackPID(double val) {
-		System.out.println("hi");
+		
 		resetEncoderZero();
 		if (m_indexBackMotor.get() > 0) {
 			m_backPIDController.setReference(backTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
@@ -101,6 +106,15 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		} else {
 			m_backPIDController.setReference(backTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
 					ControlType.kPosition);
+		}
+	}
+
+	public void setMidPID(boolean upOrDown) {
+		if (upOrDown) {
+			m_midPIDController.setReference(midTicks+IndexerConstants.TOP_TICKS, ControlType.kPosition);
+		} else {
+			m_midPIDController.setReference(midTicks+IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
+			
 		}
 	}
 

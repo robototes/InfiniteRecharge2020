@@ -6,16 +6,17 @@ import frc.team2412.robot.commands.hood.HoodExtendCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
+import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 
 public class StartUpCommand extends ParallelCommandGroup {
 
 	public StartUpCommand(LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
-			HoodSubsystem hoodSubsystem) {
+			HoodSubsystem hoodSubsystem, IndexerMotorSubsystem motorSubsystem) {
 
 		addCommands(
 
-				new LiftUpCommand(liftSubsystem), new FlywheelShootCommand(flywheelSubsystem),
+				new LiftUpCommand(liftSubsystem, motorSubsystem), new FlywheelShootCommand(flywheelSubsystem),
 				new HoodExtendCommand(hoodSubsystem)
 
 		);
