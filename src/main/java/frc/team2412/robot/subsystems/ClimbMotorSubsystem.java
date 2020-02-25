@@ -7,6 +7,7 @@ import com.revrobotics.ControlType;
 import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 import io.github.oblarg.oblog.Loggable;
@@ -25,6 +26,7 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	private CANPIDController m_pidController;
 	@Log
 	private CANSparkMax m_rightClimbMotor;
+	
 	private ClimbHeight reference;
 
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
@@ -44,14 +46,17 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void climbExtendArm() {
 		m_rightClimbMotor.set(ClimbConstants.MAX_SPEED);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
 	public void climbRetractArm() {
 		m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
 	public void climbStop() {
 		m_rightClimbMotor.set(0);
+		RobotState.m_climbState = RobotState.ClimbState.NOT_CLIMBING;
 	}
 
 	public double getEncoderValue() {
@@ -66,6 +71,7 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void setMotors(double value) {
 		m_rightClimbMotor.set(value);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
 	public void setReference(ClimbHeight newHeight) {
@@ -74,6 +80,7 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 
 	}
 

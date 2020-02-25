@@ -243,6 +243,8 @@ public class RobotMap {
 
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();
+	
+	public static RobotState m_robotState = new RobotState(m_robotContainer);
 
 	// OI
 	public static OI m_OI = new OI(m_robotContainer);
