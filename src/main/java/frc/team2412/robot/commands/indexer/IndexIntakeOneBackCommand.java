@@ -1,10 +1,10 @@
 package frc.team2412.robot.commands.indexer;
 
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.numBalls;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexIntakeOneBackCommand extends CommandBase {
@@ -19,18 +19,17 @@ public class IndexIntakeOneBackCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		m_indexerMotorSubsystem.setBackMotor(-1);
+		if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
+			m_indexerMotorSubsystem.setBackMotor(-1);
 	}
-
+	@Override
+	public void end(boolean cancel){
+		m_indexerMotorSubsystem.stopBackPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
+		RobotState.m_ballCount++;
+	}
 	@Override
 	public boolean isFinished() {
-		if (m_indexerSensorSubsystem.getIndexMidSensorValue()) {
-			m_indexerMotorSubsystem.stopBackPID();
-			numBalls++;
-			return true;
-		} else {
-			return false;
-		}
+		return m_indexerSensorSubsystem.getIndexBackMidSensorValue();
 	}
 
 }

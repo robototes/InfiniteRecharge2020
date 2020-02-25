@@ -14,17 +14,18 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 
-	@Log
-	private CANSparkMax m_intakeFrontMotor;
-	@Log
-	private CANSparkMax m_intakeBackMotor;
-	private SpeedControllerGroup m_intakeMotorGroup = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);
-	@Log
+	@Log.ToString
+	private final CANSparkMax m_intakeFrontMotor;
+	@Log.ToString
+	private final CANSparkMax m_intakeBackMotor;
+	private final SpeedControllerGroup m_intakeMotorGroup;
+	@Log.ToString
 	public IntakeLastMotor m_lastMotor = IntakeLastMotor.BOTH;
 
 	public IntakeOnOffSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
 		this.m_intakeFrontMotor = frontMotor;
 		this.m_intakeBackMotor = backMotor;
+		this.m_intakeMotorGroup = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);
 	}
 
 	public void backIntakeOff() {
@@ -66,6 +67,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 
 	public void intakeOff() {
 		m_intakeMotorGroup.set(0);
+		RobotState.m_intakeDirection = IntakeDirection.NONE;
 	}
 
 	public void intakeOn() {
@@ -77,6 +79,18 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	@Config
 	public void setIntake(double speed) {
 		m_intakeMotorGroup.set(speed);
+	}
+
+	public double getCurrentDraw() {
+		return m_intakeBackMotor.getOutputCurrent() + m_intakeFrontMotor.getOutputCurrent();
+	}
+
+	public boolean backMotorOn() {
+		return (m_intakeBackMotor.get() != 0);
+	}
+
+	public boolean FrontMotorOn() {
+		return (m_intakeFrontMotor.get() != 0);
 	}
 
 }

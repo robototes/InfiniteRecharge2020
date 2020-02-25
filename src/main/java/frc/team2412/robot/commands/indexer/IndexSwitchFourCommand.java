@@ -1,8 +1,7 @@
 package frc.team2412.robot.commands.indexer;
 
-import static frc.team2412.robot.subsystems.constants.IndexerConstants.unbalancedSide;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
@@ -21,36 +20,36 @@ public class IndexSwitchFourCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (unbalancedSide == IndexerConstants.UnbalancedSide.FRONT) {
-			m_indexerMotorSubsystem.setFrontMotor(-1);
-			m_indexerMotorSubsystem.setBackMotor(1);
-		} else {
-			m_indexerMotorSubsystem.setFrontMotor(1);
-			m_indexerMotorSubsystem.setBackMotor(-1);
+		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue()
+				|| m_indexerSensorSubsystem.getIntakeBackSensorValue()) {
+			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
+				m_indexerMotorSubsystem.setFrontMotor(-1);
+				m_indexerMotorSubsystem.setBackMotor(1);
+			} else {
+				m_indexerMotorSubsystem.setFrontMotor(1);
+				m_indexerMotorSubsystem.setBackMotor(-1);
+			}
 		}
 
 	}
-
+	@Override
+	public void end(boolean cancel){
+		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
+			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.NORMAL_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.NORMAL_STOP_DISTANCE);
+			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
+		} else {
+			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.NORMAL_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.NORMAL_STOP_DISTANCE);
+			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
+		}
+	}
 	@Override
 	public boolean isFinished() {
-		if (unbalancedSide == IndexerConstants.UnbalancedSide.FRONT) {
-			if (m_indexerSensorSubsystem.getIndexBackSensorValue()) {
-				m_indexerMotorSubsystem.stopFrontPID();
-				m_indexerMotorSubsystem.stopBackPID();
-				unbalancedSide.flip();
-				return true;
-			} else {
-				return false;
-			}
+		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
+			return m_indexerSensorSubsystem.getIndexBackSensorValue();
 		} else {
-			if (m_indexerSensorSubsystem.getIndexFrontSensorValue()) {
-				m_indexerMotorSubsystem.stopFrontPID();
-				m_indexerMotorSubsystem.stopBackPID();
-				unbalancedSide.flip();
-				return true;
-			} else {
-				return false;
-			}
+			return m_indexerSensorSubsystem.getIndexFrontSensorValue();
 		}
 
 	}

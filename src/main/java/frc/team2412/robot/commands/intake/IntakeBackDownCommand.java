@@ -17,6 +17,12 @@ public class IntakeBackDownCommand extends CommandBase {
 		m_intakeUpDownSubsystem.backIntakeDown();
 	}
 
+	public void end(boolean cancelled) {
+		if (cancelled) {
+			m_intakeUpDownSubsystem.backIntakeUp();
+		}
+	}
+
 	@Override
 	public boolean isFinished() {
 		return true;

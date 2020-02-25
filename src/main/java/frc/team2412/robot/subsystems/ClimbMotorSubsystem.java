@@ -7,19 +7,21 @@ import com.revrobotics.ControlType;
 import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class ClimbMotorSubsystem extends SubsystemBase {
-	// private WPI_TalonSRX m_ClimbMotorSubsystem;
+public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public Distance m_currentClimbHeight;
 	private CANEncoder m_encoder;
 	private CANSparkMax m_leftClimbMotor;
-
 	private CANPIDController m_pidController;
-
 	private CANSparkMax m_rightClimbMotor;
+	
 	private ClimbHeight reference;
 
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
@@ -39,14 +41,17 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 	public void climbExtendArm() {
 		m_rightClimbMotor.set(ClimbConstants.MAX_SPEED);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
 	public void climbRetractArm() {
 		m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
 	public void climbStop() {
 		m_rightClimbMotor.set(0);
+		RobotState.m_climbState = RobotState.ClimbState.NOT_CLIMBING;
 	}
 
 	public double getEncoderValue() {
@@ -61,6 +66,7 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 	public void setMotors(double value) {
 		m_rightClimbMotor.set(value);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
 	public void setReference(ClimbHeight newHeight) {
@@ -69,6 +75,12 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
+		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
+
+	}
+
+	public double getCurrentDraw() {
+		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
 	}
 
 }

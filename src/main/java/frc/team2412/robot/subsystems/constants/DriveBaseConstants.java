@@ -7,6 +7,8 @@ public class DriveBaseConstants {
 	private static double wheelDiameterMeters = 0.1524;
 	public static final double metersPerWheelRevolution = wheelDiameterMeters * Math.PI;
 
+	public static final double encoderTicksPerRevolution = 4096.0;
+
 	public static final double highGearRatio = 1 / 7.08;
 	public static final double lowGearRatio = 1 / 6.13;
 
@@ -31,5 +33,7 @@ public class DriveBaseConstants {
 	// Ramsete Controller Value
 	public static final double kRamseteB = 2; // makes a more straight curve
 	public static final double kRamseteZeta = 0.7; // limits the correction
+
+	public static final double brownoutFactor = 3;
 
 }
