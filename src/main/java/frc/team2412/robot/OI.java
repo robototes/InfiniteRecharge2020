@@ -1,7 +1,6 @@
 package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -136,15 +135,17 @@ public class OI {
 					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 		}
 
-		if(RobotMap.DRIVE_BASE_CONNECTED) {
-		MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick, codriverStick,
-				JoystickEqualizerButton));
+		if (RobotMap.DRIVE_BASE_CONNECTED) {
+			MotorTestButton.whenPressed(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick,
+					codriverStick, JoystickEqualizerButton));
 		}
-		
+
 		// LIFT
 		if (RobotMap.LIFT_CONNECTED) {
-			liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
-			liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+			liftUpButton.whenPressed(
+					new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+			liftDownButton.whenPressed(
+					new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		}
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);

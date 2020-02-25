@@ -2,8 +2,9 @@ package frc.team2412.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import io.github.oblarg.oblog.Loggable;
 
-public class IndexerSensorSubsystem extends SubsystemBase {
+public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 
 	private DigitalInput m_intakeFrontSensor, m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor,
 			m_indexBackInnerSensor, m_indexBackMidSensor, m_indexBackSensor, m_intakeBackSensor;

@@ -73,19 +73,25 @@ public class Logging implements Loggable {
 	public void periodic() {
 		// WIP: OuterGoalAble, innerGoalAble, outerGoalAimed, innerGoalAimed
 
-		backIntakeOn = RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.backMotorOn();
-		backIntakeUp = RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isBackIntakeUp();
-		frontIntakeUp = RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isFrontIntakeUp();
-		frontIntakeOn = RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.FrontMotorOn();
+		backIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.backMotorOn()
+				: null;
+		backIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isBackIntakeUp()
+				: null;
+		frontIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isFrontIntakeUp()
+				: null;
+		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.FrontMotorOn()
+				: null;
 
 		powerCellCount = RobotState.m_ballCount;
 
-		currentDrawDial = RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
-				+ RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw()
+		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+				: 0)
+				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
+						: 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 
 		// 6.8 V is the warning level for brownout

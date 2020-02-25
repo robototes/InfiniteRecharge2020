@@ -67,6 +67,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 
 	public void intakeOff() {
 		m_intakeMotorGroup.set(0);
+		RobotState.m_intakeDirection = IntakeDirection.NONE;
 	}
 
 	public void intakeOn() {

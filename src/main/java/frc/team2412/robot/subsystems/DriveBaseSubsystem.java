@@ -103,7 +103,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-
 		if (button.get()) {
 			m_rightMotor1.set(rightJoystick.getY());
 			m_leftMotor1.set(rightJoystick.getY());
@@ -111,7 +110,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 			m_rightMotor1.set(rightJoystick.getY());
 			m_leftMotor1.set(leftJoystick.getY());
 		}
-
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
@@ -187,6 +185,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
+
 	}
 
 	// Trajectory stuff
