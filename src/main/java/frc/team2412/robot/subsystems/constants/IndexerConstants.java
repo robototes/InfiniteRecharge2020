@@ -1,9 +1,6 @@
 package frc.team2412.robot.subsystems.constants;
 
 public class IndexerConstants {
-	// NOT CONSTANTS BUT UNIVERSAL VALUES
-
-	//
 	public enum UnbalancedSide {
 		FRONT, BACK;
 		public void flip() {
@@ -32,7 +29,7 @@ public class IndexerConstants {
 
 	// FOR INNER SENSORS
 	public static final double SHORT_STOP_DISTANCE = 2;
-	public static final double LONG_STOP_DISTANCE = 4;
+	public static final double LONG_STOP_DISTANCE = 5;
 
 	// FOR MIDDLE
 	public static final double EXTRA_LONG_STOP_DISTANCE = 10;
@@ -40,6 +37,7 @@ public class IndexerConstants {
 	public static final double SPINDLE_DIAMETER = 1.2;
 	public static final double INCH_STOP_DISTANCE = 2;
 
+	public static final double MAX_SPEED = 0.5;
 	public static final double TOP_TICKS = 20;
 	public static final double BOTTOM_TICKS = 0;
 

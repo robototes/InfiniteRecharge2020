@@ -11,17 +11,23 @@ import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
+	@Log.ToString(tabName = "Climb")
 	public Distance m_currentClimbHeight;
-	private CANEncoder m_encoder;
+
+	@Log.NumberBar(min = -1, max = 1, name = "Left Climb Speed", tabName = "Climb", methodName = "get")
 	private CANSparkMax m_leftClimbMotor;
-	private CANPIDController m_pidController;
+	@Log.NumberBar(min = -1, max = 1, name = "Right Climb Speed", tabName = "Climb", methodName = "get")
 	private CANSparkMax m_rightClimbMotor;
-	
+
+	private CANEncoder m_encoder;
+
+	private CANPIDController m_pidController;
+
+	@Log.ToString(tabName = "Climb")
 	private ClimbHeight reference;
 
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
