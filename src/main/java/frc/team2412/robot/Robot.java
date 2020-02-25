@@ -72,7 +72,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void autonomousInit() {
-		timeRemaining = 150;
+		timeRemaining = 150.0;
 		/*
 		 * Limelight Spin up turret Shoot command
 		 * 
@@ -99,6 +99,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopInit() {
+		timeRemaining = 135.0;
 	}
 
 	/**
