@@ -23,40 +23,40 @@ public class RobotContainer implements Loggable {
 	@Log(tabName = "Limelight subsystem")
 	public LimelightSubsystem m_LimelightSubsystem;
 
-	@Log(tabName = "Turret Subsystem")
+	@Log(tabName = "Turret Subsystem", name = "Turret Subsystem")
 	public TurretSubsystem m_turretSubsystem;
 
-	@Log(tabName = "Flywheel Subsystem")
+	@Log(tabName = "Flywheeeeeee Subsystem", name = "Flywheeee Subsystem")
 	public FlywheelSubsystem m_flywheelSubsystem;
 
-	@Log(tabName = "Hood Subsystem")
+	@Log(tabName = "Hood Subsystem", name = "Hood Subsystem")
 	public HoodSubsystem m_hoodSubsystem;
 
-	@Log(tabName = "Lift Subsystem")
+	@Log(tabName = "Lift Subsystem", name = "Lift Subsystem")
 	public LiftSubsystem m_liftSubsystem;
 
 	@Log(tabName = "Drivebase Subsystem", name = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
-	@Log(tabName = "Intake Subsystem")
+	@Log(tabName = "Intake Motors Subsystem", name = "Intake Motors Subsystem")
 	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
-	@Log(tabName = "Intake Subsystem")
+	@Log(tabName = "Intake Lift Subsystem", name = "Intake Lift Subsystem")
 	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
-	@Log(tabName = "Index Subsystem")
+	@Log(tabName = "Indexer Motor Subsystem", name = "Indexer Motor Subsystem")
 	public IndexerMotorSubsystem m_indexerMotorSubsystem;
 
-	@Log(tabName = "Index Subsystem")
+	@Log(tabName = "Indexer Sensor Subsystem", name = "Indexer Sensor Subsystem")
 	public IndexerSensorSubsystem m_indexerSensorSubsystem;
 
+	@Log(tabName = "Climb Lift Subsystem", name = "Climb Lift Subsystem")
 	public ClimbLiftSubsystem m_climbLiftSubsystem;
 
+	@Log(tabName = "Climb Motor Subsystem", name = "Climb Motor Subsystem")
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
-
-	public RobotState robotState = new RobotState();
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -105,5 +105,6 @@ public class RobotContainer implements Loggable {
 
 			m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
 		}
+
 	}
 }

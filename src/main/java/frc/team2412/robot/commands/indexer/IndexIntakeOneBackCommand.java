@@ -22,17 +22,14 @@ public class IndexIntakeOneBackCommand extends CommandBase {
 		if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
 			m_indexerMotorSubsystem.setBackMotor(-1);
 	}
-
+	@Override
+	public void end(boolean cancel){
+		m_indexerMotorSubsystem.stopBackPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
+		RobotState.m_ballCount++;
+	}
 	@Override
 	public boolean isFinished() {
-		if (m_indexerSensorSubsystem.getIndexBackMidSensorValue()) {
-			System.out.println("pppp");
-			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
-			RobotState.m_ballCount++;
-			return true;
-		} else {
-			return false;
-		}
+		return m_indexerSensorSubsystem.getIndexBackMidSensorValue();
 	}
 
 }

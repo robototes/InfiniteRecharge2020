@@ -55,4 +55,7 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 		m_hoodServo1.set(1 - angle);
 	}
 
+	public void periodic() {
+	}
+
 }

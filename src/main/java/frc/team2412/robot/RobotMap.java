@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
@@ -15,16 +16,12 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
@@ -121,8 +118,8 @@ public class RobotMap {
 	public static WPI_TalonFX driveRightBack = DRIVE_BASE_CONNECTED ? new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id)
 			: null;
 
-	// DriveBase Gyro
-	public static Gyro driveGyro = DRIVE_BASE_CONNECTED ? null : null;
+	// DriveBase
+	public static final ADIS16448_IMU driveGyro = DRIVE_BASE_CONNECTED ? new ADIS16448_IMU() : null;
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;
@@ -247,6 +244,8 @@ public class RobotMap {
 
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();
+	
+	public static RobotState m_robotState = new RobotState(m_robotContainer);
 
 	// OI
 	public static OI m_OI = new OI(m_robotContainer);

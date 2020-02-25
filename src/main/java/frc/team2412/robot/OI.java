@@ -174,11 +174,13 @@ public class OI {
 		robotContainer.m_driveBaseSubsystem.setDefaultCommand(new DriveCommand(robotContainer.m_driveBaseSubsystem, driverStick, codriverStick,
 				JoystickEqualizerButton));
 		}
-		
+
 		// LIFT
 		if (RobotMap.LIFT_CONNECTED) {
-			liftUpButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
-			liftDownButton.whenPressed(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+			liftUpButton.whenPressed(
+					new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+			liftDownButton.whenPressed(
+					new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		}
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);

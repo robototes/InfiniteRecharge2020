@@ -83,12 +83,16 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		m_allMotors.set(0);
 	}
 
+	public void stopMidMotor() {
+		m_indexMidMotor.set(0);
+	}
+
 	public void stopSideMotors() {
 		m_sideMotors.set(0);
 	}
 
 	public void stopFrontPID(double val) {
-	
+
 		resetEncoderZero();
 		if (m_indexFrontMotor.get() > 0) {
 			m_frontPIDController.setReference(frontTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
@@ -100,7 +104,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void stopBackPID(double val) {
-		
+
 		resetEncoderZero();
 		if (m_indexBackMotor.get() > 0) {
 			m_backPIDController.setReference(backTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
@@ -113,10 +117,10 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void setMidPID(boolean upOrDown) {
 		if (upOrDown) {
-			m_midPIDController.setReference(midTicks+IndexerConstants.TOP_TICKS, ControlType.kPosition);
+			m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
 		} else {
-			m_midPIDController.setReference(midTicks+IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
-			
+			m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
+
 		}
 	}
 
@@ -128,6 +132,10 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	public double getCurrentDraw() {
 		return m_indexBackMotor.getOutputCurrent() + m_indexFrontMotor.getOutputCurrent()
 				+ m_indexMidMotor.getOutputCurrent();
+	}
+
+	public void periodic() {
+
 	}
 
 }
