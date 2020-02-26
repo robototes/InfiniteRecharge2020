@@ -141,7 +141,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
-		if(RobotState.m_liftSolenoidState == RobotState.LiftState.EXTENDED) {
+		if (RobotState.m_liftSolenoidState == RobotState.LiftState.EXTENDED) {
 			setMidPID(true);
 		} else {
 			setMidPID(false);

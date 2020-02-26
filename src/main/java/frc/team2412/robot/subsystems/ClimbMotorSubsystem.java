@@ -92,5 +92,5 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	public void resetEncoder() {
 		m_encoder.setPosition(0);
 	}
-	
+
 }

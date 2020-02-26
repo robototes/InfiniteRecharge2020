@@ -118,7 +118,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	public boolean FrontMotorOn() {
 		return (m_intakeFrontMotor.get() != 0);
 	}
-	
+
 	public void resetEncoder() {
 		m_intakeFrontMotor.getEncoder().setPosition(0);
 		m_intakeBackMotor.getEncoder().setPosition(0);

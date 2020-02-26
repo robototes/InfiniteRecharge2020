@@ -43,10 +43,8 @@ public class DriveBaseConstants {
 
 	public static final double brownoutFactor = 3;
 
-	
-
 	public static final double controlPanelCutOff = 4.0;
-	
+
 	// Create a voltage constraint to ensure we don't accelerate too fast
 	public static DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
 			new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter), kDriveKinematics,
@@ -60,13 +58,13 @@ public class DriveBaseConstants {
 					// Apply the voltage constraint
 					.addConstraint(autoVoltageConstraint);
 
-	public static SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter,
-			kaVoltSecondsSquaredPerMeter);
+	public static SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts,
+			kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);
 
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
-	
+
 	public static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
 
 }
