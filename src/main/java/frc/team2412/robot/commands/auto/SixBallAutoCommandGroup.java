@@ -23,7 +23,8 @@ public class SixBallAutoCommandGroup extends SequentialCommandGroup {
 
 		addCommands(
 
-				new LiftUpCommand(liftSubsystem), new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem),
+				new LiftUpCommand(liftSubsystem, indexerMotorSubsystem),
+				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem),
 				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem, intakeUpDownSubsystem),
 				new MoveFromPowerCellsCommand(driveBaseSubsystem),
 				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem));

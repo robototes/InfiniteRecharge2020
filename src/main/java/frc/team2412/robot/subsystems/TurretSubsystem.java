@@ -20,9 +20,9 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class TurretSubsystem extends PIDSubsystem implements Loggable {
 
-	@Log.ToString
+	@Log.ToString(tabName = "Turret")
 	private Rotations m_currentAngle;
-	@Log
+	@Log(tabName = "Turret")
 	private WPI_TalonSRX m_turretMotor;
 
 	private LimelightSubsystem m_limelightSubsystem;
@@ -95,7 +95,7 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 	public void useOutput(double output, double setpoint) {
 		m_turretMotor.set(output);
 	}
-	
+
 	public double getCurrentDraw() {
 		return m_turretMotor.getStatorCurrent();
 	}

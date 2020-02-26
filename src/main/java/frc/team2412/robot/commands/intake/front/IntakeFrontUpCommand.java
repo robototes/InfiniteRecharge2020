@@ -1,20 +1,20 @@
-package frc.team2412.robot.commands.intake;
+package frc.team2412.robot.commands.intake.front;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 
-public class IntakeBackUpCommand extends CommandBase {
+public class IntakeFrontUpCommand extends CommandBase {
 
 	private IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
-	public IntakeBackUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem) {
+	public IntakeFrontUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem) {
 		addRequirements(intakeUpDownSubsystem);
 		this.m_intakeUpDownSubsystem = intakeUpDownSubsystem;
 	}
 
 	@Override
 	public void execute() {
-		m_intakeUpDownSubsystem.backIntakeUp();
+		m_intakeUpDownSubsystem.frontIntakeUp();
 	}
 
 	@Override

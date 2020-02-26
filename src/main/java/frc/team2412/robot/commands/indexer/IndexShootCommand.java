@@ -20,7 +20,8 @@ public class IndexShootCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
-		if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
+		if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue()
+				&& !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
 			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
 				if (m_indexerSensorSubsystem.allFrontSensorsOff()) {
@@ -36,10 +37,14 @@ public class IndexShootCommand extends CommandBase {
 	}
 
 	@Override
+	public void end(boolean cancel) {
+		m_indexerMotorSubsystem.stopAllMotors();
+		RobotState.m_ballCount = 0;
+	}
+
+	@Override
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
-			m_indexerMotorSubsystem.stopAllMotors();
-			RobotState.m_ballCount = 0;
 			return true;
 
 		} else {

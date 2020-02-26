@@ -24,16 +24,14 @@ public class IndexIntakeOneFrontCommand extends CommandBase {
 	}
 
 	@Override
+	public void end(boolean cancel) {
+		RobotState.m_ballCount++;
+		m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
+	}
+
+	@Override
 	public boolean isFinished() {
-		// System.out.println("pppp");
-		if (m_indexerSensorSubsystem.getIndexFrontMidSensorValue()) {
-			RobotState.m_ballCount++;
-			System.out.println("pppp");
-			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
-			return true;
-		} else {
-			return false;
-		}
+		return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
 	}
 
 }

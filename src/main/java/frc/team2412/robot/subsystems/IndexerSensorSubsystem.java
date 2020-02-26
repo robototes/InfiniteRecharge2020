@@ -2,16 +2,33 @@ package frc.team2412.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class IndexerSensorSubsystem extends SubsystemBase {
+public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 
-	private DigitalInput m_intakeFrontSensor, m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor, m_indexBackInnerSensor,
-			m_indexBackMidSensor, m_indexBackSensor, m_intakeBackSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_intakeFrontSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontMidSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontInnerSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexBackInnerSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexBackMidSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexBackSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_intakeBackSensor;
 
 	private DigitalInput[] m_sensorArray;
 
-	public IndexerSensorSubsystem(DigitalInput intakeFront, DigitalInput front, DigitalInput frontMid, DigitalInput frontInner, DigitalInput backInner,
-			DigitalInput backMid, DigitalInput back, DigitalInput intakeBack) {
+	public IndexerSensorSubsystem(DigitalInput intakeFront, DigitalInput front, DigitalInput frontMid,
+			DigitalInput frontInner, DigitalInput backInner, DigitalInput backMid, DigitalInput back,
+			DigitalInput intakeBack) {
 		m_intakeFrontSensor = intakeFront;
 		m_indexFrontSensor = front;
 		m_indexFrontMidSensor = frontMid;
@@ -21,8 +38,8 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 		m_indexBackSensor = back;
 		m_intakeBackSensor = intakeBack;
 
-		m_sensorArray = new DigitalInput[] {m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor, m_indexBackInnerSensor,
-				m_indexBackMidSensor, m_indexBackSensor };
+		m_sensorArray = new DigitalInput[] { m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor,
+				m_indexBackInnerSensor, m_indexBackMidSensor, m_indexBackSensor };
 
 	}
 
@@ -41,9 +58,11 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	public boolean getIndexFrontInnerSensorValue() {
 		return !m_indexFrontInnerSensor.get();
 	}
+
 	public boolean getIndexBackInnerSensorValue() {
 		return !m_indexBackInnerSensor.get();
 	}
+
 	public boolean getIndexBackMidSensorValue() {
 		return !m_indexBackMidSensor.get();
 	}
@@ -57,8 +76,8 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allInnerSensorsOff() {
-		for(DigitalInput d : m_sensorArray) {
-			if(!d.get()) {
+		for (DigitalInput d : m_sensorArray) {
+			if (!d.get()) {
 				return false;
 			}
 		}
@@ -66,8 +85,8 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allInnerSensorsOn() {
-		for(DigitalInput d : m_sensorArray) {
-			if(d.get()) {
+		for (DigitalInput d : m_sensorArray) {
+			if (d.get()) {
 				return false;
 			}
 		}
@@ -75,27 +94,22 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allFrontSensorsOff() {
-		if (!m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get() && !m_indexFrontInnerSensor.get()) {
-			return true;
-		} else {
-			return false;
-		}
+		return !m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()
+				&& !m_indexFrontInnerSensor.get();
 	}
 
 	public boolean allBackSensorsOff() {
-		if (!m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get() && !m_indexBackInnerSensor.get()) {
-			return true;
-		} else {
-			return false;
-		}
+		return !m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
+				&& !m_indexBackInnerSensor.get();
 	}
 
+	@Log.Dial(tabName = "Indexer", min = 0, max = 8)
 	public int totalSensorsOn() {
 		int total = 0;
 		for (int i = 0; i < m_sensorArray.length; i++) {
 			if (!m_sensorArray[i].get()) {
-				//TO DEAL WITH 2 CENTER SENSORS
-				if(i == 2) {
+				// TO DEAL WITH 2 CENTER SENSORS
+				if (i == 2) {
 					i++;
 				}
 				total++;

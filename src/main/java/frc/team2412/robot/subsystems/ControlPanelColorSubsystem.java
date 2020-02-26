@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ControlPanelConstants;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
 
 public class ControlPanelColorSubsystem extends SubsystemBase implements Loggable {
 
@@ -17,7 +16,6 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	private ColorMatch m_colorMatcher = new ColorMatch();
 	private WPI_TalonFX m_wheelMotor;
 
-	@Log
 	private Color m_currentColor;
 
 	private Color m_startColor;

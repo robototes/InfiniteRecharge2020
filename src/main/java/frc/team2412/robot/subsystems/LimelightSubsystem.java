@@ -10,6 +10,8 @@ import com.robototes.units.Distance;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.subsystems.constants.LimelightConstants;
@@ -20,10 +22,13 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
-	@Log.ToString
+	@Log.ToString(tabName = "Turret")
 	public Distance m_distanceToTarget;
-	@Log.ToString
+	@Log.ToString(tabName = "turret")
 	public Rotations m_yawFromTarget;
+
+	@Log.CameraStream
+	public HttpCamera limeCam;
 
 	// Store the limelight
 	private Limelight m_limelight;
@@ -40,6 +45,14 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 		this.m_yawFromTarget = new Rotations(0);
 
 		this.setDefaultCommand(new LimelightReadCommand(this));
+
+	}
+
+	public void getCameraStream() {
+		HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
+				HttpCameraKind.kMJPGStreamer);
+
+		limeCam = limelightFeed;
 	}
 
 	public void accurateAim() {

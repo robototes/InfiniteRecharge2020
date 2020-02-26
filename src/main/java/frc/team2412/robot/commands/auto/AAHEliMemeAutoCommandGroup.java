@@ -13,9 +13,9 @@ import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 
-public class EliMemeAutoCommandGroup extends SequentialCommandGroup {
+public class AAHEliMemeAutoCommandGroup extends SequentialCommandGroup {
 
-	public EliMemeAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
+	public AAHEliMemeAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
 			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
 			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {

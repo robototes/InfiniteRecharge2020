@@ -1,4 +1,4 @@
-package frc.team2412.robot.commands.intake;
+package frc.team2412.robot.commands.intake.back;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
@@ -15,6 +15,13 @@ public class IntakeBackDownCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_intakeUpDownSubsystem.backIntakeDown();
+	}
+
+	@Override
+	public void end(boolean cancelled) {
+		if (cancelled) {
+			m_intakeUpDownSubsystem.backIntakeUp();
+		}
 	}
 
 	@Override
