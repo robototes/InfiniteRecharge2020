@@ -21,15 +21,13 @@ public class Logging implements Loggable {
 	private final String white = "#FFFFFF";
 
 	// Goal Able
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAble = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAimed = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAimed = false;
@@ -53,8 +51,7 @@ public class Logging implements Loggable {
 	public double currentDrawDial = 0;
 
 	// Dial Boolean
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Dwivew view >~<")
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, width = 3, columnIndex = 7, rowIndex = 1, tabName = "Dwivew view >~<")
 	public boolean brownoutWarning = false;
 
 	// Timer
