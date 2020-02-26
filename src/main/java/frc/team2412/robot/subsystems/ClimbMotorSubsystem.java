@@ -89,4 +89,8 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
 	}
 
+	public void resetEncoder() {
+		m_encoder.setPosition(0);
+	}
+	
 }

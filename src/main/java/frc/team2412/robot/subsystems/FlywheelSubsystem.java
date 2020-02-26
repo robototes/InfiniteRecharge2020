@@ -122,4 +122,9 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	@Override
 	public void periodic() {
 	}
+	
+	public void resetEncoder() {
+		m_leftEncoder.setPosition(0);
+		m_rightEncoder.setPosition(0);
+	}
 }

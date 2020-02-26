@@ -190,6 +190,13 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
 
 	}
+	
+	public void resetEncoder() {
+		m_leftMotor1.setSelectedSensorPosition(0);
+		m_leftMotor2.setSelectedSensorPosition(0);
+		m_rightMotor1.setSelectedSensorPosition(0);
+		m_rightMotor2.setSelectedSensorPosition(0);
+	}
 
 	// Trajectory stuff
 	// _________________________________________________________________________________________________

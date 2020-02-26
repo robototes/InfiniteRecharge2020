@@ -59,4 +59,7 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 	public void periodic() {
 	}
 
+	public void resetEncoder() {
+		m_hoodServo1.setPosition(0);
+	}
 }

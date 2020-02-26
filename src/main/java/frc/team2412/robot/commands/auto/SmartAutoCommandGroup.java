@@ -26,27 +26,62 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 
 		if (autonomous.getIfTrenchPossible()) {
 			addCommands(
-					
+
 					new ParallelCommandGroup(
+							//
 							autonomous.getAutoCommand(),
+							//
 							new IntakeFrontDownCommand(intakeUpDownSubsystem),
+							//
 							new LiftUpCommand(liftSubsystem),
+							//
 							new SequentialCommandGroup(
+									// add rev up flyhweel command
 									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
+							//
 							)
-					), 
+					//
+					),
+					//
 					new ParallelCommandGroup(
-							
-							new LiftDownCommand(liftSubsystem),
+							//
 							autonomous.getTrenchMovementCommand(),
+							//
+							new LiftDownCommand(liftSubsystem),
+							//
+							autonomous.getTrenchMovementCommand(),
+							//
 							new SequentialCommandGroup(
+									// add rev up flyhweel command
 									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
-									)
+							//
+							)
+					//
 					)
-					
-					);
+
+			);
 		} else {
-			addCommands();
+			addCommands(
+					//
+					new LiftUpCommand(liftSubsystem),
+					//
+					new SequentialCommandGroup(
+							// add rev up flyhweel command Parker was here
+							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
+					//
+					),
+					//
+					new IntakeFrontDownCommand(intakeUpDownSubsystem),
+					//
+					autonomous.getAutoCommand(),
+					//
+					new SequentialCommandGroup(
+							// add rev up flyhweel command
+							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
+					//
+					)
+
+			);
 		}
 
 	}

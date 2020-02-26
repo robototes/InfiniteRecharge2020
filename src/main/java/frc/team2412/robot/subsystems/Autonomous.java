@@ -30,9 +30,9 @@ public class Autonomous {
 	private boolean trenchPossible = true;
 
 	public Autonomous() {
-
+		getTrajectoryPossible();
 	}
-	
+
 	public boolean getIfTrenchPossible() {
 		return trenchPossible;
 	}
@@ -40,23 +40,20 @@ public class Autonomous {
 	public Command getAutoCommand() {
 		return getRamseteCommand(trajectory);
 	}
-	
+
 	public Command getTrenchMovementCommand() {
 		return getRamseteCommand(getTrenchTrajectory());
 	}
-	
+
 	public Trajectory getTrenchTrajectory() {
-		return TrajectoryGenerator.generateTrajectory(
-				driveSub.getPose(), 
-				List.of(new Translation2d(8.076, -0.70485)),
-				new Pose2d(9.646, 0.704, driveSub.getPose().getRotation()), 
-				config);
+		return TrajectoryGenerator.generateTrajectory(driveSub.getPose(), List.of(new Translation2d(8.076, -0.70485)),
+				new Pose2d(9.646, 0.704, driveSub.getPose().getRotation()), config);
 	}
-	
+
 	// Crazy Auto idea
 	public void getTrajectoryPossible() {
 
-		Distance hypoteneuseinInch = RobotMap.m_robotContainer.m_LimelightSubsystem.m_distanceToTarget;
+		Distance hypoteneuseinInch = RobotMap.m_robotContainer.m_limelightSubsystem.m_distanceToTarget;
 
 		Distance hypotenuseinMeters = new Distance(hypoteneuseinInch.distance, DistanceUnits.METER);
 
