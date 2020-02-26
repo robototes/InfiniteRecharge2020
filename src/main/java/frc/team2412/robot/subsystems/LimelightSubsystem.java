@@ -22,11 +22,10 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
-	@Log.ToString
+	@Log.ToString(tabName = "Turret")
 	public Distance m_distanceToTarget;
-	@Log.ToString
+	@Log.ToString(tabName = "turret")
 	public Rotations m_yawFromTarget;
-
 
 	// Store the limelight
 	private Limelight m_limelight;
@@ -47,8 +46,7 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public HttpCamera getCameraStream() {
-		return new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
-				HttpCameraKind.kMJPGStreamer);
+		return new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg", HttpCameraKind.kMJPGStreamer);
 
 	}
 

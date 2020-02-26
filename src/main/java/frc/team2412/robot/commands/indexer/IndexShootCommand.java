@@ -35,11 +35,13 @@ public class IndexShootCommand extends CommandBase {
 			}
 		}
 	}
+
 	@Override
-	public void end(boolean cancel){
+	public void end(boolean cancel) {
 		m_indexerMotorSubsystem.stopAllMotors();
 		RobotState.m_ballCount = 0;
 	}
+
 	@Override
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {

@@ -32,8 +32,9 @@ public class IndexSwitchFourCommand extends CommandBase {
 		}
 
 	}
+
 	@Override
-	public void end(boolean cancel){
+	public void end(boolean cancel) {
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.NORMAL_STOP_DISTANCE);
 			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.NORMAL_STOP_DISTANCE);
@@ -44,6 +45,7 @@ public class IndexSwitchFourCommand extends CommandBase {
 			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
 		}
 	}
+
 	@Override
 	public boolean isFinished() {
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {

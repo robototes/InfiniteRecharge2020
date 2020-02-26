@@ -20,14 +20,14 @@ public class IndexIntakeFiveFrontCommand extends CommandBase {
 	}
 
 	@Override
-	public void end(boolean cancel){
+	public void end(boolean cancel) {
 		RobotState.m_unbalancedSide = RobotState.UnbalancedSide.FRONT;
 		RobotState.m_ballCount++;
 	}
 
 	@Override
 	public boolean isFinished() {
-	    return m_indexerSensorSubsystem.getIndexFrontSensorValue();
+		return m_indexerSensorSubsystem.getIndexFrontSensorValue();
 	}
 
 }

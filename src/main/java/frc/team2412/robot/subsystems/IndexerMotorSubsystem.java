@@ -4,6 +4,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,15 +13,20 @@ import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	private double frontTicks, backTicks, midTicks;
 
 	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
-	private CANPIDController m_frontPIDController, m_backPIDController, m_midPIDController;;
+	private CANPIDController m_frontPIDController, m_backPIDController, m_midPIDController;
+
+	@Log.NumberBar(min = -1, max = 1, name = "Index Front Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexFrontMotor;
+	@Log.NumberBar(min = -1, max = 1, name = "Index Mid Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexMidMotor;
+	@Log.NumberBar(min = -1, max = 1, name = "Index Back Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexBackMotor;
 
 	private SpeedControllerGroup m_allMotors;
@@ -59,17 +65,21 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		motorController.setP(IndexerConstants.PID_P);
 		motorController.setI(IndexerConstants.PID_I);
 		motorController.setD(IndexerConstants.PID_D);
+		motorController.setOutputRange(-IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
 	}
 
 	public void setFrontMotor(double val) {
+		val = MathUtils.constrain(val, -IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
 		m_indexFrontMotor.set(val);
 	}
 
 	public void setMidMotor(double val) {
+		val = MathUtils.constrain(val, -IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
 		m_indexMidMotor.set(val);
 	}
 
 	public void setBackMotor(double val) {
+		val = MathUtils.constrain(val, -IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
 		m_indexBackMotor.set(val);
 	}
 
@@ -128,6 +138,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 				+ m_indexMidMotor.getOutputCurrent();
 	}
 
+	@Override
 	public void periodic() {
 
 	}

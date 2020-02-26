@@ -35,9 +35,9 @@ public class DriveBaseConstants {
 	public static final double kRamseteZeta = 0.7; // limits the correction
 
 	public static final double brownoutFactor = 3;
-	
+
 	public static final double inititationLineMeters = 3.048;
-	
+
 	public static final double controlPanelCutOff = 4.0;
 
 }

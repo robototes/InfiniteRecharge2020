@@ -4,16 +4,15 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeState;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 
-	@Log
+	@Log(tabName = "Intake")
 	private Solenoid m_frontIntakeUpDown;
-	@Log
+	@Log(tabName = "Intake")
 	private Solenoid m_backIntakeUpDown;
-	@Log.ToString
+	@Log.ToString(tabName = "Intake")
 	private IntakeState m_currentState = IntakeState.WITHDRAWN;
 
 	public IntakeUpDownSubsystem(Solenoid frontIntakeUpDown, Solenoid backIntakeUpDown) {
@@ -49,7 +48,6 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 		return m_backIntakeUpDown.get();
 	}
 
-	@Config
 	private void setIntake(IntakeState newState, Solenoid Solenoid) {
 		m_frontIntakeUpDown.set(newState.value);
 		m_currentState = newState;

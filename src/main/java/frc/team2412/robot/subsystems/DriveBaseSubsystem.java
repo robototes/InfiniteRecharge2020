@@ -70,6 +70,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	private DifferentialDriveOdometry m_odometry;
 
+	@SuppressWarnings("unused")
 	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
 	@Log.BooleanBox(colorWhenFalse = "#0000ff", colorWhenTrue = "#ffff00", tabName = "Drivebase Subsystem")
@@ -104,7 +105,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 
-		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
+		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
@@ -184,9 +185,11 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotorRevolutions = m_rightMotor1.getSelectedSensorPosition();
 		m_leftMotorRevolutions = m_leftMotor1.getSelectedSensorPosition();
 
-		m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
-				(m_leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
-				(m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
+		// m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()),
+		// (m_leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
+		// metersPerWheelRevolution,
+		// (m_rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
+		// metersPerWheelRevolution);
 
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
@@ -430,18 +433,14 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		Pose2d currentPose = new Pose2d(new Translation2d(inititationLineMeters, -robotY),
 				Rotation2d.fromDegrees(m_gyro.getAngle()));
 
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-				currentPose,
-				List.of(new Translation2d(5.411, -0.70485)),
-				new Pose2d(7.231, 0.70485, currentPose.getRotation()),
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
+				List.of(new Translation2d(5.411, -0.70485)), new Pose2d(7.231, 0.70485, currentPose.getRotation()),
 				config);
 
 		if (exampleTrajectory.getTotalTimeSeconds() < controlPanelCutOff) {
-			exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-					currentPose,
-					List.of(new Translation2d(6, -4),new Translation2d(6.25, -3)),
-					new Pose2d(5.5, -2.4, Rotation2d.fromDegrees(180)),
-					config);
+			exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
+					List.of(new Translation2d(6, -4), new Translation2d(6.25, -3)),
+					new Pose2d(5.5, -2.4, Rotation2d.fromDegrees(180)), config);
 		}
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,

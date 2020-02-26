@@ -11,43 +11,46 @@ public class RobotState implements Loggable {
 
 	private RobotContainer m_robotContainer;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static UnbalancedSide m_unbalancedSide;
 
-	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count")
+	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count", tabName = "Robot State")
 	public static int m_ballCount = 0;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static GearboxState m_gearState = GearboxState.LOW;
 
+	@Log.ToString(tabName = "Robot State")
 	public static BrownoutStage m_brownoutStage = BrownoutStage.ZERO;
 
-	@Config.ToggleSwitch
+	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean sixBallAuto = true;
 
-	@Config.ToggleSwitch
+	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean threeBallAuto = false;
 
-	@Config.ToggleSwitch
+	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean justMoveAuto = true;
 
 	@Log(tabName = "Misc.")
 	public static String eventName = "N/A";
 
+	@Log.ToString(tabName = "Misc.")
 	public static MatchType matchType = MatchType.None;
 
 	@Log(tabName = "Misc.")
 	public static int matchNumber = 0;
 
+	@Log.ToString(tabName = "Misc.")
 	public static Alliance alliance = Alliance.Invalid;
 
 	@Log(tabName = "Misc.")
@@ -60,6 +63,7 @@ public class RobotState implements Loggable {
 	public static enum UnbalancedSide {
 		FRONT, BACK;
 
+		@Override
 		public String toString() {
 			if (this.equals(FRONT)) {
 				return "Front";
@@ -72,6 +76,7 @@ public class RobotState implements Loggable {
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 
+		@Override
 		public String toString() {
 			if (this.equals(FRONT)) {
 				return "Front";
@@ -88,6 +93,7 @@ public class RobotState implements Loggable {
 	public static enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
 
+		@Override
 		public String toString() {
 			if (this.equals(NOT_CLIMBING)) {
 				return "Not Climbing, woohoo";
@@ -100,6 +106,7 @@ public class RobotState implements Loggable {
 	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
 
+		@Override
 		public String toString() {
 			if (this.equals(WITHDRAWN)) {
 				return "Withdrawn";
@@ -111,6 +118,7 @@ public class RobotState implements Loggable {
 
 	public static enum GearboxState {
 		HIGH, LOW;
+		@Override
 		public String toString() {
 			if (this.equals(HIGH)) {
 				return "High";

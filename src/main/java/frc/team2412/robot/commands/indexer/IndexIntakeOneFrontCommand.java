@@ -22,14 +22,15 @@ public class IndexIntakeOneFrontCommand extends CommandBase {
 		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
 			m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
+
 	@Override
-	public void end(boolean cancel){
+	public void end(boolean cancel) {
 		RobotState.m_ballCount++;
 		m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
 	}
+
 	@Override
 	public boolean isFinished() {
-		// System.out.println("pppp");
 		return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
 	}
 
