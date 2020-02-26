@@ -17,40 +17,40 @@ public class Logging implements Loggable {
 	private final String white = "#FFFFFF";
 
 	// Goal Able
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAble = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAimed = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAimed = false;
 
 	// Intake stuff
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 3, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 3, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean backIntakeOn = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 4, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 4, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean backIntakeUp = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 6, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 6, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean frontIntakeUp = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 7, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 7, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean frontIntakeOn = false;
 
 	// PC count
-	@Log(columnIndex = 5, height = 1, rowIndex = 0, tabName = "Driver View")
+	@Log(columnIndex = 5, height = 1, rowIndex = 0, tabName = "Dwivew view >~<")
 	public int powerCellCount = 0;
 
 	// Dial
-	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Driver View")
+	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Dwivew view >~<")
 	public double currentDrawDial = 0;
 
 	// Dial Boolean
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Dwivew view >~<")
 	public boolean brownoutWarning = false;
 
 	// Timer
@@ -58,11 +58,11 @@ public class Logging implements Loggable {
 	public static String timer = "";
 
 	// Gauge
-	@Log(columnIndex = 7, rowIndex = 3, tabName = "Driver View")
+	@Log(columnIndex = 7, rowIndex = 3, tabName = "Dwivew view >~<")
 	public double PSI = 0;
 
 	// CurrentDraws
-	@Log(columnIndex = 8, rowIndex = 3, tabName = "Driver View")
+	@Log(columnIndex = 8, rowIndex = 3, tabName = "Dwivew view >~<")
 	public double driveBaseCurrentDraw = 0;
 
 	@Log(columnIndex = 9, rowIndex = 3, tabName = "Dwivew view >~<")

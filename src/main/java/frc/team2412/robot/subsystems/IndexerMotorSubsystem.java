@@ -9,6 +9,7 @@ import com.robototes.math.MathUtils;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
@@ -140,7 +141,11 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
-
+		if(RobotState.m_liftSolenoidState == RobotState.LiftState.EXTENDED) {
+			setMidPID(true);
+		} else {
+			setMidPID(false);
+		}
 	}
 
 }

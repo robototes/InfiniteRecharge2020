@@ -1,8 +1,6 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.controlPanelCutOff;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.inititationLineMeters;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kMaxAccelerationMetersPerSecondSquared;
@@ -21,8 +19,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.robototes.units.Distance;
-import com.robototes.units.UnitTypes.DistanceUnits;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -46,7 +42,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
-import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.RobotState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -420,36 +415,36 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	// Crazy Auto idea
-	public Command getSmartAutoCommand() {
-		DriveBaseSubsystem thisSub = this;
-
-		Distance hypoteneuseinInch = RobotMap.m_robotContainer.m_LimelightSubsystem.m_distanceToTarget;
-
-		Distance hypotenuseinMeters = new Distance(hypoteneuseinInch.distance, DistanceUnits.METER);
-
-		double robotY = Math.pow(hypotenuseinMeters.distance, 2) - Math.pow(inititationLineMeters, 2);
-
-		Pose2d currentPose = new Pose2d(new Translation2d(inititationLineMeters, -robotY),
-				Rotation2d.fromDegrees(m_gyro.getAngle()));
-
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
-				List.of(new Translation2d(5.411, -0.70485)), new Pose2d(7.231, 0.70485, currentPose.getRotation()),
-				config);
-
-		if (exampleTrajectory.getTotalTimeSeconds() < controlPanelCutOff) {
-			exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
-					List.of(new Translation2d(6, -4), new Translation2d(6.25, -3)),
-					new Pose2d(5.5, -2.4, Rotation2d.fromDegrees(180)), config);
-		}
-
-		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
-				// RamseteCommand passes volts to the callback
-				thisSub::tankDriveVolts, thisSub);
-
-		// Run path following command, then stop at the end.
-		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
-	}
+//	// Crazy Auto idea
+//	public Command getSmartAutoCommand() {
+//		DriveBaseSubsystem thisSub = this;
+//
+//		Distance hypoteneuseinInch = RobotMap.m_robotContainer.m_LimelightSubsystem.m_distanceToTarget;
+//
+//		Distance hypotenuseinMeters = new Distance(hypoteneuseinInch.distance, DistanceUnits.METER);
+//
+//		double robotY = Math.pow(hypotenuseinMeters.distance, 2) - Math.pow(inititationLineMeters, 2);
+//
+//		Pose2d currentPose = new Pose2d(new Translation2d(inititationLineMeters, -robotY),
+//				Rotation2d.fromDegrees(m_gyro.getAngle()));
+//
+//		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
+//				List.of(new Translation2d(5.411, -0.70485)), new Pose2d(7.231, 0.70485, currentPose.getRotation()),
+//				config);
+//
+//		if (exampleTrajectory.getTotalTimeSeconds() < controlPanelCutOff) {
+//			exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
+//					List.of(new Translation2d(6, -4), new Translation2d(6.25, -3)),
+//					new Pose2d(5.5, -2.4, Rotation2d.fromDegrees(180)), config);
+//		}
+//
+//		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+//				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+//				// RamseteCommand passes volts to the callback
+//				thisSub::tankDriveVolts, thisSub);
+//
+//		// Run path following command, then stop at the end.
+//		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+//	}
 
 }
