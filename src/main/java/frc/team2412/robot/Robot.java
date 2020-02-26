@@ -73,8 +73,8 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void autonomousInit() {
 		timeRemaining = 150.0;
-		RobotMap.m_robotContainer.m_driveBaseSubsystem.m_gyro.reset();
-		RobotContainer.resetAllEncoders();
+		m_robotContainer.m_driveBaseSubsystem.m_gyro.reset();
+		m_robotContainer.resetAllEncoders();
 		/*
 		 * Limelight Spin up turret Shoot command
 		 * 
