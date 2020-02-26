@@ -22,43 +22,43 @@ import io.github.oblarg.oblog.annotations.Log;
 public class RobotContainer implements Loggable {
 	
 	@Log(tabName = "Turret")
-	public static LimelightSubsystem m_limelightSubsystem;
+	public   LimelightSubsystem m_limelightSubsystem;
 
 	@Log(tabName = "Turret Subsystem", name = "Turret")
-	public static TurretSubsystem m_turretSubsystem;
+	public   TurretSubsystem m_turretSubsystem;
 
 	@Log(tabName = "Flywheel Subsystem", name = "Turret")
-	public static FlywheelSubsystem m_flywheelSubsystem;
+	public   FlywheelSubsystem m_flywheelSubsystem;
 
 	@Log(tabName = "Hood Subsystem", name = "Turret")
-	public static HoodSubsystem m_hoodSubsystem;
+	public   HoodSubsystem m_hoodSubsystem;
 
 	@Log(tabName = "Lift Subsystem", name = "Lift")
-	public static LiftSubsystem m_liftSubsystem;
+	public   LiftSubsystem m_liftSubsystem;
 
 	@Log(tabName = "Drivebase Subsystem", name = "Drivebase Subsystem")
-	public static DriveBaseSubsystem m_driveBaseSubsystem;
+	public   DriveBaseSubsystem m_driveBaseSubsystem;
 
 	@Log(tabName = "Intake Motors Subsystem", name = "Intake")
-	public static IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
+	public  IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
 	@Log(tabName = "Intake Lift Subsystem", name = "Intake")
-	public static IntakeUpDownSubsystem m_intakeUpDownSubsystem;
+	public   IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
 	@Log(tabName = "Control Panel Subsystem", name = "Control Panel")
-	public static ControlPanelColorSubsystem m_controlPanelColorSubsystem;
+	public   ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
 	@Log(tabName = "Indexer Motor Subsystem", name = "Indexer")
-	public static IndexerMotorSubsystem m_indexerMotorSubsystem;
+	public   IndexerMotorSubsystem m_indexerMotorSubsystem;
 
 	@Log(tabName = "Indexer Sensor Subsystem", name = "Indexer")
-	public static IndexerSensorSubsystem m_indexerSensorSubsystem;
+	public   IndexerSensorSubsystem m_indexerSensorSubsystem;
 
 	@Log(tabName = "Climb Lift Subsystem", name = "Climb")
-	public static ClimbLiftSubsystem m_climbLiftSubsystem;
+	public   ClimbLiftSubsystem m_climbLiftSubsystem;
 
 	@Log(tabName = "Climb Motor Subsystem", name = "Climb")
-	public static ClimbMotorSubsystem m_climbMotorSubsystem;
+	public   ClimbMotorSubsystem m_climbMotorSubsystem;
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -110,7 +110,7 @@ public class RobotContainer implements Loggable {
 		
 	}
 
-	public static void resetAllEncoders() {
+	public void resetAllEncoders() {
 		m_climbMotorSubsystem.resetEncoder();
 		m_driveBaseSubsystem.resetEncoder();
 		m_flywheelSubsystem.resetEncoder();

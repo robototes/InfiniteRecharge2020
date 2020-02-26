@@ -2,6 +2,7 @@ package frc.team2412.robot;
 
 import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.HttpCamera.HttpCameraKind;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotController;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -11,6 +12,9 @@ public class Logging implements Loggable {
 	Robot m_robot;
 
 	// 4 rows, 10 col
+
+	@Log.PDP(tabName = "Misc.")
+	public PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	private final String green = "#7FFF00";
 	private final String red = "#B22222";
