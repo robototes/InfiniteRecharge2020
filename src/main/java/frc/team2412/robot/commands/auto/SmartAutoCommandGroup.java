@@ -2,6 +2,7 @@ package frc.team2412.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.team2412.robot.commands.flywheel.FlywheelRevUpCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
@@ -36,7 +37,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							new LiftUpCommand(liftSubsystem),
 							//
 							new SequentialCommandGroup(
-									// add rev up flyhweel command
+									new FlywheelRevUpCommand(flywheelSubsystem, 10),
 									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
 							//
 							)
@@ -52,7 +53,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							autonomous.getTrenchMovementCommand(),
 							//
 							new SequentialCommandGroup(
-									// add rev up flyhweel command
+									new FlywheelRevUpCommand(flywheelSubsystem, 10),
 									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
 							//
 							)
