@@ -70,7 +70,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void frontIntakeOut() {
-		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+		m_intakeFrontMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.FRONT;
 		RobotState.m_intakeDirection = IntakeDirection.FRONT;
 	}

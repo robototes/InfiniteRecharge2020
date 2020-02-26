@@ -48,7 +48,7 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood Subsystem", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
+	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setServo(double angle) {
 		System.out.println(angle);
 		m_hoodServo2.set(angle);

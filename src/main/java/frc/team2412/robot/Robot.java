@@ -26,7 +26,6 @@ public class Robot extends TimedRobot implements Loggable {
 	public double timeRemaining;
 
 	// Have instances of robot container and OI for easy access
-	@SuppressWarnings("unused")
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
@@ -39,8 +38,8 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void robotInit() {
-		Logger.configureLoggingAndConfig(this, false);
-		Shuffleboard.startRecording();
+		Logger.configureLoggingAndConfig(m_robotContainer, false);
+		// Shuffleboard.startRecording();
 
 		DriverStation driverStation = DriverStation.getInstance();
 

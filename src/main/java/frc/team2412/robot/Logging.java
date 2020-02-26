@@ -6,6 +6,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class Logging implements Loggable {
 
+	@Log.Exclude
 	Robot m_robot;
 
 	// 4 rows, 10 col
@@ -16,14 +17,14 @@ public class Logging implements Loggable {
 
 	// Goal Able
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "asdf", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean outerGoalAble = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "asdf2", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean outerGoalAimed = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean innerGoalAimed = false;
@@ -48,7 +49,7 @@ public class Logging implements Loggable {
 
 	// Dial Boolean
 	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Driver View")
+	//@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Driver View")
 	public boolean brownoutWarning = false;
 
 	// Timer

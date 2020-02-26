@@ -8,7 +8,7 @@ import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 public class IntakeBothOffCommandGroup extends ParallelCommandGroup {
 	public IntakeBothOffCommandGroup(IntakeOnOffSubsystem intakeOnOffSubsystem) {
 
-		addCommands(new IntakeFrontOffCommand(intakeOnOffSubsystem), new IntakeBackOffCommand(intakeOnOffSubsystem));
+		addCommands(new IntakeFrontOffCommand(intakeOnOffSubsystem, false), new IntakeBackOffCommand(intakeOnOffSubsystem, false));
 	}
 
 }

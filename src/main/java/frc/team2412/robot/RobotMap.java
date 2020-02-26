@@ -29,11 +29,11 @@ public class RobotMap {
 
 	public static boolean CLIMB_CONNECTED = false;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
-	public static boolean SHOOTER_CONNECTED = false;
+	public static boolean SHOOTER_CONNECTED = true;
 	public static boolean INDEX_CONNECTED = true;
 	public static boolean INTAKE_CONNECTED = true;
 	public static boolean LIFT_CONNECTED = true;
-	public static boolean DRIVE_BASE_CONNECTED = true;
+	public static boolean DRIVE_BASE_CONNECTED = false;
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_MID(40), DRIVE_LEFT_FRONT(1),
