@@ -27,8 +27,6 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 	@Log.ToString
 	public Rotations m_yawFromTarget;
 
-	@Log.CameraStream
-	public HttpCamera limeCam;
 
 	// Store the limelight
 	private Limelight m_limelight;
@@ -48,11 +46,10 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	public void getCameraStream() {
-		HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
+	public HttpCamera getCameraStream() {
+		return new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
 				HttpCameraKind.kMJPGStreamer);
 
-		limeCam = limelightFeed;
 	}
 
 	public void accurateAim() {

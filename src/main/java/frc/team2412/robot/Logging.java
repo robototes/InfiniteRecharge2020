@@ -1,5 +1,7 @@
 package frc.team2412.robot;
 
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.wpilibj.RobotController;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -53,7 +55,7 @@ public class Logging implements Loggable {
 
 	// Timer
 	@Log(columnIndex = 7, rowIndex = 2, width = 3, height = 1, tabName = "Dwivew view >~<")
-	public static String timer = "Yes";
+	public static String timer = "";
 
 	// Gauge
 	@Log(columnIndex = 7, rowIndex = 3, tabName = "Dwivew view >~<")
@@ -65,9 +67,14 @@ public class Logging implements Loggable {
 
 	@Log(columnIndex = 9, rowIndex = 3, tabName = "Dwivew view >~<")
 	public static double totalCurrentDraw = 0;
+	
+	@Log.CameraStream(columnIndex = 3, rowIndex = 1, width = 4, height = 3, tabName = "Dwivew view >~<")
+	public HttpCamera limelightFeed;
 
 	public Logging(Robot robot) {
 		this.m_robot = robot;
+		limelightFeed = new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
+				HttpCameraKind.kMJPGStreamer);
 	}
 
 	public void periodic() {
@@ -99,7 +106,7 @@ public class Logging implements Loggable {
 
 		double time = m_robot.timeRemaining;
 		timer = time / 60 + " : " + time % 60;
-
+		
 		driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
 	}
 

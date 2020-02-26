@@ -12,7 +12,6 @@ import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 

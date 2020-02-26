@@ -11,8 +11,6 @@ import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
 public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
