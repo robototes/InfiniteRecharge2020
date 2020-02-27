@@ -20,20 +20,20 @@ public class IndexShootCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
-		if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue()
-				&& !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
-			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-				m_indexerMotorSubsystem.setFrontMotor(-1);
-				if (m_indexerSensorSubsystem.allFrontSensorsOff()) {
-					m_indexerMotorSubsystem.setBackMotor(-1);
-				}
-			} else {
-				m_indexerMotorSubsystem.setBackMotor(-1);
-				if (m_indexerSensorSubsystem.allBackSensorsOff()) {
-					m_indexerMotorSubsystem.setFrontMotor(-1);
-				}
-			}
-		}
+		// if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue()
+		// 		&& !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
+		// 	if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
+		// 		m_indexerMotorSubsystem.setFrontMotor(1);
+		// 		if (m_indexerSensorSubsystem.allFrontSensorsOff()) {
+		// 			m_indexerMotorSubsystem.setBackMotor(1);
+		// 		}
+		// 	} else {
+		// 		m_indexerMotorSubsystem.setBackMotor(1);
+		// 		if (m_indexerSensorSubsystem.allBackSensorsOff()) {
+		// 			m_indexerMotorSubsystem.setFrontMotor(1);
+		// 		}
+		// 	}
+		// }
 	}
 
 	@Override
@@ -45,12 +45,14 @@ public class IndexShootCommand extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
-			return true;
+			// return true;
 
 		} else {
 			RobotState.m_ballCount = m_indexerSensorSubsystem.totalSensorsOn();
 			return false;
 		}
+
+		return false;
 
 	}
 

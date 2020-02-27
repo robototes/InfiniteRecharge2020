@@ -27,7 +27,7 @@ public class IndexSpitCommand extends CommandBase {
 		m_indexerMotorSubsystem.setFrontMotor(1);
 		m_indexerMotorSubsystem.setBackMotor(1);
 		m_indexerMotorSubsystem.setMidMotor(-0.1);
-		m_intakeOnOffSubsystem.setIntake(1);
+		m_intakeOnOffSubsystem.setIntake(-1);
 	}
 
 	@Override

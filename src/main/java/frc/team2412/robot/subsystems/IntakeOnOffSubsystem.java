@@ -27,6 +27,9 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 		this.m_intakeFrontMotor = frontMotor;
 		this.m_intakeBackMotor = backMotor;
 		this.m_intakeMotorGroup = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);
+
+		m_intakeBackMotor.setInverted(true);
+		m_intakeFrontMotor.setInverted(true);
 	}
 
 	public void backIntakeOff() {

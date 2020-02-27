@@ -43,6 +43,7 @@ public class LiftSubsystem extends SubsystemBase implements Loggable {
 	// the current state to that state
 	private void setLift(LiftState value) {
 		m_liftUpDown.set(value.value);
+		System.out.println(value);
 	}
 
 }

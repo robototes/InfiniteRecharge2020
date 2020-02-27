@@ -28,7 +28,7 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public double getServo() {
-		return m_hoodServo1.get();
+		return m_hoodServo2.get();
 	}
 
 	@Log(name = "Extend Servos Fully", tabName = "Hood", width = 2, height = 1, columnIndex = 4, rowIndex = 2)
@@ -57,6 +57,10 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
+	}
+
+	public void add(double m_increment) {
+		this.setServo(getServo() + m_increment);
 	}
 
 }

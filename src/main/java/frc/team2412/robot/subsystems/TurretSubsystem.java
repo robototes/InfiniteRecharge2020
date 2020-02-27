@@ -65,7 +65,7 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 
 	@Override
 	public void periodic() {
-		m_turretCurrentPosition = m_turretMotor.getSelectedSensorPosition(0);
+		// m_turretCurrentPosition = m_turretMotor.getSelectedSensorPosition(0);
 
 		if (m_turretCurrentPosition - m_turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
 			m_turretOffsetPosition += TICKS_PER_REVOLUTION;
@@ -77,7 +77,7 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 		m_turretPastPosition = m_turretCurrentPosition;
 		m_currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
 				RotationUnits.DEGREE);
-		System.out.println(getMeasurement());
+		// System.out.println(getMeasurement());
 	}
 
 	@Config
