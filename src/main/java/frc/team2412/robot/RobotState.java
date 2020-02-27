@@ -2,61 +2,68 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
+import edu.wpi.first.wpilibj.RobotController;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
 
-	private RobotContainer robotContainer = RobotMap.m_robotContainer;
+	private RobotContainer m_robotContainer;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static UnbalancedSide m_unbalancedSide;
 
-	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count")
+	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count", tabName = "Robot State")
 	public static int m_ballCount = 0;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
 
-	@Log.ToString
+	@Log.ToString(tabName = "Robot State")
 	public static GearboxState m_gearState = GearboxState.LOW;
 
-	@Config.ToggleSwitch
+	@Log.ToString(tabName = "Robot State")
+	public static BrownoutStage m_brownoutStage = BrownoutStage.ZERO;
+
+	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean sixBallAuto = true;
 
-	@Config.ToggleSwitch
+	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean threeBallAuto = false;
 
-	@Config.ToggleSwitch
+	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean justMoveAuto = true;
 
 	@Log(tabName = "Misc.")
 	public static String eventName = "N/A";
 
+	@Log.ToString(tabName = "Misc.")
 	public static MatchType matchType = MatchType.None;
 
 	@Log(tabName = "Misc.")
 	public static int matchNumber = 0;
 
+	@Log.ToString(tabName = "Misc.")
 	public static Alliance alliance = Alliance.Invalid;
 
 	@Log(tabName = "Misc.")
 	public static int location = 0;
 
-	public RobotState() {
-
+	public RobotState(RobotContainer robotContainer) {
+		m_robotContainer = robotContainer;
 	}
 
 	public static enum UnbalancedSide {
 		FRONT, BACK;
 
+		@Override
 		public String toString() {
 			if (this.equals(FRONT)) {
 				return "Front";
@@ -69,6 +76,7 @@ public class RobotState implements Loggable {
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 
+		@Override
 		public String toString() {
 			if (this.equals(FRONT)) {
 				return "Front";
@@ -85,6 +93,7 @@ public class RobotState implements Loggable {
 	public static enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
 
+		@Override
 		public String toString() {
 			if (this.equals(NOT_CLIMBING)) {
 				return "Not Climbing, woohoo";
@@ -97,6 +106,7 @@ public class RobotState implements Loggable {
 	public static enum LiftState {
 		WITHDRAWN, EXTENDED;
 
+		@Override
 		public String toString() {
 			if (this.equals(WITHDRAWN)) {
 				return "Withdrawn";
@@ -108,6 +118,7 @@ public class RobotState implements Loggable {
 
 	public static enum GearboxState {
 		HIGH, LOW;
+		@Override
 		public String toString() {
 			if (this.equals(HIGH)) {
 				return "High";
@@ -179,14 +190,41 @@ public class RobotState implements Loggable {
 	}
 
 	public double getTotalCurrentDraw() {
-		double currentDraw = robotContainer.m_climbMotorSubsystem.getCurrentDraw()
-				+ robotContainer.m_driveBaseSubsystem.getCurrentDraw()
-				+ robotContainer.m_flywheelSubsystem.getCurrentDraw()
-				+ robotContainer.m_indexerMotorSubsystem.getCurrentDraw()
-				+ robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
-				+ robotContainer.m_turretSubsystem.getCurrentDraw() + RobotMap.compressor.getCompressorCurrent();
+		double currentDraw = (RobotMap.CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.DRIVE_BASE_CONNECTED ? m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INDEX_CONNECTED ? m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
+				+ RobotMap.compressor.getCompressorCurrent();
 
 		return currentDraw;
+	}
+
+	public static enum BrownoutStage {
+		ZERO(1), ONE(0.75), TWO(0.5), THREE(0);
+
+		double value;
+
+		private BrownoutStage(double value) {
+			this.value = value;
+		}
+
+	}
+
+	public void brownoutWarning() {
+		double voltage = RobotController.getInputVoltage();
+
+		if (voltage < 7) {
+			m_brownoutStage = BrownoutStage.ONE;
+		} else if (voltage < 6) {
+			m_brownoutStage = BrownoutStage.TWO;
+		} else if (voltage < 5) {
+			m_brownoutStage = BrownoutStage.THREE;
+		} else {
+			m_brownoutStage = BrownoutStage.ZERO;
+		}
+
 	}
 
 }

@@ -34,4 +34,6 @@ public class DriveBaseConstants {
 	public static final double kRamseteB = 2; // makes a more straight curve
 	public static final double kRamseteZeta = 0.7; // limits the correction
 
+	public static final double brownoutFactor = 3;
+
 }

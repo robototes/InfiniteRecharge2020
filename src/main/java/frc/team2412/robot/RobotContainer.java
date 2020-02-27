@@ -20,31 +20,43 @@ import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
+	@Log(tabName = "Turret")
 	public LimelightSubsystem m_LimelightSubsystem;
 
+	@Log(tabName = "Turret Subsystem", name = "Turret")
 	public TurretSubsystem m_turretSubsystem;
 
+	@Log(tabName = "Flywheel Subsystem", name = "Turret")
 	public FlywheelSubsystem m_flywheelSubsystem;
 
+	@Log(tabName = "Hood Subsystem", name = "Turret")
 	public HoodSubsystem m_hoodSubsystem;
 
+	@Log(tabName = "Lift Subsystem", name = "Lift")
 	public LiftSubsystem m_liftSubsystem;
 
 	@Log(tabName = "Drivebase Subsystem", name = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
+	@Log(tabName = "Intake Motors Subsystem", name = "Intake")
 	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
+	@Log(tabName = "Intake Lift Subsystem", name = "Intake")
 	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
+	@Log(tabName = "Control Panel Subsystem", name = "Control Panel")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
+	@Log(tabName = "Indexer Motor Subsystem", name = "Indexer")
 	public IndexerMotorSubsystem m_indexerMotorSubsystem;
 
+	@Log(tabName = "Indexer Sensor Subsystem", name = "Indexer")
 	public IndexerSensorSubsystem m_indexerSensorSubsystem;
 
+	@Log(tabName = "Climb Lift Subsystem", name = "Climb")
 	public ClimbLiftSubsystem m_climbLiftSubsystem;
 
+	@Log(tabName = "Climb Motor Subsystem", name = "Climb")
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
 
 	// A chooser for autonomous commands
@@ -94,5 +106,6 @@ public class RobotContainer implements Loggable {
 
 			m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
 		}
+
 	}
 }

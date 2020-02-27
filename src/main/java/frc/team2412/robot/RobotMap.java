@@ -1,5 +1,6 @@
 package frc.team2412.robot;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
@@ -15,15 +16,12 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
@@ -32,10 +30,10 @@ public class RobotMap {
 	public static boolean CLIMB_CONNECTED = false;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
 	public static boolean SHOOTER_CONNECTED = false;
-	public static boolean INDEX_CONNECTED = false;
-	public static boolean INTAKE_CONNECTED = false;
-	public static boolean LIFT_CONNECTED = false;
-	public static boolean DRIVE_BASE_CONNECTED = false;
+	public static boolean INDEX_CONNECTED = true;
+	public static boolean INTAKE_CONNECTED = true;
+	public static boolean LIFT_CONNECTED = true;
+	public static boolean DRIVE_BASE_CONNECTED = true;
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_MID(40), DRIVE_LEFT_FRONT(1),
@@ -50,7 +48,7 @@ public class RobotMap {
 	}
 
 	public static enum PneumaticPort {
-		DRIVE(0), CLIMB_LEFT(1), CLIMB_RIGHT(2), INTAKE_FRONT_UP(3), INTAKE_BACK_UP(4), LIFT_UP(5), LIFT_DOWN(6);
+		DRIVE(0), CLIMB_LEFT(1), CLIMB_RIGHT(2), INTAKE_FRONT_UP(6), INTAKE_BACK_UP(7), LIFT_UP(5), LIFT_DOWN(4);
 
 		public final int id;
 
@@ -60,8 +58,8 @@ public class RobotMap {
 	}
 
 	public static enum DIOPort {
-		BACK_SENSOR(6), BACK_MID_SENSOR(5), BACK_INNER_SENSOR(4), FRONT_INNER_SENSOR(3), FRONT_MID_SENSOR(2),
-		FRONT_SENSOR(1), INTAKE_FRONT_SENSOR(0), INTAKE_BACK_SENSOR(7);
+		BACK_SENSOR(5), BACK_MID_SENSOR(6), BACK_INNER_SENSOR(7), FRONT_INNER_SENSOR(3), FRONT_MID_SENSOR(2),
+		FRONT_SENSOR(1), INTAKE_FRONT_SENSOR(0), INTAKE_BACK_SENSOR(4);
 
 		public final int id;
 
@@ -84,6 +82,7 @@ public class RobotMap {
 	public static enum IndexIntakeModule {
 		ONE(CANBus.INTAKE1.id, CANBus.INDEX1.id), TWO(CANBus.INTAKE2.id, CANBus.INDEX2.id),
 		THREE(CANBus.INTAKE3.id, CANBus.INDEX3.id);
+
 		private int indexCANID, intakeCANID;
 
 		IndexIntakeModule(int intakeID, int indexID) {
@@ -119,8 +118,8 @@ public class RobotMap {
 	public static WPI_TalonFX driveRightBack = DRIVE_BASE_CONNECTED ? new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id)
 			: null;
 
-	// DriveBase Gyro
-	public static ADXRS450_Gyro driveGyro = DRIVE_BASE_CONNECTED ? new ADXRS450_Gyro() : null;
+	// DriveBase
+	public static final ADIS16448_IMU driveGyro = DRIVE_BASE_CONNECTED ? new ADIS16448_IMU() : null;
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;
@@ -245,6 +244,8 @@ public class RobotMap {
 
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();
+
+	public static RobotState m_robotState = new RobotState(m_robotContainer);
 
 	// OI
 	public static OI m_OI = new OI(m_robotContainer);
