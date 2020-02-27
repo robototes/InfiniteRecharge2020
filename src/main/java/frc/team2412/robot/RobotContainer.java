@@ -10,8 +10,8 @@ import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
+import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
@@ -40,10 +40,10 @@ public class RobotContainer implements Loggable {
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
 	@Log(tabName = "Intake Motors Subsystem", name = "Intake")
-	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
+	public IntakeMotorSubsystem m_intakeMotorOnOffSubsystem;
 
 	@Log(tabName = "Intake Lift Subsystem", name = "Intake")
-	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
+	public IntakeLiftSubsystem m_intakeUpDownSubsystem;
 
 	@Log(tabName = "Control Panel Subsystem", name = "Control Panel")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
@@ -88,9 +88,9 @@ public class RobotContainer implements Loggable {
 		}
 
 		if (RobotMap.INTAKE_CONNECTED) {
-			m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
+			m_intakeMotorOnOffSubsystem = new IntakeMotorSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-			m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
+			m_intakeUpDownSubsystem = new IntakeLiftSubsystem(RobotMap.frontIntakeliftSolenoid,
 					RobotMap.backIntakeLiftSolenoid);
 		}
 

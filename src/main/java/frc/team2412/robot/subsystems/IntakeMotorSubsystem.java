@@ -12,7 +12,7 @@ import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
-public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
+public class IntakeMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Log.NumberBar(tabName = "Intake", min = -1, max = 1, methodName = "get")
 	private final CANSparkMax m_intakeFrontMotor;
@@ -23,7 +23,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	@Log.ToString
 	public IntakeLastMotor m_lastMotor = IntakeLastMotor.BOTH;
 
-	public IntakeOnOffSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
+	public IntakeMotorSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
 		this.m_intakeFrontMotor = frontMotor;
 		this.m_intakeBackMotor = backMotor;
 		this.m_intakeMotorGroup = new SpeedControllerGroup(m_intakeFrontMotor, m_intakeBackMotor);

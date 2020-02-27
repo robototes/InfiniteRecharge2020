@@ -27,7 +27,7 @@ import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
 public class IntakeOnOffSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	IntakeOnOffSubsystem realIntakeMotorOnOffSubsystem;
+	IntakeMotorSubsystem realIntakeMotorOnOffSubsystem;
 	CANSparkMax mockedIntakeFrontMotor;
 	CANSparkMax mockedIntakeBackMotor;
 
@@ -53,7 +53,7 @@ public class IntakeOnOffSubsystemTest {
 		mockedIntakeFrontMotor = mock(CANSparkMax.class);
 		mockedIntakeBackMotor = mock(CANSparkMax.class);
 
-		realIntakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
+		realIntakeMotorOnOffSubsystem = new IntakeMotorSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
 	}
 
 	@Ignore

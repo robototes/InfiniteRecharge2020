@@ -13,14 +13,14 @@ import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
+import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 
 public class SmartAutoCommandGroup extends SequentialCommandGroup {
 
 	public SmartAutoCommandGroup(Autonomous autonomous, DriveBaseSubsystem driveBaseSubsystem,
-			IntakeOnOffSubsystem intakeOnOffSubsystem, IntakeUpDownSubsystem intakeUpDownSubsystem,
+			IntakeMotorSubsystem intakeOnOffSubsystem, IntakeLiftSubsystem intakeUpDownSubsystem,
 			LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
 			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
 			HoodSubsystem hoodSubsystem) {
