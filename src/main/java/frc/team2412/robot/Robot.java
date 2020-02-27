@@ -38,7 +38,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void robotInit() {
-		Logger.configureLoggingAndConfig(this, false);
+		Logger.configureLoggingAndConfig(m_robotContainer, false);
 		Shuffleboard.startRecording();
 
 		DriverStation driverStation = DriverStation.getInstance();

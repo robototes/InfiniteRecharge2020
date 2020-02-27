@@ -40,10 +40,10 @@ public class RobotContainer implements Loggable {
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
 	@Log(tabName = "Intake Motors Subsystem", name = "Intake")
-	public IntakeMotorSubsystem m_intakeMotorOnOffSubsystem;
+	public IntakeMotorSubsystem m_intakeMotorSubsystem;
 
 	@Log(tabName = "Intake Lift Subsystem", name = "Intake")
-	public IntakeLiftSubsystem m_intakeUpDownSubsystem;
+	public IntakeLiftSubsystem m_intakeLiftSubsystem;
 
 	@Log(tabName = "Control Panel Subsystem", name = "Control Panel")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
@@ -88,7 +88,7 @@ public class RobotContainer implements Loggable {
 		}
 
 		if (RobotMap.INTAKE_CONNECTED) {
-			m_intakeMotorOnOffSubsystem = new IntakeMotorSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
+			m_intakeMotorSubsystem = new IntakeMotorSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
 			m_intakeUpDownSubsystem = new IntakeLiftSubsystem(RobotMap.frontIntakeliftSolenoid,
 					RobotMap.backIntakeLiftSolenoid);
@@ -116,7 +116,7 @@ public class RobotContainer implements Loggable {
 		m_flywheelSubsystem.resetEncoder();
 		m_hoodSubsystem.resetEncoder();
 		m_indexerMotorSubsystem.resetEncoderZero();
-		m_intakeMotorOnOffSubsystem.resetEncoder();
+		m_intakeMotorSubsystem.resetEncoder();
 		m_turretSubsystem.resetEncoder();
 	}
 }

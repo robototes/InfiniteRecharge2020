@@ -100,17 +100,17 @@ public class OI {
 //			intakeBackOffButton.whenPressed(new IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
 //					robotContainer.m_intakeMotorOnOffSubsystem));
 
-			intakeFrontDownButton.whenPressed(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem));
-			intakeFrontDownButton.whenReleased(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem));
+			intakeFrontDownButton.whenPressed(new IntakeFrontDownCommand(robotContainer.m_intakeLiftSubsystem));
+			intakeFrontDownButton.whenReleased(new IntakeFrontUpCommand(robotContainer.m_intakeLiftSubsystem));
 
-			intakeBackDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
-			intakeBackDownButton.whenReleased(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+			intakeBackDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeLiftSubsystem));
+			intakeBackDownButton.whenReleased(new IntakeBackUpCommand(robotContainer.m_intakeLiftSubsystem));
 
-			intakeInButton.whenPressed(new IntakeBothInCommandGroup(robotContainer.m_intakeMotorOnOffSubsystem));
-			intakeOutButton.whenPressed(new IntakeBothOutCommandGroup(robotContainer.m_intakeMotorOnOffSubsystem));
+			intakeInButton.whenPressed(new IntakeBothInCommandGroup(robotContainer.m_intakeMotorSubsystem));
+			intakeOutButton.whenPressed(new IntakeBothOutCommandGroup(robotContainer.m_intakeMotorSubsystem));
 
 			intakeInButton.or(intakeOutButton)
-					.whenInactive(new IntakeBothOffCommandGroup(robotContainer.m_intakeMotorOnOffSubsystem));
+					.whenInactive(new IntakeBothOffCommandGroup(robotContainer.m_intakeMotorSubsystem));
 		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
@@ -131,7 +131,7 @@ public class OI {
 
 		if (RobotMap.INDEX_CONNECTED) {
 			indexerSpitButton.whenPressed(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
-					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorSubsystem));
 
 			indexerShootButton.whenPressed(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
 					robotContainer.m_indexerMotorSubsystem)
@@ -156,8 +156,8 @@ public class OI {
 
 		Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
 		if (RobotMap.INTAKE_CONNECTED) {
-			intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem,
-					robotContainer.m_intakeMotorOnOffSubsystem));
+			intakeUpWhenFiveBalls.whenActive(new IntakeBothUpCommand(robotContainer.m_intakeLiftSubsystem,
+					robotContainer.m_intakeMotorSubsystem));
 		}
 
 	}
