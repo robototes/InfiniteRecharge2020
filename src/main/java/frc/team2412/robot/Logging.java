@@ -1,13 +1,12 @@
 package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
-public class Logging implements Loggable {
-
-	@Log.Exclude
-	Robot m_robot;
+public class Logging implements Loggable, Sendable {
 
 	// 4 rows, 10 col
 
@@ -67,8 +66,7 @@ public class Logging implements Loggable {
 	@Log(columnIndex = 9, rowIndex = 3, tabName = "Driver View")
 	public double totalCurrentDraw = 0;
 
-	public Logging(Robot robot) {
-		this.m_robot = robot;
+	public Logging() {
 	}
 
 	public void periodic() {
@@ -98,10 +96,14 @@ public class Logging implements Loggable {
 		// 6.8 V is the warning level for brownout
 		brownoutWarning = (RobotController.getInputVoltage() < 7 || RobotController.isBrownedOut());
 
-		double time = m_robot.timeRemaining;
-		timer = time / 60 + " : " + time % 60;
+		// double time = m_robot.timeRemaining;
+		// timer = time / 60 + " : " + time % 60;
 
 		driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+	}
+
+	public void initSendable(SendableBuilder builder){
+
 	}
 
 }

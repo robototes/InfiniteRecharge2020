@@ -74,7 +74,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void setMidMotor(double val) {
-		val = MathUtils.constrain(val, -IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
+		val = MathUtils.constrain(val, -IndexerConstants.MAX_LIFT_SPEED, IndexerConstants.MAX_LIFT_SPEED);
 		m_indexMidMotor.set(val);
 	}
 
@@ -120,12 +120,14 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void setMidPID(boolean upOrDown) {
-		if (upOrDown) {
-			m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
-		} else {
-			m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
+		return;
+		// if (upOrDown) {
+			
+		// 	m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
+		// } else {
+		// 	m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
 
-		}
+		// }
 	}
 
 	public void resetEncoderZero() {

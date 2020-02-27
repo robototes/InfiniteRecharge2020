@@ -25,6 +25,7 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 	@Log(tabName = "Turret")
 	private WPI_TalonSRX m_turretMotor;
 
+	@Log.Exclude
 	private LimelightSubsystem m_limelightSubsystem;
 	private int m_turretOffsetPosition = 0;
 	private int m_turretPastPosition;

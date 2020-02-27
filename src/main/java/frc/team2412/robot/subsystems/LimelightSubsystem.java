@@ -24,10 +24,10 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 	// times a loop
 	// @Log.ToString(tabName = "Turret")
 	public Distance m_distanceToTarget;
-	// @Log.ToString(tabName = "turret")
+	// @Log.ToString(tabName = "Turret")
 	public Rotations m_yawFromTarget;
 
-	@Log.CameraStream
+	@Log.CameraStream(tabName = "Turret")
 	public HttpCamera limeCam;
 
 	// Store the limelight
@@ -45,7 +45,7 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 		this.m_yawFromTarget = new Rotations(0);
 
 		this.setDefaultCommand(new LimelightReadCommand(this));
-
+		getCameraStream();
 	}
 
 	public void getCameraStream() {

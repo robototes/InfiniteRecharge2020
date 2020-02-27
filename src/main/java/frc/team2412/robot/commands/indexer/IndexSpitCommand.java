@@ -34,12 +34,12 @@ public class IndexSpitCommand extends CommandBase {
 	public void end(boolean cancel) {
 		m_indexerMotorSubsystem.stopAllMotors();
 		m_intakeOnOffSubsystem.intakeOff();
-		RobotState.m_ballCount = 0;
+		// RobotState.m_ballCount = 0;
 	}
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.allBackSensorsOff() && m_indexerSensorSubsystem.allFrontSensorsOff();
+		return false;
 	}
 
 }

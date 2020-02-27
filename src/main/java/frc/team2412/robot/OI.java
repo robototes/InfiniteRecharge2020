@@ -19,7 +19,9 @@ import frc.team2412.robot.commands.intake.back.IntakeBackUpCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontOutCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackOutCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
 
@@ -57,11 +59,8 @@ public class OI {
 	}
 
 	public enum CodriverControls {
-		SOMETHING(0), LIFT_UP(XboxController.Button.kY.value), LIFT_DOWN(XboxController.Button.kA.value),
-		FRONT_INTAKE_DOWN(XboxController.Button.kBumperRight.value),
-		BACK_INTAKE_DOWN(XboxController.Button.kBumperLeft.value), HOOD_UP(0), HOOD_DOWN(180),
-		INDEX_FOWARD(XboxController.Button.kB.value), INDEX_BACKWARD(XboxController.Button.kX.value);
-
+		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
+		INTAKE_FRONT_OUT(5);
 		public int buttonID;
 
 		private CodriverControls(int buttonID) {
@@ -92,7 +91,7 @@ public class OI {
 
 	Joystick driverRightStick = new Joystick(Joysticks.DRIVER_RIGHT.id);
 	Joystick driverLeftStick = new Joystick(Joysticks.DRIVER_LEFT.id);
-	XboxController codriverStick = new XboxController(Joysticks.CODRIVER.id);
+	Joystick codriverStick = new Joystick(Joysticks.CODRIVER.id);
 	// Joystick codriverManualStick = new Joystick(Joysticks.CODRIVER_MANUAL.id);
 
 	public Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
@@ -101,17 +100,15 @@ public class OI {
 	public Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
 	public Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
 
-	public Button intakeFrontDownButton = CodriverControls.FRONT_INTAKE_DOWN.createFrom(codriverStick);
-	public Button intakeBackDownButton = CodriverControls.BACK_INTAKE_DOWN.createFrom(codriverStick);
+	public Button liftButton = CodriverControls.LIFT.createFrom(codriverStick);
 
-	public Button liftUpButton = CodriverControls.LIFT_UP.createFrom(codriverStick);
-	public Button liftDownButton = CodriverControls.LIFT_DOWN.createFrom(codriverStick);
+	public Button frontIntakeUpDown = CodriverControls.FRONT_INTAKE_DOWN.createFrom(codriverStick);
+	public Button backIntakeUpDown = CodriverControls.BACK_INTAKE_DOWN.createFrom(codriverStick);
 
-	public Button hoodUpButton = CodriverControls.HOOD_UP.createFromPOV(codriverStick);
-	public Button hoodDownButton = CodriverControls.HOOD_DOWN.createFromPOV(codriverStick);
-
-	public Button indexFowardButton = CodriverControls.INDEX_FOWARD.createFrom(codriverStick);
-	public Button indexBackwardButton = CodriverControls.INDEX_BACKWARD.createFrom(codriverStick);
+	public Button intakeFrontIn = CodriverControls.INTAKE_FRONT_IN.createFrom(codriverStick);
+	public Button intakeFrontOut = CodriverControls.INTAKE_FRONT_OUT.createFrom(codriverStick);
+	public Button intakeBackIn = CodriverControls.INTAKE_BACK_IN.createFrom(codriverStick);
+	public Button intakeBackOut = CodriverControls.INTAKE_BACK_OUT.createFrom(codriverStick);
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
@@ -130,26 +127,38 @@ public class OI {
 			// IntakeBackBothOnCommandGroup(robotContainer.m_intakeUpDownSubsystem,
 			// robotContainer.m_intakeMotorOnOffSubsystem));
 			// intakeBackOffButton.whenPressed(new
-			// IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,\][]
+			// IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
 			// robotContainer.m_intakeMotorOnOffSubsystem));
 
-			intakeFrontDownButton.whenPressed(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem)
-					.andThen(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem))
-					.andThen(new InstantCommand(() -> System.out.println("Front Down"))));
-			intakeFrontDownButton.whenReleased(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem)
-					.andThen(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem))
-					.andThen(new InstantCommand(() -> System.out.println("Front Up"))));
+			frontIntakeUpDown.whenPressed(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem));
+			frontIntakeUpDown.whenReleased(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem));
 
-			intakeBackDownButton.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem)
-					.andThen(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem)));
-			intakeBackDownButton.whenReleased(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem)
-					.andThen(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)));
+			backIntakeUpDown.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
+			backIntakeUpDown.whenReleased(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+
+			intakeFrontIn.whenPressed(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1))));
+			intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(0))));
+
+			intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(1))));
+			intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(0))));
+
+			intakeBackIn.whenPressed(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(-1))));
+			intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
+
+			intakeBackOut.whenPressed(new IntakeBackOutCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(1))));
+			intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
 
 		}
 
 		if (RobotMap.SHOOTER_CONNECTED) {
-			hoodDownButton.whileHeld(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, -0.05));
-			hoodUpButton.whileHeld(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, 0.05));
 		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
@@ -176,25 +185,11 @@ public class OI {
 		}
 
 		if (RobotMap.INDEX_CONNECTED) {
-			indexerSpitButton.whenPressed(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
+			indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
 					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
-			indexerShootButton.whenPressed(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
+			indexerShootButton.whileHeld(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
 					robotContainer.m_indexerMotorSubsystem));
-
-			indexFowardButton.whenPressed(new InstantCommand(() -> {
-				robotContainer.m_indexerMotorSubsystem.setFrontMotor(0.5);
-				robotContainer.m_indexerMotorSubsystem.setBackMotor(-0.5);
-				robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
-			}));
-			indexBackwardButton.whenPressed(new InstantCommand(() -> {
-				robotContainer.m_indexerMotorSubsystem.setFrontMotor(-0.5);
-				robotContainer.m_indexerMotorSubsystem.setBackMotor(0.5);
-				robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
-			}));
-
-			indexBackwardButton.or(indexFowardButton)
-					.whenInactive(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors()));
 
 		}
 
@@ -208,9 +203,9 @@ public class OI {
 
 		// LIFT
 		if (RobotMap.LIFT_CONNECTED) {
-			liftUpButton.whenPressed(
+			liftButton.whenPressed(
 					new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
-			liftDownButton.whenPressed(
+			liftButton.whenReleased(
 					new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		}
 

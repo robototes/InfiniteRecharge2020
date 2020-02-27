@@ -63,6 +63,9 @@ public class RobotContainer implements Loggable {
 	@Log(tabName = "Indexer")
 	Command spitCommand;
 
+	@Log(tabName = "Driver View")
+	public Logging logger = new Logging();
+
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -79,8 +82,6 @@ public class RobotContainer implements Loggable {
 
 			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
 					RobotMap.indexBackMotor, m_indexerSensorSubsystem);
-
-
 			
 		}
 
