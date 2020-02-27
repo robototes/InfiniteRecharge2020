@@ -3,7 +3,6 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -13,10 +12,6 @@ import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
-import frc.team2412.robot.commands.intake.IntakeBothInCommandGroup;
-import frc.team2412.robot.commands.intake.IntakeBothOffCommandGroup;
-import frc.team2412.robot.commands.intake.IntakeBothOutCommandGroup;
-import frc.team2412.robot.commands.intake.IntakeBothUpCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
@@ -64,7 +59,8 @@ public class OI {
 	public enum CodriverControls {
 		SOMETHING(0), LIFT_UP(XboxController.Button.kY.value), LIFT_DOWN(XboxController.Button.kA.value),
 		FRONT_INTAKE_DOWN(XboxController.Button.kBumperRight.value),
-		BACK_INTAKE_DOWN(XboxController.Button.kBumperLeft.value), HOOD_UP(0), HOOD_DOWN(180);
+		BACK_INTAKE_DOWN(XboxController.Button.kBumperLeft.value), HOOD_UP(0), HOOD_DOWN(180),
+		INDEX_FOWARD(XboxController.Button.kB.value), INDEX_BACKWARD(XboxController.Button.kX.value);
 
 		public int buttonID;
 
@@ -113,6 +109,9 @@ public class OI {
 
 	public Button hoodUpButton = CodriverControls.HOOD_UP.createFromPOV(codriverStick);
 	public Button hoodDownButton = CodriverControls.HOOD_DOWN.createFromPOV(codriverStick);
+
+	public Button indexFowardButton = CodriverControls.INDEX_FOWARD.createFrom(codriverStick);
+	public Button indexBackwardButton = CodriverControls.INDEX_BACKWARD.createFrom(codriverStick);
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
@@ -182,6 +181,21 @@ public class OI {
 
 			indexerShootButton.whenPressed(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
 					robotContainer.m_indexerMotorSubsystem));
+
+			indexFowardButton.whenPressed(new InstantCommand(() -> {
+				robotContainer.m_indexerMotorSubsystem.setFrontMotor(0.5);
+				robotContainer.m_indexerMotorSubsystem.setBackMotor(-0.5);
+				robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
+			}));
+			indexBackwardButton.whenPressed(new InstantCommand(() -> {
+				robotContainer.m_indexerMotorSubsystem.setFrontMotor(-0.5);
+				robotContainer.m_indexerMotorSubsystem.setBackMotor(0.5);
+				robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
+			}));
+
+			indexBackwardButton.or(indexFowardButton)
+					.whenInactive(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors()));
+
 		}
 
 		if (RobotMap.DRIVE_BASE_CONNECTED) {

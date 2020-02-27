@@ -53,11 +53,11 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
 		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor);
 
-		Trigger frontProcess = new Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
-		frontProcess.whenActive(new IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
+		// Trigger frontProcess = new Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
+		// frontProcess.whenActive(new IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
 
-		Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
-		backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
+		// Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
+		// backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
 		midTicks = m_midEncoder.getPosition();
 	}
 
