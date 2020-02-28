@@ -14,13 +14,13 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 
-	@Log.NumberBar(tabName = "Intake", min = -1, max = 1, methodName = "get")
+	//@Log.NumberBar(tabName = "Intake", min = -1, max = 1, methodName = "get")
 	private final CANSparkMax m_intakeFrontMotor;
-	@Log.NumberBar(tabName = "Intake", min = -1, max = 1, methodName = "get")
+	//@Log.NumberBar(tabName = "Intake", min = -1, max = 1, methodName = "get")
 	private final CANSparkMax m_intakeBackMotor;
 
 	private final SpeedControllerGroup m_intakeMotorGroup;
-	@Log.ToString
+	//@Log.ToString
 	public IntakeLastMotor m_lastMotor = IntakeLastMotor.BOTH;
 
 	public IntakeOnOffSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
@@ -102,7 +102,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 		RobotState.m_intakeDirection = IntakeDirection.BOTH;
 	}
 
-	@Config.NumberSlider(min = -1, max = 1, tabName = "Intake")
+	//@Config.NumberSlider(min = -1, max = 1, tabName = "Intake")
 	public void setIntake(double speed) {
 		m_intakeMotorGroup.set(speed);
 	}

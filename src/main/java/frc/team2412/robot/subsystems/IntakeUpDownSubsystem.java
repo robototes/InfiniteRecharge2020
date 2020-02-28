@@ -8,11 +8,11 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 
-	@Log(tabName = "Intake")
+	//@Log(tabName = "Intake")
 	private Solenoid m_frontIntakeUpDown;
-	@Log(tabName = "Intake")
+	//@Log(tabName = "Intake")
 	private Solenoid m_backIntakeUpDown;
-	@Log.ToString(tabName = "Intake")
+	//@Log.ToString(tabName = "Intake")
 	private IntakeState m_currentState = IntakeState.WITHDRAWN;
 
 	public IntakeUpDownSubsystem(Solenoid frontIntakeUpDown, Solenoid backIntakeUpDown) {

@@ -8,7 +8,7 @@ public class IntakeFrontOutCommand extends CommandBase {
 	private IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
 	public IntakeFrontOutCommand(IntakeOnOffSubsystem intakeMotorOnOffSubsystem) {
-		addRequirements(intakeMotorOnOffSubsystem);
+		//saddRequirements(intakeMotorOnOffSubsystem);
 		this.m_intakeMotorOnOffSubsystem = intakeMotorOnOffSubsystem;
 	}
 

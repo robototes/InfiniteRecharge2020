@@ -73,7 +73,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 //	DifferentialDrive m_drive;
 
-	@Log(tabName = "Drivebase Subsystem")
+	//@Log(tabName = "Drivebase Subsystem")
 	public double m_driveBaseCurrentDraw;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,

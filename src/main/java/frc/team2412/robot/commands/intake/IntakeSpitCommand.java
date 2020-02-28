@@ -8,7 +8,7 @@ public class IntakeSpitCommand extends CommandBase {
 	private IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
 
 	public IntakeSpitCommand(IntakeOnOffSubsystem intakeMotorOnOffSubsystem) {
-		addRequirements(intakeMotorOnOffSubsystem);
+		//addRequirements(intakeMotorOnOffSubsystem);
 		this.m_intakeMotorOnOffSubsystem = intakeMotorOnOffSubsystem;
 	}
 

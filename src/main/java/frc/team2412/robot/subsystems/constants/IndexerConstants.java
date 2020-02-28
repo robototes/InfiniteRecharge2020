@@ -29,10 +29,10 @@ public class IndexerConstants {
 
 	// FOR INNER SENSORS
 	public static final double SHORT_STOP_DISTANCE = 2;
-	public static final double LONG_STOP_DISTANCE = 5;
+	public static final double LONG_STOP_DISTANCE = 10;
 
 	// FOR MIDDLE
-	public static final double EXTRA_LONG_STOP_DISTANCE = 10;
+	public static final double EXTRA_LONG_STOP_DISTANCE = 15;
 
 	public static final double SPINDLE_DIAMETER = 1.2;
 	public static final double INCH_STOP_DISTANCE = 2;

@@ -22,11 +22,11 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
 	private CANPIDController m_frontPIDController, m_backPIDController, m_midPIDController;
 
-	@Log.NumberBar(min = -1, max = 1, name = "Index Front Speed", tabName = "Indexer", methodName = "get")
+	//@Log.NumberBar(min = -1, max = 1, name = "Index Front Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexFrontMotor;
-	@Log.NumberBar(min = -1, max = 1, name = "Index Mid Speed", tabName = "Indexer", methodName = "get")
+	//@Log.NumberBar(min = -1, max = 1, name = "Index Mid Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexMidMotor;
-	@Log.NumberBar(min = -1, max = 1, name = "Index Back Speed", tabName = "Indexer", methodName = "get")
+	//@Log.NumberBar(min = -1, max = 1, name = "Index Back Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexBackMotor;
 
 	private SpeedControllerGroup m_allMotors;

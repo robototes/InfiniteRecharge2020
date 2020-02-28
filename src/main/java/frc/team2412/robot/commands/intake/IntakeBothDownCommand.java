@@ -10,7 +10,7 @@ public class IntakeBothDownCommand extends ParallelCommandGroup {
 
 	public IntakeBothDownCommand(IntakeUpDownSubsystem intakeUpDownSubsystem,
 			IntakeOnOffSubsystem intakeOnOffSubsystem) {
-		addRequirements(intakeUpDownSubsystem, intakeOnOffSubsystem);
+		//addRequirements(intakeUpDownSubsystem, intakeOnOffSubsystem);
 		addCommands(new IntakeFrontDownCommand(intakeUpDownSubsystem),
 				new IntakeBackDownCommand(intakeUpDownSubsystem));
 	}
