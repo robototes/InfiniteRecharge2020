@@ -28,7 +28,7 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public double getServo() {
-		return m_hoodServo1.get();
+		return m_hoodServo2.get();
 	}
 
 	@Log(name = "Extend Servos Fully", tabName = "Hood", width = 2, height = 1, columnIndex = 4, rowIndex = 2)
@@ -48,7 +48,7 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood Subsystem", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
+	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setServo(double angle) {
 		System.out.println(angle);
 		m_hoodServo2.set(angle);
@@ -57,6 +57,10 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
+	}
+
+	public void add(double m_increment) {
+		this.setServo(Math.min(getServo() + m_increment, HoodConstants.MAX_EXTENSION));
 	}
 
 }

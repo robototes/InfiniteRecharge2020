@@ -48,16 +48,16 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 		m_midEncoder = m_indexMidMotor.getEncoder();
 		m_midPIDController = m_indexMidMotor.getPIDController();
-		configureMotorPID(m_midPIDController);
+		configureMotorPID2(m_midPIDController);
 
 		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
 		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor);
 
-		Trigger frontProcess = new Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
-		frontProcess.whenActive(new IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
+		//Trigger frontProcess = new Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
+		 //frontProcess.whenActive(new IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
 
-		Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
-		backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
+		 //Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
+		 //backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
 		midTicks = m_midEncoder.getPosition();
 	}
 
@@ -66,6 +66,12 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		motorController.setI(IndexerConstants.PID_I);
 		motorController.setD(IndexerConstants.PID_D);
 		motorController.setOutputRange(-IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
+	}
+	private void configureMotorPID2(CANPIDController motorController) {
+		motorController.setP(IndexerConstants.PID_P);
+		motorController.setI(IndexerConstants.PID_I);
+		motorController.setD(IndexerConstants.PID_D);
+		motorController.setOutputRange(-IndexerConstants.MAX_LIFT_SPEED, IndexerConstants.MAX_LIFT_SPEED);
 	}
 
 	public void setFrontMotor(double val) {
@@ -120,10 +126,12 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void setMidPID(boolean upOrDown) {
+		
 		if (upOrDown) {
-			m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
-		} else {
-			m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
+			
+		m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
+		 } else {
+	m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
 
 		}
 	}

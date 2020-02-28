@@ -161,14 +161,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return m_driveBaseCurrentDraw;
 	}
 
-	// OBLOG
-	// ---------------------------------------------------------------------------------
-
-	@Override
-	public String configureLogName() {
-		return "Drivebase Subsystem";
-	}
-
 	// Periodic
 	// ------------------------------------------------------------------------------
 

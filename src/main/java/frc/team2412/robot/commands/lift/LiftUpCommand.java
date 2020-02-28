@@ -19,11 +19,12 @@ public class LiftUpCommand extends CommandBase {
 	public void execute() {
 		// run the example method
 		liftSubsystem.liftUp();
-		motorSubsystem.setMidPID(true);
+		
 	}
 
 	@Override
 	public boolean isFinished() {
+		motorSubsystem.setMidPID(true);
 		return true;
 	}
 

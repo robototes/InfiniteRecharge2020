@@ -37,8 +37,9 @@ public class IndexerConstants {
 	public static final double SPINDLE_DIAMETER = 1.2;
 	public static final double INCH_STOP_DISTANCE = 2;
 
-	public static final double MAX_SPEED = 0.5;
-	public static final double TOP_TICKS = 20;
-	public static final double BOTTOM_TICKS = 0;
+	public static final double MAX_SPEED = 0.3;
+	public static final double MAX_LIFT_SPEED = 0.15;
+	public static final double TOP_TICKS = 0;
+	public static final double BOTTOM_TICKS = 20;
 
 }
