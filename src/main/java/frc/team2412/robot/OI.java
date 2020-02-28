@@ -130,11 +130,11 @@ public class OI {
 			// IntakeBackBothOffCommandGroup(robotContainer.m_intakeUpDownSubsystem,
 			// robotContainer.m_intakeMotorOnOffSubsystem));
 
-			frontIntakeUpDown.whenPressed(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem));
-			frontIntakeUpDown.whenReleased(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem));
+			frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem));
+			frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem));
 
-			backIntakeUpDown.whenPressed(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
-			backIntakeUpDown.whenReleased(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+			backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+			backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
 
 			intakeFrontIn.whenPressed(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1))));

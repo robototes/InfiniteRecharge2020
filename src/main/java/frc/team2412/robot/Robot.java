@@ -30,6 +30,8 @@ public class Robot extends TimedRobot implements Loggable {
 	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
 
+	// Logging logging = new Logging(this);
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -37,7 +39,7 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void robotInit() {
 		Logger.configureLoggingAndConfig(m_robotContainer, false);
-		// Shuffleboard.startRecording();
+		Shuffleboard.startRecording();
 
 		DriverStation driverStation = DriverStation.getInstance();
 
@@ -62,7 +64,7 @@ public class Robot extends TimedRobot implements Loggable {
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 		Logger.updateEntries();
-		m_robotContainer.logger.periodic();
+		m_robotContainer.logger.periodic(this);
 	}
 
 	/**

@@ -15,15 +15,13 @@ public class Logging implements Loggable, Sendable {
 	private final String white = "#FFFFFF";
 
 	// Goal Able
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(name = "asdf", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, width = 3, height = 2, tabName = "Driver View")
 	public boolean outerGoalAble = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(name = "asdf2", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean outerGoalAimed = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean innerGoalAimed = false;
@@ -42,14 +40,15 @@ public class Logging implements Loggable, Sendable {
 	@Log(columnIndex = 5, height = 1, rowIndex = 0, tabName = "Driver View")
 	public int powerCellCount = 0;
 
+	// Dial Boolean
+	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, width = 3, tabName = "Driver View")
+	public boolean brownoutWarning = false;
+	
 	// Dial
 	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Driver View")
 	public double currentDrawDial = 0;
 
-	// Dial Boolean
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Driver View")
-	//@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Driver View")
-	public boolean brownoutWarning = false;
+	
 
 	// Timer
 	@Log(columnIndex = 7, rowIndex = 2, width = 3, height = 1, tabName = "Driver View")
@@ -69,7 +68,8 @@ public class Logging implements Loggable, Sendable {
 	public Logging() {
 	}
 
-	public void periodic() {
+
+	public void periodic(Robot m_robot) {
 		// WIP: OuterGoalAble, innerGoalAble, outerGoalAimed, innerGoalAimed
 
 		backIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.backMotorOn()
@@ -96,8 +96,8 @@ public class Logging implements Loggable, Sendable {
 		// 6.8 V is the warning level for brownout
 		brownoutWarning = (RobotController.getInputVoltage() < 7 || RobotController.isBrownedOut());
 
-		// double time = m_robot.timeRemaining;
-		// timer = time / 60 + " : " + time % 60;
+		 double time = m_robot.timeRemaining;
+		 timer = time / 60 + " : " + time % 60;
 
 		driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
 	}

@@ -63,8 +63,7 @@ public class RobotContainer implements Loggable {
 	@Log(tabName = "Indexer")
 	Command spitCommand;
 
-	@Log(tabName = "Driver View")
-	public Logging logger = new Logging();
+	Logging logger = new Logging();
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
