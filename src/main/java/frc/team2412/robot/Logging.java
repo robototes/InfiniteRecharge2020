@@ -17,13 +17,13 @@ public class Logging implements Loggable, Sendable {
 	// Goal Able
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, width = 3, height = 2, tabName = "Driver View")
 	public boolean outerGoalAble = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 1, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 2, height = 2, tabName = "Driver View")
 	public boolean outerGoalAimed = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 1, rowIndex = 2, height = 2, tabName = "Driver View")
 	public boolean innerGoalAimed = false;
 
 	// Intake stuff
@@ -45,7 +45,7 @@ public class Logging implements Loggable, Sendable {
 	public boolean brownoutWarning = false;
 	
 	// Dial
-	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Driver View")
+	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 2, tabName = "Driver View")
 	public double currentDrawDial = 0;
 
 	
@@ -81,7 +81,7 @@ public class Logging implements Loggable, Sendable {
 		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.FrontMotorOn()
 				: false;
 
-		powerCellCount = RobotState.m_ballCount;
+		powerCellCount = RobotState.m_ballCount % 5;
 
 		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
 				: 0)
