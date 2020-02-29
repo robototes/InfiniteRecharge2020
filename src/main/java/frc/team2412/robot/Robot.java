@@ -101,7 +101,7 @@ public class Robot extends TimedRobot implements Loggable {
 				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setMidMotor(1)))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setBackMotor(-1)))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1)))
-				.andThen(new WaitCommand(10))
+				.andThen(new WaitCommand(8))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(12, 12))
 						.andThen(new InstantCommand(() -> System.out.println("driving"))).andThen(new WaitCommand(0.5))
 						.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0))));

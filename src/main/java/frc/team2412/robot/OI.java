@@ -192,8 +192,16 @@ public class OI {
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
 
 		}
+		final double WALL = 0.1;
+		final double LINE = 0.31;
+		final double AUTO = 0.35;
+		Button[] hoodPresetButtons = { new JoystickButton(codriverManualStick, 2),
+				new JoystickButton(codriverManualStick, 1), new JoystickButton(codriverManualStick, 0) };
 
 		if (RobotMap.SHOOTER_CONNECTED) {
+			hoodPresetButtons[0].whenPressed(new InstantCommand(() -> robotContainer.m_hoodSubsystem.setServo(WALL)));
+			hoodPresetButtons[1].whenPressed(new InstantCommand(() -> robotContainer.m_hoodSubsystem.setServo(LINE)));
+			hoodPresetButtons[2].whenPressed(new InstantCommand(() -> robotContainer.m_hoodSubsystem.setServo(AUTO)));
 		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
