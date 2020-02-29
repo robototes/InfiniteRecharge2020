@@ -18,11 +18,15 @@ public class ClimbJoystickCommand extends CommandBase {
 	public void execute() {
 		double joystickValue = m_joystick.getY();
 
+		if (Math.abs(joystickValue) < 0.1) {
+			joystickValue = 0;
+		}
+
 		m_ClimbMotorSubsystem.setMotors(joystickValue);
 	}
 
 	@Override
 	public boolean isFinished() {
-		return true;
+		return false;
 	}
 }

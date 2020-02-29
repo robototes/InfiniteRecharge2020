@@ -28,6 +28,7 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 	public Rotations m_yawFromTarget;
 
 	@Log.CameraStream(tabName = "Turret")
+	@Log.CameraStream(tabName = "Driver View")
 	public HttpCamera limeCam;
 
 	// Store the limelight

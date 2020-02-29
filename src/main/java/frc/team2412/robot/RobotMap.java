@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
 
-	public static boolean CLIMB_CONNECTED = false;
+	public static boolean CLIMB_CONNECTED = true;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
 	public static boolean SHOOTER_CONNECTED = true;
 	public static boolean INDEX_CONNECTED = true;
@@ -69,7 +69,7 @@ public class RobotMap {
 	}
 
 	public static enum PWMPort {
-		HOOD_SERVO_1(0), HOOD_SERVO_2(1);
+		HOOD_SERVO_1(1), HOOD_SERVO_2(0);
 
 		public final int id;
 
@@ -233,7 +233,7 @@ public class RobotMap {
 			? NetworkTableInstance.create().getTable("limelight")
 			: null;
 	public static Limelight limelight = SHOOTER_CONNECTED
-			? new Limelight(limelightNetworkTable, LEDMode.OFF, CamMode.VISION_PROCESSER, Pipeline.ZERO,
+			? new Limelight(limelightNetworkTable, LEDMode.ON, CamMode.VISION_PROCESSER, Pipeline.FOUR,
 					StreamMode.STANDARD, SnapshotMode.OFF)
 			: null;
 

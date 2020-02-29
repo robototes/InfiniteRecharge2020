@@ -14,10 +14,10 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class HoodSubsystem extends SubsystemBase implements Loggable {
 
-	@Log(name = "Right Servo", tabName = "Hood", width = 8, height = 1, columnIndex = 0, rowIndex = 0)
+	@Log(name = "Right Servo", tabName = "Hood", width = 2, height = 1, columnIndex = 0, rowIndex = 0)
 	private Servo m_hoodServo1;
 
-	@Log(name = "Left Servo", tabName = "Hood", width = 8, height = 1, columnIndex = 0, rowIndex = 1)
+	@Log(name = "Left Servo", tabName = "Hood", width = 2, height = 1, columnIndex = 0, rowIndex = 1)
 	private Servo m_hoodServo2;
 
 	public HoodSubsystem(Servo hoodServo1, Servo hoodServo2) {
@@ -50,7 +50,6 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 
 	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setServo(double angle) {
-		System.out.println(angle);
 		m_hoodServo2.set(angle);
 		m_hoodServo1.set(1 - angle);
 	}

@@ -11,6 +11,7 @@ import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
@@ -24,6 +25,7 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	private CANSparkMax m_rightClimbMotor;
 
 	private CANEncoder m_encoder;
+	private CANEncoder m_leftEncoder;
 
 	private CANPIDController m_pidController;
 
@@ -33,10 +35,11 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
 		m_leftClimbMotor = leftClimbMotor;
 		m_rightClimbMotor = rightClimbMotor;
-		m_leftClimbMotor.follow(rightClimbMotor);
 
 		m_pidController = m_rightClimbMotor.getPIDController();
+
 		m_encoder = m_rightClimbMotor.getEncoder();
+		m_leftEncoder = m_leftClimbMotor.getEncoder();
 		m_pidController.setP(0.005);
 	}
 
@@ -70,8 +73,13 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 		m_currentClimbHeight = new Distance(heightFromOffset).add(ClimbConstants.CLIMB_OFFSET_HEIGHT);
 	}
 
+	@Config.NumberSlider
 	public void setMotors(double value) {
-		m_rightClimbMotor.set(value);
+		m_rightClimbMotor.set(-value);
+		m_leftClimbMotor.set(value);
+
+		System.out.println(m_encoder.getPosition());
+		System.out.println(m_leftEncoder.getPosition());
 		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 

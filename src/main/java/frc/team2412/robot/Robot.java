@@ -7,10 +7,20 @@
 
 package frc.team2412.robot;
 
+import java.util.Set;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.team2412.robot.commands.flywheel.FlywheelShootCommand;
+import frc.team2412.robot.commands.hood.HoodAdjustCommand;
+import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
+import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.Logger;
 
@@ -29,6 +39,8 @@ public class Robot extends TimedRobot implements Loggable {
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
+
+	Command autoCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -82,6 +94,18 @@ public class Robot extends TimedRobot implements Loggable {
 		 * *
 		 */
 
+		autoCommand = new HoodWithdrawCommand(m_robotContainer.m_hoodSubsystem)
+				.andThen(new HoodAdjustCommand(m_robotContainer.m_hoodSubsystem, .310))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
+				.andThen(new WaitCommand(2))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setMidMotor(1)))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setBackMotor(-1)))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1)))
+				.andThen(new WaitCommand(10))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(12, 12))
+						.andThen(new InstantCommand(() -> System.out.println("driving"))).andThen(new WaitCommand(0.5))
+						.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0))));
+		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 
 	/**
@@ -98,6 +122,8 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void teleopInit() {
 		timeRemaining = 135.0;
+		CommandScheduler.getInstance().cancel(autoCommand);
+		m_robotContainer.m_LimelightSubsystem.stopLimelight();
 	}
 
 	/**
@@ -106,6 +132,9 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void teleopPeriodic() {
 		timeRemaining -= 0.02;
+
+		double val = m_OI.codriverStick.getY() * 0.5 + 0.5;
+		m_robotContainer.m_hoodSubsystem.setServo(val);
 	}
 
 	@Override
