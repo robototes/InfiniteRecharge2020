@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
 
-	public static boolean CLIMB_CONNECTED = false;
+	public static boolean CLIMB_CONNECTED = true;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
 	public static boolean SHOOTER_CONNECTED = true;
 	public static boolean INDEX_CONNECTED = true;
@@ -134,6 +134,7 @@ public class RobotMap {
 	public static CANSparkMax rightClimbMotor = CLIMB_CONNECTED
 			? new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless)
 			: null;
+			
 
 	// INDEX SUBSYSTEM
 	// ---------------------------------------------------------------------------

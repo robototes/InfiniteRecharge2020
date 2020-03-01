@@ -75,11 +75,21 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Config.NumberSlider
 	public void setMotors(double value) {
-		m_rightClimbMotor.set(-value);
-		m_leftClimbMotor.set(value);
+		// left : 0-75
+		// right: -75 - 0
+		if (value < 0 && m_encoder.getPosition() < 0 || value > 0 && m_encoder.getPosition() > -76) {
+			m_rightClimbMotor.set(-value);
+		} else {
+			m_rightClimbMotor.set(0);
+		}
 
-		System.out.println(m_encoder.getPosition());
-		System.out.println(m_leftEncoder.getPosition());
+		if (value < 0 && m_leftEncoder.getPosition() > 0 || value > 0 && m_leftEncoder.getPosition() < 76) {
+			m_leftClimbMotor.set(value);
+		}else{
+			m_leftClimbMotor.set(0);
+		}
+		System.out.println("right: " + m_encoder.getPosition());
+		System.out.println("left: " + m_leftEncoder.getPosition());
 		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
