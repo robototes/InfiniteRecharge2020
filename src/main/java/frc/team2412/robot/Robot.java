@@ -95,7 +95,7 @@ public class Robot extends TimedRobot implements Loggable {
 		 */
 
 		autoCommand = new HoodWithdrawCommand(m_robotContainer.m_hoodSubsystem)
-				.andThen(new HoodAdjustCommand(m_robotContainer.m_hoodSubsystem, .310))
+				.andThen(new HoodAdjustCommand(m_robotContainer.m_hoodSubsystem, .330))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
 				.andThen(new WaitCommand(2))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setMidMotor(1)))
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot implements Loggable {
 				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1)))
 				.andThen(new WaitCommand(8))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(12, 12))
-						.andThen(new InstantCommand(() -> System.out.println("driving"))).andThen(new WaitCommand(0.5))
+						.andThen(new InstantCommand(() -> System.out.println("driving"))).andThen(new WaitCommand(1.5))
 						.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0))));
 		CommandScheduler.getInstance().schedule(autoCommand);
 	}
@@ -123,6 +123,8 @@ public class Robot extends TimedRobot implements Loggable {
 	public void teleopInit() {
 		timeRemaining = 135.0;
 		CommandScheduler.getInstance().cancel(autoCommand);
+		CommandScheduler.getInstance()
+				.schedule(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.stopAllMotors()));
 		m_robotContainer.m_LimelightSubsystem.stopLimelight();
 	}
 
