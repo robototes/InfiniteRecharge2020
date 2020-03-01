@@ -90,7 +90,7 @@ public class RobotContainer implements Loggable {
 		if (RobotMap.INTAKE_CONNECTED) {
 			m_intakeMotorSubsystem = new IntakeMotorSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-			m_intakeUpDownSubsystem = new IntakeLiftSubsystem(RobotMap.frontIntakeliftSolenoid,
+			m_intakeLiftSubsystem = new IntakeLiftSubsystem(RobotMap.frontIntakeliftSolenoid,
 					RobotMap.backIntakeLiftSolenoid);
 		}
 

@@ -194,7 +194,7 @@ public class RobotState implements Loggable {
 				+ (RobotMap.DRIVE_BASE_CONNECTED ? m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.INDEX_CONNECTED ? m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
+				+ (RobotMap.INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 

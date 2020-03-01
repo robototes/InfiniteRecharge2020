@@ -23,36 +23,36 @@ public class Logging implements Loggable {
 	// Goal Able
 	@Log.BooleanBox(name = "Outer goal possible", colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAble = false;
-	@Log.BooleanBox(name = "Inner goal possible",colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(name = "Inner goal possible", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
-	@Log.BooleanBox(name = "Outer goal ready",colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(name = "Outer goal ready", colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAimed = false;
-	@Log.BooleanBox(name = "Inner goal ready",colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(name = "Inner goal ready", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAimed = false;
 
 	// Intake stuff
-	@Log.BooleanBox(name = "Back intake On",colorWhenFalse = white, colorWhenTrue = green, columnIndex = 3, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(name = "Back intake On", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 3, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean backIntakeOn = false;
-	@Log.BooleanBox(name = "Back intake Up",colorWhenFalse = white, colorWhenTrue = green, columnIndex = 4, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(name = "Back intake Up", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 4, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean backIntakeUp = false;
-	@Log.BooleanBox(name = "Front intake Up",colorWhenFalse = white, colorWhenTrue = green, columnIndex = 6, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(name = "Front intake Up", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 6, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean frontIntakeUp = false;
-	@Log.BooleanBox(name = "Front intake On",colorWhenFalse = white, colorWhenTrue = green, columnIndex = 7, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
+	@Log.BooleanBox(name = "Front intake On", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 7, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean frontIntakeOn = false;
 
 	// PC count
 	@Log(columnIndex = 5, height = 1, rowIndex = 0, tabName = "Dwivew view >~<", name = "Power cell count")
 	public int powerCellCount = 0;
 
-	// Dial
-	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Dwivew view >~<", name = "Current draw")
-	public double currentDrawDial = 0;
-
 	// Dial Boolean
 	@Log.BooleanBox(colorWhenFalse = green, name = "Brownout Warinng", colorWhenTrue = red, width = 3, columnIndex = 7, rowIndex = 1, tabName = "Dwivew view >~<")
 	public boolean brownoutWarning = false;
+
+	// Dial
+	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Dwivew view >~<", name = "Current draw")
+	public double currentDrawDial = 0;
 
 	// Timer
 	@Log(columnIndex = 7, rowIndex = 2, width = 3, height = 1, name = "Timer", tabName = "Dwivew view >~<")
@@ -90,15 +90,14 @@ public class Logging implements Loggable {
 		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorSubsystem.FrontMotorOn()
 				: false;
 
-		powerCellCount = RobotState.m_ballCount;
+		powerCellCount = RobotState.m_ballCount % 5;
 
 		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
 				: 0)
 				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw()
-						: 0)
+				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 
