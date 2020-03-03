@@ -99,7 +99,7 @@ public class Logging implements Loggable, Sendable {
 		// double time = m_robot.timeRemaining;
 		// timer = time / 60 + " : " + time % 60;
 
-		driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+		//driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
 	}
 
 	public void initSendable(SendableBuilder builder){

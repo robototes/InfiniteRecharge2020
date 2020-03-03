@@ -27,13 +27,13 @@ import edu.wpi.first.wpilibj.Solenoid;
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
 
-	public static boolean CLIMB_CONNECTED = true;
+	public static boolean CLIMB_CONNECTED = false;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
 	public static boolean SHOOTER_CONNECTED = true;
 	public static boolean INDEX_CONNECTED = true;
 	public static boolean INTAKE_CONNECTED = true;
 	public static boolean LIFT_CONNECTED = true;
-	public static boolean DRIVE_BASE_CONNECTED = true;
+	public static boolean DRIVE_BASE_CONNECTED = false;
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_MID(40), DRIVE_LEFT_FRONT(3),
@@ -58,8 +58,8 @@ public class RobotMap {
 	}
 
 	public static enum DIOPort {
-		BACK_SENSOR(5), BACK_MID_SENSOR(6), BACK_INNER_SENSOR(7), FRONT_INNER_SENSOR(3), FRONT_MID_SENSOR(2),
-		FRONT_SENSOR(1), INTAKE_FRONT_SENSOR(0), INTAKE_BACK_SENSOR(4);
+		FRONT_SENSOR(5), FRONT_MID_SENSOR(6), FRONT_INNER_SENSOR(7), BACK_INNER_SENSOR(3), BACK_MID_SENSOR(2),
+		BACK_SENSOR(1), INTAKE_BACK_SENSOR(0), INTAKE_FRONT_SENSOR(4);
 
 		public final int id;
 
