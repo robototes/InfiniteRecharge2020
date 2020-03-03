@@ -1,12 +1,12 @@
 package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
-public class Logging implements Loggable {
-
-	Robot m_robot;
+public class Logging implements Loggable, Sendable {
 
 	// 4 rows, 10 col
 
@@ -16,14 +16,14 @@ public class Logging implements Loggable {
 
 	// Goal Able
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "asdf", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean outerGoalAble = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "asdf2", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean outerGoalAimed = false;
 	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
 	public boolean innerGoalAimed = false;
@@ -48,7 +48,7 @@ public class Logging implements Loggable {
 
 	// Dial Boolean
 	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Driver View")
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Driver View")
+	//@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Driver View")
 	public boolean brownoutWarning = false;
 
 	// Timer
@@ -66,8 +66,7 @@ public class Logging implements Loggable {
 	@Log(columnIndex = 9, rowIndex = 3, tabName = "Driver View")
 	public double totalCurrentDraw = 0;
 
-	public Logging(Robot robot) {
-		this.m_robot = robot;
+	public Logging() {
 	}
 
 	public void periodic() {
@@ -97,10 +96,14 @@ public class Logging implements Loggable {
 		// 6.8 V is the warning level for brownout
 		brownoutWarning = (RobotController.getInputVoltage() < 7 || RobotController.isBrownedOut());
 
-		double time = m_robot.timeRemaining;
-		timer = time / 60 + " : " + time % 60;
+		// double time = m_robot.timeRemaining;
+		// timer = time / 60 + " : " + time % 60;
 
-		driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+		//driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+	}
+
+	public void initSendable(SendableBuilder builder){
+
 	}
 
 }
