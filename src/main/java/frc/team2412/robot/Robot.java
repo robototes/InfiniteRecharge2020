@@ -122,10 +122,11 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void teleopInit() {
 		timeRemaining = 135.0;
-		CommandScheduler.getInstance().cancel(autoCommand);
+		//CommandScheduler.getInstance().cancel(autoCommand);
 		CommandScheduler.getInstance()
 				.schedule(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.stopAllMotors()));
-		m_robotContainer.m_LimelightSubsystem.stopLimelight();
+		m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
+		//m_robotContainer.m_LimelightSubsystem.stopLimelight();
 	}
 
 	/**
@@ -137,6 +138,7 @@ public class Robot extends TimedRobot implements Loggable {
 
 		double val = m_OI.codriverStick.getY() * 0.5 + 0.5;
 		m_robotContainer.m_hoodSubsystem.setServo(val);
+
 	}
 
 	@Override

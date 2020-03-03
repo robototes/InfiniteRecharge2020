@@ -23,7 +23,7 @@ public class AAHEliMemeAutoCommandGroup extends SequentialCommandGroup {
 		addCommands(
 
 				new StartUpCommand(liftSubsystem, flywheelSubsystem, hoodSubsystem, indexerMotorSubsystem),
-				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem),
+				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem),
 				new MoveToPowerCellsCommand(driveBaseSubsystem)
 
 		);
