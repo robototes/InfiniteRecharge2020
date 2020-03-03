@@ -148,7 +148,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
-		System.out.println(m_indexMidMotor.get());
+	//	System.out.println(m_indexMidMotor.get());
 	}
 
 

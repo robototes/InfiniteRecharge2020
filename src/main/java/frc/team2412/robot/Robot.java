@@ -10,6 +10,7 @@ package frc.team2412.robot;
 import java.util.Set;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -23,6 +24,7 @@ import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.Logger;
+import io.github.oblarg.oblog.annotations.Log;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,6 +43,9 @@ public class Robot extends TimedRobot implements Loggable {
 	private OI m_OI = RobotMap.m_OI;
 
 	Command autoCommand;
+
+	@Log(tabName = "Robot stuff")
+	public double voltage = RobotController.getBatteryVoltage();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -75,6 +80,8 @@ public class Robot extends TimedRobot implements Loggable {
 		CommandScheduler.getInstance().run();
 		Logger.updateEntries();
 		m_robotContainer.logger.periodic();
+
+		System.out.println(RobotController.getBatteryVoltage());
 	}
 
 	/**
