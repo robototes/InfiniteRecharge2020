@@ -8,9 +8,6 @@ import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
-import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -53,11 +50,11 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
 		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor);
 
-		Trigger frontProcess = new Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
-		frontProcess.whenActive(new IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
+		// Trigger frontProcess = new Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
+		// frontProcess.whenActive(new IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
 
-		Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
-		backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
+		// Trigger backProcess = new Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
+		// backProcess.whenActive(new IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
 		midTicks = m_midEncoder.getPosition();
 	}
 
@@ -74,7 +71,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void setMidMotor(double val) {
-		val = MathUtils.constrain(val, -IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
+		val = MathUtils.constrain(val, -IndexerConstants.MAX_LIFT_SPEED, IndexerConstants.MAX_LIFT_SPEED);
 		m_indexMidMotor.set(val);
 	}
 
@@ -120,12 +117,14 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void setMidPID(boolean upOrDown) {
-		if (upOrDown) {
-			m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
-		} else {
-			m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
+		return;
+		// if (upOrDown) {
+			
+		// 	m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS, ControlType.kPosition);
+		// } else {
+		// 	m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS, ControlType.kPosition);
 
-		}
+		// }
 	}
 
 	public void resetEncoderZero() {
