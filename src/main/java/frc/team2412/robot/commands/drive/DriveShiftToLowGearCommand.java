@@ -8,7 +8,6 @@ public class DriveShiftToLowGearCommand extends CommandBase {
 	private DriveBaseSubsystem m_driveBaseSubsystem;
 
 	public DriveShiftToLowGearCommand(DriveBaseSubsystem driveBaseSubsystem) {
-		addRequirements(driveBaseSubsystem);
 		this.m_driveBaseSubsystem = driveBaseSubsystem;
 
 	}
@@ -16,11 +15,10 @@ public class DriveShiftToLowGearCommand extends CommandBase {
 	@Override
 	public void execute() {
 		m_driveBaseSubsystem.shiftToLowGear();
-		;
 	}
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		return true;
 	}
 }
