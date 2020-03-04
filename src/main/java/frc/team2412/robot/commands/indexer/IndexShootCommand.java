@@ -1,57 +1,39 @@
 package frc.team2412.robot.commands.indexer;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team2412.robot.RobotState;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
-public class IndexShootCommand extends CommandBase {
+public class IndexShootCommand extends SequentialCommandGroup {
 
-	private IndexerSensorSubsystem m_indexerSensorSubsystem;
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
+	private IntakeMotorSubsystem m_intakeOnOffSubsystem;
 
-	public IndexShootCommand(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem) {
-		m_indexerSensorSubsystem = sensorSubsystem;
-		m_indexerMotorSubsystem = motorSubsystem;
-		addRequirements(sensorSubsystem, motorSubsystem);
+	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
+			IntakeMotorSubsystem intakeSubsystem) {
+		m_indexerMotorSubsystem = indexMotorSubsystem;
+		m_intakeOnOffSubsystem = intakeSubsystem;
+
+		addCommands(new IndexFrontShootCommand(indexMotorSubsystem, intakeSubsystem),
+				new ConditionalCommand(new WaitCommand(3), new WaitCommand(0),
+						indexerSensorSubsystem::allFrontSensorsOff),
+				new IndexBackShootCommand(indexMotorSubsystem, intakeSubsystem), new WaitCommand(2));
 	}
 
 	@Override
-	public void execute() {
-		m_indexerMotorSubsystem.setMidMotor(1);
-		if (!m_indexerSensorSubsystem.getIndexBackInnerSensorValue()
-				&& !m_indexerSensorSubsystem.getIndexFrontInnerSensorValue()) {
-			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-				m_indexerMotorSubsystem.setFrontMotor(-1);
-				if (m_indexerSensorSubsystem.allFrontSensorsOff()) {
-					m_indexerMotorSubsystem.setBackMotor(-1);
-				}
-			} else {
-				m_indexerMotorSubsystem.setBackMotor(-1);
-				if (m_indexerSensorSubsystem.allBackSensorsOff()) {
-					m_indexerMotorSubsystem.setFrontMotor(-1);
-				}
-			}
-		}
+	public void initialize() {
+		super.initialize();
+		m_indexerMotorSubsystem.setLifting(true);
 	}
 
 	@Override
 	public void end(boolean cancel) {
+		m_indexerMotorSubsystem.setLifting(false);
 		m_indexerMotorSubsystem.stopAllMotors();
-		RobotState.m_ballCount = 0;
+		m_intakeOnOffSubsystem.setIntake(0);
 	}
-
-	@Override
-	public boolean isFinished() {
-		if (m_indexerSensorSubsystem.allInnerSensorsOff()) {
-			return true;
-
-		} else {
-			RobotState.m_ballCount = m_indexerSensorSubsystem.totalSensorsOn();
-			return false;
-		}
-
-	}
-
 }

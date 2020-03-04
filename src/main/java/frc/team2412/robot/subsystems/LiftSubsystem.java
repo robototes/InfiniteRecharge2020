@@ -21,7 +21,7 @@ public class LiftSubsystem extends SubsystemBase implements Loggable {
 	// local liftSubsystem
 	public LiftSubsystem(DoubleSolenoid liftUpDown) {
 		this.m_liftUpDown = liftUpDown;
-		this.setName("Lift Subsystem");
+		// this.setName("Lift Subsystem");
 	}
 
 	// gets the current state
@@ -43,6 +43,7 @@ public class LiftSubsystem extends SubsystemBase implements Loggable {
 	// the current state to that state
 	private void setLift(LiftState value) {
 		m_liftUpDown.set(value.value);
+		System.out.println(value);
 	}
 
 }

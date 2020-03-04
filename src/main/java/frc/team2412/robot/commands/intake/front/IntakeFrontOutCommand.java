@@ -9,6 +9,12 @@ public class IntakeFrontOutCommand extends CommandBase {
 
 	public IntakeFrontOutCommand(IntakeMotorSubsystem intakeMotorOnOffSubsystem) {
 		addRequirements(intakeMotorOnOffSubsystem);
+	}
+
+	public IntakeFrontOutCommand(IntakeMotorSubsystem intakeMotorOnOffSubsystem, boolean require) {
+		if (require) {
+			addRequirements(intakeMotorOnOffSubsystem);
+		}
 		this.m_intakeMotorOnOffSubsystem = intakeMotorOnOffSubsystem;
 	}
 

@@ -178,7 +178,7 @@ public class IntakeOnOffSubsystemTest {
 		reset(mockedIntakeBackMotor);
 
 		// Create command
-		IntakeFrontInCommand intakeFrontOnCommand = new IntakeFrontInCommand(realIntakeMotorOnOffSubsystem);
+		IntakeFrontInCommand intakeFrontOnCommand = new IntakeFrontInCommand(realIntakeMotorOnOffSubsystem, true);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();

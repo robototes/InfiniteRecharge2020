@@ -1,17 +1,29 @@
 package frc.team2412.robot;
 
+import static frc.team2412.robot.RobotMap.CLIMB_CONNECTED;
+import static frc.team2412.robot.RobotMap.DRIVE_BASE_CONNECTED;
+import static frc.team2412.robot.RobotMap.INDEX_CONNECTED;
+import static frc.team2412.robot.RobotMap.INTAKE_CONNECTED;
+import static frc.team2412.robot.RobotMap.SHOOTER_CONNECTED;
+import static frc.team2412.robot.RobotMap.compressor;
+
 import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
-public class Logging implements Loggable {
+public class Logging implements Loggable, Sendable {
 
-	Robot m_robot;
-
+	
+	RobotContainer m_robotContainer;
+	
 	// 4 rows, 10 col
+	
+	
 
 	@Log.PDP(tabName = "Misc.")
 	public PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -72,8 +84,8 @@ public class Logging implements Loggable {
 	@Log.CameraStream(columnIndex = 3, rowIndex = 1, width = 4, height = 3, tabName = "Dwivew view >~<")
 	public HttpCamera limelightFeed;
 
-	public Logging(Robot robot) {
-		this.m_robot = robot;
+	public Logging(RobotContainer robotContainer) {
+		m_robotContainer = robotContainer;
 		limelightFeed = new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
 				HttpCameraKind.kMJPGStreamer);
 	}
@@ -81,33 +93,39 @@ public class Logging implements Loggable {
 	public void periodic() {
 		// WIP: OuterGoalAble, innerGoalAble, outerGoalAimed, innerGoalAimed
 
-		backIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorSubsystem.backMotorOn()
+		backIntakeOn =  INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.backMotorOn()
 				: false;
-		backIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeLiftSubsystem.isBackIntakeUp()
+		backIntakeUp =  INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isBackIntakeUp()
 				: false;
-		frontIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeLiftSubsystem.isFrontIntakeUp()
+		frontIntakeUp =  INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isFrontIntakeUp()
 				: false;
-		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorSubsystem.FrontMotorOn()
+		frontIntakeOn =  INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.FrontMotorOn()
 				: false;
 
 		powerCellCount = RobotState.m_ballCount % 5;
 
-		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+		currentDrawDial = ( CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
 				: 0)
-				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
-				+ RobotMap.compressor.getCompressorCurrent();
+				+ ( DRIVE_BASE_CONNECTED ?  m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ ( SHOOTER_CONNECTED ?  m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ ( INDEX_CONNECTED ?  m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ ( INTAKE_CONNECTED ?  m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw() : 0)
+				+ ( SHOOTER_CONNECTED ?  m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
+				+  compressor.getCompressorCurrent();
 
 		// 6.8 V is the warning level for brownout
 		brownoutWarning = (RobotController.getInputVoltage() < 7 || RobotController.isBrownedOut());
 
-		double time = m_robot.timeRemaining;
-		timer = time / 60 + " : " + time % 60;
+		// double time = m_robot.timeRemaining;
+		// timer = time / 60 + " : " + time % 60;
 
-		driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+		// driveBaseCurrentDraw =
+		//  m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+	}
+
+	@Override
+	public void initSendable(SendableBuilder builder) {
+
 	}
 
 }

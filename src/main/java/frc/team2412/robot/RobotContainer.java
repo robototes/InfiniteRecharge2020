@@ -10,8 +10,8 @@ import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
@@ -21,22 +21,22 @@ import io.github.oblarg.oblog.annotations.Log;
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
 
-	@Log(tabName = "Turret")
+	@Log(name = "Limelight Subsystem", tabName = "Turret")
 	public LimelightSubsystem m_limelightSubsystem;
 
-	@Log(tabName = "Turret Subsystem", name = "Turret")
+	@Log(name = "Turret Subsystem", tabName = "Turret")
 	public TurretSubsystem m_turretSubsystem;
 
-	@Log(tabName = "Flywheel Subsystem", name = "Turret")
+	@Log(name = "Flywheel Subsystem", tabName = "Turret")
 	public FlywheelSubsystem m_flywheelSubsystem;
 
-	@Log(tabName = "Hood Subsystem", name = "Turret")
+	@Log(name = "Hood Subsystem", tabName = "Turret")
 	public HoodSubsystem m_hoodSubsystem;
 
-	@Log(tabName = "Lift Subsystem", name = "Lift")
+	@Log(name = "Lift Subsystem", tabName = "Lift")
 	public LiftSubsystem m_liftSubsystem;
 
-	@Log(tabName = "Drivebase Subsystem", name = "Drivebase Subsystem")
+	@Log(name = "Drivebase Subsystem", tabName = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
 	@Log(tabName = "Intake Motors Subsystem", name = "Intake")
@@ -45,20 +45,23 @@ public class RobotContainer implements Loggable {
 	@Log(tabName = "Intake Lift Subsystem", name = "Intake")
 	public IntakeLiftSubsystem m_intakeLiftSubsystem;
 
-	@Log(tabName = "Control Panel Subsystem", name = "Control Panel")
+	@Log(name = "Control Panel Subsystem", tabName = "Control Panel")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
-	@Log(tabName = "Indexer Motor Subsystem", name = "Indexer")
+	@Log(name = "Indexer Motor Subsystem", tabName = "Indexer")
 	public IndexerMotorSubsystem m_indexerMotorSubsystem;
 
-	@Log(tabName = "Indexer Sensor Subsystem", name = "Indexer")
+	@Log(name = "Indexer Sensor Subsystem", tabName = "Indexer")
 	public IndexerSensorSubsystem m_indexerSensorSubsystem;
 
-	@Log(tabName = "Climb Lift Subsystem", name = "Climb")
+	@Log(name = "Climb Lift Subsystem", tabName = "Climb")
 	public ClimbLiftSubsystem m_climbLiftSubsystem;
 
-	@Log(tabName = "Climb Motor Subsystem", name = "Climb")
+	@Log(name = "Climb Motor Subsystem", tabName = "Climb")
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
+
+	@Log(tabName = "Driver View")
+	public Logging logger = new Logging(this);
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -76,6 +79,7 @@ public class RobotContainer implements Loggable {
 
 			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
 					RobotMap.indexBackMotor, m_indexerSensorSubsystem);
+
 		}
 
 		if (RobotMap.LIFT_CONNECTED) {
@@ -107,7 +111,6 @@ public class RobotContainer implements Loggable {
 
 			m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
 		}
-
 	}
 
 	public void resetAllEncoders() {

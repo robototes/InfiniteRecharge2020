@@ -13,8 +13,8 @@ import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 
 public class SmartAutoCommandGroup extends SequentialCommandGroup {
@@ -38,7 +38,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							//
 							new SequentialCommandGroup(
 									new FlywheelRevUpCommand(flywheelSubsystem, 10),
-									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
+									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem)
 							//
 							)
 					//
@@ -54,7 +54,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							//
 							new SequentialCommandGroup(
 									new FlywheelRevUpCommand(flywheelSubsystem, 10),
-									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
+									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem)
 							//
 							)
 					//
@@ -68,7 +68,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 					//
 					new SequentialCommandGroup(
 							// add rev up flyhweel command Parker was here
-							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
+							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem)
 					//
 					),
 					//
@@ -78,7 +78,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 					//
 					new SequentialCommandGroup(
 							// add rev up flyhweel command
-							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem)
+							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem)
 					//
 					)
 
