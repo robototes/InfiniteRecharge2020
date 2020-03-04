@@ -7,20 +7,15 @@
 
 package frc.team2412.robot;
 
-import java.util.Set;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.team2412.robot.commands.flywheel.FlywheelShootCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
+import frc.team2412.robot.commands.hood.HoodJoystickCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
-import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.Logger;
 
@@ -35,9 +30,7 @@ public class Robot extends TimedRobot implements Loggable {
 
 	public double timeRemaining;
 
-	// Have instances of robot container and OI for easy access
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
-	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
 
 	Command autoCommand;
@@ -122,11 +115,13 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void teleopInit() {
 		timeRemaining = 135.0;
-		//CommandScheduler.getInstance().cancel(autoCommand);
+		// CommandScheduler.getInstance().cancel(autoCommand);
 		CommandScheduler.getInstance()
 				.schedule(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.stopAllMotors()));
 		m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
-		//m_robotContainer.m_LimelightSubsystem.stopLimelight();
+
+		m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+				new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}
 
 	/**
@@ -135,10 +130,6 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void teleopPeriodic() {
 		timeRemaining -= 0.02;
-
-		double val = m_OI.codriverStick.getY() * 0.5 + 0.5;
-		m_robotContainer.m_hoodSubsystem.setServo(val);
-
 	}
 
 	@Override

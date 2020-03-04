@@ -134,7 +134,6 @@ public class RobotMap {
 	public static CANSparkMax rightClimbMotor = CLIMB_CONNECTED
 			? new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless)
 			: null;
-			
 
 	// INDEX SUBSYSTEM
 	// ---------------------------------------------------------------------------
