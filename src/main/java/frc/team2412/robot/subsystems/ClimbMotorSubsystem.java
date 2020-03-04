@@ -85,7 +85,7 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 		if (value < 0 && m_leftEncoder.getPosition() > 0 || value > 0 && m_leftEncoder.getPosition() < 76) {
 			m_leftClimbMotor.set(value);
-		}else{
+		} else {
 			m_leftClimbMotor.set(0);
 		}
 		System.out.println("right: " + m_encoder.getPosition());

@@ -20,7 +20,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
-	@Log( name = "Limelight Subsystem", tabName = "Turret")
+	@Log(name = "Limelight Subsystem", tabName = "Turret")
 	public LimelightSubsystem m_LimelightSubsystem;
 
 	@Log(name = "Turret Subsystem", tabName = "Turret")
@@ -78,7 +78,7 @@ public class RobotContainer implements Loggable {
 
 			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
 					RobotMap.indexBackMotor, m_indexerSensorSubsystem);
-			
+
 		}
 
 		if (RobotMap.LIFT_CONNECTED) {

@@ -48,7 +48,8 @@ public class Logging implements Loggable, Sendable {
 
 	// Dial Boolean
 	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Driver View")
-	//@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9, rowIndex = 1, tabName = "Driver View")
+	// @Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9,
+	// rowIndex = 1, tabName = "Driver View")
 	public boolean brownoutWarning = false;
 
 	// Timer
@@ -99,10 +100,12 @@ public class Logging implements Loggable, Sendable {
 		// double time = m_robot.timeRemaining;
 		// timer = time / 60 + " : " + time % 60;
 
-		//driveBaseCurrentDraw = RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+		// driveBaseCurrentDraw =
+		// RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
 	}
 
-	public void initSendable(SendableBuilder builder){
+	@Override
+	public void initSendable(SendableBuilder builder) {
 
 	}
 

@@ -14,6 +14,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
+	@SuppressWarnings("unused")
 	private double frontTicks, backTicks, midTicks;
 
 	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
@@ -150,8 +151,6 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	public void periodic() {
 		System.out.println(m_indexMidMotor.get());
 	}
-
-
 
 	public void setLifting(boolean b) {
 		this.lifting = b;
