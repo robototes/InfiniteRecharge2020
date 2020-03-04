@@ -13,6 +13,7 @@ import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
+import frc.team2412.robot.commands.indexer.IndexIntakeCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
@@ -27,6 +28,7 @@ import frc.team2412.robot.commands.intake.front.IntakeFrontOutCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
+import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
@@ -230,7 +232,7 @@ public class OI {
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(1);
 					else
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(0);*/
-				})));
+				}).andThen(new IndexIntakeCommandGroup(robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerLiftMotorSubsystem, robotContainer.m_indexerSensorSubsystem))));
 		intakeBackIn.whileHeld(
 				new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(new InstantCommand(() -> {
 					RobotState.m_intakeDirection = RobotState.IntakeDirection.BACK;
@@ -243,7 +245,7 @@ public class OI {
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(1);
 					else
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);*/
-				})));
+				}).andThen(new IndexIntakeCommandGroup(robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerLiftMotorSubsystem, robotContainer.m_indexerSensorSubsystem))));
 
 	}
 
