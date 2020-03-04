@@ -1,23 +1,23 @@
-package frc.team2412.robot.commands.indexer;
+package frc.team2412.robot.commands.indexer.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 
-public class IndexIntakeSecondCommand extends CommandBase{
+public class IndexIntakeFirstCommand extends CommandBase{
 	
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
-
-	public IndexIntakeSecondCommand(IndexerMotorSubsystem indexSideMotors, IndexerSensorSubsystem indexSensors) {
+	
+	public IndexIntakeFirstCommand(IndexerMotorSubsystem indexSideMotors, IndexerSensorSubsystem indexSensors) {
 		m_indexerMotorSubsystem  = indexSideMotors;
 		m_indexerSensorSubsystem = indexSensors;
 		addRequirements(indexSideMotors, indexSensors);
 	}
-
+	
 	/*
-	 * loads ball into midle position between center and intake
+	 * loads ball into area right behind intake
 	 */
 	
 	private double speed = 1.0;
@@ -27,13 +27,13 @@ public class IndexIntakeSecondCommand extends CommandBase{
 	public void execute() {
 		//intake ball to position five from front
 		if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
-			while(!m_indexerSensorSubsystem.getIndexFrontMidSensorValue())
+			while(!m_indexerSensorSubsystem.getIndexFrontSensorValue())
 				m_indexerMotorSubsystem.setFrontMotor(-speed);
 			m_indexerMotorSubsystem.setFrontMotor(0);
 		}
 		//intake ball to position one from back
 		else if(/*intake direction == back*/t == RobotState.IntakeDirection.BACK) {
-			while(!m_indexerSensorSubsystem.getIndexBackMidSensorValue())
+			while(!m_indexerSensorSubsystem.getIndexBackSensorValue())
 				m_indexerMotorSubsystem.setBackMotor(speed);
 			m_indexerMotorSubsystem.setBackMotor(0);
 		}
