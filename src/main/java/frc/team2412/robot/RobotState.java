@@ -12,7 +12,7 @@ public class RobotState implements Loggable {
 	private RobotContainer m_robotContainer;
 
 	@Log.ToString(tabName = "Robot State")
-	public static UnbalancedSide m_unbalancedSide;
+	public static UnbalancedSide m_unbalancedSide = UnbalancedSide.FRONT;
 
 	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count", tabName = "Robot State")
 	public static int m_ballCount = 0;

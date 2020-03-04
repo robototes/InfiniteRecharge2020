@@ -8,7 +8,13 @@ public class IntakeBackOffCommand extends CommandBase {
 	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
 
 	public IntakeBackOffCommand(IntakeOnOffSubsystem intakeOnOffSubsystem) {
-		addRequirements(intakeOnOffSubsystem);
+		this(intakeOnOffSubsystem, true);
+	}
+
+	public IntakeBackOffCommand(IntakeOnOffSubsystem intakeOnOffSubsystem, boolean require) {
+		if (require) {
+			addRequirements(intakeOnOffSubsystem);
+		}
 		this.m_intakeOnOffSubsystem = intakeOnOffSubsystem;
 	}
 

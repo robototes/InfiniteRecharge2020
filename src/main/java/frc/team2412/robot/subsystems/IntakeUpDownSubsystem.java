@@ -48,8 +48,8 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 		return m_backIntakeUpDown.get();
 	}
 
-	private void setIntake(IntakeState newState, Solenoid Solenoid) {
-		m_frontIntakeUpDown.set(newState.value);
+	private void setIntake(IntakeState newState, Solenoid solenoid) {
+		solenoid.set(newState.value);
 		m_currentState = newState;
 	}
 
