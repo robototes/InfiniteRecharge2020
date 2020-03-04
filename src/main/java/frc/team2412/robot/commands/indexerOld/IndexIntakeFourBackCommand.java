@@ -1,14 +1,14 @@
-package frc.team2412.robot.commands.indexer;
+package frc.team2412.robot.commands.indexerOld;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
-public class IndexIntakeFiveBackCommand extends CommandBase {
+public class IndexIntakeFourBackCommand extends CommandBase {
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
 
-	public IndexIntakeFiveBackCommand(IndexerSensorSubsystem sensorSubsystem) {
+	public IndexIntakeFourBackCommand(IndexerSensorSubsystem sensorSubsystem) {
 		m_indexerSensorSubsystem = sensorSubsystem;
 		addRequirements(sensorSubsystem);
 	}
