@@ -22,7 +22,6 @@ public class IndexIntakeFourthCommand extends CommandBase{
 	 * loads ball into one position over from center (oppocite the side it was intook)
 	 */
 	private double speed = 1.0;
-	//TODO SET INTAKE DIRECTION IN OI || INTAKE SUBSYSTEM
 	private frc.team2412.robot.RobotState.IntakeDirection t;
 	
 	public void execute() {
