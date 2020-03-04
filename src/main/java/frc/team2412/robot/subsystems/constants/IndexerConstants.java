@@ -1,5 +1,7 @@
 package frc.team2412.robot.subsystems.constants;
 
+import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
+
 public class IndexerConstants {
 	public enum UnbalancedSide {
 		FRONT, BACK;
@@ -15,7 +17,25 @@ public class IndexerConstants {
 			}
 		}
 	}
-
+	/*
+	public enum IntakeDirection {
+		FRONT, BACK, NONE;
+		//sets intake direction
+		public void setSide(IndexerSensorSubsystem sensors) {
+			IntakeDirection t = this;
+			if(sensors.getIntakeFrontSensorValue()) {
+				t = IntakeDirection.FRONT;
+			} else if(sensors.getIntakeBackSensorValue()) {
+				t = IntakeDirection.BACK;;
+			} else if(!(sensors.getIntakeBackSensorValue() || sensors.getIntakeFrontSensorValue())) {
+				t = IntakeDirection.NONE;
+			} else {
+				t = null;
+			}
+		}
+	}
+	*/
+	
 	// PID FOR AFTER A SENSOR PICKS UP A BALL
 	public static final double PID_P = 0.03;
 	public static final double PID_I = 0;

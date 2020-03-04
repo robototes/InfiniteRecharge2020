@@ -75,7 +75,6 @@ public class RobotState implements Loggable {
 
 	public static enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
-
 		@Override
 		public String toString() {
 			if (this.equals(FRONT)) {
