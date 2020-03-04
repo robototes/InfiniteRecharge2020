@@ -2,14 +2,13 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.commands.climb.ClimbDeployRailsCommand;
-import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
 import frc.team2412.robot.commands.climb.ClimbJoystickCommand;
+import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
@@ -18,13 +17,13 @@ import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackOutCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackUpCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontOutCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
-import frc.team2412.robot.commands.intake.back.IntakeBackOutCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
 
@@ -196,30 +195,11 @@ public class OI {
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(1))));
 			intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
-			intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> {
-						robotContainer.m_indexerMotorSubsystem.setMidMotor(0);
-						if (robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
-							robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1);
-						else
-							robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);
-						if (!robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
-							robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
-						else
-							robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
-					})));
-			intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> {
-						robotContainer.m_indexerMotorSubsystem.setMidMotor(0);
-						if (robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
-							robotContainer.m_indexerMotorSubsystem.setBackMotor(-1);
-						else
-							robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
-						if (!robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
-							robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);
-						else
-							robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);
-					})));
+					intakeFrontIn.whenPressed(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> RobotState.m_unbalancedSide = RobotState.UnbalancedSide.FRONT)));
+				   intakeBackIn.whenPressed(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
+					.andThen(new InstantCommand(() -> RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK)));
+			
 		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
@@ -253,13 +233,15 @@ public class OI {
 			indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
 					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
-			Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
-					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem);
+		//	Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
+		//			robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem);
 
-			indexerShootButton.whenPressed(indexShootCommand);
+			indexerShootButton.whenPressed(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
+			robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
 			indexerShootButton
-					.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
+					.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
+					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem))));
 
 		}
 

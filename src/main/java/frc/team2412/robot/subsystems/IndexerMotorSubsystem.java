@@ -29,7 +29,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
 
-	private boolean lifting;
+	private boolean lifting = false;
 
 	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,
 			IndexerSensorSubsystem indexerSensorSubsystem) {
@@ -78,8 +78,9 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void setMidMotor(double val) {
 		val = MathUtils.constrain(val, -IndexerConstants.MAX_LIFT_SPEED, IndexerConstants.MAX_LIFT_SPEED);
-		m_indexMidMotor.set(lifting ? IndexerConstants.MAX_LIFT_SPEED : val);
-		System.out.println(m_indexMidMotor.get());
+		m_indexMidMotor.set(val);
+	//	System.out.println(lifting);
+//		System.out.println(m_indexMidMotor.get());
 	}
 
 	public void setBackMotor(double val) {
@@ -148,7 +149,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
-	//	System.out.println(m_indexMidMotor.get());
+//		System.out.println(lifting);
 	}
 
 

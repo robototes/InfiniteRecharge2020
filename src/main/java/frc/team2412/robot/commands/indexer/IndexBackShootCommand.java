@@ -24,7 +24,7 @@ public class IndexBackShootCommand extends CommandBase {
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
 		m_indexerMotorSubsystem.setBackMotor(-1);
-		m_IntakeOnOffSubsystem.backIntakeIn();
+	//	m_IntakeOnOffSubsystem.backIntakeIn();
 	}
 
 	@Override
