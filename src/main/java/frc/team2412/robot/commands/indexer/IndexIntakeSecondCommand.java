@@ -9,12 +9,16 @@ public class IndexIntakeSecondCommand extends CommandBase{
 	
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
 	private IndexerSensorSubsystem m_indexerSensorSubsystem;
-	
+
 	public IndexIntakeSecondCommand(IndexerMotorSubsystem indexSideMotors, IndexerSensorSubsystem indexSensors) {
 		m_indexerMotorSubsystem  = indexSideMotors;
 		m_indexerSensorSubsystem = indexSensors;
 		addRequirements(indexSideMotors, indexSensors);
 	}
+
+	/*
+	 * loads ball into midle position between center and intake
+	 */
 	
 	private double speed = 1.0;
 	//TODO SET INTAKE DIRECTION IN OI || INTAKE SUBSYSTEM

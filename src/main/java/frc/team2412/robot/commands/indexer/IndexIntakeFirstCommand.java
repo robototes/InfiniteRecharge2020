@@ -16,6 +16,10 @@ public class IndexIntakeFirstCommand extends CommandBase{
 		addRequirements(indexSideMotors, indexSensors);
 	}
 	
+	/*
+	 * loads ball into area right behind intake
+	 */
+	
 	private double speed = 1.0;
 	//TODO SET INTAKE DIRECTION IN OI || INTAKE SUBSYSTEM
 	private frc.team2412.robot.RobotState.IntakeDirection t;
