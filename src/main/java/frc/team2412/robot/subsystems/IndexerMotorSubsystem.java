@@ -17,25 +17,20 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	@SuppressWarnings("unused")
 	private double frontTicks, backTicks, midTicks;
 
-	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
-	private CANPIDController m_frontPIDController, m_backPIDController, m_midPIDController;
+	private CANEncoder m_frontEncoder, m_backEncoder;
+	private CANPIDController m_frontPIDController, m_backPIDController;
 
 	@Log.NumberBar(min = -1, max = 1, name = "Index Front Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexFrontMotor;
-	@Log.NumberBar(min = -1, max = 1, name = "Index Mid Speed", tabName = "Indexer", methodName = "get")
-	private CANSparkMax m_indexMidMotor;
 	@Log.NumberBar(min = -1, max = 1, name = "Index Back Speed", tabName = "Indexer", methodName = "get")
 	private CANSparkMax m_indexBackMotor;
 
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
 
-	private boolean lifting;
-
-	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,
+	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor,
 			IndexerSensorSubsystem indexerSensorSubsystem) {
 		m_indexFrontMotor = frontMotor;
-		m_indexMidMotor = midMotor;
 		m_indexBackMotor = backMotor;
 
 		m_frontEncoder = m_indexFrontMotor.getEncoder();
@@ -46,23 +41,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		m_backPIDController = m_indexBackMotor.getPIDController();
 		configureMotorPID(m_backPIDController);
 
-		m_midEncoder = m_indexMidMotor.getEncoder();
-		m_midPIDController = m_indexMidMotor.getPIDController();
-		configureMotorPID(m_midPIDController);
-
 		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
-		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexMidMotor, m_indexBackMotor);
-
-		// Trigger frontProcess = new
-		// Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
-		// frontProcess.whenActive(new
-		// IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
-
-		// Trigger backProcess = new
-		// Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
-		// backProcess.whenActive(new
-		// IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
-		midTicks = m_midEncoder.getPosition();
 	}
 
 	private void configureMotorPID(CANPIDController motorController) {
@@ -76,13 +55,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		val = MathUtils.constrain(val, -IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
 		m_indexFrontMotor.set(val);
 	}
-
-	public void setMidMotor(double val) {
-		val = MathUtils.constrain(val, -IndexerConstants.MAX_LIFT_SPEED, IndexerConstants.MAX_LIFT_SPEED);
-		m_indexMidMotor.set(lifting ? IndexerConstants.MAX_LIFT_SPEED : val);
-		System.out.println(m_indexMidMotor.get());
-	}
-
+	
 	public void setBackMotor(double val) {
 		val = MathUtils.constrain(val, -IndexerConstants.MAX_SPEED, IndexerConstants.MAX_SPEED);
 		m_indexBackMotor.set(val);
@@ -90,10 +63,6 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void stopAllMotors() {
 		m_allMotors.set(0);
-	}
-
-	public void stopMidMotor() {
-		m_indexMidMotor.set(0);
 	}
 
 	public void stopSideMotors() {
@@ -124,36 +93,17 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		}
 	}
 
-	public void setMidPID(boolean upOrDown) {
-		return;
-		// if (upOrDown) {
-
-		// m_midPIDController.setReference(midTicks + IndexerConstants.TOP_TICKS,
-		// ControlType.kPosition);
-		// } else {
-		// m_midPIDController.setReference(midTicks + IndexerConstants.BOTTOM_TICKS,
-		// ControlType.kPosition);
-
-		// }
-	}
-
 	public void resetEncoderZero() {
 		frontTicks = m_frontEncoder.getPosition();
 		backTicks = m_backEncoder.getPosition();
 	}
 
 	public double getCurrentDraw() {
-		return m_indexBackMotor.getOutputCurrent() + m_indexFrontMotor.getOutputCurrent()
-				+ m_indexMidMotor.getOutputCurrent();
+		return m_indexBackMotor.getOutputCurrent() + m_indexFrontMotor.getOutputCurrent();
 	}
 
 	@Override
 	public void periodic() {
-		System.out.println(m_indexMidMotor.get());
+		//System.out.println(m_indexMidMotor.get());
 	}
-
-	public void setLifting(boolean b) {
-		this.lifting = b;
-	}
-
 }

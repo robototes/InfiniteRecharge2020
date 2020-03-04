@@ -176,10 +176,10 @@ public class OI {
 		}
 
 		indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
+				robotContainer.m_intakeMotorOnOffSubsystem, robotContainer.m_indexerLiftMotorSubsystem));
 
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
-				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem);
+				robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerLiftMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem);
 
 		indexerShootButton.whenPressed(indexShootCommand);
 
@@ -220,7 +220,7 @@ public class OI {
 				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
 		intakeFrontIn.whileHeld(
 				new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(new InstantCommand(() -> {
-					robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
+					robotContainer.m_indexerLiftMotorSubsystem.setMidMotor(-0.2);
 					if (robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1);
 					else
@@ -232,7 +232,7 @@ public class OI {
 				})));
 		intakeBackIn.whileHeld(
 				new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(new InstantCommand(() -> {
-					robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
+					robotContainer.m_indexerLiftMotorSubsystem.setMidMotor(-0.2);
 					if (robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(-1);
 					else
@@ -261,9 +261,9 @@ public class OI {
 		}
 
 		liftButton
-				.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+				.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerLiftMotorSubsystem));
 		liftButton.whenReleased(
-				new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+				new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerLiftMotorSubsystem));
 	}
 
 	public void bindDriverControls(RobotContainer robotContainer) {
