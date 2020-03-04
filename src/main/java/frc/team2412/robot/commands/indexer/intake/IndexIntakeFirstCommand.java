@@ -25,17 +25,20 @@ public class IndexIntakeFirstCommand extends CommandBase{
 	private frc.team2412.robot.RobotState.IntakeDirection t;
 	
 	public void execute() {
-		//intake ball to position five from front
-		if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
-			while(!m_indexerSensorSubsystem.getIndexFrontSensorValue())
-				m_indexerMotorSubsystem.setFrontMotor(-speed);
-			m_indexerMotorSubsystem.setFrontMotor(0);
-		}
-		//intake ball to position one from back
-		else if(/*intake direction == back*/t == RobotState.IntakeDirection.BACK) {
-			while(!m_indexerSensorSubsystem.getIndexBackSensorValue())
-				m_indexerMotorSubsystem.setBackMotor(speed);
-			m_indexerMotorSubsystem.setBackMotor(0);
+		t = RobotState.getintakeDirection();
+		if(RobotState.getBallCount() == 0) {
+			//intake ball to position five from front
+			if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
+				while(!m_indexerSensorSubsystem.getIndexFrontSensorValue())
+					m_indexerMotorSubsystem.setFrontMotor(-speed);
+				m_indexerMotorSubsystem.setFrontMotor(0);
+			}
+			//intake ball to position one from back
+			else if(/*intake direction == back*/t == RobotState.IntakeDirection.BACK) {
+				while(!m_indexerSensorSubsystem.getIndexBackSensorValue())
+					m_indexerMotorSubsystem.setBackMotor(speed);
+				m_indexerMotorSubsystem.setBackMotor(0);
+			}
 		}
 	}
 }

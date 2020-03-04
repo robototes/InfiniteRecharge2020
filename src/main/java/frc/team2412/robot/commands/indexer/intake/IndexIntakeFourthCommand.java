@@ -26,6 +26,7 @@ public class IndexIntakeFourthCommand extends CommandBase{
 	private frc.team2412.robot.RobotState.IntakeDirection t;
 	
 	public void execute() {
+		t = RobotState.getintakeDirection();
 		//intake ball to position two from front
 		if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
 			while(!m_indexerSensorSubsystem.getIndexBackMidSensorValue()) {

@@ -26,29 +26,32 @@ public class IndexIntakeThirdCommand extends CommandBase{
 	private frc.team2412.robot.RobotState.IntakeDirection t;
 	
 	public void execute() {
-		//intake ball to position three(center) from front
-		if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
-			while(!(m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && m_indexerSensorSubsystem.getIndexFrontInnerSensorValue())) {
-				m_indexerMotorSubsystem.setFrontMotor(-speed); //rotate to back
-				m_indexerLiftMotorSubsystem.setMidMotor(-speed); //down
-				m_indexerMotorSubsystem.setBackMotor(-speed); // rotate to back
+		if(RobotState.getBallCount() == 2) {
+			t = RobotState.getintakeDirection();
+			//intake ball to position three(center) from front
+			if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
+				while(!(m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && m_indexerSensorSubsystem.getIndexFrontInnerSensorValue())) {
+					m_indexerMotorSubsystem.setFrontMotor(-speed); //rotate to back
+					m_indexerLiftMotorSubsystem.setMidMotor(-speed); //down
+					m_indexerMotorSubsystem.setBackMotor(-speed); // rotate to back
+				}
+				//stop all
+				m_indexerMotorSubsystem.setFrontMotor(0);
+				m_indexerLiftMotorSubsystem .setMidMotor(0);
+				m_indexerMotorSubsystem.setBackMotor(0);
 			}
-			//stop all
-			m_indexerMotorSubsystem.setFrontMotor(0);
-			m_indexerLiftMotorSubsystem .setMidMotor(0);
-			m_indexerMotorSubsystem.setBackMotor(0);
-		}
-		//intake ball to position three(center) from back
-		else if(/*intake direction == back*/t == RobotState.IntakeDirection.BACK) {
-			while(!(m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && m_indexerSensorSubsystem.getIndexFrontInnerSensorValue())) {
-				m_indexerMotorSubsystem.setBackMotor(speed); //rotate to front
-				m_indexerLiftMotorSubsystem.setMidMotor(speed); //down
-				m_indexerMotorSubsystem.setFrontMotor(speed); //rotate to front
+			//intake ball to position three(center) from back
+			else if(/*intake direction == back*/t == RobotState.IntakeDirection.BACK) {
+				while(!(m_indexerSensorSubsystem.getIndexBackInnerSensorValue() && m_indexerSensorSubsystem.getIndexFrontInnerSensorValue())) {
+					m_indexerMotorSubsystem.setBackMotor(speed); //rotate to front
+					m_indexerLiftMotorSubsystem.setMidMotor(speed); //down
+					m_indexerMotorSubsystem.setFrontMotor(speed); //rotate to front
+				}
+				//stop all
+				m_indexerMotorSubsystem.setBackMotor(0);
+				m_indexerLiftMotorSubsystem.setMidMotor(0);
+				m_indexerMotorSubsystem.setFrontMotor(0);
 			}
-			//stop all
-			m_indexerMotorSubsystem.setBackMotor(0);
-			m_indexerLiftMotorSubsystem.setMidMotor(0);
-			m_indexerMotorSubsystem.setFrontMotor(0);
 		}
 	}
 }

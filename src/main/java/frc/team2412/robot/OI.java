@@ -220,7 +220,8 @@ public class OI {
 				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
 		intakeFrontIn.whileHeld(
 				new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(new InstantCommand(() -> {
-					robotContainer.m_indexerLiftMotorSubsystem.setMidMotor(-0.2);
+					RobotState.m_intakeDirection = RobotState.IntakeDirection.FRONT;
+					/*robotContainer.m_indexerLiftMotorSubsystem.setMidMotor(-0.2);
 					if (robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1);
 					else
@@ -228,11 +229,12 @@ public class OI {
 					if (!robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(1);
 					else
-						robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
+						robotContainer.m_indexerMotorSubsystem.setBackMotor(0);*/
 				})));
 		intakeBackIn.whileHeld(
 				new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(new InstantCommand(() -> {
-					robotContainer.m_indexerLiftMotorSubsystem.setMidMotor(-0.2);
+					RobotState.m_intakeDirection = RobotState.IntakeDirection.BACK;
+					/*robotContainer.m_indexerLiftMotorSubsystem.setMidMotor(-0.2);
 					if (robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(-1);
 					else
@@ -240,7 +242,7 @@ public class OI {
 					if (!robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(1);
 					else
-						robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);
+						robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);*/
 				})));
 
 	}
