@@ -85,6 +85,8 @@ public class IndexBitmapCommand extends CommandBase {
       final IndexerSensorSubsystem indexerSensorSubsystem) {
     m_indexerMotorSubsystem = indexerMotorSubsystem;
     m_indexerSensorSubsystem = indexerSensorSubsystem;
+
+    // Only require the index motor subsystem, as the sensors can be read by multiple commands simultaneously without issues
     addRequirements(indexerMotorSubsystem);
   }
 
@@ -151,7 +153,8 @@ public class IndexBitmapCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return true;
+    // Command is never finished, as it's intended to be used as the default command for the index motor subsystem
+    return false;
   }
 
   private double getIndexerMotorSpeed(IndexDirection direction) {
