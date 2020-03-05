@@ -1,7 +1,6 @@
 package frc.team2412.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.commands.indexer.intake.IndexIntakeFirstCommand;
 import frc.team2412.robot.commands.indexer.intake.IndexIntakeFithCommand;
 import frc.team2412.robot.commands.indexer.intake.IndexIntakeFourthCommand;
@@ -24,8 +23,6 @@ public class IndexIntakeCommandGroup extends ParallelCommandGroup {
 		m_indexIntakeThreeCommand = intakeThree;
 		m_indexIntakeFourCommand = intakeFour;
 		m_indexIntakeFiveCommand = intakeFive;
-		
-		SequentialCommandGroup IndexIntake = new SequentialCommandGroup(intakeOne, intakeTwo, intakeThree, intakeFour, intakeFive);
 		
 	}
 }

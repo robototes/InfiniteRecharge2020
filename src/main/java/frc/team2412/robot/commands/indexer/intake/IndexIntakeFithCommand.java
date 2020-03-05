@@ -26,32 +26,29 @@ public class IndexIntakeFithCommand extends CommandBase{
 	private frc.team2412.robot.RobotState.IntakeDirection t;
 	
 	public void execute() {
-		if(RobotState.getBallCount() == 4) {
-			t = RobotState.getintakeDirection();
-			//intake ball to position two from front
-			if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
-				while(!m_indexerSensorSubsystem.getIndexBackSensorValue()) {
-					m_indexerMotorSubsystem.setFrontMotor(-speed); //rotate to back
-					m_indexerLiftMotorSubsystem.setMidMotor(-speed); //down
-					m_indexerMotorSubsystem.setBackMotor(-speed); // rotate to back
-				}
-				//stop all
-				m_indexerMotorSubsystem.setFrontMotor(0);
-				m_indexerLiftMotorSubsystem .setMidMotor(0);
-				m_indexerMotorSubsystem.setBackMotor(0);
+		//intake ball to position two from front
+		if(/*intake direction == front*/ t == RobotState.IntakeDirection.FRONT) {
+			while(!m_indexerSensorSubsystem.getIndexBackSensorValue()) {
+				m_indexerMotorSubsystem.setFrontMotor(-speed); //rotate to back
+				m_indexerLiftMotorSubsystem.setMidMotor(-speed); //down
+				m_indexerMotorSubsystem.setBackMotor(-speed); // rotate to back
 			}
-			//intake ball to position four from back
-			else if(/*intake direction == back*/t == RobotState.IntakeDirection.BACK) {
-				while(!m_indexerSensorSubsystem.getIndexFrontSensorValue()) {
-					m_indexerMotorSubsystem.setBackMotor(speed); //rotate to front
-					m_indexerLiftMotorSubsystem.setMidMotor(speed); //down
-					m_indexerMotorSubsystem.setFrontMotor(speed); //rotate to front
-				}
-				//stop all
-				m_indexerMotorSubsystem.setBackMotor(0);
-				m_indexerLiftMotorSubsystem.setMidMotor(0);
-				m_indexerMotorSubsystem.setFrontMotor(0);
+			//stop all
+			m_indexerMotorSubsystem.setFrontMotor(0);
+			m_indexerLiftMotorSubsystem .setMidMotor(0);
+			m_indexerMotorSubsystem.setBackMotor(0);
+		}
+		//intake ball to position four from back
+		else if(/*intake direction == back*/t == RobotState.IntakeDirection.BACK) {
+			while(!m_indexerSensorSubsystem.getIndexFrontSensorValue()) {
+				m_indexerMotorSubsystem.setBackMotor(speed); //rotate to front
+				m_indexerLiftMotorSubsystem.setMidMotor(speed); //down
+				m_indexerMotorSubsystem.setFrontMotor(speed); //rotate to front
 			}
+			//stop all
+			m_indexerMotorSubsystem.setBackMotor(0);
+			m_indexerLiftMotorSubsystem.setMidMotor(0);
+			m_indexerMotorSubsystem.setFrontMotor(0);
 		}
 	}
 }
