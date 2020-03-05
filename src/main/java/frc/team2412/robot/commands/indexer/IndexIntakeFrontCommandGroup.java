@@ -1,4 +1,4 @@
-package frc.team2412.robot.commands.indexerOld;
+package frc.team2412.robot.commands.indexer;
 
 import static java.util.Map.entry;
 
@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.RobotState;
-import frc.team2412.robot.commands.indexer.IndexSwitchFourCommand;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 
