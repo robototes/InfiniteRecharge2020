@@ -20,7 +20,7 @@ public class IndexBitmapCommand extends CommandBase {
   static enum IndexCommandEntry {
     //    Bit flags                     Intake Off                              Intake On
     //  Valid   expected     Front motor          Back motor         Front motor          Back motor
-    
+
     // Don't move, as there's nothing in the outer slots -or-
     // Back side has inner and outer slots full, front side only has middle slot full
     A(0b100001, 0b000000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
@@ -130,16 +130,13 @@ public class IndexBitmapCommand extends CommandBase {
       switch (intakeDirection) {
         case BOTH:
         case FRONT:
-          m_indexerMotorSubsystem.setFrontMotor(frontIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-            frontIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-          m_indexerMotorSubsystem.setBackMotor(backIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-            backIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          m_indexerMotorSubsystem.setFrontMotor(getIndexerMotorSpeed(frontIndexDirection));
+          m_indexerMotorSubsystem.setBackMotor(getIndexerMotorSpeed(backIndexDirection));
           break;
         case BACK:
-          m_indexerMotorSubsystem.setBackMotor(frontIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-            frontIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-          m_indexerMotorSubsystem.setFrontMotor(backIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-            backIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          // Swap the front & back motor values since the IndexCommandEntry assumes intake from the front
+          m_indexerMotorSubsystem.setBackMotor(getIndexerMotorSpeed(frontIndexDirection));
+          m_indexerMotorSubsystem.setFrontMotor(getIndexerMotorSpeed(backIndexDirection));
           break;
         default:
           m_indexerMotorSubsystem.setFrontMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
@@ -155,5 +152,17 @@ public class IndexBitmapCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     return true;
+  }
+
+  private double getIndexerMotorSpeed(IndexDirection direction) {
+    switch (direction) {
+      case IN:
+        return IndexerMotorSubsystem.MOTOR_IN_SPEED;
+      case OUT:
+        return IndexerMotorSubsystem.MOTOR_OUT_SPEED;
+      case OFF:
+      default:
+        return IndexerMotorSubsystem.MOTOR_OFF_SPEED;
+    }
   }
 }
