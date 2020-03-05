@@ -16,6 +16,10 @@ public class IndexerConstants {
 		}
 	}
 
+	public static final double MOTOR_IN_SPEED = -1;
+	public static final double MOTOR_OUT_SPEED = -1;
+	public static final double MOTOR_OFF_SPEED = 0;
+
 	// PID FOR AFTER A SENSOR PICKS UP A BALL
 	public static final double PID_P = 0.03;
 	public static final double PID_I = 0;

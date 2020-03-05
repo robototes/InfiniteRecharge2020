@@ -33,9 +33,6 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	private SpeedControllerGroup m_sideMotors;
 
 	private boolean lifting = false;
-	public static final double MOTOR_IN_SPEED = -1;
-	public static final double MOTOR_OUT_SPEED = -1;
-	public static final double MOTOR_OFF_SPEED = 0;
 
 	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,
 			IndexerSensorSubsystem indexerSensorSubsystem) {

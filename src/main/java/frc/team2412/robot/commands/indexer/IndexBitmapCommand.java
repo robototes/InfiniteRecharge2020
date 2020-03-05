@@ -5,6 +5,7 @@ import frc.team2412.robot.RobotState;
 import frc.team2412.robot.RobotState.IntakeDirection;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 public class IndexBitmapCommand extends CommandBase {
   private final IndexerMotorSubsystem m_indexerMotorSubsystem;
@@ -141,13 +142,13 @@ public class IndexBitmapCommand extends CommandBase {
           m_indexerMotorSubsystem.setFrontMotor(getIndexerMotorSpeed(backIndexDirection));
           break;
         default:
-          m_indexerMotorSubsystem.setFrontMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-          m_indexerMotorSubsystem.setBackMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          m_indexerMotorSubsystem.setFrontMotor(IndexerConstants.MOTOR_OFF_SPEED);
+          m_indexerMotorSubsystem.setBackMotor(IndexerConstants.MOTOR_OFF_SPEED);
           break;
         }
       } else {
-        m_indexerMotorSubsystem.setFrontMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-        m_indexerMotorSubsystem.setBackMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+        m_indexerMotorSubsystem.setFrontMotor(IndexerConstants.MOTOR_OFF_SPEED);
+        m_indexerMotorSubsystem.setBackMotor(IndexerConstants.MOTOR_OFF_SPEED);
     }
   }
 
@@ -160,12 +161,12 @@ public class IndexBitmapCommand extends CommandBase {
   private double getIndexerMotorSpeed(IndexDirection direction) {
     switch (direction) {
       case IN:
-        return IndexerMotorSubsystem.MOTOR_IN_SPEED;
+        return IndexerConstants.MOTOR_IN_SPEED;
       case OUT:
-        return IndexerMotorSubsystem.MOTOR_OUT_SPEED;
+        return IndexerConstants.MOTOR_OUT_SPEED;
       case OFF:
       default:
-        return IndexerMotorSubsystem.MOTOR_OFF_SPEED;
+        return IndexerConstants.MOTOR_OFF_SPEED;
     }
   }
 }
