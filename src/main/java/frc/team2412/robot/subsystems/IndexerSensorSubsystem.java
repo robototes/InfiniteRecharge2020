@@ -102,7 +102,11 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 		return !m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
 				&& !m_indexBackInnerSensor.get();
 	}
-
+	public boolean allSensorsOn(){
+		return !m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
+		&& !m_indexBackInnerSensor.get() && !m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()
+		&& !m_indexFrontInnerSensor.get();
+	}
 	@Log.Dial(tabName = "Indexer", min = 0, max = 8)
 	public int totalSensorsOn() {
 		int total = 0;

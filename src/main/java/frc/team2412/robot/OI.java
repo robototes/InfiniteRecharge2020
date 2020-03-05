@@ -3,9 +3,11 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.team2412.robot.RobotState.UnbalancedSide;
 import frc.team2412.robot.commands.climb.ClimbDeployRailsCommand;
 import frc.team2412.robot.commands.climb.ClimbJoystickCommand;
 import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
@@ -14,6 +16,7 @@ import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
+import frc.team2412.robot.commands.indexer.IndexSwitchFourCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
@@ -176,8 +179,8 @@ public class OI {
 			// IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 			// .andThen(new InstantCommand(() ->
 			// robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1))));
-			intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors())));
+			intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+					//.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors())));
 
 			intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(1))));
@@ -188,17 +191,22 @@ public class OI {
 			// IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 			// .andThen(new InstantCommand(() ->
 			// robotContainer.m_indexerMotorSubsystem.setBackMotor(-1))));
-			intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors())));
+			intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+					//.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors())));
 
 			intakeBackOut.whenPressed(new IntakeBackOutCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(1))));
 			intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
-					intakeFrontIn.whenPressed(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> RobotState.m_unbalancedSide = RobotState.UnbalancedSide.FRONT)));
-				   intakeBackIn.whenPressed(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK)));
+			intakeFrontIn.whenPressed(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(
+				new InstantCommand(() -> RobotState.m_unbalancedSide = UnbalancedSide.FRONT).andThen(
+				new ConditionalCommand(
+					new IndexSwitchFourCommand(robotContainer.m_indexerSensorSubsystem, robotContainer.m_indexerMotorSubsystem),
+					 new InstantCommand(() -> System.out.println("hi")), 
+					 (() -> RobotState.m_ballCount == 4)))));
+					//.andThen(new IndexSwitchFourCommand(robotContainer.m_indexerSensorSubsystem, robotContainer.m_indexerMotorSubsystem)));
+				   intakeBackIn.whenPressed(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+					//.andThen(new InstantCommand(() -> RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK)));
 			
 		}
 

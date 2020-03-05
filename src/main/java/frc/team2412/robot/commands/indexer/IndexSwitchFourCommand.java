@@ -20,8 +20,10 @@ public class IndexSwitchFourCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue()
-				|| m_indexerSensorSubsystem.getIntakeBackSensorValue()) {
+		/*
+		System.out.println("hi2");
+		//if (m_indexerSensorSubsystem.getIntakeFrontSensorValue()
+		//		|| m_indexerSensorSubsystem.getIntakeBackSensorValue()) {
 			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
 				m_indexerMotorSubsystem.setBackMotor(1);
@@ -29,25 +31,26 @@ public class IndexSwitchFourCommand extends CommandBase {
 				m_indexerMotorSubsystem.setFrontMotor(1);
 				m_indexerMotorSubsystem.setBackMotor(-1);
 			}
-		}
+	//	}*/
 
 	}
 
 	@Override
 	public void end(boolean cancel) {
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.NORMAL_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopFrontPID(-IndexerConstants.NORMAL_STOP_DISTANCE);
 			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.NORMAL_STOP_DISTANCE);
 			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
 		} else {
 			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.NORMAL_STOP_DISTANCE);
-			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.NORMAL_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopBackPID(-IndexerConstants.NORMAL_STOP_DISTANCE);
 			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
 		}
 	}
 
 	@Override
 	public boolean isFinished() {
+		
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 			return m_indexerSensorSubsystem.getIndexBackSensorValue();
 		} else {

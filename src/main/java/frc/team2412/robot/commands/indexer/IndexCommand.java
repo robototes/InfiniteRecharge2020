@@ -19,8 +19,8 @@ public class IndexCommand extends SequentialCommandGroup{
   m_indexFrontCommand = new IndexFrontCommand(indexerMotorSubsystem, indexerSensorSubsystem);
   m_indexBackCommand = new IndexBackCommand(indexerMotorSubsystem, indexerSensorSubsystem);
   //addRequirements(indexerMotorSubsystem);
-  addCommands(new ConditionalCommand(m_indexFrontCommand, m_indexBackCommand, ()-> RobotState.m_unbalancedSide == UnbalancedSide.FRONT));
-
+  if(!m_indexerSensorSubsystem.allSensorsOn()){
+    addCommands(new ConditionalCommand(m_indexFrontCommand, m_indexBackCommand, ()-> RobotState.m_unbalancedSide == UnbalancedSide.FRONT));
  }
-
+ }
 }

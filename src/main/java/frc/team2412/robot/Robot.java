@@ -72,7 +72,7 @@ public class Robot extends TimedRobot implements Loggable {
 
 	@Override
 	public void robotPeriodic() {
-		CommandScheduler.getInstance().schedule(new IndexCommand(RobotMap.m_robotContainer.m_indexerMotorSubsystem, RobotMap.m_robotContainer.m_indexerSensorSubsystem));
+		//CommandScheduler.getInstance().schedule(new IndexCommand(RobotMap.m_robotContainer.m_indexerMotorSubsystem, RobotMap.m_robotContainer.m_indexerSensorSubsystem));
 
 		CommandScheduler.getInstance().run();
 		Logger.updateEntries();
