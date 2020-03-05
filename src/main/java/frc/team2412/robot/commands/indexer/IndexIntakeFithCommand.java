@@ -1,4 +1,4 @@
-package frc.team2412.robot.commands.indexer.intake;
+package frc.team2412.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
@@ -19,7 +19,7 @@ public class IndexIntakeFithCommand extends CommandBase{
 		addRequirements(indexSideMotors, indexMidMotor, indexSensors);
 	}
 	/*
-	 * shifts all balls to opposite side of indexing so you can jam last one in w/ intake arm
+	 * shifts all balls to opposite side of indexing so you can push last one in w/ intake arm
 	 */
 	private double speed = 1.0;
 	//TODO SET INTAKE DIRECTION IN OI || INTAKE SUBSYSTEM
