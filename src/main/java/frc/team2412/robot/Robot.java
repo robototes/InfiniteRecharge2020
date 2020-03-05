@@ -59,7 +59,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 * This runs after the mode specific periodic functions, but before LiveWindow
 	 * and SmartDashboard integrated updating.
 	 */
-
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
@@ -112,11 +111,11 @@ public class Robot extends TimedRobot implements Loggable {
 
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
 	public void disabledPeriodic() {
+
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package frc.team2412.robot;
 
+import com.robototes.math.MathUtils;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -24,6 +26,7 @@ import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackOutCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
+import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
@@ -136,20 +139,16 @@ public class OI {
 			backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
 			backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
 
-			intakeFrontIn.whenPressed(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1))));
 			intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(0))));
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopSideMotors())));
 
 			intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(1))));
 			intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(0))));
-
-			intakeBackIn.whenPressed(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(-1))));
+			
 			intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem)
-					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
+					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopSideMotors())));
 
 			intakeBackOut.whenPressed(new IntakeBackOutCommand(robotContainer.m_intakeMotorOnOffSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(1))));
@@ -159,6 +158,9 @@ public class OI {
 		}
 
 		if (RobotMap.SHOOTER_CONNECTED) {
+			new JoystickButton(driverRightStick, 1).whenPressed(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_LimelightSubsystem)
+			.andThen(new InstantCommand(() -> robotContainer.m_hoodSubsystem.setServo(MathUtils.map(robotContainer.m_LimelightSubsystem.getDistanceToTarget().distance*12, 3, 45, 0.1, 0.8)))));
+			//scale from abt 2 ft to 45ft
 		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {

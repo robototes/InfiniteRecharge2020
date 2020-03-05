@@ -7,6 +7,12 @@
 
 package frc.team2412.robot;
 
+import java.util.ArrayList;
+
+import com.revrobotics.CANError;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.RobotBase;
 
 /**
@@ -22,9 +28,11 @@ public final class Main {
 	 * If you change your main robot class, change the parameter type.
 	 */
 	public static void main(String... args) {
+		//new Main();
 		RobotBase.startRobot(Robot::new);
 	}
 
 	private Main() {
+		
 	}
 }
