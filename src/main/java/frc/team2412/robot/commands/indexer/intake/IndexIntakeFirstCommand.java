@@ -21,6 +21,7 @@ public class IndexIntakeFirstCommand extends CommandBase{
 	 */
 	
 	private double speed = 1.0;
+	//TODO SET INTAKE DIRECTION IN OI || INTAKE SUBSYSTEM
 	private frc.team2412.robot.RobotState.IntakeDirection t;
 	
 	public void execute() {
