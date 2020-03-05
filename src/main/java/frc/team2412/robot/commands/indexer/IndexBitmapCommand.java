@@ -1,26 +1,26 @@
 package frc.team2412.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.RobotState.IntakeDirection;
-import frc.team2412.robot.RobotState.UnbalancedSide;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 
-public class IndexDefaultCommand2 extends CommandBase {
-  private IndexerMotorSubsystem m_indexerMotorSubsystem;
-  private IndexerSensorSubsystem m_indexerSensorSubsystem;
+public class IndexBitmapCommand extends CommandBase {
+  private final IndexerMotorSubsystem m_indexerMotorSubsystem;
+  private final IndexerSensorSubsystem m_indexerSensorSubsystem;
   private static IntakeDirection s_lastIntakeDirection = IntakeDirection.NONE;
 
-  private static enum IndexDirection {
+  static enum IndexDirection {
     IN, OUT, OFF, DISABLED
   }
 
-  private static enum IndexCommandEntry {
+  static final int VALID_SENSOR_BITS = 0b111111;
+
+  static enum IndexCommandEntry {
     //    Bit flags                     Intake Off                              Intake On
     //  Valid   expected     Front motor          Back motor         Front motor          Back motor
+    
     // Don't move, as there's nothing in the outer slots -or-
     // Back side has inner and outer slots full, front side only has middle slot full
     A(0b100001, 0b000000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
@@ -61,16 +61,16 @@ public class IndexDefaultCommand2 extends CommandBase {
     private final IndexDirection intakeOnBackIndexDir;
 
     // Get index motor directions for a given Intake state
-    public IndexDirection getFrontIndexDirection(boolean intakeOn) {
+    public IndexDirection getFrontIndexDirection(final boolean intakeOn) {
       return intakeOn ? intakeOnFrontIndexDir : intakeOffFrontIndexDir;
     }
 
-    public IndexDirection getBackIndexDirection(boolean intakeOn) {
+    public IndexDirection getBackIndexDirection(final boolean intakeOn) {
       return intakeOn ? intakeOnBackIndexDir : intakeOffBackIndexDir;
     }
 
-    private IndexCommandEntry(int validBits, int expectedBits, IndexDirection intakeOffFrontIndexDir, IndexDirection intakeOffBackIndexDir,
-    IndexDirection intakeOnFrontIndexDir, IndexDirection intakeOnBackIndexDir) {
+    private IndexCommandEntry(final int validBits, final int expectedBits, final IndexDirection intakeOffFrontIndexDir, final IndexDirection intakeOffBackIndexDir,
+    final IndexDirection intakeOnFrontIndexDir, final IndexDirection intakeOnBackIndexDir) {
       assert ((validBits & expectedBits) == expectedBits);
       this.validBits = validBits;
       this.expectedBits = expectedBits;
@@ -81,8 +81,8 @@ public class IndexDefaultCommand2 extends CommandBase {
     }
   }
 
-  public IndexDefaultCommand2(IndexerMotorSubsystem indexerMotorSubsystem,
-      IndexerSensorSubsystem indexerSensorSubsystem) {
+  public IndexBitmapCommand(final IndexerMotorSubsystem indexerMotorSubsystem,
+      final IndexerSensorSubsystem indexerSensorSubsystem) {
     m_indexerMotorSubsystem = indexerMotorSubsystem;
     m_indexerSensorSubsystem = indexerSensorSubsystem;
     addRequirements(indexerMotorSubsystem);
@@ -106,10 +106,10 @@ public class IndexDefaultCommand2 extends CommandBase {
     switch (intakeDirection) {
     case BOTH:
     case FRONT:
-      sensorBitmap = m_indexerSensorSubsystem.getSensorBitmapFrontLSB();
+      sensorBitmap = (m_indexerSensorSubsystem.getSensorBitmapFrontLSB() & VALID_SENSOR_BITS);
       break;
     case BACK:
-      sensorBitmap = m_indexerSensorSubsystem.getSensorBitmapBackLSB();
+      sensorBitmap = (m_indexerSensorSubsystem.getSensorBitmapBackLSB() & VALID_SENSOR_BITS);
       break;
     case NONE:
       assert (false);
@@ -117,34 +117,39 @@ public class IndexDefaultCommand2 extends CommandBase {
     }
 
     IndexCommandEntry indexCommand = null;
-    for (IndexCommandEntry entry : IndexCommandEntry.values()) {
+    for (final IndexCommandEntry entry : IndexCommandEntry.values()) {
       if (entry.expectedBits == (sensorBitmap & entry.validBits)) {
         indexCommand = entry;
       }
     }
 
-    final IndexDirection frontIndexDirection = indexCommand.getFrontIndexDirection(intakeOn);
-    final IndexDirection backIndexDirection = indexCommand.getBackIndexDirection(intakeOn);
+    if (indexCommand != null) {
+      final IndexDirection frontIndexDirection = indexCommand.getFrontIndexDirection(intakeOn);
+      final IndexDirection backIndexDirection = indexCommand.getBackIndexDirection(intakeOn);
 
-    switch (intakeDirection) {
-      case BOTH:
-      case FRONT:
-        m_indexerMotorSubsystem.setFrontMotor(frontIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-          frontIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-        m_indexerMotorSubsystem.setBackMotor(backIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-          backIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-        break;
-      case BACK:
-        m_indexerMotorSubsystem.setBackMotor(frontIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-          frontIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-        m_indexerMotorSubsystem.setFrontMotor(backIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
-          backIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-        break;
-      default:
+      switch (intakeDirection) {
+        case BOTH:
+        case FRONT:
+          m_indexerMotorSubsystem.setFrontMotor(frontIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
+            frontIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          m_indexerMotorSubsystem.setBackMotor(backIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
+            backIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          break;
+        case BACK:
+          m_indexerMotorSubsystem.setBackMotor(frontIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
+            frontIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          m_indexerMotorSubsystem.setFrontMotor(backIndexDirection == IndexDirection.IN ? IndexerMotorSubsystem.MOTOR_IN_SPEED : 
+            backIndexDirection == IndexDirection.OUT ? IndexerMotorSubsystem.MOTOR_OUT_SPEED : IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          break;
+        default:
+          m_indexerMotorSubsystem.setFrontMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          m_indexerMotorSubsystem.setBackMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
+          break;
+        }
+      } else {
         m_indexerMotorSubsystem.setFrontMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
         m_indexerMotorSubsystem.setBackMotor(IndexerMotorSubsystem.MOTOR_OFF_SPEED);
-        break;
-      }
+    }
   }
 
   @Override
