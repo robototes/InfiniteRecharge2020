@@ -1,23 +1,19 @@
 package frc.team2412.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
-import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 
-//This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexFrontShootCommand extends CommandBase {
 
-	private IndexerSensorSubsystem m_indexerSensorSubsystem;
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
-	private IntakeOnOffSubsystem m_IntakeOnOffSubsystem;
+	private IntakeMotorSubsystem m_IntakeOnOffSubsystem;
 
-	public IndexFrontShootCommand(IndexerSensorSubsystem sensorSubsystem, IndexerMotorSubsystem motorSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem) {
-		m_indexerSensorSubsystem = sensorSubsystem;
-		m_indexerMotorSubsystem = motorSubsystem;
+	public IndexFrontShootCommand(IndexerMotorSubsystem indexerMotorSubsystem,
+			IntakeMotorSubsystem intakeOnOffSubsystem) {
+		m_indexerMotorSubsystem = indexerMotorSubsystem;
 		m_IntakeOnOffSubsystem = intakeOnOffSubsystem;
-		addRequirements(sensorSubsystem, motorSubsystem);
+		addRequirements(indexerMotorSubsystem);
 	}
 
 	@Override
@@ -31,5 +27,4 @@ public class IndexFrontShootCommand extends CommandBase {
 	public boolean isFinished() {
 		return true;
 	}
-
 }

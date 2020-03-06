@@ -24,6 +24,8 @@ public class IndexSwitchFourCommand extends CommandBase {
 		System.out.println("hi2");
 		//if (m_indexerSensorSubsystem.getIntakeFrontSensorValue()
 		//		|| m_indexerSensorSubsystem.getIntakeBackSensorValue()) {
+		if (m_indexerSensorSubsystem.isIntakeFrontSensorTripped()
+				|| m_indexerSensorSubsystem.isIntakeBackSensorTripped()) {
 			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
 				m_indexerMotorSubsystem.setBackMotor(1);
@@ -52,9 +54,9 @@ public class IndexSwitchFourCommand extends CommandBase {
 	public boolean isFinished() {
 		
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-			return m_indexerSensorSubsystem.getIndexBackSensorValue();
+			return m_indexerSensorSubsystem.isIndexBackSensorTripped();
 		} else {
-			return m_indexerSensorSubsystem.getIndexFrontSensorValue();
+			return m_indexerSensorSubsystem.isIndexFrontSensorTripped();
 		}
 
 	}

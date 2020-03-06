@@ -108,19 +108,19 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
-		if(oneJoystickDrive){
-			m_rightMotor1.set(rightJoystick.getY()-Math.pow(rightJoystick.getTwist(),3));
-			m_leftMotor1.set(rightJoystick.getY()+Math.pow(rightJoystick.getTwist(), 3));
+		if (oneJoystickDrive) {
+			m_rightMotor1.set(rightJoystick.getY() - Math.pow(rightJoystick.getTwist(), 3));
+			m_leftMotor1.set(rightJoystick.getY() + Math.pow(rightJoystick.getTwist(), 3));
 		} else {
-		
-		if (button.get()) {
-			m_rightMotor1.set(rightJoystick.getY());
-			m_leftMotor1.set(rightJoystick.getY());
-		} else {
-			m_rightMotor1.set(rightJoystick.getY());
-			m_leftMotor1.set(leftJoystick.getY());
+
+			if (button.get()) {
+				m_rightMotor1.set(rightJoystick.getY());
+				m_leftMotor1.set(rightJoystick.getY());
+			} else {
+				m_rightMotor1.set(rightJoystick.getY());
+				m_leftMotor1.set(leftJoystick.getY());
+			}
 		}
-	}
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
@@ -191,6 +191,13 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_driveBaseCurrentDraw = m_rightMotor1.getStatorCurrent() + m_rightMotor2.getStatorCurrent()
 				+ m_leftMotor1.getStatorCurrent() + m_leftMotor2.getStatorCurrent();
 
+	}
+
+	public void resetEncoder() {
+		m_leftMotor1.setSelectedSensorPosition(0);
+		m_leftMotor2.setSelectedSensorPosition(0);
+		m_rightMotor1.setSelectedSensorPosition(0);
+		m_rightMotor2.setSelectedSensorPosition(0);
 	}
 
 	// Trajectory stuff
@@ -416,5 +423,37 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
 
 	}
+
+//	// Crazy Auto idea
+//	public Command getSmartAutoCommand() {
+//		DriveBaseSubsystem thisSub = this;
+//
+//		Distance hypoteneuseinInch = RobotMap.m_robotContainer.m_LimelightSubsystem.m_distanceToTarget;
+//
+//		Distance hypotenuseinMeters = new Distance(hypoteneuseinInch.distance, DistanceUnits.METER);
+//
+//		double robotY = Math.pow(hypotenuseinMeters.distance, 2) - Math.pow(inititationLineMeters, 2);
+//
+//		Pose2d currentPose = new Pose2d(new Translation2d(inititationLineMeters, -robotY),
+//				Rotation2d.fromDegrees(m_gyro.getAngle()));
+//
+//		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
+//				List.of(new Translation2d(5.411, -0.70485)), new Pose2d(7.231, 0.70485, currentPose.getRotation()),
+//				config);
+//
+//		if (exampleTrajectory.getTotalTimeSeconds() < controlPanelCutOff) {
+//			exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
+//					List.of(new Translation2d(6, -4), new Translation2d(6.25, -3)),
+//					new Pose2d(5.5, -2.4, Rotation2d.fromDegrees(180)), config);
+//		}
+//
+//		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, thisSub::getPose, ramseteControlller,
+//				simpleMotorFeedforward, kDriveKinematics, thisSub::getWheelSpeeds, pidController, pidController,
+//				// RamseteCommand passes volts to the callback
+//				thisSub::tankDriveVolts, thisSub);
+//
+//		// Run path following command, then stop at the end.
+//		return ramseteCommand.andThen(() -> thisSub.tankDriveVolts(0, 0));
+//	}
 
 }

@@ -16,6 +16,7 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -134,7 +135,6 @@ public class RobotMap {
 	public static CANSparkMax rightClimbMotor = CLIMB_CONNECTED
 			? new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless)
 			: null;
-			
 
 	// INDEX SUBSYSTEM
 	// ---------------------------------------------------------------------------
@@ -241,6 +241,9 @@ public class RobotMap {
 	// Unknown RN
 	// -------------------------------------------------------------------------------------------------
 	// Compressor
+	private static final int PSI_GAUGE_PORT = 0;
+	public static AnalogInput psiGauge = new AnalogInput(PSI_GAUGE_PORT);
+
 	public static Compressor compressor = new Compressor();
 
 	// Robot container

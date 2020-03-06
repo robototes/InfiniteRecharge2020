@@ -19,7 +19,7 @@ public class IndexIntakeOneBackCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
+		if (m_indexerSensorSubsystem.isIntakeBackSensorTripped())
 			m_indexerMotorSubsystem.setBackMotor(-1);
 	}
 
@@ -31,7 +31,7 @@ public class IndexIntakeOneBackCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.getIndexBackMidSensorValue();
+		return m_indexerSensorSubsystem.isIndexBackMidSensorTripped();
 	}
 
 }

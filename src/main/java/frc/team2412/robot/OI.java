@@ -33,6 +33,34 @@ import frc.team2412.robot.commands.lift.LiftUpCommand;
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
 
+	public static interface ButtonEnumInterface {
+
+		public int getButtonID();
+
+		public int getJoystickID();
+
+		public default Button createFrom(Joystick stick) {
+			if (stick.getPort() != getJoystickID()) {
+				System.err.println("Warning! Binding button to the wrong stick!");
+			}
+			return new JoystickButton(stick, getButtonID());
+		}
+
+		public default Button createFrom(XboxController controller) {
+			if (controller.getPort() != getJoystickID()) {
+				System.err.println("Warning! Binding button to the wrong stick!");
+			}
+			return new Button(() -> controller.getRawButton(getButtonID()));
+		}
+
+		public default Button createFromPOV(XboxController controller) {
+			if (controller.getPort() != getJoystickID()) {
+				System.err.println("Warning! Binding button to the wrong stick!");
+			}
+			return new Button(() -> controller.getPOV() == getButtonID());
+		}
+	}
+
 	public enum Joysticks {
 		DRIVER_RIGHT(0), DRIVER_LEFT(1), CODRIVER(2), CODRIVER_MANUAL(3);
 
@@ -43,7 +71,7 @@ public class OI {
 		}
 	}
 
-	public enum DriverControls {
+	public enum DriverControls implements ButtonEnumInterface {
 		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT, 1),
 		ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
@@ -55,15 +83,19 @@ public class OI {
 			this.buttonID = buttonID;
 		}
 
-		public Button createFrom(Joystick stick) {
-			if (stick.getPort() != this.stick.id) {
-				System.err.println("Warning! Binding button to the wrong stick!");
-			}
-			return new JoystickButton(stick, this.buttonID);
+		@Override
+		public int getButtonID() {
+			return this.buttonID;
 		}
+
+		@Override
+		public int getJoystickID() {
+			return stick.id;
+		}
+
 	}
 
-	public enum CodriverControls {
+	public enum CodriverControls implements ButtonEnumInterface {
 		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
 		INTAKE_FRONT_OUT(5);
 
@@ -73,29 +105,19 @@ public class OI {
 			this.buttonID = buttonID;
 		}
 
-		public Button createFrom(Joystick stick) {
-			if (stick.getPort() != Joysticks.CODRIVER.id) {
-				System.err.println("Warning! Binding button to the wrong stick!");
-			}
-			return new JoystickButton(stick, this.buttonID);
+		@Override
+		public int getButtonID() {
+			return this.buttonID;
 		}
 
-		public Button createFrom(XboxController controller) {
-			if (controller.getPort() != Joysticks.CODRIVER.id) {
-				System.err.println("Warning! Binding button to the wrong stick!");
-			}
-			return new Button(() -> controller.getRawButton(this.buttonID));
+		@Override
+		public int getJoystickID() {
+			return Joysticks.CODRIVER.id;
 		}
 
-		public Button createFromPOV(XboxController controller) {
-			if (controller.getPort() != Joysticks.CODRIVER.id) {
-				System.err.println("Warning! Binding button to the wrong stick!");
-			}
-			return new Button(() -> controller.getPOV() == this.buttonID);
-		}
 	}
 
-	public enum CodriverManualControls {
+	public enum CodriverManualControls implements ButtonEnumInterface {
 		CLIMB_MODE(5);
 
 		public int buttonID;
@@ -104,53 +126,51 @@ public class OI {
 			this.buttonID = buttonID;
 		}
 
-		public Button createFrom(Joystick stick) {
-			if (stick.getPort() != Joysticks.CODRIVER_MANUAL.id) {
-				System.err.println("Warning! Binding button to the wrong stick!");
-			}
-			return new JoystickButton(stick, this.buttonID);
+		@Override
+		public int getButtonID() {
+			return this.buttonID;
 		}
 
-		public Button createFrom(XboxController controller) {
-			if (controller.getPort() != Joysticks.CODRIVER_MANUAL.id) {
-				System.err.println("Warning! Binding button to the wrong stick!");
-			}
-			return new Button(() -> controller.getRawButton(this.buttonID));
+		@Override
+		public int getJoystickID() {
+			return Joysticks.CODRIVER_MANUAL.id;
 		}
 
-		public Button createFromPOV(XboxController controller) {
-			if (controller.getPort() != Joysticks.CODRIVER_MANUAL.id) {
-				System.err.println("Warning! Binding button to the wrong stick!");
-			}
-			return new Button(() -> controller.getPOV() == this.buttonID);
-		}
 	}
 
-	Joystick driverRightStick = new Joystick(Joysticks.DRIVER_RIGHT.id);
-	Joystick driverLeftStick = new Joystick(Joysticks.DRIVER_LEFT.id);
-	Joystick codriverStick = new Joystick(Joysticks.CODRIVER.id);
-	Joystick codriverManualStick = new Joystick(Joysticks.CODRIVER_MANUAL.id);
+	// Joysticks
+	public final Joystick driverRightStick = new Joystick(Joysticks.DRIVER_RIGHT.id);
+	public final Joystick driverLeftStick = new Joystick(Joysticks.DRIVER_LEFT.id);
+	public final Joystick codriverStick = new Joystick(Joysticks.CODRIVER.id);
+	public final Joystick codriverManualStick = new Joystick(Joysticks.CODRIVER_MANUAL.id);
 
-	public Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
+	// Driver Controls
+	public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
+	public final Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
+	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
 
-	// Buttons
-	public Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
-	public Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
+	// Lift Controls
+	public final Button liftButton = CodriverControls.LIFT.createFrom(codriverStick);
 
-	public Button liftButton = CodriverControls.LIFT.createFrom(codriverStick);
+	// Intake Controls
+	public final Button frontIntakeUpDown = CodriverControls.FRONT_INTAKE_DOWN.createFrom(codriverStick);
+	public final Button backIntakeUpDown = CodriverControls.BACK_INTAKE_DOWN.createFrom(codriverStick);
+	public final Button intakeFrontIn = CodriverControls.INTAKE_FRONT_IN.createFrom(codriverStick);
+	public final Button intakeFrontOut = CodriverControls.INTAKE_FRONT_OUT.createFrom(codriverStick);
+	public final Button intakeBackIn = CodriverControls.INTAKE_BACK_IN.createFrom(codriverStick);
+	public final Button intakeBackOut = CodriverControls.INTAKE_BACK_OUT.createFrom(codriverStick);
 
-	public Button frontIntakeUpDown = CodriverControls.FRONT_INTAKE_DOWN.createFrom(codriverStick);
-	public Button backIntakeUpDown = CodriverControls.BACK_INTAKE_DOWN.createFrom(codriverStick);
-
-	public Button intakeFrontIn = CodriverControls.INTAKE_FRONT_IN.createFrom(codriverStick);
-	public Button intakeFrontOut = CodriverControls.INTAKE_FRONT_OUT.createFrom(codriverStick);
-	public Button intakeBackIn = CodriverControls.INTAKE_BACK_IN.createFrom(codriverStick);
-	public Button intakeBackOut = CodriverControls.INTAKE_BACK_OUT.createFrom(codriverStick);
-
-	public Button climbModeButton = CodriverManualControls.CLIMB_MODE.createFrom(codriverManualStick);
+	// Climb Controls
+	public final Button climbModeButton = CodriverManualControls.CLIMB_MODE.createFrom(codriverManualStick);
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
+		bindClimbControls(robotContainer);
+		bindDriverControls(robotContainer);
+		bindIntakeControls(robotContainer);
+		bindLiftControls(robotContainer);
+		bindIndexControls(robotContainer);
+	}
 
 		if (RobotMap.INTAKE_CONNECTED) {
 			// INTAKE front
@@ -207,41 +227,8 @@ public class OI {
 					//.andThen(new IndexSwitchFourCommand(robotContainer.m_indexerSensorSubsystem, robotContainer.m_indexerMotorSubsystem)));
 				   intakeBackIn.whenPressed(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 					//.andThen(new InstantCommand(() -> RobotState.m_unbalancedSide = RobotState.UnbalancedSide.BACK)));
-			
-		}
-
-		if (RobotMap.CONTROL_PANEL_CONNECTED) {
-			// CONTROL PANEL
-			// controlPanelSpinThreeTimesButton
-			// .whenPressed(new
-			// RotateControlPanelCommand(robotContainer.m_controlPanelColorSubsystem));
-			// controlPanelSetToTargetButton
-			// .whenPressed(new
-			// SetToTargetColorCommand(robotContainer.m_controlPanelColorSubsystem));
-		}
-
-		if (RobotMap.CLIMB_CONNECTED) {
-			// climbDeployRailsButton.whenActive(new
-			// ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));
-			// climbExtendArmButton.whenActive(new
-			// ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
-			// climbRetractArmButton.whenActive(new
-			// ClimbExtendArmCommand(robotContainer.m_climbMotorSubsystem));
-			// climbRetractRailsButton.whenActive(new
-			// ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
-			// climbStopArmButton.whenActive(new
-			// ClimbStopArmCommand(robotContainer.m_climbMotorSubsystem));
-			climbModeButton
-					.whileHeld(new ClimbJoystickCommand(codriverManualStick, robotContainer.m_climbMotorSubsystem));
-			climbModeButton.whenPressed(new ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));
-			climbModeButton.whenReleased(new ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
-		}
-
-		if (RobotMap.INDEX_CONNECTED) {
-			indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerSensorSubsystem,
-					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
-
-		//	Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
+	
+      //	Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
 		//			robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem);
 
 			indexerShootButton.whenPressed(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
@@ -251,29 +238,76 @@ public class OI {
 					.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
 					robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem))));
 
+		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorSubsystem)
+				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors())));
+
+		intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeMotorSubsystem)
+				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(1))));
+		intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorSubsystem)
+				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setFrontMotor(0))));
+
+		intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorSubsystem)
+				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors())));
+
+		intakeBackOut.whenPressed(new IntakeBackOutCommand(robotContainer.m_intakeMotorSubsystem)
+				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(1))));
+		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorSubsystem)
+				.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
+		intakeFrontIn.whileHeld(
+				new IntakeFrontInCommand(robotContainer.m_intakeMotorSubsystem, false).andThen(new InstantCommand(() -> {
+					robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
+					if (robotContainer.m_indexerSensorSubsystem.isIndexFrontSensorTripped())
+						robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1);
+					else
+						robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);
+					if (!robotContainer.m_indexerSensorSubsystem.isIndexBackSensorTripped())
+						robotContainer.m_indexerMotorSubsystem.setBackMotor(1);
+					else
+						robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
+				})));
+		intakeBackIn.whileHeld(
+				new IntakeBackInCommand(robotContainer.m_intakeMotorSubsystem).andThen(new InstantCommand(() -> {
+					robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
+					if (robotContainer.m_indexerSensorSubsystem.isIndexBackSensorTripped())
+						robotContainer.m_indexerMotorSubsystem.setBackMotor(-1);
+					else
+						robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
+					if (!robotContainer.m_indexerSensorSubsystem.isIndexFrontSensorTripped())
+						robotContainer.m_indexerMotorSubsystem.setFrontMotor(1);
+					else
+						robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);
+				})));
+
+	}
+
+	public void bindClimbControls(RobotContainer robotContainer) {
+		if (!RobotMap.CLIMB_CONNECTED) {
+			return;
 		}
 
+		climbModeButton.whileHeld(new ClimbJoystickCommand(codriverManualStick, robotContainer.m_climbMotorSubsystem));
+		climbModeButton.whenPressed(new ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));
+		climbModeButton.whenReleased(new ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
+	}
+
+	public void bindLiftControls(RobotContainer robotContainer) {
+		if (!RobotMap.LIFT_CONNECTED) {
+			return;
+		}
+
+		liftButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem));
+		liftButton.whenReleased(new LiftDownCommand(robotContainer.m_liftSubsystem));
+	}
+
+	public void bindDriverControls(RobotContainer robotContainer) {
 		if (RobotMap.DRIVE_BASE_CONNECTED) {
-			robotContainer.m_driveBaseSubsystem.setDefaultCommand(new DriveCommand(robotContainer.m_driveBaseSubsystem,
-					driverRightStick, driverLeftStick, DriverControls.ALIGN_STICKS.createFrom(driverLeftStick)));
-
-			shifter.whenPressed(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem));
-			shifter.whenReleased(new DriveShiftToLowGearCommand(robotContainer.m_driveBaseSubsystem));
+			return;
 		}
 
-		// LIFT
-		if (RobotMap.LIFT_CONNECTED) {
-			liftButton.whenPressed(
-					new LiftUpCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
-			liftButton.whenReleased(
-					new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
-		}
+		robotContainer.m_driveBaseSubsystem.setDefaultCommand(new DriveCommand(robotContainer.m_driveBaseSubsystem,
+				driverRightStick, driverLeftStick, DriverControls.ALIGN_STICKS.createFrom(driverLeftStick)));
 
-		// Trigger intakeUpWhenFiveBalls = new Trigger(RobotState::hasFiveBalls);
-		if (RobotMap.INTAKE_CONNECTED) {
-			// intakeUpWhenFiveBalls.whenActive(new
-			// IntakeBothUpCommand(robotContainer.m_intakeUpDownSubsystem));
-		}
-
+		shifter.whenPressed(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem));
+		shifter.whenReleased(new DriveShiftToLowGearCommand(robotContainer.m_driveBaseSubsystem));
 	}
 }

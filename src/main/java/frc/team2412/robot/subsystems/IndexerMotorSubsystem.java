@@ -7,16 +7,19 @@ import com.revrobotics.ControlType;
 import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
+	@SuppressWarnings("unused")
 	private double frontTicks, backTicks, midTicks;
 
 	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
@@ -152,10 +155,13 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
-//		System.out.println(lifting);
+		if (RobotState.m_liftSolenoidState == RobotState.LiftState.EXTENDED) {
+			setMidPID(true);
+		} else {
+			setMidPID(false);
+		}
+		System.out.println(m_indexMidMotor.get());
 	}
-
-
 
 	public void setLifting(boolean b) {
 		this.lifting = b;

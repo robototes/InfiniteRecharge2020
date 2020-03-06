@@ -6,7 +6,7 @@ import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
-public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
+public class IntakeLiftSubsystem extends SubsystemBase implements Loggable {
 
 	@Log(tabName = "Intake")
 	private Solenoid m_frontIntakeUpDown;
@@ -15,7 +15,7 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	@Log.ToString(tabName = "Intake")
 	private IntakeState m_currentState = IntakeState.WITHDRAWN;
 
-	public IntakeUpDownSubsystem(Solenoid frontIntakeUpDown, Solenoid backIntakeUpDown) {
+	public IntakeLiftSubsystem(Solenoid frontIntakeUpDown, Solenoid backIntakeUpDown) {
 		this.m_frontIntakeUpDown = frontIntakeUpDown;
 		this.m_backIntakeUpDown = backIntakeUpDown;
 	}
@@ -48,8 +48,8 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 		return m_backIntakeUpDown.get();
 	}
 
-	private void setIntake(IntakeState newState, Solenoid solenoid) {
-		solenoid.set(newState.value);
+	private void setIntake(IntakeState newState, Solenoid Solenoid) {
+		Solenoid.set(newState.value);
 		m_currentState = newState;
 	}
 
