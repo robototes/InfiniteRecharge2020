@@ -73,10 +73,6 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 		return m_yawFromTarget;
 	}
 
-	@Override
-	public void periodic() {
-	}
-
 	public void setDistanceDataFromTable() {
 		m_distanceData = ShooterConstants.getDistanceDataPointFromTy(m_limelight.getTY());
 	}

@@ -91,9 +91,7 @@ public class Robot extends TimedRobot implements Loggable {
 				.andThen(new HoodAdjustCommand(m_robotContainer.m_hoodSubsystem, .300))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
 				.andThen(new WaitCommand(2))
-				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setMidMotor(1)))
-				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setBackMotor(-1)))
-				.andThen(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1)))
+				// Add index shooting back in here
 				.andThen(new WaitCommand(8))
 				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
 				.andThen(new WaitCommand(1))
@@ -115,9 +113,7 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void teleopInit() {
 		timeRemaining = 135.0;
-		// CommandScheduler.getInstance().cancel(autoCommand);
-		CommandScheduler.getInstance()
-				.schedule(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.stopAllMotors()));
+		CommandScheduler.getInstance().cancel(autoCommand);
 		m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
 		m_robotContainer.m_hoodSubsystem.setDefaultCommand(

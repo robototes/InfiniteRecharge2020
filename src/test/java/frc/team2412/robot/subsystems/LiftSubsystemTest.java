@@ -18,13 +18,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
+import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class LiftSubsystemTest {
 
 	// Mock instance of Example Subsystem
 	LiftSubsystem realLiftSubsystem;
-	IndexerMotorSubsystem mockedIndexerMotorSubsystem;
+	IndexerSubsystemSuperStructure mockedIndexerMotorSubsystem;
 	DoubleSolenoid mockedLiftSolenoid;
 
 	// This is called after tests, and makes sure that nothing is left open and

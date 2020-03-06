@@ -1,4 +1,4 @@
-package frc.team2412.robot.subsystems;
+package frc.team2412.robot.subsystems.index;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -8,21 +8,21 @@ import io.github.oblarg.oblog.annotations.Log;
 public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 
 	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
-	private DigitalInput m_intakeFrontSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
-	private DigitalInput m_indexFrontSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
-	private DigitalInput m_indexFrontMidSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
-	private DigitalInput m_indexFrontInnerSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackInnerSensor;
 	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackMidSensor;
 	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackSensor;
 	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontInnerSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontMidSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_indexFrontSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_intakeBackSensor;
+	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	private DigitalInput m_intakeFrontSensor;
 
 	private DigitalInput[] m_sensorArray;
 
@@ -43,36 +43,14 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	public boolean getIntakeFrontSensorValue() {
-		return !m_intakeFrontSensor.get();
+	public boolean allBackSensorsOff() {
+		return !m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
+				&& !m_indexBackInnerSensor.get();
 	}
 
-	public boolean getIndexFrontSensorValue() {
-		return !m_indexFrontSensor.get();
-	}
-
-	public boolean getIndexFrontMidSensorValue() {
-		return !m_indexFrontMidSensor.get();
-	}
-
-	public boolean getIndexFrontInnerSensorValue() {
-		return !m_indexFrontInnerSensor.get();
-	}
-
-	public boolean getIndexBackInnerSensorValue() {
-		return !m_indexBackInnerSensor.get();
-	}
-
-	public boolean getIndexBackMidSensorValue() {
-		return !m_indexBackMidSensor.get();
-	}
-
-	public boolean getIndexBackSensorValue() {
-		return !m_indexBackSensor.get();
-	}
-
-	public boolean getIntakeBackSensorValue() {
-		return !m_intakeBackSensor.get();
+	public boolean allFrontSensorsOff() {
+		return !m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()
+				&& !m_indexFrontInnerSensor.get();
 	}
 
 	public boolean allInnerSensorsOff() {
@@ -93,14 +71,36 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 		return true;
 	}
 
-	public boolean allFrontSensorsOff() {
-		return !m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()
-				&& !m_indexFrontInnerSensor.get();
+	public boolean getIndexBackInnerSensorValue() {
+		return !m_indexBackInnerSensor.get();
 	}
 
-	public boolean allBackSensorsOff() {
-		return !m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
-				&& !m_indexBackInnerSensor.get();
+	public boolean getIndexBackMidSensorValue() {
+		return !m_indexBackMidSensor.get();
+	}
+
+	public boolean getIndexBackSensorValue() {
+		return !m_indexBackSensor.get();
+	}
+
+	public boolean getIndexFrontInnerSensorValue() {
+		return !m_indexFrontInnerSensor.get();
+	}
+
+	public boolean getIndexFrontMidSensorValue() {
+		return !m_indexFrontMidSensor.get();
+	}
+
+	public boolean getIndexFrontSensorValue() {
+		return !m_indexFrontSensor.get();
+	}
+
+	public boolean getIntakeBackSensorValue() {
+		return !m_intakeBackSensor.get();
+	}
+
+	public boolean getIntakeFrontSensorValue() {
+		return !m_intakeFrontSensor.get();
 	}
 
 	@Log.Dial(tabName = "Indexer", min = 0, max = 8)

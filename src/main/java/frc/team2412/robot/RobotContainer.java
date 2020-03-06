@@ -8,13 +8,13 @@ import frc.team2412.robot.subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
-import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
+import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
@@ -48,7 +48,7 @@ public class RobotContainer implements Loggable {
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
 
 	@Log(name = "Indexer Motor Subsystem", tabName = "Indexer")
-	public IndexerMotorSubsystem m_indexerMotorSubsystem;
+	public IndexerSubsystemSuperStructure m_indexerMotorSubsystem;
 
 	@Log(name = "Indexer Sensor Subsystem", tabName = "Indexer")
 	public IndexerSensorSubsystem m_indexerSensorSubsystem;
@@ -76,8 +76,9 @@ public class RobotContainer implements Loggable {
 					RobotMap.frontMid, RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back,
 					RobotMap.intakeBack);
 
-			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-					RobotMap.indexBackMotor, m_indexerSensorSubsystem);
+			m_indexerMotorSubsystem = new IndexerSubsystemSuperStructure(RobotMap.indexFrontMotor,
+					RobotMap.indexleftMidMotor, RobotMap.indexRightMidMotor, RobotMap.indexBackMotor,
+					m_indexerSensorSubsystem);
 
 		}
 
