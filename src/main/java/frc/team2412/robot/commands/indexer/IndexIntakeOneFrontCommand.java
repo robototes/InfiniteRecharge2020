@@ -31,7 +31,7 @@ public class IndexIntakeOneFrontCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.isIndexFrontMidSensorTripped();
+		return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
 	}
 
 }

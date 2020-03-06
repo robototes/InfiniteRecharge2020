@@ -54,9 +54,9 @@ public class IndexSwitchFourCommand extends CommandBase {
 	public boolean isFinished() {
 		
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-			return m_indexerSensorSubsystem.isIndexBackSensorTripped();
+			return m_indexerSensorSubsystem.getIndexBackSensorValue();
 		} else {
-			return m_indexerSensorSubsystem.isIndexFrontSensorTripped();
+			return m_indexerSensorSubsystem.getIndexFrontSensorValue();
 		}
 
 	}

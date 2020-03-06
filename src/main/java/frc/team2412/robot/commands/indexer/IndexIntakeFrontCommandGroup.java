@@ -43,6 +43,7 @@ public class IndexIntakeFrontCommandGroup extends ParallelCommandGroup {
 				Map.ofEntries(entry(0, indexIntakeOneFrontCommand), entry(1, indexIntakeTwoFrontCommand),
 						entry(2, indexSequenceTwo), entry(3, indexIntakeFourFrontCommand), entry(101, indexSequenceFour)),
 				this::numBalls);
+	
 		addCommands(command);
 	}
 

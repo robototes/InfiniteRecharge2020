@@ -26,7 +26,7 @@ public class IndexIntakeFourBackCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.isIndexBackSensorTripped();
+		return m_indexerSensorSubsystem.getIndexBackSensorValue();
 	}
 
 }
