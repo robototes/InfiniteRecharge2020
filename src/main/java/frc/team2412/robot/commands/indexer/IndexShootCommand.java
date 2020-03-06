@@ -1,12 +1,13 @@
 package frc.team2412.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.team2412.robot.commands.intake.IntakeBothUpCommand;
 import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexShootCommand extends SequentialCommandGroup {
@@ -14,9 +15,10 @@ public class IndexShootCommand extends SequentialCommandGroup {
 	private IndexerMotorSubsystem motorSubsystem;
 	private IndexerMidMotorSubsystem midMotorSubsystem;
 	private IndexerSensorSubsystem sensorSubsystem; 
+	private IntakeLiftSubsystem intakeLiftSubsystem;
 
 	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
-			IndexerMidMotorSubsystem indexMidMotorSubsystem) {
+			IndexerMidMotorSubsystem indexMidMotorSubsystem, IntakeLiftSubsystem intakeLiftSubsystem) {
 		motorSubsystem = indexMotorSubsystem;
 		this.midMotorSubsystem = indexMidMotorSubsystem;
 		this.sensorSubsystem = indexerSensorSubsystem;
@@ -32,21 +34,15 @@ public class IndexShootCommand extends SequentialCommandGroup {
 		super.initialize();
 		motorSubsystem.setLifting(true);
 		addCommands(
-				// new ParallelRaceGroup(new IndexSpitCommand(sensorSubsystem, motorSubsystem,
-				// intakeSubsystem),
-				// new WaitCommand(0.1)),
-				// new IndexAllOffCommand(motorSubsystem),
-				// new IndexMidMotorCommand(motorSubsystem),
-				// new WaitCommand(0.3),
-				new ParallelDeadlineGroup(new WaitCommand(1), new IndexAllOut(motorSubsystem, midMotorSubsystem)),
-				new ParallelDeadlineGroup(new WaitCommand(1), new IndexMidMotorCommand(midMotorSubsystem)),
-				// new IndexMidMotorCommand(motorSubsystem),
-				// new WaitCommand(0.5),
-				new IndexFrontShootCommand(motorSubsystem, midMotorSubsystem), new WaitCommand(2),
-				// new IndexAllOffCommand(motorSubsystem),
-				new IndexBackShootCommand(motorSubsystem, midMotorSubsystem), new WaitCommand(2)
-
-		);
+				
+				// ya no
+				new IntakeBothUpCommand(intakeLiftSubsystem),
+				new IndexFrontShootCommand(motorSubsystem, midMotorSubsystem),
+				new IndexBackShootCommand(motorSubsystem, midMotorSubsystem)
+			);
+		
+		
+		
 	}
 
 	@Override
