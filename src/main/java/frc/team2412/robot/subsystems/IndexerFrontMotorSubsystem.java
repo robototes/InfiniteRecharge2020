@@ -44,7 +44,7 @@ public class IndexerFrontMotorSubsystem extends IndexerMotorSubsystem implements
     }
 
     public void setFrontPID(double val) {
-		super.resetEncoderZero();
+		ticks = super.resetEncoderZero(m_indexFrontMotor);
 		m_PIDController.setReference(ticks + (val * IndexerConstants.INCH_STOP_DISTANCE),
 			ControlType.kPosition);
     }

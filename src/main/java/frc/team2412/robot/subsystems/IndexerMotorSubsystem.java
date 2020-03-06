@@ -17,18 +17,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
-	private double frontTicks, backTicks, midTicks;
-
 	private CANEncoder m_frontEncoder, m_backEncoder, m_midEncoder;
-	//private CANPIDController m_frontPIDController, m_backPIDController, m_midPIDController;
-
-	//@Log.NumberBar(min = -1, max = 1, name = "Index Front Speed", tabName = "Indexer", methodName = "get")
-	//private CANSparkMax m_indexFrontMotor;
-	//@Log.NumberBar(min = -1, max = 1, name = "Index Mid Speed", tabName = "Indexer", methodName = "get")
-	//private CANSparkMax m_indexMidMotor1;
-	//private CANSparkMax m_indexMidMotor2;
-	//@Log.NumberBar(min = -1, max = 1, name = "Index Back Speed", tabName = "Indexer", methodName = "get")
-	//private CANSparkMax m_indexBackMotor;
 
 	private IndexerLiftMotorSubsystem m_liftMotorSubsystem;
 	private IndexerFrontMotorSubsystem m_FrontMotorSubsystem;
@@ -61,7 +50,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		Trigger(indexerSensorSubsystem::getIndexBackSensorValue);
 		backProcess.whenActive(new
 		IndexIntakeBackCommandGroup(indexerSensorSubsystem, this), true);
-		midTicks = m_midEncoder.getPosition();
+		//midTicks = m_midEncoder.getPosition();
 	}
 
 	private void configureMotorPID(CANPIDController motorController) {
@@ -121,9 +110,9 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		m_liftMotorSubsystem.setMidPID(upOrDown);
 	}
 
-	public void resetEncoderZero() {
-		frontTicks = m_frontEncoder.getPosition();
-		backTicks = m_backEncoder.getPosition();
+	public double resetEncoderZero(CANSparkMax c) {
+		return  c.getEncoder().getPosition();
+	
 	}
 
 	public double getCurrentDraw() {

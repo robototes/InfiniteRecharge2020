@@ -44,7 +44,7 @@ public class IndexerBackMotorSubsystem extends IndexerMotorSubsystem implements 
     }
 
     public void setBackPID(double val) {
-		super.resetEncoderZero();
+		ticks = super.resetEncoderZero(m_indexBackMotor);
 		m_PIDController.setReference(ticks + (val * IndexerConstants.INCH_STOP_DISTANCE),
 			ControlType.kPosition);
 	}
