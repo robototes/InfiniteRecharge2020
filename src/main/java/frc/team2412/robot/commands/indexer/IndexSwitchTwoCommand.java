@@ -20,8 +20,8 @@ public class IndexSwitchTwoCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue()
-				|| m_indexerSensorSubsystem.getIntakeBackSensorValue()) {
+		if (m_indexerSensorSubsystem.isIntakeFrontSensorTripped()
+				|| m_indexerSensorSubsystem.isIntakeBackSensorTripped()) {
 			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
 				m_indexerMotorSubsystem.setFrontMotor(-1);
 				m_indexerMotorSubsystem.setBackMotor(1);
@@ -48,9 +48,9 @@ public class IndexSwitchTwoCommand extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-			return m_indexerSensorSubsystem.getIndexBackMidSensorValue();
+			return m_indexerSensorSubsystem.isIndexBackMidSensorTripped();
 		} else {
-			return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
+			return m_indexerSensorSubsystem.isIndexFrontMidSensorTripped();
 		}
 
 	}

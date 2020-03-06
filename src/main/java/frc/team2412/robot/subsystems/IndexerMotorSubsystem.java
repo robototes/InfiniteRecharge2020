@@ -7,6 +7,7 @@ import com.revrobotics.ControlType;
 import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
@@ -30,7 +31,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
-
+	
 	private boolean lifting;
 
 	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax midMotor, CANSparkMax backMotor,

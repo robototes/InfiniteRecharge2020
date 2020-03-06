@@ -43,35 +43,35 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	public boolean getIntakeFrontSensorValue() {
+	public boolean isIntakeFrontSensorTripped() {
 		return !m_intakeFrontSensor.get();
 	}
 
-	public boolean getIndexFrontSensorValue() {
+	public boolean isIndexFrontSensorTripped() {
 		return !m_indexFrontSensor.get();
 	}
 
-	public boolean getIndexFrontMidSensorValue() {
+	public boolean isIndexFrontMidSensorTripped() {
 		return !m_indexFrontMidSensor.get();
 	}
 
-	public boolean getIndexFrontInnerSensorValue() {
+	public boolean isIndexFrontInnerSensorTripped() {
 		return !m_indexFrontInnerSensor.get();
 	}
 
-	public boolean getIndexBackInnerSensorValue() {
+	public boolean isIndexBackInnerSensorTripped() {
 		return !m_indexBackInnerSensor.get();
 	}
 
-	public boolean getIndexBackMidSensorValue() {
+	public boolean isIndexBackMidSensorTripped() {
 		return !m_indexBackMidSensor.get();
 	}
 
-	public boolean getIndexBackSensorValue() {
+	public boolean isIndexBackSensorTripped() {
 		return !m_indexBackSensor.get();
 	}
 
-	public boolean getIntakeBackSensorValue() {
+	public boolean isIntakeBackSensorTripped() {
 		return !m_intakeBackSensor.get();
 	}
 
@@ -116,6 +116,23 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 			}
 		}
 		return total;
+	}
+
+	public int binaryValueOfSensors() {
+		int total = 0;
+
+		total += isIndexFrontSensorTripped() ? 1 : 0;
+		total += isIndexFrontMidSensorTripped() ? 2 : 0;
+		total += isIndexFrontInnerSensorTripped() ? 4 : 0;
+		total += isIndexBackInnerSensorTripped() ? 8 : 0;
+		total += isIndexBackMidSensorTripped() ? 16 : 0;
+		total += isIndexBackSensorTripped() ? 32 : 0;
+
+		return total;
+	}
+	
+	public boolean allSensorsOff() {
+		return allBackSensorsOff() && allFrontSensorsOff() && allInnerSensorsOff();
 	}
 
 }

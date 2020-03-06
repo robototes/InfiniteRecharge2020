@@ -221,11 +221,11 @@ public class OI {
 		intakeFrontIn.whileHeld(
 				new IntakeFrontInCommand(robotContainer.m_intakeMotorSubsystem, false).andThen(new InstantCommand(() -> {
 					robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
-					if (robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
+					if (robotContainer.m_indexerSensorSubsystem.isIndexFrontSensorTripped())
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1);
 					else
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);
-					if (!robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
+					if (!robotContainer.m_indexerSensorSubsystem.isIndexBackSensorTripped())
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(1);
 					else
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
@@ -233,11 +233,11 @@ public class OI {
 		intakeBackIn.whileHeld(
 				new IntakeBackInCommand(robotContainer.m_intakeMotorSubsystem).andThen(new InstantCommand(() -> {
 					robotContainer.m_indexerMotorSubsystem.setMidMotor(-0.2);
-					if (robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
+					if (robotContainer.m_indexerSensorSubsystem.isIndexBackSensorTripped())
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(-1);
 					else
 						robotContainer.m_indexerMotorSubsystem.setBackMotor(0);
-					if (!robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
+					if (!robotContainer.m_indexerSensorSubsystem.isIndexFrontSensorTripped())
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(1);
 					else
 						robotContainer.m_indexerMotorSubsystem.setFrontMotor(0);

@@ -19,7 +19,7 @@ public class IndexIntakeOneFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
+		if (m_indexerSensorSubsystem.isIntakeFrontSensorTripped())
 			m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
@@ -31,7 +31,7 @@ public class IndexIntakeOneFrontCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
+		return m_indexerSensorSubsystem.isIndexFrontMidSensorTripped();
 	}
 
 }
