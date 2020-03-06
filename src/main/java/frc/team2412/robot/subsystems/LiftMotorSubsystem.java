@@ -53,5 +53,4 @@ public class LiftMotorSubsystem extends SubsystemBase implements Loggable{
 		return m_midMotorMaster.getOutputCurrent() + m_midMotorSlave.getOutputCurrent();
 	}
 
-
 }

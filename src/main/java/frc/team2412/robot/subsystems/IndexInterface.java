@@ -2,8 +2,6 @@ package frc.team2412.robot.subsystems;
 
 public interface IndexInterface {
 
-	void getRevolutions();
-	
 	void set(double val);
 	
 	void up();
@@ -13,5 +11,9 @@ public interface IndexInterface {
 	void off();
 	
 	void pid(double val);
+	
+	double getRevolutions();
+	
+	double getCurrentDraw();
 	
 }
