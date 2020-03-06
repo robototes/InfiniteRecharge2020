@@ -3,6 +3,7 @@ package frc.team2412.robot.commands.indexer;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.team2412.robot.subsystems.IndexerLiftMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
@@ -11,17 +12,18 @@ import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 public class IndexShootCommand extends SequentialCommandGroup {
 
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
+	private IndexerLiftMotorSubsystem m_indexerLiftSubsystem;
 	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
 
-	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
+	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerLiftMotorSubsystem indexerLiftMotorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
 			IntakeOnOffSubsystem intakeSubsystem) {
 		m_indexerMotorSubsystem = indexMotorSubsystem;
 		m_intakeOnOffSubsystem = intakeSubsystem;
 
-		addCommands(new IndexFrontShootCommand(indexMotorSubsystem, intakeSubsystem),
+		addCommands(new IndexFrontShootCommand(indexMotorSubsystem, indexerLiftMotorSubsystem, intakeSubsystem),
 				new ConditionalCommand(new WaitCommand(3), new WaitCommand(0),
 						indexerSensorSubsystem::allFrontSensorsOff),
-				new IndexBackShootCommand(indexMotorSubsystem, intakeSubsystem), new WaitCommand(2));
+				new IndexBackShootCommand(indexMotorSubsystem, indexerLiftMotorSubsystem, intakeSubsystem), new WaitCommand(2));
 	}
 
 	@Override
