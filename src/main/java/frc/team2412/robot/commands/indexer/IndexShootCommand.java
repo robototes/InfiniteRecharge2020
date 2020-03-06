@@ -53,6 +53,6 @@ public class IndexShootCommand extends SequentialCommandGroup {
 	public void end(boolean cancel) {
 		motorSubsystem.setLifting(false);
 		motorSubsystem.stopAllMotors();
-		midMotorSubsystem.setOff();
+		midMotorSubsystem.setDown();
 	}
 }
