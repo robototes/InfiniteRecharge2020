@@ -19,13 +19,13 @@ public class IndexIntakeOneBackCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
+		//if (m_indexerSensorSubsystem.getIntakeBackSensorValue())
 			m_indexerMotorSubsystem.setBackMotor(-1);
 	}
 
 	@Override
 	public void end(boolean cancel) {
-		m_indexerMotorSubsystem.stopBackPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
+		m_indexerMotorSubsystem.stopBackPID(-IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
 		RobotState.m_ballCount++;
 	}
 

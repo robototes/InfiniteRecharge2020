@@ -42,7 +42,7 @@ public class IndexIntakeBackCommandGroup extends ParallelCommandGroup {
 
 		Command command = new SelectCommand(
 				Map.ofEntries(entry(0, indexIntakeOneBackCommand), entry(1, indexIntakeTwoBackCommand),
-						entry(2, indexSequenceTwo), entry(3, indexIntakeFourBackCommand), entry(4, indexSequenceFour)),
+						entry(2, indexSequenceTwo), entry(3, indexIntakeFourBackCommand), entry(100, indexSequenceFour)),
 				this::numBalls);
 		addCommands(command);
 	}

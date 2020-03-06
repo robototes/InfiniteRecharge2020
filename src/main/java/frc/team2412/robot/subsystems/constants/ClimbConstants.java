@@ -42,6 +42,6 @@ public class ClimbConstants {
 	public static final int MAX_SPEED = 1;
 
 	public static final InterUnitRatio<RotationUnits, DistanceUnits> MOTOR_REVOLUTIONS_TO_INCHES = new InterUnitRatio<RotationUnits, DistanceUnits>(
-			RotationUnits.ROTATION, 1, DistanceUnits.INCH);
-
+			RotationUnits.ROTATION, 14 * 1.273 * Math.PI, DistanceUnits.INCH);
+	public static final double MAX_EXTENSION = -70;
 }

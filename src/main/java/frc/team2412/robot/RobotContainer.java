@@ -2,7 +2,6 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.subsystems.ClimbLiftSubsystem;
 import frc.team2412.robot.subsystems.ClimbMotorSubsystem;
 import frc.team2412.robot.subsystems.ControlPanelColorSubsystem;
@@ -60,10 +59,8 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Climb Motor Subsystem", tabName = "Climb")
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
 
-	@Log(tabName = "Indexer")
-	Command spitCommand;
-
-	Logging logger = new Logging();
+	@Log(tabName = "Driver View")
+	public Logging logger = new Logging();
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -79,7 +76,7 @@ public class RobotContainer implements Loggable {
 					RobotMap.frontMid, RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back,
 					RobotMap.intakeBack);
 
-			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
+			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor1, RobotMap.indexMidMotor2,
 					RobotMap.indexBackMotor, m_indexerSensorSubsystem);
 			
 		}
@@ -113,6 +110,5 @@ public class RobotContainer implements Loggable {
 
 			m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
 		}
-		spitCommand = new IndexSpitCommand(m_indexerSensorSubsystem, m_indexerMotorSubsystem, m_intakeMotorOnOffSubsystem);
 	}
 }

@@ -20,7 +20,7 @@ public class IndexIntakeThreeFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIndexFrontSensorValue())
+		//if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
 			m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
