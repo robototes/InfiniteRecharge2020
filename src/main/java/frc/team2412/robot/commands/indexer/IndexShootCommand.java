@@ -13,7 +13,7 @@ public class IndexShootCommand extends SequentialCommandGroup {
 
 	private IndexerMotorSubsystem motorSubsystem;
 	private IndexerMidMotorSubsystem midMotorSubsystem;
-	private IndexerSensorSubsystem sensorSubsystem;
+	private IndexerSensorSubsystem sensorSubsystem; 
 
 	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
 			IndexerMidMotorSubsystem indexMidMotorSubsystem) {
