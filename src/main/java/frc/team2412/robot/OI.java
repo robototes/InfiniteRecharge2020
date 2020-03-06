@@ -239,11 +239,11 @@ public class OI {
 			// robotContainer.m_intakeMotorOnOffSubsystem);
 
 			indexerShootButton.whenPressed(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
-					robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerMidMotorSubsystem));
+					robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerMidMotorSubsystem, robotContainer.m_intakeLiftSubsystem));
 
 			indexerShootButton.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance()
 					.cancel(new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
-							robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerMidMotorSubsystem))));
+							robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerMidMotorSubsystem, robotContainer.m_intakeLiftSubsystem))));
 
 			intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorSubsystem)
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.stopAllMotors())));
@@ -262,7 +262,7 @@ public class OI {
 					.andThen(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.setBackMotor(0))));
 			intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorSubsystem, false)
 					.andThen(new InstantCommand(() -> {
-						robotContainer.m_indexerMidMotorSubsystem.setDown();
+						robotContainer.m_indexerMidMotorSubsystem.down();
 						if (robotContainer.m_indexerSensorSubsystem.getIndexFrontSensorValue())
 							robotContainer.m_indexerMotorSubsystem.setFrontMotor(-1);
 						else
@@ -274,7 +274,7 @@ public class OI {
 					})));
 			intakeBackIn.whileHeld(
 					new IntakeBackInCommand(robotContainer.m_intakeMotorSubsystem).andThen(new InstantCommand(() -> {
-						robotContainer.m_indexerMidMotorSubsystem.setDown();
+						robotContainer.m_indexerMidMotorSubsystem.down();
 						if (robotContainer.m_indexerSensorSubsystem.getIndexBackSensorValue())
 							robotContainer.m_indexerMotorSubsystem.setBackMotor(-1);
 						else

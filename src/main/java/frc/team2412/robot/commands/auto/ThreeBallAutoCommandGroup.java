@@ -7,7 +7,7 @@ import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
+import frc.team2412.robot.subsystems.LiftMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
@@ -19,12 +19,12 @@ public class ThreeBallAutoCommandGroup extends SequentialCommandGroup {
 	public ThreeBallAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
 			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
 			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
-			IndexerMidMotorSubsystem indexMidMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			LiftMotorSubsystem indexMidMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 
 				new LiftUpCommand(liftSubsystem),
-				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, indexMidMotorSubsystem),
+				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, indexMidMotorSubsystem, intakeUpDownSubsystem),
 				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem,
 						intakeUpDownSubsystem));
 	}

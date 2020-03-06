@@ -11,7 +11,7 @@ import frc.team2412.robot.subsystems.Autonomous;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
+import frc.team2412.robot.subsystems.LiftMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
@@ -24,7 +24,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 			IntakeMotorSubsystem intakeOnOffSubsystem, IntakeLiftSubsystem intakeUpDownSubsystem,
 			LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
 			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
-			IndexerMidMotorSubsystem indexMidMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			LiftMotorSubsystem indexMidMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		if (autonomous.getIfTrenchPossible()) {
 			addCommands(
@@ -39,7 +39,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							//
 							new SequentialCommandGroup(new FlywheelRevUpCommand(flywheelSubsystem, 10),
 									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem,
-											indexMidMotorSubsystem)
+											indexMidMotorSubsystem, intakeUpDownSubsystem)
 							//
 							)
 					//
@@ -55,7 +55,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							//
 							new SequentialCommandGroup(new FlywheelRevUpCommand(flywheelSubsystem, 10),
 									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem,
-											indexMidMotorSubsystem)
+											indexMidMotorSubsystem, intakeUpDownSubsystem)
 							//
 							)
 					//
@@ -69,7 +69,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 					//
 					new SequentialCommandGroup(
 							// add rev up flyhweel command Parker was here
-							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, indexMidMotorSubsystem)
+							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, indexMidMotorSubsystem, intakeUpDownSubsystem)
 					//
 					),
 					//
@@ -79,7 +79,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 					//
 					new SequentialCommandGroup(
 							// add rev up flyhweel command
-							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, indexMidMotorSubsystem)
+							new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, indexMidMotorSubsystem, intakeUpDownSubsystem)
 					//
 					)
 

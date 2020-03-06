@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.commands.intake.IntakeBothUpCommand;
-import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
+import frc.team2412.robot.subsystems.LiftMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
@@ -13,12 +13,12 @@ import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
 public class IndexShootCommand extends SequentialCommandGroup {
 
 	private IndexerMotorSubsystem motorSubsystem;
-	private IndexerMidMotorSubsystem midMotorSubsystem;
+	private LiftMotorSubsystem midMotorSubsystem;
 	private IndexerSensorSubsystem sensorSubsystem; 
 	private IntakeLiftSubsystem intakeLiftSubsystem;
 
 	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
-			IndexerMidMotorSubsystem indexMidMotorSubsystem, IntakeLiftSubsystem intakeLiftSubsystem) {
+			LiftMotorSubsystem indexMidMotorSubsystem, IntakeLiftSubsystem intakeLiftSubsystem) {
 		motorSubsystem = indexMotorSubsystem;
 		this.midMotorSubsystem = indexMidMotorSubsystem;
 		this.sensorSubsystem = indexerSensorSubsystem;
@@ -49,6 +49,6 @@ public class IndexShootCommand extends SequentialCommandGroup {
 	public void end(boolean cancel) {
 		motorSubsystem.setLifting(false);
 		motorSubsystem.stopAllMotors();
-		midMotorSubsystem.setDown();
+		midMotorSubsystem.down();
 	}
 }

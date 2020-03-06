@@ -8,7 +8,7 @@ import frc.team2412.robot.commands.drive.MoveToPowerCellsCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
+import frc.team2412.robot.subsystems.LiftMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
@@ -24,7 +24,7 @@ public class AutoCommandPickerCommand extends CommandBase {
 	FlywheelSubsystem m_flywheelSubsystem;
 	IndexerSensorSubsystem m_indexerSensorSubsystem;
 	IndexerMotorSubsystem m_indexerMotorSubsystem;
-	IndexerMidMotorSubsystem m_indexerMidMotorSubsystem;
+	LiftMotorSubsystem m_indexerMidMotorSubsystem;
 	HoodSubsystem m_hoodSubsystem;
 
 	Command m_command;
@@ -32,7 +32,7 @@ public class AutoCommandPickerCommand extends CommandBase {
 	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
 			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
 			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
-			IndexerMidMotorSubsystem indexMidMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			LiftMotorSubsystem indexMidMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		m_driveBaseSubsystem = driveBaseSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
