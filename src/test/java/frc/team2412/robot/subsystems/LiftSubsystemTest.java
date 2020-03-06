@@ -24,7 +24,6 @@ public class LiftSubsystemTest {
 
 	// Mock instance of Example Subsystem
 	LiftSubsystem realLiftSubsystem;
-	IndexerMotorSubsystem mockedIndexerMotorSubsystem;
 	DoubleSolenoid mockedLiftSolenoid;
 
 	// This is called after tests, and makes sure that nothing is left open and
@@ -55,7 +54,7 @@ public class LiftSubsystemTest {
 		reset(mockedLiftSolenoid);
 
 		// Create command
-		LiftDownCommand liftDownCommand = new LiftDownCommand(realLiftSubsystem, mockedIndexerMotorSubsystem);
+		LiftDownCommand liftDownCommand = new LiftDownCommand(realLiftSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
@@ -84,7 +83,7 @@ public class LiftSubsystemTest {
 		reset(mockedLiftSolenoid);
 
 		// Create command
-		LiftUpCommand liftUpCommand = new LiftUpCommand(realLiftSubsystem, mockedIndexerMotorSubsystem);
+		LiftUpCommand liftUpCommand = new LiftUpCommand(realLiftSubsystem);
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();

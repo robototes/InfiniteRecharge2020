@@ -16,7 +16,7 @@ public class StartUpCommand extends ParallelCommandGroup {
 
 		addCommands(
 
-				new LiftUpCommand(liftSubsystem, motorSubsystem), new FlywheelShootCommand(flywheelSubsystem),
+				new LiftUpCommand(liftSubsystem), new FlywheelShootCommand(flywheelSubsystem),
 				new HoodExtendCommand(hoodSubsystem)
 
 		);

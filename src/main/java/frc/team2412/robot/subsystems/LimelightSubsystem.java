@@ -49,11 +49,9 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 		getCameraStream();
 	}
 
-	public void getCameraStream() {
-		HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
-				HttpCameraKind.kMJPGStreamer);
+	public HttpCamera getCameraStream() {
+		return new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg", HttpCameraKind.kMJPGStreamer);
 
-		limeCam = limelightFeed;
 	}
 
 	public void accurateAim() {

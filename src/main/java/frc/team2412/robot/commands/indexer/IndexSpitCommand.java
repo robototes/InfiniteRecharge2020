@@ -3,7 +3,8 @@ package frc.team2412.robot.commands.indexer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.subsystems.IndexerLiftMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
+import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 
 public class IndexSpitCommand extends CommandBase {
 
@@ -11,10 +12,10 @@ public class IndexSpitCommand extends CommandBase {
 	private IndexerLiftMotorSubsystem m_indexerLiftMotorSubsystem;
 	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
 
-	public IndexSpitCommand(IndexerMotorSubsystem motorSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem) {
+	public IndexSpitCommand(IndexerMotorSubsystem motorSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem, IndexerLiftMotorSubsystem liftMotorSubsystem) {
 		m_indexerMotorSubsystem = motorSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
-
+    m_indexerLiftMotorSubsystem = liftMotorSubsystem
 		addRequirements(motorSubsystem, intakeOnOffSubsystem);
 	}
 

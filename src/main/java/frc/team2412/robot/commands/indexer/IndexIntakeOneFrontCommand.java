@@ -19,19 +19,19 @@ public class IndexIntakeOneFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
-			m_indexerMotorSubsystem.setFrontMotor(-1);
+		//if (m_indexerSensorSubsystem.getFrontSensorValue())
+		m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
 	@Override
 	public void end(boolean cancel) {
 		RobotState.m_ballCount++;
-		m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
+		m_indexerMotorSubsystem.stopFrontPID(-IndexerConstants.EXTRA_LONG_STOP_DISTANCE);
 	}
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
+		return m_indexerSensorSubsystem.isIndexFrontMidSensorTripped();
 	}
 
 }

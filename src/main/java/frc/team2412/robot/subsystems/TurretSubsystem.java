@@ -103,4 +103,8 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 	public double getCurrentDraw() {
 		return m_turretMotor.getStatorCurrent();
 	}
+
+	public void resetEncoder() {
+		m_turretMotor.setSelectedSensorPosition(0);
+	}
 }

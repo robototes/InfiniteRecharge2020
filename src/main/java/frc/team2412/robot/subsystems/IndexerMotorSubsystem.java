@@ -7,7 +7,12 @@ import com.revrobotics.ControlType;
 import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.team2412.robot.commands.indexer.IndexIntakeBackCommandGroup;
+import frc.team2412.robot.commands.indexer.IndexIntakeFrontCommandGroup;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -28,7 +33,7 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	private SpeedControllerGroup m_allMotors;
 	private SpeedControllerGroup m_sideMotors;
 
-	private boolean lifting;
+	private boolean lifting = false;
 
 	public IndexerMotorSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor,
 			IndexerSensorSubsystem indexerSensorSubsystem) {
@@ -46,10 +51,10 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 		m_sideMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
 		m_allMotors = new SpeedControllerGroup(m_indexFrontMotor, m_indexBackMotor);
 
-		// Trigger frontProcess = new
-		// Trigger(indexerSensorSubsystem::getIntakeFrontSensorValue);
-		// frontProcess.whenActive(new
-		// IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
+		Trigger frontProcess = new
+		Trigger(indexerSensorSubsystem::getIndexFrontSensorValue);
+		frontProcess.whenActive(new
+		IndexIntakeFrontCommandGroup(indexerSensorSubsystem, this), true);
 
 		// Trigger backProcess = new
 		// Trigger(indexerSensorSubsystem::getIntakeBackSensorValue);
@@ -86,25 +91,25 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 	public void stopFrontPID(double val) {
 
 		resetEncoderZero();
-		if (m_indexFrontMotor.get() > 0) {
+		//if (m_indexFrontMotor.get() > 0) {
 			m_frontPIDController.setReference(frontTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
 					ControlType.kPosition);
-		} else {
-			m_frontPIDController.setReference(frontTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
-					ControlType.kPosition);
-		}
+		//} else {
+		//	m_frontPIDController.setReference(frontTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
+		//			ControlType.kPosition);
+		//}
 	}
 
 	public void stopBackPID(double val) {
 
 		resetEncoderZero();
-		if (m_indexBackMotor.get() > 0) {
+		//if (m_indexBackMotor.get() > 0) {
 			m_backPIDController.setReference(backTicks + (val * IndexerConstants.INCH_STOP_DISTANCE),
 					ControlType.kPosition);
-		} else {
-			m_backPIDController.setReference(backTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
-					ControlType.kPosition);
-		}
+		//} else {
+		//	m_backPIDController.setReference(backTicks - (val * IndexerConstants.INCH_STOP_DISTANCE),
+		//			ControlType.kPosition);
+		//}
 	}
 
 	public void setMidPID(boolean upOrDown) {
@@ -127,6 +132,16 @@ public class IndexerMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public double getCurrentDraw() {
 		return m_indexBackMotor.getOutputCurrent() + m_indexFrontMotor.getOutputCurrent();
+	}
+
+	@Override
+	public void periodic() {
+		if (RobotState.m_liftSolenoidState == RobotState.LiftState.EXTENDED) {
+			setMidPID(true);
+		} else {
+			setMidPID(false);
+		}
+		System.out.println(m_indexMidMotor.get());
 	}
 
 	public void setLifting(boolean b) {

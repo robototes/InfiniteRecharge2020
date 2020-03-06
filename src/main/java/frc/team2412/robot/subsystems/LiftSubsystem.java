@@ -10,11 +10,11 @@ import io.github.oblarg.oblog.annotations.Log;
 public class LiftSubsystem extends SubsystemBase implements Loggable {
 
 	// creates a Solenoid to use, mainly for ease
-	@Log(tabName = "Lift")
+	@Log(name = "Lift solenoid ", tabName = "Lift")
 	private DoubleSolenoid m_liftUpDown;
 
 	// Sets the state of the lift to down because of init it is down
-	@Log.ToString(tabName = "Lift")
+	@Log.ToString(name = "Current Lift State",tabName = "Lift")
 	private LiftState m_currentState = LiftState.DOWN;
 
 	// For when we create a liftSubsystem, it makes a liftSubsystem which uses our

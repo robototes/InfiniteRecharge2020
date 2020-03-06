@@ -1,6 +1,6 @@
 package frc.team2412.robot.commands.indexer;
 
-import static java.util.Map.entry;
+import static java.util.Map.Entry;
 
 import java.util.Map;
 
@@ -37,12 +37,11 @@ public class IndexIntakeFrontCommandGroup extends ParallelCommandGroup {
 
 		SequentialCommandGroup indexSequenceTwo = new SequentialCommandGroup(indexSwitchTwoCommand,
 				indexIntakeThreeFrontCommand);
-		SequentialCommandGroup indexSequenceFour = new SequentialCommandGroup(indexSwitchFourCommand,
-				indexIntakeFiveFrontCommand);
+		SequentialCommandGroup indexSequenceFour = new SequentialCommandGroup(indexIntakeFiveFrontCommand);
 
 		Command command = new SelectCommand(
 				Map.ofEntries(entry(0, indexIntakeOneFrontCommand), entry(1, indexIntakeTwoFrontCommand),
-						entry(2, indexSequenceTwo), entry(3, indexIntakeFourFrontCommand), entry(4, indexSequenceFour)),
+						entry(2, indexSequenceTwo), entry(3, indexIntakeFourFrontCommand), entry(101, indexSequenceFour)),
 				this::numBalls);
 		addCommands(command);
 	}

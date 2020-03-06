@@ -16,6 +16,7 @@ import com.robototes.sensors.Limelight.StreamMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -29,7 +30,7 @@ public class RobotMap {
 
 	public static boolean CLIMB_CONNECTED = false;
 	public static boolean CONTROL_PANEL_CONNECTED = false;
-	public static boolean SHOOTER_CONNECTED = true;
+	public static boolean SHOOTER_CONNECTED = false;
 	public static boolean INDEX_CONNECTED = true;
 	public static boolean INTAKE_CONNECTED = true;
 	public static boolean LIFT_CONNECTED = true;
@@ -37,6 +38,7 @@ public class RobotMap {
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_LIFT_RIGHT(40), INDEX_LIFT_LEFT(41), DRIVE_LEFT_FRONT(3),
+		INTAKE1(21), INDEX1(22), INTAKE2(11), INDEX2(12), INTAKE3(31), INDEX3(32), INDEX_MID(40), DRIVE_LEFT_FRONT(3),
 		DRIVE_LEFT_BACK(4), DRIVE_RIGHT_FRONT(1), DRIVE_RIGHT_BACK(2), CLIMB1(5), CLIMB2(6), TURRET(7),
 		FLYWHEEL_LEFT(8), FLYWHEEL_RIGHT(9), CONTROL_PANEL(10),;
 
@@ -243,6 +245,9 @@ public class RobotMap {
 	// Unknown RN
 	// -------------------------------------------------------------------------------------------------
 	// Compressor
+	private static final int PSI_GAUGE_PORT = 0;
+	public static AnalogInput psiGauge = new AnalogInput(PSI_GAUGE_PORT);
+
 	public static Compressor compressor = new Compressor();
 
 	// Robot container

@@ -11,8 +11,8 @@ import frc.team2412.robot.subsystems.HoodSubsystem;
 import frc.team2412.robot.subsystems.IndexerLiftMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
@@ -21,8 +21,9 @@ import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
+
 	@Log(name = "Limelight Subsystem", tabName = "Turret")
-	public LimelightSubsystem m_LimelightSubsystem;
+	public LimelightSubsystem m_limelightSubsystem;
 
 	@Log(name = "Turret Subsystem", tabName = "Turret")
 	public TurretSubsystem m_turretSubsystem;
@@ -39,11 +40,11 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Drivebase Subsystem", tabName = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
-	@Log(name = "Intake Motors Subsystem", tabName = "Intake")
-	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
+	@Log(tabName = "Intake Motors Subsystem", name = "Intake")
+	public IntakeMotorSubsystem m_intakeMotorSubsystem;
 
-	@Log(name = "Intake Subsystem", tabName = "Intake")
-	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
+	@Log(tabName = "Intake Lift Subsystem", name = "Intake")
+	public IntakeLiftSubsystem m_intakeLiftSubsystem;
 
 	@Log(name = "Control Panel Subsystem", tabName = "Control Panel")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
@@ -64,7 +65,7 @@ public class RobotContainer implements Loggable {
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
 
 	@Log(tabName = "Driver View")
-	public Logging logger = new Logging();
+	public Logging logger = new Logging(this);
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -97,9 +98,9 @@ public class RobotContainer implements Loggable {
 		}
 
 		if (RobotMap.INTAKE_CONNECTED) {
-			m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
+			m_intakeMotorSubsystem = new IntakeMotorSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-			m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
+			m_intakeLiftSubsystem = new IntakeLiftSubsystem(RobotMap.frontIntakeliftSolenoid,
 					RobotMap.backIntakeLiftSolenoid);
 		}
 
@@ -109,12 +110,22 @@ public class RobotContainer implements Loggable {
 		}
 
 		if (RobotMap.SHOOTER_CONNECTED) {
-			m_LimelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
-			m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
+			m_limelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
+			m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_limelightSubsystem);
 
 			m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
 
 			m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
 		}
+	}
+
+	public void resetAllEncoders() {
+		m_climbMotorSubsystem.resetEncoder();
+		m_driveBaseSubsystem.resetEncoder();
+		m_flywheelSubsystem.resetEncoder();
+		m_hoodSubsystem.resetEncoder();
+		m_indexerMotorSubsystem.resetEncoderZero();
+		m_intakeMotorSubsystem.resetEncoder();
+		m_turretSubsystem.resetEncoder();
 	}
 }

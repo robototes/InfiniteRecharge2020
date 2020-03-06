@@ -1,5 +1,15 @@
 package frc.team2412.robot;
 
+import static frc.team2412.robot.RobotMap.CLIMB_CONNECTED;
+import static frc.team2412.robot.RobotMap.DRIVE_BASE_CONNECTED;
+import static frc.team2412.robot.RobotMap.INDEX_CONNECTED;
+import static frc.team2412.robot.RobotMap.INTAKE_CONNECTED;
+import static frc.team2412.robot.RobotMap.SHOOTER_CONNECTED;
+import static frc.team2412.robot.RobotMap.compressor;
+
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.HttpCamera.HttpCameraKind;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
@@ -8,91 +18,100 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class Logging implements Loggable, Sendable {
 
+	
+	RobotContainer m_robotContainer;
+	
 	// 4 rows, 10 col
+	
+	
+
+	@Log.PDP(tabName = "Misc.")
+	public PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	private final String green = "#7FFF00";
 	private final String red = "#B22222";
 	private final String white = "#FFFFFF";
 
 	// Goal Able
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(name = "asdf", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "Outer goal possible", colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAble = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "Inner goal possible", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAble = false;
 
 	// Goal Aimed
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
-	@Log.BooleanBox(name = "asdf2", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 2, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "Outer goal ready", colorWhenFalse = white, colorWhenTrue = green, width = 3, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean outerGoalAimed = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Driver View")
+	@Log.BooleanBox(name = "Inner goal ready", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 0, rowIndex = 0, height = 2, tabName = "Dwivew view >~<")
 	public boolean innerGoalAimed = false;
 
 	// Intake stuff
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 3, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(name = "Back intake On", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 3, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean backIntakeOn = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 4, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(name = "Back intake Up", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 4, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean backIntakeUp = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 6, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(name = "Front intake Up", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 6, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean frontIntakeUp = false;
-	@Log.BooleanBox(colorWhenFalse = white, colorWhenTrue = green, columnIndex = 7, rowIndex = 0, height = 1, tabName = "Driver View")
+	@Log.BooleanBox(name = "Front intake On", colorWhenFalse = white, colorWhenTrue = green, columnIndex = 7, rowIndex = 0, height = 1, tabName = "Dwivew view >~<")
 	public boolean frontIntakeOn = false;
 
 	// PC count
-	@Log(columnIndex = 5, height = 1, rowIndex = 0, tabName = "Driver View")
+	@Log(columnIndex = 5, height = 1, rowIndex = 0, tabName = "Dwivew view >~<", name = "Power cell count")
 	public int powerCellCount = 0;
 
-	// Dial
-	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Driver View")
-	public double currentDrawDial = 0;
-
 	// Dial Boolean
-	@Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 7, rowIndex = 1, tabName = "Driver View")
-	// @Log.BooleanBox(colorWhenFalse = green, colorWhenTrue = red, columnIndex = 9,
-	// rowIndex = 1, tabName = "Driver View")
+	@Log.BooleanBox(colorWhenFalse = green, name = "Brownout Warinng", colorWhenTrue = red, width = 3, columnIndex = 7, rowIndex = 1, tabName = "Dwivew view >~<")
 	public boolean brownoutWarning = false;
 
+	// Dial
+	@Log.Dial(columnIndex = 8, height = 1, rowIndex = 3, tabName = "Dwivew view >~<", name = "Current draw")
+	public double currentDrawDial = 0;
+
 	// Timer
-	@Log(columnIndex = 7, rowIndex = 2, width = 3, height = 1, tabName = "Driver View")
-	public String timer = "Yes";
+	@Log(columnIndex = 7, rowIndex = 2, width = 3, height = 1, name = "Timer", tabName = "Dwivew view >~<")
+	public static String timer = "";
 
 	// Gauge
-	@Log(columnIndex = 7, rowIndex = 3, tabName = "Driver View")
+	@Log(columnIndex = 7, rowIndex = 3, tabName = "Dwivew view >~<")
 	public double PSI = 0;
 
 	// CurrentDraws
-	@Log(columnIndex = 8, rowIndex = 3, tabName = "Driver View")
+	@Log(columnIndex = 8, rowIndex = 3, tabName = "Dwivew view >~<")
 	public double driveBaseCurrentDraw = 0;
 
-	@Log(columnIndex = 9, rowIndex = 3, tabName = "Driver View")
-	public double totalCurrentDraw = 0;
+	@Log(columnIndex = 9, rowIndex = 3, tabName = "Dwivew view >~<")
+	public static double totalCurrentDraw = 0;
 
-	public Logging() {
+	@Log.CameraStream(columnIndex = 3, rowIndex = 1, width = 4, height = 3, tabName = "Dwivew view >~<")
+	public HttpCamera limelightFeed;
+
+	public Logging(RobotContainer robotContainer) {
+		m_robotContainer = robotContainer;
+		limelightFeed = new HttpCamera("limelight", "http://10.24.12.11:5801/stream.mjpg",
+				HttpCameraKind.kMJPGStreamer);
 	}
 
 	public void periodic() {
 		// WIP: OuterGoalAble, innerGoalAble, outerGoalAimed, innerGoalAimed
 
-		backIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.backMotorOn()
+		backIntakeOn =  INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.backMotorOn()
 				: false;
-		backIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isBackIntakeUp()
+		backIntakeUp =  INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isBackIntakeUp()
 				: false;
-		frontIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isFrontIntakeUp()
+		frontIntakeUp =  INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isFrontIntakeUp()
 				: false;
-		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.FrontMotorOn()
+		frontIntakeOn =  INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.FrontMotorOn()
 				: false;
 
-		powerCellCount = RobotState.m_ballCount;
+		powerCellCount = RobotState.m_ballCount % 5;
 
-		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+		currentDrawDial = ( CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
 				: 0)
-				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
-						: 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
-				+ RobotMap.compressor.getCompressorCurrent();
+				+ ( DRIVE_BASE_CONNECTED ?  m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ ( SHOOTER_CONNECTED ?  m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ ( INDEX_CONNECTED ?  m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ ( INTAKE_CONNECTED ?  m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw() : 0)
+				+ ( SHOOTER_CONNECTED ?  m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
+				+  compressor.getCompressorCurrent();
 
 		// 6.8 V is the warning level for brownout
 		brownoutWarning = (RobotController.getInputVoltage() < 7 || RobotController.isBrownedOut());
@@ -101,7 +120,7 @@ public class Logging implements Loggable, Sendable {
 		// timer = time / 60 + " : " + time % 60;
 
 		// driveBaseCurrentDraw =
-		// RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+		//  m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
 	}
 
 	@Override

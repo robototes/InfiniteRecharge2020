@@ -20,8 +20,7 @@ public class IndexIntakeThreeFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
-			m_indexerMotorSubsystem.setFrontMotor(-1);
+		//if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
 	}
 
 	@Override
@@ -33,7 +32,7 @@ public class IndexIntakeThreeFrontCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.getIndexFrontMidSensorValue();
+		return m_indexerSensorSubsystem.isIndexFrontMidSensorTripped();
 	}
 
 }
