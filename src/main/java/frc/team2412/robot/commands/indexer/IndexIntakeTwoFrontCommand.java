@@ -20,14 +20,14 @@ public class IndexIntakeTwoFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (m_indexerSensorSubsystem.isIntakeFrontSensorTripped())
+		//if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
 			m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
 	@Override
 	public void end(boolean cancel) {
 		RobotState.m_unbalancedSide = RobotState.UnbalancedSide.FRONT;
-		m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.LONG_STOP_DISTANCE);
+		m_indexerMotorSubsystem.stopFrontPID(-IndexerConstants.LONG_STOP_DISTANCE);
 		RobotState.m_ballCount++;
 	}
 

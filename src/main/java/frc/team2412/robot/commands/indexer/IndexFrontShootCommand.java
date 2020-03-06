@@ -20,7 +20,7 @@ public class IndexFrontShootCommand extends CommandBase {
 	public void execute() {
 		m_indexerMotorSubsystem.setMidMotor(1);
 		m_indexerMotorSubsystem.setFrontMotor(-1);
-		m_IntakeOnOffSubsystem.frontIntakeIn();
+//		m_IntakeOnOffSubsystem.frontIntakeIn();
 	}
 
 	@Override

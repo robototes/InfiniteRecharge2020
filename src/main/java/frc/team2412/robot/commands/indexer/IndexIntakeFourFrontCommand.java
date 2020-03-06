@@ -27,7 +27,7 @@ public class IndexIntakeFourFrontCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return m_indexerSensorSubsystem.isIndexFrontSensorTripped();
+		return true; //return m_indexerSensorSubsystem.getIndexFrontSensorValue();
 	}
 
 }

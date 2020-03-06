@@ -1,5 +1,10 @@
 package frc.team2412.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -28,6 +33,23 @@ public class IndexShootCommand extends SequentialCommandGroup {
 	public void initialize() {
 		super.initialize();
 		m_indexerMotorSubsystem.setLifting(true);
+		addCommands(
+		//	new ParallelRaceGroup(new IndexSpitCommand(sensorSubsystem, motorSubsystem, intakeSubsystem),
+			//new WaitCommand(0.1)),
+			//new IndexAllOffCommand(motorSubsystem),
+			//new IndexMidMotorCommand(motorSubsystem),
+			//new WaitCommand(0.3),
+			new ParallelDeadlineGroup(new WaitCommand(1), new IndexAllOut(motorSubsystem)),
+			new ParallelDeadlineGroup(new WaitCommand(1), new IndexMidMotorCommand(motorSubsystem)),
+		//	new IndexMidMotorCommand(motorSubsystem),
+		//	new WaitCommand(0.5),
+			new IndexFrontShootCommand(sensorSubsystem, motorSubsystem, intakeSubsystem), 
+			new WaitCommand(2),
+		//	new IndexAllOffCommand(motorSubsystem),
+			new IndexBackShootCommand(sensorSubsystem, motorSubsystem, intakeSubsystem),
+			new WaitCommand(2)
+			 
+			 );
 	}
 
 	@Override

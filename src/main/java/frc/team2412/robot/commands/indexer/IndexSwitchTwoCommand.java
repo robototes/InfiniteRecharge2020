@@ -20,6 +20,7 @@ public class IndexSwitchTwoCommand extends CommandBase {
 
 	@Override
 	public void execute() {
+
 		if (m_indexerSensorSubsystem.isIntakeFrontSensorTripped()
 				|| m_indexerSensorSubsystem.isIntakeBackSensorTripped()) {
 			if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
@@ -29,18 +30,19 @@ public class IndexSwitchTwoCommand extends CommandBase {
 				m_indexerMotorSubsystem.setFrontMotor(1);
 				m_indexerMotorSubsystem.setBackMotor(-1);
 			}
-		}
+		
 	}
 
 	@Override
 	public void end(boolean cancel) {
+		//System.out.println("hi");
 		if (RobotState.m_unbalancedSide == RobotState.UnbalancedSide.FRONT) {
-			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.SHORT_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopFrontPID(-IndexerConstants.SHORT_STOP_DISTANCE);
 			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.SHORT_STOP_DISTANCE);
 			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
 		} else {
 			m_indexerMotorSubsystem.stopFrontPID(IndexerConstants.SHORT_STOP_DISTANCE);
-			m_indexerMotorSubsystem.stopBackPID(IndexerConstants.SHORT_STOP_DISTANCE);
+			m_indexerMotorSubsystem.stopBackPID(-IndexerConstants.SHORT_STOP_DISTANCE);
 			RobotState.m_unbalancedSide = RobotState.flip(RobotState.m_unbalancedSide);
 		}
 	}
