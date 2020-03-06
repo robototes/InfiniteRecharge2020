@@ -32,22 +32,21 @@ public class IndexShootCommand extends SequentialCommandGroup {
 		super.initialize();
 		motorSubsystem.setLifting(true);
 		addCommands(
-		//	new ParallelRaceGroup(new IndexSpitCommand(sensorSubsystem, motorSubsystem, intakeSubsystem),
-			//new WaitCommand(0.1)),
-			//new IndexAllOffCommand(motorSubsystem),
-			//new IndexMidMotorCommand(motorSubsystem),
-			//new WaitCommand(0.3),
-			new ParallelDeadlineGroup(new WaitCommand(1), new IndexAllOut(motorSubsystem)),
-			new ParallelDeadlineGroup(new WaitCommand(1), new IndexMidMotorCommand(motorSubsystem)),
-		//	new IndexMidMotorCommand(motorSubsystem),
-		//	new WaitCommand(0.5),
-			new IndexFrontShootCommand(motorSubsystem, intakeSubsystem), 
-			new WaitCommand(2),
-		//	new IndexAllOffCommand(motorSubsystem),
-			new IndexBackShootCommand(motorSubsystem, intakeSubsystem),
-			new WaitCommand(2)
-			 
-			 );
+				// new ParallelRaceGroup(new IndexSpitCommand(sensorSubsystem, motorSubsystem,
+				// intakeSubsystem),
+				// new WaitCommand(0.1)),
+				// new IndexAllOffCommand(motorSubsystem),
+				// new IndexMidMotorCommand(motorSubsystem),
+				// new WaitCommand(0.3),
+				new ParallelDeadlineGroup(new WaitCommand(1), new IndexAllOut(motorSubsystem)),
+				new ParallelDeadlineGroup(new WaitCommand(1), new IndexMidMotorCommand(motorSubsystem)),
+				// new IndexMidMotorCommand(motorSubsystem),
+				// new WaitCommand(0.5),
+				new IndexFrontShootCommand(motorSubsystem, intakeSubsystem), new WaitCommand(2),
+				// new IndexAllOffCommand(motorSubsystem),
+				new IndexBackShootCommand(motorSubsystem, intakeSubsystem), new WaitCommand(2)
+
+		);
 	}
 
 	@Override

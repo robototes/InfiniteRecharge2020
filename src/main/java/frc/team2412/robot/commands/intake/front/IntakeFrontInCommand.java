@@ -7,7 +7,6 @@ public class IntakeFrontInCommand extends CommandBase {
 
 	private IntakeMotorSubsystem m_intakeMotorOnOffSubsystem;
 
-
 	public IntakeFrontInCommand(IntakeMotorSubsystem intakeMotorOnOffSubsystem, boolean require) {
 		if (require) {
 			addRequirements(intakeMotorOnOffSubsystem);

@@ -17,13 +17,13 @@ import frc.team2412.robot.subsystems.LiftSubsystem;
 public class SixBallAutoCommandGroup extends SequentialCommandGroup {
 
 	public SixBallAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
-			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
-			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
-			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
+			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
+			HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 
-				new LiftUpCommand(liftSubsystem), 
+				new LiftUpCommand(liftSubsystem),
 				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem),
 				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem, intakeUpDownSubsystem),
 				new MoveFromPowerCellsCommand(driveBaseSubsystem),

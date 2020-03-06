@@ -14,9 +14,9 @@ public class IntakeEverythingOnCommandGroup extends ParallelCommandGroup {
 	public IntakeEverythingOnCommandGroup(IntakeMotorSubsystem intakeOnOffSubsystem,
 			IntakeLiftSubsystem intakeUpDownSubsystem, IndexerMotorSubsystem indexerMotorSubsystem) {
 
-		addCommands(new IntakeFrontInCommand(intakeOnOffSubsystem, false), new IntakeBackInCommand(intakeOnOffSubsystem),
-				new IntakeFrontDownCommand(intakeUpDownSubsystem), new IntakeBackDownCommand(intakeUpDownSubsystem),
-				new IndexAllOnCommand(indexerMotorSubsystem));
+		addCommands(new IntakeFrontInCommand(intakeOnOffSubsystem, false),
+				new IntakeBackInCommand(intakeOnOffSubsystem), new IntakeFrontDownCommand(intakeUpDownSubsystem),
+				new IntakeBackDownCommand(intakeUpDownSubsystem), new IndexAllOnCommand(indexerMotorSubsystem));
 	}
 
 }

@@ -20,8 +20,8 @@ public class IndexIntakeTwoFrontCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		//if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
-			m_indexerMotorSubsystem.setFrontMotor(-1);
+		// if (m_indexerSensorSubsystem.getIntakeFrontSensorValue())
+		m_indexerMotorSubsystem.setFrontMotor(-1);
 	}
 
 	@Override

@@ -20,7 +20,6 @@ public class IndexAllOut extends CommandBase {
 		m_indexerMotorSubsystem.setMidMotor(0);
 	}
 
-
 	@Override
 	public boolean isFinished() {
 		return true;

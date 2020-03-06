@@ -12,11 +12,11 @@ public class IndexMidMotorCommand extends CommandBase {
 		m_indexerMotorSubsystem = motorSubsystem;
 	}
 
-public void execute(){
-	m_indexerMotorSubsystem.setMidMotor(0.7);
-}
+	public void execute() {
+		m_indexerMotorSubsystem.setMidMotor(0.7);
+	}
 
-public void end(){
-	m_indexerMotorSubsystem.setMidMotor(0);
-}
+	public void end() {
+		m_indexerMotorSubsystem.setMidMotor(0);
+	}
 }

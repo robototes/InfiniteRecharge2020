@@ -16,9 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
-import frc.team2412.robot.commands.hood.HoodJoystickCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
-import frc.team2412.robot.commands.indexer.IndexCommand;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.Logger;
 import io.github.oblarg.oblog.annotations.Log;
@@ -73,15 +71,17 @@ public class Robot extends TimedRobot implements Loggable {
 
 	@Override
 	public void robotPeriodic() {
-		//CommandScheduler.getInstance().schedule(new IndexCommand(RobotMap.m_robotContainer.m_indexerMotorSubsystem, RobotMap.m_robotContainer.m_indexerSensorSubsystem));
+		// CommandScheduler.getInstance().schedule(new
+		// IndexCommand(RobotMap.m_robotContainer.m_indexerMotorSubsystem,
+		// RobotMap.m_robotContainer.m_indexerSensorSubsystem));
 
 		CommandScheduler.getInstance().run();
 		Logger.updateEntries();
 		RobotMap.psiGauge.getValue();
 		m_robotContainer.logger.periodic();
-		//System.out.println(new DigitalInput(8).get());
-		
-	//	System.out.println(RobotController.getBatteryVoltage());
+		// System.out.println(new DigitalInput(8).get());
+
+		// System.out.println(RobotController.getBatteryVoltage());
 	}
 
 	/**
@@ -134,8 +134,8 @@ public class Robot extends TimedRobot implements Loggable {
 		// CommandScheduler.getInstance().cancel(autoCommand);
 		CommandScheduler.getInstance()
 				.schedule(new InstantCommand(() -> m_robotContainer.m_indexerMotorSubsystem.stopAllMotors()));
-		//m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
-		//m_robotContainer.m_LimelightSubsystem.stopLimelight();
+		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
+		// m_robotContainer.m_LimelightSubsystem.stopLimelight();
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class Robot extends TimedRobot implements Loggable {
 		timeRemaining -= 0.02;
 
 		double val = m_OI.codriverStick.getY() * 0.5 + 0.5;
-		//m_robotContainer.m_hoodSubsystem.setServo(val);
+		// m_robotContainer.m_hoodSubsystem.setServo(val);
 
 	}
 

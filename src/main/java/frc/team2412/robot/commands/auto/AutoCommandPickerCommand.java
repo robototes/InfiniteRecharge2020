@@ -28,9 +28,9 @@ public class AutoCommandPickerCommand extends CommandBase {
 	Command m_command;
 
 	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
-			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
-			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
-			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
+			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
+			HoodSubsystem hoodSubsystem) {
 
 		m_driveBaseSubsystem = driveBaseSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;

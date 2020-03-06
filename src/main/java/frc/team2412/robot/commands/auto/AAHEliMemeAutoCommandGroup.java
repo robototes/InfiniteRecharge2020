@@ -16,9 +16,9 @@ import frc.team2412.robot.subsystems.LiftSubsystem;
 public class AAHEliMemeAutoCommandGroup extends SequentialCommandGroup {
 
 	public AAHEliMemeAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
-			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
-			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
-			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
+			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
+			HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 

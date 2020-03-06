@@ -1,7 +1,5 @@
 package frc.team2412.robot.commands.indexer;
 
-import static java.util.Map.Entry;
-
 import java.util.Map;
 
 import edu.wpi.first.wpilibj2.command.Command;

@@ -36,9 +36,9 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							//
 							new LiftUpCommand(liftSubsystem),
 							//
-							new SequentialCommandGroup(
-									new FlywheelRevUpCommand(flywheelSubsystem, 10),
-									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem)
+							new SequentialCommandGroup(new FlywheelRevUpCommand(flywheelSubsystem, 10),
+									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem,
+											intakeOnOffSubsystem)
 							//
 							)
 					//
@@ -52,9 +52,9 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							//
 							autonomous.getTrenchMovementCommand(),
 							//
-							new SequentialCommandGroup(
-									new FlywheelRevUpCommand(flywheelSubsystem, 10),
-									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem)
+							new SequentialCommandGroup(new FlywheelRevUpCommand(flywheelSubsystem, 10),
+									new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem,
+											intakeOnOffSubsystem)
 							//
 							)
 					//

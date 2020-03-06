@@ -8,7 +8,8 @@ public class IntakeFrontBothOnCommandGroup extends ParallelCommandGroup {
 	public IntakeFrontBothOnCommandGroup(IntakeLiftSubsystem intakeUpDownSubsystem,
 			IntakeMotorSubsystem intakeOnOffSubsystem) {
 
-		addCommands(new IntakeFrontInCommand(intakeOnOffSubsystem, false), new IntakeFrontDownCommand(intakeUpDownSubsystem));
+		addCommands(new IntakeFrontInCommand(intakeOnOffSubsystem, false),
+				new IntakeFrontDownCommand(intakeUpDownSubsystem));
 	}
 
 }

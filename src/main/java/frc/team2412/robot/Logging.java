@@ -18,12 +18,9 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class Logging implements Loggable, Sendable {
 
-	
 	RobotContainer m_robotContainer;
-	
+
 	// 4 rows, 10 col
-	
-	
 
 	@Log.PDP(tabName = "Misc.")
 	public PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -93,25 +90,20 @@ public class Logging implements Loggable, Sendable {
 	public void periodic() {
 		// WIP: OuterGoalAble, innerGoalAble, outerGoalAimed, innerGoalAimed
 
-		backIntakeOn =  INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.backMotorOn()
-				: false;
-		backIntakeUp =  INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isBackIntakeUp()
-				: false;
-		frontIntakeUp =  INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isFrontIntakeUp()
-				: false;
-		frontIntakeOn =  INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.FrontMotorOn()
-				: false;
+		backIntakeOn = INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.backMotorOn() : false;
+		backIntakeUp = INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isBackIntakeUp() : false;
+		frontIntakeUp = INTAKE_CONNECTED ? m_robotContainer.m_intakeLiftSubsystem.isFrontIntakeUp() : false;
+		frontIntakeOn = INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.FrontMotorOn() : false;
 
 		powerCellCount = RobotState.m_ballCount % 5;
 
-		currentDrawDial = ( CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
-				: 0)
-				+ ( DRIVE_BASE_CONNECTED ?  m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
-				+ ( SHOOTER_CONNECTED ?  m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
-				+ ( INDEX_CONNECTED ?  m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ ( INTAKE_CONNECTED ?  m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw() : 0)
-				+ ( SHOOTER_CONNECTED ?  m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
-				+  compressor.getCompressorCurrent();
+		currentDrawDial = (CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
+				+ (DRIVE_BASE_CONNECTED ? m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ (SHOOTER_CONNECTED ? m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ (INDEX_CONNECTED ? m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ (INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorSubsystem.getCurrentDraw() : 0)
+				+ (SHOOTER_CONNECTED ? m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
+				+ compressor.getCompressorCurrent();
 
 		// 6.8 V is the warning level for brownout
 		brownoutWarning = (RobotController.getInputVoltage() < 7 || RobotController.isBrownedOut());
@@ -120,7 +112,7 @@ public class Logging implements Loggable, Sendable {
 		// timer = time / 60 + " : " + time % 60;
 
 		// driveBaseCurrentDraw =
-		//  m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
+		// m_robotContainer.m_driveBaseSubsystem.getCurrentDraw();
 	}
 
 	@Override

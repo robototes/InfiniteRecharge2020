@@ -62,7 +62,7 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 	public void resetEncoder() {
 		m_hoodServo1.setPosition(0);
 	}
-	
+
 	public void add(double m_increment) {
 		this.setServo(Math.min(getServo() + m_increment, HoodConstants.MAX_EXTENSION));
 	}

@@ -17,9 +17,9 @@ public class FlywheelRevUpCommand extends CommandBase {
 	public void execute() {
 		m_flywheelSubsystem.setRPMFromMPS(m_wantedMPS);
 	}
-	
+
 	@Override
 	public boolean isFinished() {
-		return Math.abs(m_flywheelSubsystem.currentLeftSpeedInMetersPerSecond()- m_wantedMPS) < 0.01;
+		return Math.abs(m_flywheelSubsystem.currentLeftSpeedInMetersPerSecond() - m_wantedMPS) < 0.01;
 	}
 }
