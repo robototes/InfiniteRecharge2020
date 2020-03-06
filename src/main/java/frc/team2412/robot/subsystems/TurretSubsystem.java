@@ -38,9 +38,6 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 		m_limelightSubsystem = limelightSubsystem;
 
 		initTurretEncoder();
-
-		// setDefaultCommand(new TurretFollowLimelightCommand(this,
-		// m_limelightSubsystem));
 	}
 
 	public Rotations getCurrentAngle() {
