@@ -8,6 +8,7 @@ import frc.team2412.robot.commands.drive.MoveToPowerCellsCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
+import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
@@ -23,6 +24,7 @@ public class AutoCommandPickerCommand extends CommandBase {
 	FlywheelSubsystem m_flywheelSubsystem;
 	IndexerSensorSubsystem m_indexerSensorSubsystem;
 	IndexerMotorSubsystem m_indexerMotorSubsystem;
+	IndexerMidMotorSubsystem m_indexerMidMotorSubsystem;
 	HoodSubsystem m_hoodSubsystem;
 
 	Command m_command;
@@ -30,7 +32,7 @@ public class AutoCommandPickerCommand extends CommandBase {
 	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
 			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
 			IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
-			HoodSubsystem hoodSubsystem) {
+			IndexerMidMotorSubsystem indexMidMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		m_driveBaseSubsystem = driveBaseSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
@@ -40,6 +42,7 @@ public class AutoCommandPickerCommand extends CommandBase {
 		m_indexerMotorSubsystem = indexerMotorSubsystem;
 		m_indexerSensorSubsystem = indexerSensorSubsystem;
 		m_hoodSubsystem = hoodSubsystem;
+		m_indexerMidMotorSubsystem = indexMidMotorSubsystem;
 
 	}
 
@@ -50,13 +53,13 @@ public class AutoCommandPickerCommand extends CommandBase {
 
 			m_command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
 					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
-					m_indexerMotorSubsystem, m_hoodSubsystem);
+					m_indexerMotorSubsystem, m_indexerMidMotorSubsystem, m_hoodSubsystem);
 
 		} else if (RobotState.threeBallAuto == true) {
 
 			m_command = new ThreeBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
 					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
-					m_indexerMotorSubsystem, m_hoodSubsystem);
+					m_indexerMotorSubsystem, m_indexerMidMotorSubsystem, m_hoodSubsystem);
 
 		} else if (RobotState.justMoveAuto == true) {
 

@@ -37,9 +37,9 @@ public class RobotMap {
 	public static boolean DRIVE_BASE_CONNECTED = false;
 
 	public static enum CANBus {
-		INTAKE1(21), INDEX1(22), INTAKE2(11), INDEX2(12), INTAKE3(31), INDEX3(32), INDEX_MID(40), DRIVE_LEFT_FRONT(3),
-		DRIVE_LEFT_BACK(4), DRIVE_RIGHT_FRONT(1), DRIVE_RIGHT_BACK(2), CLIMB1(5), CLIMB2(6), TURRET(7),
-		FLYWHEEL_LEFT(8), FLYWHEEL_RIGHT(9), CONTROL_PANEL(10);
+		INTAKE1(21), INDEX1(22), INTAKE2(11), INDEX2(12), INTAKE3(31), INDEX3(32), INDEX_MID(40), INDEX_MID2(41),
+		DRIVE_LEFT_FRONT(3), DRIVE_LEFT_BACK(4), DRIVE_RIGHT_FRONT(1), DRIVE_RIGHT_BACK(2), CLIMB1(5), CLIMB2(6),
+		TURRET(7), FLYWHEEL_LEFT(8), FLYWHEEL_RIGHT(9), CONTROL_PANEL(10);
 
 		public final int id;
 
@@ -141,7 +141,10 @@ public class RobotMap {
 
 	// motors
 	public static CANSparkMax indexFrontMotor, indexBackMotor;
-	public static CANSparkMax indexMidMotor = INDEX_CONNECTED
+	public static CANSparkMax indexMidMotor1 = INDEX_CONNECTED
+			? new CANSparkMax(CANBus.INDEX_MID2.id, MotorType.kBrushless)
+			: null;
+	public static CANSparkMax indexMidMotor2 = INDEX_CONNECTED
 			? new CANSparkMax(CANBus.INDEX_MID.id, MotorType.kBrushless)
 			: null;
 

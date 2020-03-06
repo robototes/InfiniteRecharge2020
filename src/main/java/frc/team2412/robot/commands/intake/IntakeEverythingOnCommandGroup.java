@@ -6,17 +6,20 @@ import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
+import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
 import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 
 public class IntakeEverythingOnCommandGroup extends ParallelCommandGroup {
 	public IntakeEverythingOnCommandGroup(IntakeMotorSubsystem intakeOnOffSubsystem,
-			IntakeLiftSubsystem intakeUpDownSubsystem, IndexerMotorSubsystem indexerMotorSubsystem) {
+			IntakeLiftSubsystem intakeUpDownSubsystem, IndexerMotorSubsystem indexerMotorSubsystem,
+			IndexerMidMotorSubsystem indexMidMotorSubsystem) {
 
 		addCommands(new IntakeFrontInCommand(intakeOnOffSubsystem, false),
 				new IntakeBackInCommand(intakeOnOffSubsystem), new IntakeFrontDownCommand(intakeUpDownSubsystem),
-				new IntakeBackDownCommand(intakeUpDownSubsystem), new IndexAllOnCommand(indexerMotorSubsystem));
+				new IntakeBackDownCommand(intakeUpDownSubsystem),
+				new IndexAllOnCommand(indexerMotorSubsystem, indexMidMotorSubsystem));
 	}
 
 }

@@ -25,7 +25,7 @@ public class IndexBitmapCommand extends CommandBase {
 		// Don't move, as there's nothing in the outer slots -or-
 		// Back side has inner and outer slots full, front side only has middle slot
 		// full
-		A(0b100001, 0b000000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
+		A(0b011110, 0b000000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
 		B(0b101111, 0b101010, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
 
 		// Back side has outer slot full and inner slot empty, so move back ball(s) in

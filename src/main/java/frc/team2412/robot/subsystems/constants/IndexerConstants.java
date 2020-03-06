@@ -16,6 +16,9 @@ public class IndexerConstants {
 		}
 	}
 
+	public static final double MID_MOTOR_UP_MAX_SPEED = 1;
+	public static final double MID_MOTOR_DOWN_MAX_SPEED = -1;
+
 	public static final double MOTOR_IN_SPEED = -1;
 	public static final double MOTOR_OUT_SPEED = -1;
 	public static final double MOTOR_OFF_SPEED = 0;

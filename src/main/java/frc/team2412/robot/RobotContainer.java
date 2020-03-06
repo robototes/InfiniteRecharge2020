@@ -8,6 +8,7 @@ import frc.team2412.robot.subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
+import frc.team2412.robot.subsystems.IndexerMidMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
 import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
@@ -60,6 +61,9 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Climb Motor Subsystem", tabName = "Climb")
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
 
+	@Log(name = "Mif Motor Subsystem", tabName = "Indexer")
+	public IndexerMidMotorSubsystem m_indexerMidMotorSubsystem;
+
 	@Log(tabName = "Driver View")
 	public Logging logger = new Logging(this);
 
@@ -77,13 +81,14 @@ public class RobotContainer implements Loggable {
 					RobotMap.frontMid, RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back,
 					RobotMap.intakeBack);
 
-			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexMidMotor,
-					RobotMap.indexBackMotor, m_indexerSensorSubsystem);
+			m_indexerMotorSubsystem = new IndexerMotorSubsystem(RobotMap.indexFrontMotor, RobotMap.indexBackMotor,
+					m_indexerSensorSubsystem);
 
 		}
 
 		if (RobotMap.LIFT_CONNECTED) {
 			m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+			m_indexerMidMotorSubsystem = new IndexerMidMotorSubsystem(RobotMap.indexMidMotor1, RobotMap.indexMidMotor2);
 		}
 
 		if (RobotMap.DRIVE_BASE_CONNECTED) {
