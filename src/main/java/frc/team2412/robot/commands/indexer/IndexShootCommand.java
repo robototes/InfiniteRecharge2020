@@ -12,13 +12,14 @@ import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 public class IndexShootCommand extends SequentialCommandGroup {
 
 	private IndexerMotorSubsystem m_indexerMotorSubsystem;
-	private IndexerLiftMotorSubsystem m_indexerLiftSubsystem;
+	private IndexerLiftMotorSubsystem m_indexerLiftMotorSubsystem;
 	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
 
 	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerLiftMotorSubsystem indexerLiftMotorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
 			IntakeOnOffSubsystem intakeSubsystem) {
 		m_indexerMotorSubsystem = indexMotorSubsystem;
 		m_intakeOnOffSubsystem = intakeSubsystem;
+		m_indexerLiftMotorSubsystem = indexerLiftMotorSubsystem;
 
 		addCommands(new IndexFrontShootCommand(indexMotorSubsystem, indexerLiftMotorSubsystem, intakeSubsystem),
 				new ConditionalCommand(new WaitCommand(3), new WaitCommand(0),

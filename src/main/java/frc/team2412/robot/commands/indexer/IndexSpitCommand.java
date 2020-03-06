@@ -11,11 +11,12 @@ public class IndexSpitCommand extends CommandBase {
 	private IndexerLiftMotorSubsystem m_indexerLiftMotorSubsystem;
 	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
 
-	public IndexSpitCommand(IndexerMotorSubsystem motorSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem) {
+	public IndexSpitCommand(IndexerMotorSubsystem motorSubsystem, IndexerLiftMotorSubsystem indexerLiftMotorSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem) {
 		m_indexerMotorSubsystem = motorSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
-
-		addRequirements(motorSubsystem, intakeOnOffSubsystem);
+		m_indexerLiftMotorSubsystem = indexerLiftMotorSubsystem;
+		
+		addRequirements(motorSubsystem, indexerLiftMotorSubsystem, intakeOnOffSubsystem);
 	}
 
 	@Override

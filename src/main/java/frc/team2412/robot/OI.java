@@ -175,7 +175,7 @@ public class OI {
 			return;
 		}
 
-		indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem,
+		indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem, robotContainer.m_indexerLiftMotorSubsytem,
 				robotContainer.m_intakeMotorOnOffSubsystem));
 
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerSensorSubsystem,
