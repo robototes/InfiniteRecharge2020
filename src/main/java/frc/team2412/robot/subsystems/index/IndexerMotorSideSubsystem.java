@@ -13,7 +13,6 @@ public abstract class IndexerMotorSideSubsystem extends SubsystemBase implements
 	private final IndexMotorSubsystemType m_type;
 
 	public IndexerMotorSideSubsystem(CANSparkMax motor, IndexMotorSubsystemType type) {
-		super();
 		this.m_type = type;
 		this.m_motor = motor;
 		this.m_encoder = motor.getEncoder();

@@ -10,8 +10,8 @@ import frc.team2412.robot.subsystems.HoodSubsystem;
 import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
-import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class EliMemeAutoCommandGroup extends SequentialCommandGroup {
 
@@ -23,7 +23,7 @@ public class EliMemeAutoCommandGroup extends SequentialCommandGroup {
 		addCommands(
 
 				new StartUpCommand(liftSubsystem, flywheelSubsystem, hoodSubsystem, indexerMotorSubsystem),
-				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem),
+				new IndexShootCommand(indexerMotorSubsystem, intakeUpDownSubsystem),
 				new MoveToPowerCellsCommand(driveBaseSubsystem)
 
 		);

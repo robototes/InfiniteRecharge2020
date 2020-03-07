@@ -3,6 +3,7 @@ package frc.team2412.robot.subsystems.index;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
+import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorFrontSubsystem extends IndexerMotorSideSubsystem {
@@ -21,5 +22,11 @@ public class IndexerMotorFrontSubsystem extends IndexerMotorSideSubsystem {
 	@Log.NumberBar(min = -1, max = 1, methodName = "get", name = "Current Front Motor Speed", tabName = "Index")
 	public CANSparkMax getMainMotor() {
 		return super.getMainMotor();
+	}
+
+	@Override
+	@Config.NumberSlider(min = -1, max = 1, name = "Set Front Motor Speed")
+	public void set(double speed) {
+		super.set(speed);
 	}
 }

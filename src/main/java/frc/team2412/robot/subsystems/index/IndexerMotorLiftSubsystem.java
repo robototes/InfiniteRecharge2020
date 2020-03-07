@@ -3,8 +3,10 @@ package frc.team2412.robot.subsystems.index;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorLiftSubsystem extends SubsystemBase implements IIndexMotorSubsystem {
@@ -28,6 +30,13 @@ public class IndexerMotorLiftSubsystem extends SubsystemBase implements IIndexMo
 		leftLiftMotor.follow(rightLiftMotor);
 
 		configPID(m_pidController);
+	}
+
+	@Override
+	@Config.NumberSlider(min = -1, max = 1, name = "Set Lift Motor Speed")
+	public void set(double speed) {
+		double newSpeed = MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
+		m_rightLiftMotor.set(newSpeed);
 	}
 
 	@Override

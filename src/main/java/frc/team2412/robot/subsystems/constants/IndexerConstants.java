@@ -41,5 +41,6 @@ public class IndexerConstants {
 	public static final double MAX_LIFT_SPEED = 0.75;
 	public static final double TOP_TICKS = 20;
 	public static final double BOTTOM_TICKS = 0;
+	public static final double SHIFT_DISTANCE = 25;
 
 }

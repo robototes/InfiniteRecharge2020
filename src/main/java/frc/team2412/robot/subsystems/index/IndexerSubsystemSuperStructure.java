@@ -43,8 +43,4 @@ public class IndexerSubsystemSuperStructure extends SubsystemBase implements Log
 		return m_IndexerSensorSubsystem;
 	}
 
-	@Override
-	public void periodic() {
-	}
-
 }

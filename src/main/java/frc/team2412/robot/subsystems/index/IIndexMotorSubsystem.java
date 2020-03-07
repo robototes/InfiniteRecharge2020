@@ -4,11 +4,10 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.robototes.math.MathUtils;
 
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
 public interface IIndexMotorSubsystem extends Loggable {
 
@@ -42,7 +41,6 @@ public interface IIndexMotorSubsystem extends Loggable {
 
 	public CANPIDController getPIDController();
 
-	@Log.ToString(name = "Index Motor Subsystem Type", tabName = "Index")
 	public IndexMotorSubsystemType getType();
 
 	public default void in() {
@@ -57,9 +55,9 @@ public interface IIndexMotorSubsystem extends Loggable {
 		this.getPIDController().setReference(rotations, ControlType.kPosition);
 	}
 
-	@Config.NumberSlider(min = -1, max = 1, name = "Set Motor Speed", tabName = "Index")
 	public default void set(double speed) {
-		getMainMotor().set(speed);
+		double newSpeed = MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
+		getMainMotor().set(newSpeed);
 	}
 
 	public default void stop() {
