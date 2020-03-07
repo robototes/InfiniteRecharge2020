@@ -16,7 +16,7 @@ public class IndexShootCommand extends SequentialCommandGroup {
 				new IndexPulseCommand(indexerSubsystemSuperStructure),
 				new IndexShootSelectionCommand(indexerSubsystemSuperStructure)); // Are we assuming that we'll only have
 																					// to pulse once to find all the
-																					// missing balls?
+																					// missing balls? Yes
 
 	}
 

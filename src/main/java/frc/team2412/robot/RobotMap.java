@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+
+import com.kauailabs.navx.frc.AHRS;
 
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
@@ -119,7 +122,7 @@ public class RobotMap {
 			: null;
 
 	// DriveBase
-	public static final ADIS16448_IMU driveGyro = DRIVE_BASE_CONNECTED ? new ADIS16448_IMU() : null;
+	public static final Gyro driveGyro = DRIVE_BASE_CONNECTED ? new AHRS() : null;
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;
