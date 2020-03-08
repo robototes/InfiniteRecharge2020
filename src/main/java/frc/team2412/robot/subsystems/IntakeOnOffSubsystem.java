@@ -33,61 +33,97 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestBackIntakeOff() {
+		// We don't need to check if the intakes are disabled here, but we
+		// use the request prefix for consistency (feel free to change this).
 		m_intakeBackMotor.set(0);
 	}
 
 	public void requestBackIntakeIn() {
-		m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
-		m_lastMotor = IntakeLastMotor.BACK;
-		RobotState.m_intakeDirection = IntakeDirection.BACK;
+		if(!intakesAreDisabled()) {
+			m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+			m_lastMotor = IntakeLastMotor.BACK;
+			RobotState.m_intakeDirection = IntakeDirection.BACK;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public void requestBackIntakeOut() {
-		m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
-		m_lastMotor = IntakeLastMotor.BACK;
-		RobotState.m_intakeDirection = IntakeDirection.BACK;
+		if(!intakesAreDisabled()) {
+			m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
+			m_lastMotor = IntakeLastMotor.BACK;
+			RobotState.m_intakeDirection = IntakeDirection.BACK;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public void requestFrontIntakeOff() {
+		// We don't need to check if the intakes are disabled here, but we
+		// use the request prefix for consistency (feel free to change this).
 		m_intakeFrontMotor.set(0);
 	}
 
 	public void requestFrontIntakeOffBackIntakeIn() {
-		m_intakeFrontMotor.set(0);
-		m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
-		m_lastMotor = IntakeLastMotor.BACK;
-		RobotState.m_intakeDirection = IntakeDirection.BACK;
+		if(!intakesAreDisabled()) {
+			m_intakeFrontMotor.set(0);
+			m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+			m_lastMotor = IntakeLastMotor.BACK;
+			RobotState.m_intakeDirection = IntakeDirection.BACK;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public void requestFrontIntakeOffBackIntakeOut() {
-		m_intakeFrontMotor.set(0);
-		m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
-		m_lastMotor = IntakeLastMotor.BACK;
-		RobotState.m_intakeDirection = IntakeDirection.BACK;
+		if(!intakesAreDisabled()) {
+			m_intakeFrontMotor.set(0);
+			m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
+			m_lastMotor = IntakeLastMotor.BACK;
+			RobotState.m_intakeDirection = IntakeDirection.BACK;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public void requestFrontIntakeIn() {
-		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
-		m_lastMotor = IntakeLastMotor.FRONT;
-		RobotState.m_intakeDirection = IntakeDirection.FRONT;
+		if(!intakesAreDisabled()) {
+			m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+			m_lastMotor = IntakeLastMotor.FRONT;
+			RobotState.m_intakeDirection = IntakeDirection.FRONT;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public void requestFrontIntakeOut() {
-		m_intakeFrontMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
-		m_lastMotor = IntakeLastMotor.FRONT;
-		RobotState.m_intakeDirection = IntakeDirection.FRONT;
+		if(!intakesAreDisabled()) {
+			m_intakeFrontMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
+			m_lastMotor = IntakeLastMotor.FRONT;
+			RobotState.m_intakeDirection = IntakeDirection.FRONT;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public void requestFrontIntakeInBackIntakeOff() {
-		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
-		m_intakeBackMotor.set(0);
-		m_lastMotor = IntakeLastMotor.FRONT;
+		if(!intakesAreDisabled()) {
+			m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+			m_intakeBackMotor.set(0);
+			m_lastMotor = IntakeLastMotor.FRONT;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public void requestFrontIntakeOutBackIntakeOff() {
-		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
-		m_intakeBackMotor.set(0);
-		m_lastMotor = IntakeLastMotor.FRONT;
+		if(!intakesAreDisabled()) {
+			m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
+			m_intakeBackMotor.set(0);
+			m_lastMotor = IntakeLastMotor.FRONT;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public IntakeLastMotor getLastMotor() {
@@ -121,5 +157,8 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	public boolean FrontMotorOn() {
 		return (m_intakeFrontMotor.get() != 0);
 	}
-
+	@Log.BooleanBox(colorWhenFalse = "#00FF00", colorWhenTrue = "#FF0000", columnIndex = 2, rowIndex = 0, height = 2, tabName = "Intake")
+	public boolean intakesAreDisabled() {
+		return RobotState.getintakeDirection() == RobotState.IntakeDirection.DISABLED;
+	}
 }
