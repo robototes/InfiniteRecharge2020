@@ -137,11 +137,11 @@ public class IndexBitmapCommand extends CommandBase {
 			}
 		}
 
-		System.out.println(
-			"Sensor values: " + Integer.toBinaryString(sensorBitmap) +
-			", Index command: " + indexCommand.ordinal() +
-			", Intake on: " + intakeOn +
-			", Intake dir: " + intakeDirection.ordinal());
+		// System.out.println(
+		// 	"Sensor values: " + Integer.toBinaryString(sensorBitmap) +
+		// 	", Index command: " + indexCommand.ordinal() +
+		// 	", Intake on: " + intakeOn +
+		// 	", Intake dir: " + intakeDirection.ordinal());
 
 		if (indexCommand != null) {
 			final IndexDirection frontIndexDirection = indexCommand.getFrontIndexDirection(intakeOn);
