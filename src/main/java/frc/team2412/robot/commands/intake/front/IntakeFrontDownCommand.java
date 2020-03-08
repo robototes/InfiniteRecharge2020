@@ -8,7 +8,12 @@ public class IntakeFrontDownCommand extends CommandBase {
 	private IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
 	public IntakeFrontDownCommand(IntakeUpDownSubsystem intakeUpDownSubsystem) {
-		addRequirements(intakeUpDownSubsystem);
+		this(intakeUpDownSubsystem, true);
+	}
+
+	public IntakeFrontDownCommand(IntakeUpDownSubsystem intakeUpDownSubsystem, boolean require) {
+		if (require)
+			addRequirements(intakeUpDownSubsystem);
 		this.m_intakeUpDownSubsystem = intakeUpDownSubsystem;
 	}
 
