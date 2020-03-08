@@ -203,8 +203,12 @@ public class RobotState implements Loggable {
 		return m_intakeEnabled;
 	}
 
-	public static void setIntakeEnabled(IntakeEnabled m_intakeEnabled) {
-		RobotState.m_intakeEnabled = m_intakeEnabled;
+	public static void enableIntake() {
+		RobotState.m_intakeEnabled = IntakeEnabled.ENABLED;
+	}
+
+	public static void disableIntake() {
+		RobotState.m_intakeEnabled = IntakeEnabled.DISABLED;
 	}
 
 	public static ClimbState getclimbState() {

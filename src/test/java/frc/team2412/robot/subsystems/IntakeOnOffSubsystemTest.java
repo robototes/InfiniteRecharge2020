@@ -73,7 +73,7 @@ public class IntakeOnOffSubsystemTest {
 		fakeButton.whenPressed(intakeBackOnCommand);
 
 		// Disable the intakes
-		RobotState.setIntakeEnabled(RobotState.IntakeEnabled.DISABLED);
+		RobotState.disableIntake();
 
 		// Push the button and run the scheduler once
 		fakeButton.push();
