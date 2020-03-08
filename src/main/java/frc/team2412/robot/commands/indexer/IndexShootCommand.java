@@ -1,39 +1,23 @@
 package frc.team2412.robot.commands.indexer;
 
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
-import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
+import frc.team2412.robot.commands.indexer.shoot.IndexShootSelectionCommand;
+import frc.team2412.robot.commands.intake.IntakeBothUpCommand;
+import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
-//This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
 public class IndexShootCommand extends SequentialCommandGroup {
 
-	private IndexerMotorSubsystem m_indexerMotorSubsystem;
-	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
+	public IndexShootCommand(IndexerSubsystemSuperStructure indexerSubsystemSuperStructure,
+			IntakeUpDownSubsystem intakeUpDownSubsystem) {
 
-	public IndexShootCommand(IndexerSensorSubsystem indexerSensorSubsystem, IndexerMotorSubsystem indexMotorSubsystem,
-			IntakeOnOffSubsystem intakeSubsystem) {
-		m_indexerMotorSubsystem = indexMotorSubsystem;
-		m_intakeOnOffSubsystem = intakeSubsystem;
+		this.addCommands(new IntakeBothUpCommand(intakeUpDownSubsystem),
+				new IndexShootSelectionCommand(indexerSubsystemSuperStructure),
+				new IndexPulseCommand(indexerSubsystemSuperStructure),
+				new IndexShootSelectionCommand(indexerSubsystemSuperStructure)); // Are we assuming that we'll only have
+																					// to pulse once to find all the
+																					// missing balls? Yes
 
-		addCommands(new IndexFrontShootCommand(indexMotorSubsystem, intakeSubsystem),
-				new ConditionalCommand(new WaitCommand(3), new WaitCommand(0),
-						indexerSensorSubsystem::allFrontSensorsOff),
-				new IndexBackShootCommand(indexMotorSubsystem, intakeSubsystem), new WaitCommand(2));
 	}
 
-	@Override
-	public void initialize() {
-		super.initialize();
-		m_indexerMotorSubsystem.setLifting(true);
-	}
-
-	@Override
-	public void end(boolean cancel) {
-		m_indexerMotorSubsystem.setLifting(false);
-		m_indexerMotorSubsystem.stopAllMotors();
-		m_intakeOnOffSubsystem.setIntake(0);
-	}
 }

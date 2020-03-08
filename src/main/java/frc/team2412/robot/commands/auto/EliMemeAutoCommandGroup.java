@@ -7,23 +7,23 @@ import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
-import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class EliMemeAutoCommandGroup extends SequentialCommandGroup {
 
 	public EliMemeAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
 			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
-			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			IndexerSubsystemSuperStructure indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 
 				new StartUpCommand(liftSubsystem, flywheelSubsystem, hoodSubsystem, indexerMotorSubsystem),
-				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem),
+				new IndexShootCommand(indexerMotorSubsystem, intakeUpDownSubsystem),
 				new MoveToPowerCellsCommand(driveBaseSubsystem)
 
 		);

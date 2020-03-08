@@ -8,26 +8,26 @@ import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IndexerMotorSubsystem;
-import frc.team2412.robot.subsystems.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
 import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class SixBallAutoCommandGroup extends SequentialCommandGroup {
 
 	public SixBallAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
 			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
-			IndexerMotorSubsystem indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			IndexerSubsystemSuperStructure indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 
 				new LiftUpCommand(liftSubsystem, indexerMotorSubsystem),
-				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem),
+				new IndexShootCommand(indexerMotorSubsystem, intakeUpDownSubsystem),
 				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem, intakeUpDownSubsystem),
 				new MoveFromPowerCellsCommand(driveBaseSubsystem),
-				new IndexShootCommand(indexerSensorSubsystem, indexerMotorSubsystem, intakeOnOffSubsystem));
+				new IndexShootCommand(indexerMotorSubsystem, intakeUpDownSubsystem));
 	}
 
 }
