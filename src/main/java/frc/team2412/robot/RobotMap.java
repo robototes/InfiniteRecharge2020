@@ -2,6 +2,7 @@ package frc.team2412.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorMatch;
@@ -119,7 +120,7 @@ public class RobotMap {
 			: null;
 
 	// DriveBase
-	public static final Gyro driveGyro = null; //DRIVE_BASE_CONNECTED ? new AHRS() : null;
+	public static final Gyro driveGyro = false && DRIVE_BASE_CONNECTED ? new AHRS() : null;
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;
