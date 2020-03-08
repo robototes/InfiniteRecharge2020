@@ -14,7 +14,7 @@ public class IntakeSpitCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		m_intakeMotorOnOffSubsystem.setIntake(-1);
+		m_intakeMotorOnOffSubsystem.requestSetIntake(-1);
 	}
 
 	@Override

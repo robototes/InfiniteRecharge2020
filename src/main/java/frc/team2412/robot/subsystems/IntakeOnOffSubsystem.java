@@ -146,8 +146,12 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	@Config.NumberSlider(min = -1, max = 1, tabName = "Intake")
-	public void setIntake(double speed) {
-		m_intakeMotorGroup.set(speed);
+	public void requestSetIntake(double speed) {
+		if(!intakesAreDisabled()) {
+			m_intakeMotorGroup.set(speed);
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	public double getCurrentDraw() {
