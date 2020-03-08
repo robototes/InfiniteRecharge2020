@@ -171,20 +171,21 @@ public class OI {
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {
-		if (RobotMap.INDEX_CONNECTED) {
+		if (!RobotMap.INDEX_CONNECTED) {
 			return;
 		}
 
 		indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem,
 				robotContainer.m_intakeMotorOnOffSubsystem));
 
-		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem,
-				robotContainer.m_intakeUpDownSubsystem);
+		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
+		// Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem,
+		// 		robotContainer.m_intakeUpDownSubsystem);
 
-		indexerShootButton.whenPressed(indexShootCommand);
+		// indexerShootButton.whenPressed(indexShootCommand);
 
-		indexerShootButton
-				.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
+		// indexerShootButton
+		// 		.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
 	}
 
 	public void bindIntakeControls(RobotContainer robotContainer) {
@@ -209,14 +210,14 @@ public class OI {
 		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
-		//intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(
-			new InstantCommand(() ->{			
-				robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().set(-1);
-				robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().set(-1);
-			}
-			)
-		));
+		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		// intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(
+		// 	new InstantCommand(() ->{			
+		// 		robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().set(-1);
+		// 		robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().set(-1);
+		// 	}
+		// 	)
+		// ));
 
 	}
 
@@ -242,7 +243,7 @@ public class OI {
 	}
 
 	public void bindDriverControls(RobotContainer robotContainer) {
-		if (RobotMap.DRIVE_BASE_CONNECTED) {
+		if (!RobotMap.DRIVE_BASE_CONNECTED) {
 			return;
 		}
 
