@@ -7,21 +7,21 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackInnerSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackMidSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexFrontInnerSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexFrontMidSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexFrontSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_intakeBackSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
+	//@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_intakeFrontSensor;
 
 	private DigitalInput[] m_sensorArray;
@@ -119,7 +119,7 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 				| (getIndexBackMidSensorValue() ? 0x10 : 0) | (getIndexBackSensorValue() ? 0x20 : 0);
 	}
 
-	@Log.Dial(tabName = "Indexer", min = 0, max = 8)
+	//@Log.Dial(tabName = "Indexer", min = 0, max = 8)
 	public int totalSensorsOn() {
 		int total = 0;
 		for (int i = 0; i < m_sensorArray.length; i++) {

@@ -1,6 +1,5 @@
 package frc.team2412.robot;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
@@ -24,8 +23,6 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
-import com.kauailabs.navx.frc.AHRS;
-
 //This is the class in charge of all the motors, motor ids, and any other sensors the robot uses.
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
@@ -36,7 +33,7 @@ public class RobotMap {
 	public static boolean INDEX_CONNECTED = true;
 	public static boolean INTAKE_CONNECTED = true;
 	public static boolean LIFT_CONNECTED = true;
-	public static boolean DRIVE_BASE_CONNECTED = false;
+	public static boolean DRIVE_BASE_CONNECTED = true;
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_LEFT_MID(40),
@@ -72,7 +69,7 @@ public class RobotMap {
 	}
 
 	public static enum PWMPort {
-		HOOD_SERVO_1(1), HOOD_SERVO_2(0);
+		HOOD_SERVO_1(0), HOOD_SERVO_2(1);
 
 		public final int id;
 
@@ -122,7 +119,7 @@ public class RobotMap {
 			: null;
 
 	// DriveBase
-	public static final Gyro driveGyro = DRIVE_BASE_CONNECTED ? new AHRS() : null;
+	public static final Gyro driveGyro = null; //DRIVE_BASE_CONNECTED ? new AHRS() : null;
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = DRIVE_BASE_CONNECTED ? new Solenoid(PneumaticPort.DRIVE.id) : null;

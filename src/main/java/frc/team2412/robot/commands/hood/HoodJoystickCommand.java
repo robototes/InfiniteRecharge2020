@@ -13,6 +13,7 @@ public class HoodJoystickCommand extends CommandBase {
 	public HoodJoystickCommand(HoodSubsystem hoodSubsystem, DoubleSupplier angleSupplier) {
 		this.m_angleSupplier = angleSupplier;
 		this.m_hoodSubsystem = hoodSubsystem;
+		addRequirements(hoodSubsystem);
 	}
 
 	@Override
@@ -22,6 +23,6 @@ public class HoodJoystickCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return true;
+		return false;
 	}
 }
