@@ -19,7 +19,7 @@ public class FlywheelSetSpeedCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		m_flywheelSubsystem.setSpeed(m_distanceSupplier.get().m_shooterPower.value());
+		m_flywheelSubsystem.setRPM(m_distanceSupplier.get().m_shooterPower.value());
 	}
 
 	@Override
