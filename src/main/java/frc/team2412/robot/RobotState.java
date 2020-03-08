@@ -74,7 +74,13 @@ public class RobotState implements Loggable {
 	}
 
 	public static enum IntakeDirection {
-		NONE, FRONT, BACK, BOTH;
+		// Note that both intakes aren't spinning in the DISABLED and NONE
+		// states.
+		// In the DISABLED state, the intakes aren't allowed to spin (typically
+		// to prevent the indexer from jamming) while in the NONE state, the
+		// intakes aren't spinning because the user hasn't made them spin yet.
+		// TODO: Re-examine this logic and simplify it?
+		DISABLED, NONE, FRONT, BACK, BOTH;
 
 		@Override
 		public String toString() {
@@ -84,6 +90,8 @@ public class RobotState implements Loggable {
 				return "Back";
 			} else if (this.equals(BOTH)) {
 				return "Both";
+			} else if (this.equals(DISABLED)) {
+				return "Disabled!";
 			} else {
 				return "None";
 			}
