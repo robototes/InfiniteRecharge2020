@@ -23,7 +23,7 @@ public class ThreeBallAutoCommandGroup extends SequentialCommandGroup {
 		addCommands(
 
 				new LiftUpCommand(liftSubsystem, indexerMotorSubsystem),
-				new IndexShootCommand(indexerMotorSubsystem, intakeUpDownSubsystem),
+				new IndexShootCommand(indexerMotorSubsystem),
 				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem,
 						intakeUpDownSubsystem));
 	}

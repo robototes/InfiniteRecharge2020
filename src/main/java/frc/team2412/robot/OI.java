@@ -179,13 +179,12 @@ public class OI {
 				robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
-		// Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem,
-		// 		robotContainer.m_intakeUpDownSubsystem);
+		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
 
-		// indexerShootButton.whenPressed(indexShootCommand);
+		indexerShootButton.whenPressed(indexShootCommand);
 
-		// indexerShootButton
-		// 		.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
+		indexerShootButton
+				.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
 	}
 
 	public void bindIntakeControls(RobotContainer robotContainer) {
