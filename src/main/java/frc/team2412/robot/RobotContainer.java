@@ -50,7 +50,9 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Indexer Motor Subsystem", tabName = "Indexer")
 	public IndexerSubsystemSuperStructure m_indexerMotorSubsystem;
 
-	@Log(name = "Indexer Sensor Subsystem", tabName = "Indexer")
+	// See https://oblog-docs.readthedocs.io/en/latest/loggables.html#excluding-and-re-including-loggables
+	// This is logged inside the above m_indexerMotorSubsystem, so don't add it here as well
+	@Log.Exclude
 	public IndexerSensorSubsystem m_indexerSensorSubsystem;
 
 	@Log(name = "Climb Lift Subsystem", tabName = "Climb")

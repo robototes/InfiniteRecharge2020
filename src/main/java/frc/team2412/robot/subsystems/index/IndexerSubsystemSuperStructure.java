@@ -4,12 +4,16 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerSubsystemSuperStructure extends SubsystemBase implements Loggable {
 
 	private IndexerMotorBackSubsystem m_IndexerMotorBackSubsystem;
 	private IndexerMotorFrontSubsystem m_IndexerMotorFrontSubsystem;
 	private IndexerMotorLiftSubsystem m_IndexerMotorLiftSubsystem;
+	// See https://oblog-docs.readthedocs.io/en/latest/loggables.html#excluding-and-re-including-loggables
+	// Must specifically include this since it's excluded elsewhere to avoid duplicate logging of the indexer sensors
+	@Log.Include 
 	private IndexerSensorSubsystem m_IndexerSensorSubsystem;
 
 	public IndexerSubsystemSuperStructure(CANSparkMax frontMotor, CANSparkMax midLeftMotor, CANSparkMax midRightMotor,
