@@ -16,6 +16,7 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.commands.intake.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
@@ -54,6 +55,37 @@ public class IntakeOnOffSubsystemTest {
 		mockedIntakeBackMotor = mock(CANSparkMax.class);
 
 		realIntakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
+	}
+
+	@Test
+	public void IntakeDisabledBackOnCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
+		// Reset the subsystem to make sure all mock values are reset
+		reset(mockedIntakeFrontMotor);
+		reset(mockedIntakeBackMotor);
+
+		// Create command
+		IntakeBackInCommand intakeBackOnCommand = new IntakeBackInCommand(realIntakeMotorOnOffSubsystem);
+
+		// Create a fake button that will be "pressed"
+		MockButton fakeButton = new MockButton();
+
+		// Tell the button to run example command when pressed
+		fakeButton.whenPressed(intakeBackOnCommand);
+
+		// Disable the intakes
+		RobotState.disableIntake();
+
+		// Push the button and run the scheduler once
+		fakeButton.push();
+		CommandScheduler.getInstance().run();
+		fakeButton.release();
+
+		// Verify that the intake motor wasn't set because intakes are
+		// disabled.
+		verify(mockedIntakeBackMotor, times(0)).set(1);
+
+		// Clear the scheduler
+		TestWithScheduler.schedulerClear();
 	}
 
 	@Ignore

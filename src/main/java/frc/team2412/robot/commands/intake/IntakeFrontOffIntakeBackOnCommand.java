@@ -14,7 +14,7 @@ public class IntakeFrontOffIntakeBackOnCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		m_intakeOnOffSubsystem.frontIntakeOffBackIntakeIn();
+		m_intakeOnOffSubsystem.requestFrontIntakeOffBackIntakeIn();
 	}
 
 	@Override

@@ -21,6 +21,9 @@ public class RobotState implements Loggable {
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
 	@Log.ToString(tabName = "Robot State")
+	public static IntakeEnabled m_intakeEnabled = IntakeEnabled.ENABLED;
+
+	@Log.ToString(tabName = "Robot State")
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
 	@Log.ToString(tabName = "Robot State")
@@ -86,6 +89,29 @@ public class RobotState implements Loggable {
 				return "Both";
 			} else {
 				return "None";
+			}
+		}
+	}
+
+	public static enum IntakeEnabled {
+		// Note that this is separated from the IntakeDirection enum. This
+		// allows us to enable/disable the intakes while keeping track of which
+		// intake was last used (this way we don't disrupt the indexer logic,
+		// which relies on this information).
+		// Additionally, IndexBitmapCommand modifies the m_intakeEnabled field
+		// (indirectly, via a setter) while IntakeOnOffSubsystem modifies the
+		// m_intakeDirection field (also indirectly). If we kept the intake
+		// enabled/disabled state information and the intake direction
+		// information in the same enum, both classes would be reading and
+		// writing the same field, which would drastically complicate logic.
+		ENABLED, DISABLED;
+
+		@Override
+		public String toString() {
+			if (this.equals(ENABLED)) {
+				return "Enabled";
+			} else {
+				return "Disabled!";
 			}
 		}
 	}
@@ -171,6 +197,18 @@ public class RobotState implements Loggable {
 
 	public static void setintakeDirection(IntakeDirection m_intakeDirection) {
 		RobotState.m_intakeDirection = m_intakeDirection;
+	}
+
+	public static IntakeEnabled getIntakeEnabled() {
+		return m_intakeEnabled;
+	}
+
+	public static void enableIntake() {
+		RobotState.m_intakeEnabled = IntakeEnabled.ENABLED;
+	}
+
+	public static void disableIntake() {
+		RobotState.m_intakeEnabled = IntakeEnabled.DISABLED;
 	}
 
 	public static ClimbState getclimbState() {

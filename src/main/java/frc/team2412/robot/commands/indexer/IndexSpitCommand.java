@@ -21,7 +21,7 @@ public class IndexSpitCommand extends CommandBase {
 		m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().out();
 		m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().out();
 		m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().out();
-		m_intakeOnOffSubsystem.setIntake(-1);
+		m_intakeOnOffSubsystem.requestSetIntake(-1);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class IndexSpitCommand extends CommandBase {
 		m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().stop();
 		m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().stop();
 		m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().stop();
-		m_intakeOnOffSubsystem.intakeOff();
+		m_intakeOnOffSubsystem.requestIntakeOff();
 	}
 
 	@Override

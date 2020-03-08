@@ -20,7 +20,7 @@ public class IntakeFrontOffCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		m_intakeOnOffSubsystem.frontIntakeOff();
+		m_intakeOnOffSubsystem.requestFrontIntakeOff();
 	}
 
 	@Override
