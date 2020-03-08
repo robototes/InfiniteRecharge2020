@@ -39,7 +39,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestBackIntakeIn() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 			m_lastMotor = IntakeLastMotor.BACK;
 			RobotState.m_intakeDirection = IntakeDirection.BACK;
@@ -49,7 +49,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestBackIntakeOut() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
 			m_lastMotor = IntakeLastMotor.BACK;
 			RobotState.m_intakeDirection = IntakeDirection.BACK;
@@ -65,7 +65,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestFrontIntakeOffBackIntakeIn() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeFrontMotor.set(0);
 			m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 			m_lastMotor = IntakeLastMotor.BACK;
@@ -76,7 +76,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestFrontIntakeOffBackIntakeOut() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeFrontMotor.set(0);
 			m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
 			m_lastMotor = IntakeLastMotor.BACK;
@@ -87,7 +87,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestFrontIntakeIn() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 			m_lastMotor = IntakeLastMotor.FRONT;
 			RobotState.m_intakeDirection = IntakeDirection.FRONT;
@@ -97,7 +97,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestFrontIntakeOut() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeFrontMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
 			m_lastMotor = IntakeLastMotor.FRONT;
 			RobotState.m_intakeDirection = IntakeDirection.FRONT;
@@ -107,7 +107,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestFrontIntakeInBackIntakeOff() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 			m_intakeBackMotor.set(0);
 			m_lastMotor = IntakeLastMotor.FRONT;
@@ -117,7 +117,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestFrontIntakeOutBackIntakeOff() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 			m_intakeBackMotor.set(0);
 			m_lastMotor = IntakeLastMotor.FRONT;
@@ -136,7 +136,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void requestIntakeIn() {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeMotorGroup.set(1);
 			m_lastMotor = IntakeLastMotor.BOTH;
 			RobotState.m_intakeDirection = IntakeDirection.BOTH;
@@ -147,7 +147,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 
 	@Config.NumberSlider(min = -1, max = 1, tabName = "Intake")
 	public void requestSetIntake(double speed) {
-		if(!intakesAreDisabled()) {
+		if(intakesAreEnabled()) {
 			m_intakeMotorGroup.set(speed);
 		} else {
 			requestIntakeOff();
@@ -166,7 +166,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 		return (m_intakeFrontMotor.get() != 0);
 	}
 	@Log.BooleanBox(colorWhenFalse = "#00FF00", colorWhenTrue = "#FF0000", columnIndex = 2, rowIndex = 0, height = 2, tabName = "Intake")
-	public boolean intakesAreDisabled() {
-		return RobotState.getintakeDirection() == RobotState.IntakeDirection.DISABLED;
+	public boolean intakesAreEnabled() {
+		return RobotState.getIntakeEnabled() == RobotState.IntakeEnabled.DISABLED;
 	}
 }

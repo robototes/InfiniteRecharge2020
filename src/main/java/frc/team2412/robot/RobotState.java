@@ -21,6 +21,9 @@ public class RobotState implements Loggable {
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
 	@Log.ToString(tabName = "Robot State")
+	public static IntakeEnabled m_intakeEnabled = IntakeEnabled.ENABLED;
+
+	@Log.ToString(tabName = "Robot State")
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
 	@Log.ToString(tabName = "Robot State")
@@ -74,13 +77,7 @@ public class RobotState implements Loggable {
 	}
 
 	public static enum IntakeDirection {
-		// Note that both intakes aren't spinning in the DISABLED and NONE
-		// states.
-		// In the DISABLED state, the intakes aren't allowed to spin (typically
-		// to prevent the indexer from jamming) while in the NONE state, the
-		// intakes aren't spinning because the user hasn't made them spin yet.
-		// TODO: Re-examine this logic and simplify it?
-		DISABLED, NONE, FRONT, BACK, BOTH;
+		NONE, FRONT, BACK, BOTH;
 
 		@Override
 		public String toString() {
@@ -90,10 +87,31 @@ public class RobotState implements Loggable {
 				return "Back";
 			} else if (this.equals(BOTH)) {
 				return "Both";
-			} else if (this.equals(DISABLED)) {
-				return "Disabled!";
 			} else {
 				return "None";
+			}
+		}
+	}
+
+	public static enum IntakeEnabled {
+		// Note that this is separated from the IntakeDirection enum. This
+		// allows us to enable/disable the intakes while keeping track of which
+		// intake was last used (this way we don't disrupt the indexer logic,
+		// which relies on this information).
+		// Additionally, IndexBitmapCommand modifies the m_intakeEnabled field
+		// (indirectly, via a setter) while IntakeOnOffSubsystem modifies the
+		// m_intakeDirection field (also indirectly). If we kept the intake
+		// enabled/disabled state information and the intake direction
+		// information in the same enum, both classes would be reading and
+		// writing the same field, which would drastically complicate logic.
+		ENABLED, DISABLED;
+
+		@Override
+		public String toString() {
+			if (this.equals(ENABLED)) {
+				return "Enabled";
+			} else {
+				return "Disabled!";
 			}
 		}
 	}
@@ -179,6 +197,14 @@ public class RobotState implements Loggable {
 
 	public static void setintakeDirection(IntakeDirection m_intakeDirection) {
 		RobotState.m_intakeDirection = m_intakeDirection;
+	}
+
+	public static IntakeEnabled getIntakeEnabled() {
+		return m_intakeEnabled;
+	}
+
+	public static void setIntakeEnabled(IntakeEnabled m_intakeEnabled) {
+		RobotState.m_intakeEnabled = m_intakeEnabled;
 	}
 
 	public static ClimbState getclimbState() {
