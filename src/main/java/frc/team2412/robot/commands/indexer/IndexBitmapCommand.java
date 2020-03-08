@@ -1,5 +1,6 @@
 package frc.team2412.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.RobotState.IntakeDirection;
@@ -9,6 +10,7 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class IndexBitmapCommand extends CommandBase {
 	private final IndexerSubsystemSuperStructure m_indexerSubsystem;
 	private static IntakeDirection s_lastIntakeDirection = IntakeDirection.NONE;
+	private double lastIndexRunTimeMicroSec = 0.0;
 
 	static enum IndexDirection {
 		IN, OUT, OFF, DISABLED
@@ -135,10 +137,25 @@ public class IndexBitmapCommand extends CommandBase {
 			}
 		}
 
+		System.out.println(
+			"Sensor values: " + Integer.toBinaryString(sensorBitmap) +
+			", Index command: " + indexCommand.ordinal() +
+			", Intake on: " + intakeOn +
+			", Intake dir: " + intakeDirection.ordinal());
+
 		if (indexCommand != null) {
 			final IndexDirection frontIndexDirection = indexCommand.getFrontIndexDirection(intakeOn);
 			final IndexDirection backIndexDirection = indexCommand.getBackIndexDirection(intakeOn);
+			boolean runLift = ((frontIndexDirection == IndexDirection.IN) || (frontIndexDirection == IndexDirection.OUT)) ||
+			((backIndexDirection == IndexDirection.IN) || (backIndexDirection == IndexDirection.OUT));
 
+			if (runLift) {
+				lastIndexRunTimeMicroSec = RobotController.getFPGATime();
+			} else if (RobotController.getFPGATime() < lastIndexRunTimeMicroSec + 1000 * 500) {
+				runLift = true;
+			}
+			
+			m_indexerSubsystem.getIndexerMotorLiftSubsystem().set(runLift ? IndexerConstants.LIFT_DOWN_SPEED : 0.0);
 			switch (intakeDirection) {
 			case BOTH:
 			case FRONT:
@@ -148,8 +165,8 @@ public class IndexBitmapCommand extends CommandBase {
 			case BACK:
 				// Swap the front & back motor values since the IndexCommandEntry assumes intake
 				// from the front
-				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
-				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
+				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
+				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
 				break;
 			default:
 				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
@@ -159,6 +176,7 @@ public class IndexBitmapCommand extends CommandBase {
 		} else {
 			m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
 			m_indexerSubsystem.getIndexerMotorBackSubsystem().set(0);
+			m_indexerSubsystem.getIndexerMotorLiftSubsystem().set(0);
 		}
 	}
 
@@ -172,9 +190,9 @@ public class IndexBitmapCommand extends CommandBase {
 	private double getIndexerMotorSpeed(IndexDirection direction) {
 		switch (direction) {
 		case IN:
-			return IndexerConstants.MAX_SPEED;
-		case OUT:
 			return -IndexerConstants.MAX_SPEED;
+		case OUT:
+			return IndexerConstants.MAX_SPEED;
 		case OFF:
 		default:
 			return 0;
