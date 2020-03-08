@@ -114,7 +114,7 @@ public class Robot extends TimedRobot implements Loggable {
 	public void teleopInit() {
 		timeRemaining = 135.0;
 		CommandScheduler.getInstance().cancel(autoCommand);
-		m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
+		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
 		m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 				new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> m_OI.codriverStick.getY() * 0.5 + 0.5));

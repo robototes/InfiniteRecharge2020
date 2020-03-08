@@ -53,20 +53,22 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
 	}
 
-	@Config.NumberSlider(min = -1, max = 1, name = "Set speed", tabName = "Flywheel", width = 3, height = 1, columnIndex = 2, rowIndex = 0)
+	@Config.NumberSlider(min = -1, max = 0, name = "Set speed", tabName = "Flywheel", width = 3, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setSpeed(double speed) {
-		System.out.println(speed);
+		if(speed <= 0) {
+			System.out.println(speed);
 
-		m_flywheelLeftMotor.set(speed);
-		m_flywheelRightMotor.set(speed);
+			m_flywheelLeftMotor.set(speed);
+			m_flywheelRightMotor.set(speed);
+		}
 	}
 
 	public void shoot() {
-		m_flywheelLeftMotor.set(1.0);
+		// m_flywheelLeftMotor.set(1.0);
 	}
 
 	public void stop() {
-		m_flywheelLeftMotor.set(0.0);
+		// m_flywheelLeftMotor.set(0.0);
 	}
 
 	public double getSpeed() {
