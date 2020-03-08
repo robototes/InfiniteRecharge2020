@@ -135,10 +135,14 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 		RobotState.m_intakeDirection = IntakeDirection.NONE;
 	}
 
-	public void intakeIn() {
-		m_intakeMotorGroup.set(1);
-		m_lastMotor = IntakeLastMotor.BOTH;
-		RobotState.m_intakeDirection = IntakeDirection.BOTH;
+	public void requestIntakeIn() {
+		if(!intakesAreDisabled()) {
+			m_intakeMotorGroup.set(1);
+			m_lastMotor = IntakeLastMotor.BOTH;
+			RobotState.m_intakeDirection = IntakeDirection.BOTH;
+		} else {
+			requestIntakeOff();
+		}
 	}
 
 	@Config.NumberSlider(min = -1, max = 1, tabName = "Intake")
