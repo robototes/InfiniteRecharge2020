@@ -209,7 +209,14 @@ public class OI {
 		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
-		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		//intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(
+			new InstantCommand(() ->{			
+				robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().set(-1);
+				robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().set(-1);
+			}
+			)
+		));
 
 	}
 
