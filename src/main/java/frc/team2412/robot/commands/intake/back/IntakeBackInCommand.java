@@ -20,7 +20,7 @@ public class IntakeBackInCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		m_intakeOnOffSubsystem.backIntakeIn();
+		m_intakeOnOffSubsystem.requestBackIntakeIn();
 	}
 
 	@Override

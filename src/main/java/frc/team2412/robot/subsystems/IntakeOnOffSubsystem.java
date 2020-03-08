@@ -32,59 +32,59 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 		m_intakeFrontMotor.setInverted(true);
 	}
 
-	public void backIntakeOff() {
+	public void requestBackIntakeOff() {
 		m_intakeBackMotor.set(0);
 	}
 
-	public void backIntakeIn() {
+	public void requestBackIntakeIn() {
 		m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.BACK;
 		RobotState.m_intakeDirection = IntakeDirection.BACK;
 	}
 
-	public void backIntakeOut() {
+	public void requestBackIntakeOut() {
 		m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.BACK;
 		RobotState.m_intakeDirection = IntakeDirection.BACK;
 	}
 
-	public void frontIntakeOff() {
+	public void requestFrontIntakeOff() {
 		m_intakeFrontMotor.set(0);
 	}
 
-	public void frontIntakeOffBackIntakeIn() {
+	public void requestFrontIntakeOffBackIntakeIn() {
 		m_intakeFrontMotor.set(0);
 		m_intakeBackMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.BACK;
 		RobotState.m_intakeDirection = IntakeDirection.BACK;
 	}
 
-	public void frontIntakeOffBackIntakeOut() {
+	public void requestFrontIntakeOffBackIntakeOut() {
 		m_intakeFrontMotor.set(0);
 		m_intakeBackMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.BACK;
 		RobotState.m_intakeDirection = IntakeDirection.BACK;
 	}
 
-	public void frontIntakeIn() {
+	public void requestFrontIntakeIn() {
 		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.FRONT;
 		RobotState.m_intakeDirection = IntakeDirection.FRONT;
 	}
 
-	public void frontIntakeOut() {
+	public void requestFrontIntakeOut() {
 		m_intakeFrontMotor.set(-IntakeConstants.MAX_INTAKE_SPEED);
 		m_lastMotor = IntakeLastMotor.FRONT;
 		RobotState.m_intakeDirection = IntakeDirection.FRONT;
 	}
 
-	public void frontIntakeInBackIntakeOff() {
+	public void requestFrontIntakeInBackIntakeOff() {
 		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_intakeBackMotor.set(0);
 		m_lastMotor = IntakeLastMotor.FRONT;
 	}
 
-	public void frontIntakeOutBackIntakeOff() {
+	public void requestFrontIntakeOutBackIntakeOff() {
 		m_intakeFrontMotor.set(IntakeConstants.MAX_INTAKE_SPEED);
 		m_intakeBackMotor.set(0);
 		m_lastMotor = IntakeLastMotor.FRONT;
@@ -94,7 +94,7 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 		return m_lastMotor;
 	}
 
-	public void intakeOff() {
+	public void requestIntakeOff() {
 		m_intakeMotorGroup.set(0);
 		RobotState.m_intakeDirection = IntakeDirection.NONE;
 	}
