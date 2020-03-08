@@ -167,6 +167,6 @@ public class IntakeOnOffSubsystem extends SubsystemBase implements Loggable {
 	}
 	@Log.BooleanBox(colorWhenFalse = "#00FF00", colorWhenTrue = "#FF0000", columnIndex = 2, rowIndex = 0, height = 2, tabName = "Intake")
 	public boolean intakesAreEnabled() {
-		return RobotState.getIntakeEnabled() == RobotState.IntakeEnabled.DISABLED;
+		return RobotState.getIntakeEnabled() == RobotState.IntakeEnabled.ENABLED;
 	}
 }
