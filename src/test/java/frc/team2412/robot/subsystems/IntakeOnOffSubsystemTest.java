@@ -18,10 +18,10 @@ import com.robototes.helpers.TestWithScheduler;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.commands.intake.IntakeFrontOffIntakeBackOnCommand;
 import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
-import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class IntakeOnOffSubsystemTest {

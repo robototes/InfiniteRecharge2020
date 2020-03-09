@@ -13,8 +13,8 @@ import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
-import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
+import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
