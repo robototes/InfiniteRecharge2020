@@ -43,6 +43,7 @@ public class IndexShootSelectionCommand extends SelectCommand {
 				entry(ShootSelection.FRONT, new IndexShootFrontThenBack(indexSubsystemSuperStructure))),
 				new ShootSelector(indexSubsystemSuperStructure)::getShooterSelection);
 
+		m_indexerMotorSubsystem = indexSubsystemSuperStructure;
 	}
 
 	@Override
