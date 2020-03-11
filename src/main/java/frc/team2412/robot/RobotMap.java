@@ -17,7 +17,7 @@ import com.robototes.sensors.Limelight.StreamMode;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalInput;	
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
@@ -210,7 +210,7 @@ public class RobotMap {
 
 	// Intake Subsystem
 	// -------------------------------------------------------------------------------
-	public static Solenoid frontIntakeliftSolenoid = INTAKE_CONNECTED ? new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id)
+	public static Solenoid frontIntakeLiftSolenoid = INTAKE_CONNECTED ? new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id)
 			: null;
 	public static Solenoid backIntakeLiftSolenoid = INTAKE_CONNECTED ? new Solenoid(PneumaticPort.INTAKE_BACK_UP.id)
 			: null;

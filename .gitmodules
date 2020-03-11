@@ -1,6 +1,4 @@
 [submodule "2412RobotLibrary"]
 	path = 2412RobotLibrary
 	url = https://github.com/robototes/2412RobotLibrary
-[submodule "IncludeBranch"]
-	path = IncludeBranch
-	url = https://github.com/robototes/2412RobotLibrary
+

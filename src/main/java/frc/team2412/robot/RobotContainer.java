@@ -8,12 +8,14 @@ import frc.team2412.robot.subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
+import frc.team2412.robot.subsystems.intake.IntakeBackMotorSubsystem;
+import frc.team2412.robot.subsystems.intake.IntakeBackPneumaticSubsystem;
+import frc.team2412.robot.subsystems.intake.IntakeFrontMotorSubsystem;
+import frc.team2412.robot.subsystems.intake.IntakeFrontPneumaticSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
@@ -38,11 +40,17 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Drivebase Subsystem", tabName = "Drivebase Subsystem")
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
-	@Log(name = "Intake Motors Subsystem", tabName = "Intake")
-	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
+	@Log(name = "Intake Front Motor Subsystem", tabName = "Intake")
+	public IntakeFrontMotorSubsystem m_intakeFrontMotorSubsystem;
 
-	@Log(name = "Intake Subsystem", tabName = "Intake")
-	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
+	@Log(name = "Intake Back Motor Subsystem", tabName = "Intake")
+	public IntakeBackMotorSubsystem m_intakeBackMotorSubsystem;
+
+	@Log(name = "Intake Front Pneumatic Subsystem", tabName = "Intake")
+	public IntakeFrontPneumaticSubsystem m_intakeFrontPneumaticSubsystem;
+
+	@Log(name = "Intake Back Pneumatic Subsystem", tabName = "Intake")
+	public IntakeBackPneumaticSubsystem m_intakeBackPneumaticSubsystem;
 
 	@Log(name = "Control Panel Subsystem", tabName = "Control Panel")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
@@ -94,10 +102,11 @@ public class RobotContainer implements Loggable {
 		}
 
 		if (RobotMap.INTAKE_CONNECTED) {
-			m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
-
-			m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
-					RobotMap.backIntakeLiftSolenoid);
+			m_intakeFrontMotorSubsystem = new IntakeFrontMotorSubsystem(RobotMap.intakeFrontMotor);
+			m_intakeBackMotorSubsystem = new IntakeBackMotorSubsystem(RobotMap.intakeBackMotor);
+			
+			m_intakeFrontPneumaticSubsystem = new IntakeFrontPneumaticSubsystem(RobotMap.frontIntakeLiftSolenoid);
+			m_intakeBackPneumaticSubsystem = new IntakeBackPneumaticSubsystem(RobotMap.backIntakeLiftSolenoid);
 		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
