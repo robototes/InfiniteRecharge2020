@@ -14,8 +14,7 @@ public class RobotShootCommand extends ParallelCommandGroup {
 
 	public RobotShootCommand(LimelightSubsystem limelightSubsystem, TurretSubsystem turretSubsystem,
 			HoodSubsystem hoodSubsystem, FlywheelSubsystem flywheelSubsystem,
-			IndexerSubsystemSuperStructure indexerSubsystemSuperStructure, LiftSubsystem liftSubsystem
-			) {
+			IndexerSubsystemSuperStructure indexerSubsystemSuperStructure, LiftSubsystem liftSubsystem) {
 
 		this.addCommands(
 				new SetShooterValueCommand(limelightSubsystem, turretSubsystem, hoodSubsystem, flywheelSubsystem),
