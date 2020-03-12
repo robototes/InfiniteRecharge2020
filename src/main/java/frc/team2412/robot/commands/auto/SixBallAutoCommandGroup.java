@@ -2,7 +2,6 @@ package frc.team2412.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.commands.auto.subsistentCommands.MoveToIntakePowerCellsCommandGroup;
-import frc.team2412.robot.commands.drive.MoveFromPowerCellsCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
@@ -26,7 +25,7 @@ public class SixBallAutoCommandGroup extends SequentialCommandGroup {
 				new LiftUpCommand(liftSubsystem, indexerMotorSubsystem),
 				new IndexShootCommand(indexerMotorSubsystem, intakeUpDownSubsystem),
 				new MoveToIntakePowerCellsCommandGroup(driveBaseSubsystem, intakeOnOffSubsystem, intakeUpDownSubsystem),
-				new MoveFromPowerCellsCommand(driveBaseSubsystem),
+				// new MoveFromPowerCellsCommand(driveBaseSubsystem),
 				new IndexShootCommand(indexerMotorSubsystem, intakeUpDownSubsystem));
 	}
 

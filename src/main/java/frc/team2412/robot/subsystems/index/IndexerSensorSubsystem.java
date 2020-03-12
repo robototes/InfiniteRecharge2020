@@ -119,7 +119,7 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 				| (getIndexBackMidSensorValue() ? 0x10 : 0) | (getIndexBackSensorValue() ? 0x20 : 0);
 	}
 
-	//@Log.Dial(tabName = "Indexer", min = 0, max = 8)
+	// @Log.Dial(tabName = "Indexer", min = 0, max = 8)
 	public int totalSensorsOn() {
 		int total = 0;
 		for (int i = 0; i < m_sensorArray.length; i++) {

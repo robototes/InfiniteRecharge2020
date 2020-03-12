@@ -64,12 +64,13 @@ public class Robot extends TimedRobot implements Loggable {
 	 * and SmartDashboard integrated updating.
 	 */
 
-	 private static boolean log = true;
+	private static boolean log = true;
 
-		@Override
+	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		if (log) Logger.updateEntries();
+		if (log)
+			Logger.updateEntries();
 		m_robotContainer.logger.periodic();
 		log = !log;
 	}
@@ -120,14 +121,13 @@ public class Robot extends TimedRobot implements Loggable {
 		CommandScheduler.getInstance().cancel(autoCommand);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		m_robotContainer.m_indexerMotorSubsystem.setDefaultCommand(
-			new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem)
-		);
+		m_robotContainer.m_indexerMotorSubsystem
+				.setDefaultCommand(new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem));
 
-		m_robotContainer.m_hoodSubsystem.setDefaultCommand(
-				new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> 0.00));
+		m_robotContainer.m_hoodSubsystem
+				.setDefaultCommand(new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> 0.00));
 	}
-	//m_OI.codriverStick.getY() * 0.5 + 0.5
+	// m_OI.codriverStick.getY() * 0.5 + 0.5
 
 	/**
 	 * This function is called periodically during operator control.
@@ -137,8 +137,8 @@ public class Robot extends TimedRobot implements Loggable {
 		timeRemaining -= 0.02;
 	}
 
-		@Override
-		public void disabledInit() {
+	@Override
+	public void disabledInit() {
 
 	}
 

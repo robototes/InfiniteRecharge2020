@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.RobotState;
-import frc.team2412.robot.commands.drive.MoveToPowerCellsCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
@@ -60,7 +59,7 @@ public class AutoCommandPickerCommand extends CommandBase {
 
 		} else if (RobotState.justMoveAuto == true) {
 
-			m_command = new MoveToPowerCellsCommand(m_driveBaseSubsystem);
+			// m_command = new MoveToPowerCellsCommand(m_driveBaseSubsystem);
 
 		} else {
 

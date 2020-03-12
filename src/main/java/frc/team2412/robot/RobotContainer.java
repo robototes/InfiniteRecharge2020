@@ -21,7 +21,7 @@ import io.github.oblarg.oblog.annotations.Log;
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
 	@Log(name = "Limelight Subsystem", tabName = "Turret")
-	public LimelightSubsystem m_LimelightSubsystem;
+	public LimelightSubsystem m_limelightSubsystem;
 
 	@Log(name = "Turret Subsystem", tabName = "Turret")
 	public TurretSubsystem m_turretSubsystem;
@@ -50,8 +50,10 @@ public class RobotContainer implements Loggable {
 	@Log(name = "Indexer Motor Subsystem", tabName = "Indexer")
 	public IndexerSubsystemSuperStructure m_indexerMotorSubsystem;
 
-	// See https://oblog-docs.readthedocs.io/en/latest/loggables.html#excluding-and-re-including-loggables
-	// This is logged inside the above m_indexerMotorSubsystem, so don't add it here as well
+	// See
+	// https://oblog-docs.readthedocs.io/en/latest/loggables.html#excluding-and-re-including-loggables
+	// This is logged inside the above m_indexerMotorSubsystem, so don't add it here
+	// as well
 	@Log.Exclude
 	public IndexerSensorSubsystem m_indexerSensorSubsystem;
 
@@ -106,8 +108,8 @@ public class RobotContainer implements Loggable {
 		}
 
 		if (RobotMap.SHOOTER_CONNECTED) {
-			m_LimelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
-			m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_LimelightSubsystem);
+			m_limelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
+			m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_limelightSubsystem);
 
 			m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
 
