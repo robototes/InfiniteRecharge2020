@@ -26,4 +26,4 @@ pluginManagement {
     }
 }
 
-// include 'robot_library'
+include 'robot_library'
