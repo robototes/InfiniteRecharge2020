@@ -44,11 +44,11 @@ public interface IIndexMotorSubsystem extends Loggable {
 	public IndexMotorSubsystemType getType();
 
 	public default void in() {
-		this.set(this.getType().SPEED);
+		this.set(-this.getType().SPEED);
 	}
 
 	public default void out() {
-		this.set(-this.getType().SPEED);
+		this.set(this.getType().SPEED);
 	}
 
 	public default void pid(double rotations) {

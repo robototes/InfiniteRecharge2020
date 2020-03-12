@@ -124,10 +124,10 @@ public class Robot extends TimedRobot implements Loggable {
 			new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem)
 		);
 
-		m_robotContainer.m_hoodSubsystem.setDefaultCommand(
-				new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> 0.00));
+		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+		// 		new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}
-	//m_OI.codriverStick.getY() * 0.5 + 0.5
+	//
 
 	/**
 	 * This function is called periodically during operator control.

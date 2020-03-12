@@ -15,12 +15,11 @@ public class RobotShootCommand extends ParallelCommandGroup {
 
 	public RobotShootCommand(LimelightSubsystem limelightSubsystem, TurretSubsystem turretSubsystem,
 			HoodSubsystem hoodSubsystem, FlywheelSubsystem flywheelSubsystem,
-			IndexerSubsystemSuperStructure indexerSubsystemSuperStructure, LiftSubsystem liftSubsystem,
-			IntakeUpDownSubsystem intakeUpDownSubsystem) {
+			IndexerSubsystemSuperStructure indexerSubsystemSuperStructure, LiftSubsystem liftSubsystem) {
 
 		this.addCommands(
 				new SetShooterValueCommand(limelightSubsystem, turretSubsystem, hoodSubsystem, flywheelSubsystem),
-				new IndexShootCommand(indexerSubsystemSuperStructure, intakeUpDownSubsystem),
+				new IndexShootCommand(indexerSubsystemSuperStructure),
 				new InstantCommand(() -> indexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().out()));
 
 	}

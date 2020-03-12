@@ -9,7 +9,7 @@ public class IntakeBothUpCommand extends ParallelCommandGroup {
 
 	public IntakeBothUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem) {
 		addRequirements(intakeUpDownSubsystem);
-		addCommands(new IntakeFrontUpCommand(intakeUpDownSubsystem), new IntakeBackUpCommand(intakeUpDownSubsystem));
+		addCommands(new IntakeFrontUpCommand(intakeUpDownSubsystem, false), new IntakeBackUpCommand(intakeUpDownSubsystem, false));
 	}
 
 	@Override

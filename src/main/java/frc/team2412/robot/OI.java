@@ -179,13 +179,12 @@ public class OI {
 				robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
-		// Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem,
-		// 		robotContainer.m_intakeUpDownSubsystem);
+		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
 
-		// indexerShootButton.whenPressed(indexShootCommand);
+		indexerShootButton.whenPressed(indexShootCommand);
 
-		// indexerShootButton
-		// 		.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
+		indexerShootButton
+				.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
 	}
 
 	public void bindIntakeControls(RobotContainer robotContainer) {
@@ -193,11 +192,11 @@ public class OI {
 			return;
 		}
 
-		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem));
-		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem, false));
+		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem, false));
 
-		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
-		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem, false));
+		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem, false));
 
 		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
