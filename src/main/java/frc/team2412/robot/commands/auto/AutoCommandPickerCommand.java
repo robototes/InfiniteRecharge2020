@@ -8,33 +8,33 @@ import frc.team2412.robot.commands.drive.MoveToPowerCellsCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
+import frc.team2412.robot.subsystems.intake.IntakeFrontMotorSubsystem;
+import frc.team2412.robot.subsystems.intake.IntakeFrontPneumaticSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 
 public class AutoCommandPickerCommand extends CommandBase {
 
 	DriveBaseSubsystem m_driveBaseSubsystem;
-	IntakeOnOffSubsystem m_intakeOnOffSubsystem;
-	IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 	LiftSubsystem m_liftSubsystem;
 	FlywheelSubsystem m_flywheelSubsystem;
 	IndexerSensorSubsystem m_indexerSensorSubsystem;
 	IndexerSubsystemSuperStructure m_indexerMotorSubsystem;
+	IntakeFrontMotorSubsystem m_intakeFrontMotorSubsystem;
+	IntakeFrontPneumaticSubsystem m_intakeFrontPneumaticSubsystem;
 	HoodSubsystem m_hoodSubsystem;
 
 	Command m_command;
 
-	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
-			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
+	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeFrontMotorSubsystem intakeFrontMotorSubsystem,
+			IntakeFrontPneumaticSubsystem intakeFrontPneumaticSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
 			IndexerSubsystemSuperStructure indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
 		m_driveBaseSubsystem = driveBaseSubsystem;
-		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
-		m_intakeUpDownSubsystem = intakeUpDownSubsystem;
+		m_intakeFrontMotorSubsystem = intakeFrontMotorSubsystem;
+		m_intakeFrontPneumaticSubsystem = intakeFrontPneumaticSubsystem;
 		m_liftSubsystem = liftSubsystem;
 		m_flywheelSubsystem = flywheelSubsystem;
 		m_indexerMotorSubsystem = indexerMotorSubsystem;
@@ -48,14 +48,14 @@ public class AutoCommandPickerCommand extends CommandBase {
 
 		if (RobotState.sixBallAuto == true) {
 
-			m_command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
-					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
+			m_command = new SixBallAutoCommandGroup(m_driveBaseSubsystem, m_liftSubsystem, m_intakeFrontMotorSubsystem,
+			m_intakeFrontPneumaticSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
 					m_indexerMotorSubsystem, m_hoodSubsystem);
 
 		} else if (RobotState.threeBallAuto == true) {
 
-			m_command = new ThreeBallAutoCommandGroup(m_driveBaseSubsystem, m_intakeOnOffSubsystem,
-					m_intakeUpDownSubsystem, m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
+			m_command = new ThreeBallAutoCommandGroup(m_driveBaseSubsystem,
+					m_liftSubsystem, m_flywheelSubsystem, m_indexerSensorSubsystem,
 					m_indexerMotorSubsystem, m_hoodSubsystem);
 
 		} else if (RobotState.justMoveAuto == true) {

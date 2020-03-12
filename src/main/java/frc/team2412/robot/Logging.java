@@ -73,13 +73,13 @@ public class Logging implements Loggable, Sendable {
 	public void periodic() {
 		// WIP: OuterGoalAble, innerGoalAble, outerGoalAimed, innerGoalAimed
 
-		backIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.backMotorOn()
+		backIntakeOn = RobotMap.INTAKE_CONNECTED ? (RobotMap.m_robotContainer.m_intakeBackMotorSubsystem.getMainMotor().get() != 0)
 				: false;
-		backIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isBackIntakeUp()
+		backIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeBackPneumaticSubsystem.getMainSolenoid().get()
 				: false;
-		frontIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isFrontIntakeUp()
+		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? (RobotMap.m_robotContainer.m_intakeFrontMotorSubsystem.getMainMotor().get() != 0)
 				: false;
-		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.FrontMotorOn()
+		frontIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeFrontPneumaticSubsystem.getMainSolenoid().get()
 				: false;
 
 		powerCellCount = RobotState.m_ballCount;
@@ -89,8 +89,8 @@ public class Logging implements Loggable, Sendable {
 				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
-						: 0)
+				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeFrontMotorSubsystem.getCurrentDraw()
+					+RobotMap.m_robotContainer.m_intakeBackMotorSubsystem.getCurrentDraw() : 0)
 				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 

@@ -1,25 +1,28 @@
 package frc.team2412.robot.commands.intake.back;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.intake.IntakeBackPneumaticSubsystem;
 
 public class IntakeBackUpCommand extends CommandBase {
 
-	private IntakeUpDownSubsystem m_intakeUpDownSubsystem;
+	private IntakeBackPneumaticSubsystem m_intakeSubsystem;
 
-	public IntakeBackUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem) {
-		this(intakeUpDownSubsystem, true);
-	}
-
-	public IntakeBackUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem, boolean require) {
-		if (require)
-			addRequirements(intakeUpDownSubsystem);
-		this.m_intakeUpDownSubsystem = intakeUpDownSubsystem;
+	public IntakeBackUpCommand(IntakeBackPneumaticSubsystem intakeSubsystem) {
+		m_intakeSubsystem = intakeSubsystem;
+		addRequirements(intakeSubsystem);
+		
 	}
 
 	@Override
 	public void execute() {
-		m_intakeUpDownSubsystem.backIntakeUp();
+		m_intakeSubsystem.in();
+	}
+
+	@Override
+	public void end(boolean cancelled) {
+		if (cancelled) {
+			m_intakeSubsystem.out();
+		}
 	}
 
 	@Override

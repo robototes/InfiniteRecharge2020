@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;

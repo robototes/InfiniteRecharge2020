@@ -176,7 +176,7 @@ public class OI {
 		}
 
 		indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
+				robotContainer.m_intakeFrontMotorSubsystem, robotContainer.m_intakeBackMotorSubsystem));
 
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
@@ -192,31 +192,26 @@ public class OI {
 			return;
 		}
 
-		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem, false));
-		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem, false));
+		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeFrontPneumaticSubsystem));
+		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeFrontPneumaticSubsystem));
 
-		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem, false));
-		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem, false));
+		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeBackPneumaticSubsystem));
+		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeBackPneumaticSubsystem));
 
-		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeFrontMotorSubsystem));
 
-		intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeFrontMotorSubsystem));
+		intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeFrontMotorSubsystem));
 
-		intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeBackMotorSubsystem));
 
-		intakeBackOut.whenPressed(new IntakeBackOutCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOut.whenPressed(new IntakeBackOutCommand(robotContainer.m_intakeBackMotorSubsystem));
+		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeBackMotorSubsystem));
 
-		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		// intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(
-		// 	new InstantCommand(() ->{			
-		// 		robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().set(-1);
-		// 		robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().set(-1);
-		// 	}
-		// 	)
-		// ));
+		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeFrontMotorSubsystem));
+
+		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeBackMotorSubsystem));
+
 
 	}
 
