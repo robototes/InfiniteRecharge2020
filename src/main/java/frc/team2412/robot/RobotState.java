@@ -8,7 +8,7 @@ import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
 
 public class RobotState implements Loggable {
-
+	public static boolean babyMode = true;
 	private RobotContainer m_robotContainer;
 
 	@Log.ToString(tabName = "Robot State")

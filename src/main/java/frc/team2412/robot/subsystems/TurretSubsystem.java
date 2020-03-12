@@ -21,7 +21,7 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 
 	@Log.ToString(tabName = "Turret")
 	private Rotations m_currentAngle;
-	@Log(tabName = "Turret")
+	//@Log(tabName = "Turret")
 	private WPI_TalonSRX m_turretMotor;
 
 	@Log.Exclude

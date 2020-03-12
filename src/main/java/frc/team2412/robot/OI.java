@@ -13,6 +13,7 @@ import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
+import frc.team2412.robot.commands.drive.OneJoystickDriveCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
@@ -60,7 +61,7 @@ public class OI {
 	}
 
 	public enum Joysticks {
-		DRIVER_RIGHT(0), DRIVER_LEFT(1), CODRIVER(2), CODRIVER_MANUAL(3);
+		DRIVER(0), CODRIVER(2), CODRIVER_MANUAL(3);
 
 		public int id;
 
@@ -70,8 +71,7 @@ public class OI {
 	}
 
 	public enum DriverControls implements ButtonEnumInterface {
-		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT, 1),
-		ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
+		SHOOT(Joysticks.DRIVER, 1), SPIT(Joysticks.DRIVER, 2);
 
 		public Joysticks stick;
 		public int buttonID;
@@ -94,8 +94,7 @@ public class OI {
 	}
 
 	public enum CodriverControls implements ButtonEnumInterface {
-		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
-		INTAKE_FRONT_OUT(5);
+		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),INTAKE_FRONT_OUT(5);
 
 		public int buttonID;
 
@@ -137,16 +136,18 @@ public class OI {
 	}
 
 	// Joysticks
-	public final Joystick driverRightStick = new Joystick(Joysticks.DRIVER_RIGHT.id);
-	public final Joystick driverLeftStick = new Joystick(Joysticks.DRIVER_LEFT.id);
+	public final Joystick driverStick = new Joystick(Joysticks.DRIVER.id);
+	//public final Joystick driverLeftStick = new Joystick(Joysticks.DRIVER_LEFT.id);
 	public final Joystick codriverStick = new Joystick(Joysticks.CODRIVER.id);
 	public final Joystick codriverManualStick = new Joystick(Joysticks.CODRIVER_MANUAL.id);
 
 	// Driver Controls
-	public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
-	public final Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
-	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
-
+	//public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
+	public final Button indexerShootButton = DriverControls.SHOOT.createFrom(driverStick);
+	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverStick);
+	
+	//DISABLE BABY MODE
+	public final Button disableBabyModeButton = new JoystickButton(driverStick, 4);
 	// Lift Controls
 	public final Button liftButton = CodriverControls.LIFT.createFrom(codriverStick);
 
@@ -168,6 +169,8 @@ public class OI {
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
 		bindIndexControls(robotContainer);
+		disableBabyModeButton.whenPressed(new InstantCommand(() -> RobotState.babyMode = false));
+		disableBabyModeButton.whenReleased(new InstantCommand(() -> RobotState.babyMode = true));
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {
@@ -192,12 +195,17 @@ public class OI {
 			return;
 		}
 
-		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeFrontPneumaticSubsystem));
-		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeFrontPneumaticSubsystem));
+		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeFrontPneumaticSubsystem)
+				.alongWith(new IntakeFrontOffCommand(robotContainer.m_intakeFrontMotorSubsystem)));
+		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeFrontPneumaticSubsystem)
+				.alongWith(new IntakeFrontInCommand(robotContainer.m_intakeFrontMotorSubsystem)));
 
-		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeBackPneumaticSubsystem));
-		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeBackPneumaticSubsystem));
+		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeBackPneumaticSubsystem)
+				.alongWith(new IntakeBackOffCommand(robotContainer.m_intakeBackMotorSubsystem)));
+		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeBackPneumaticSubsystem)
+				.alongWith(new IntakeBackInCommand(robotContainer.m_intakeBackMotorSubsystem)));
 
+		
 		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeFrontMotorSubsystem));
 
 		intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeFrontMotorSubsystem));
@@ -211,7 +219,7 @@ public class OI {
 		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeFrontMotorSubsystem));
 
 		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeBackMotorSubsystem));
-
+		
 
 	}
 
@@ -241,10 +249,11 @@ public class OI {
 			return;
 		}
 
-		robotContainer.m_driveBaseSubsystem.setDefaultCommand(new DriveCommand(robotContainer.m_driveBaseSubsystem,
-				driverRightStick, driverLeftStick, DriverControls.ALIGN_STICKS.createFrom(driverLeftStick)));
+		robotContainer.m_driveBaseSubsystem.setDefaultCommand(
+				new OneJoystickDriveCommand(robotContainer.m_driveBaseSubsystem, driverStick));
 
-		shifter.whenPressed(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem));
-		shifter.whenReleased(new DriveShiftToLowGearCommand(robotContainer.m_driveBaseSubsystem));
+		//shifter.whenPressed(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem));
+		///shifter.whenReleased(new DriveShiftToLowGearCommand(robotContainer.m_driveBaseSubsystem));
 	}
+
 }

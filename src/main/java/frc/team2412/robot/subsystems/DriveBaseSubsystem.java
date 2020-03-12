@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -75,7 +76,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@Log.BooleanBox(name = "In 1 joystick", tabName = "Drivebase Subsystem", colorWhenFalse = "red", colorWhenTrue = "green")
 	private boolean inOneJoystickDrive = oneJoystickDrive;
 
-//	DifferentialDrive m_drive;
+	private DifferentialDrive m_drive;
 
 	@Log(tabName = "Drivebase Subsystem")
 	public double m_driveBaseCurrentDraw;
@@ -96,7 +97,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 		m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
 		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
-//		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
 		m_gyro = gyro;
 		m_gearShifter = gearShifter;
@@ -124,7 +125,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
-//		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
+		m_drive.arcadeDrive((RobotState.babyMode ? 0.5 : 1) * joystick.getY(), (RobotState.babyMode ? 0.5 : 1)*joystick.getTwist(), true);
 	}
 
 	public void setDriveSpeed(double forwardness, double turn) {

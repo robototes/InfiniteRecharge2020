@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.FlywheelConstants;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
@@ -55,6 +56,7 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 
 	@Config.NumberSlider(min = -1, max = 0, name = "Set speed", tabName = "Flywheel", width = 3, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setSpeed(double speed) {
+		speed = RobotState.babyMode ? speed*=0.25 : speed;
 		if(speed <= 0) {
 			System.out.println(speed);
 

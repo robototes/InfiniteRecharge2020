@@ -27,7 +27,17 @@ import io.github.oblarg.oblog.Logger;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
+
+ //EDITS FOR OUTREACH
+ /*
+ 50% index, intake, and drive speed
+ 25% flywheel speed
+ no climb or turret
+ intake spins in upon extension, and stops on retraction
+ */
 public class Robot extends TimedRobot implements Loggable {
+	
+
 
 	public double timeRemaining;
 
@@ -124,8 +134,8 @@ public class Robot extends TimedRobot implements Loggable {
 			new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem)
 		);
 
-		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
-		// 		new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> m_OI.codriverStick.getY() * 0.5 + 0.5));
+		m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+			new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}
 	//
 

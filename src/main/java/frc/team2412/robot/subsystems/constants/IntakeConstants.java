@@ -28,6 +28,6 @@ public class IntakeConstants {
 		}
 	}
 
-	public static final double MAX_INTAKE_SPEED = 0.75;
+	public static final double MAX_INTAKE_SPEED = 0.4;
 
 }
