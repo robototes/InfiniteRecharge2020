@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
-import frc.team2412.robot.commands.hood.HoodJoystickCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
 import io.github.oblarg.oblog.Loggable;
@@ -124,10 +123,10 @@ public class Robot extends TimedRobot implements Loggable {
 		m_robotContainer.m_indexerMotorSubsystem
 				.setDefaultCommand(new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem));
 
-		m_robotContainer.m_hoodSubsystem
-				.setDefaultCommand(new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> 0.00));
+		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
+		// m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}
-	// m_OI.codriverStick.getY() * 0.5 + 0.5
 
 	/**
 	 * This function is called periodically during operator control.

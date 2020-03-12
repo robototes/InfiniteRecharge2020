@@ -33,7 +33,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 					//
 					new LiftUpCommand(liftSubsystem, indexerSuperSubsystem),
 					//
-					new IndexShootCommand(indexerSuperSubsystem, intakeUpDownSubsystem)
+					new IndexShootCommand(indexerSuperSubsystem)
 			//
 			),
 					//
@@ -45,7 +45,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							//
 							autonomous.getTrenchMovementCommand(),
 							//
-							new IndexShootCommand(indexerSuperSubsystem, intakeUpDownSubsystem)
+							new IndexShootCommand(indexerSuperSubsystem)
 					//
 					)
 
@@ -55,13 +55,13 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 					//
 					new LiftUpCommand(liftSubsystem, indexerSuperSubsystem),
 					//
-					new IndexShootCommand(indexerSuperSubsystem, intakeUpDownSubsystem),
+					new IndexShootCommand(indexerSuperSubsystem),
 					//
 					new IntakeFrontDownCommand(intakeUpDownSubsystem),
 					//
 					autonomous.getAutoCommand(),
 					//
-					new IndexShootCommand(indexerSuperSubsystem, intakeUpDownSubsystem)
+					new IndexShootCommand(indexerSuperSubsystem)
 
 			);
 		}

@@ -13,7 +13,7 @@ public class MoveToIntakePowerCellsCommandGroup extends ParallelCommandGroup {
 
 		addCommands(new IntakeFrontBothOnCommandGroup(intakeUpDownSubsystem, intakeOnOffSubsystem)
 //				new MoveToPowerCellsCommand(driveBaseSubsystem)
-				);
+		);
 	}
 
 }

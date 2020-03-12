@@ -8,7 +8,12 @@ public class IntakeBackUpCommand extends CommandBase {
 	private IntakeUpDownSubsystem m_intakeUpDownSubsystem;
 
 	public IntakeBackUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem) {
-		addRequirements(intakeUpDownSubsystem);
+		this(intakeUpDownSubsystem, true);
+	}
+
+	public IntakeBackUpCommand(IntakeUpDownSubsystem intakeUpDownSubsystem, boolean require) {
+		if (require)
+			addRequirements(intakeUpDownSubsystem);
 		this.m_intakeUpDownSubsystem = intakeUpDownSubsystem;
 	}
 

@@ -152,11 +152,13 @@ public class IndexBitmapCommand extends CommandBase {
 
 			if (runLift) {
 				lastIndexRunTimeMicroSec = RobotController.getFPGATime();
-			} else if (RobotController.getFPGATime() < lastIndexRunTimeMicroSec + 1000 * 500) {
+			} else if (RobotController.getFPGATime() < lastIndexRunTimeMicroSec
+					+ 1000 * IndexerConstants.LIFT_DOWN_MS_DURATION_AFTER_SHUFFLE) {
 				runLift = true;
 			}
 
-			m_indexerSubsystem.getIndexerMotorLiftSubsystem().set(runLift ? IndexerConstants.LIFT_DOWN_SPEED : 0.0);
+			m_indexerSubsystem.getIndexerMotorLiftSubsystem()
+					.set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
 			switch (intakeDirection) {
 			case BOTH:
 			case FRONT:

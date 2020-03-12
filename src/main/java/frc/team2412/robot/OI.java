@@ -2,6 +2,9 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.commands.climb.ClimbDeployRailsCommand;
@@ -10,6 +13,7 @@ import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
+import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
@@ -175,15 +179,12 @@ public class OI {
 				robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
-		// Command indexShootCommand = new
-		// IndexShootCommand(robotContainer.m_indexerMotorSubsystem,
-		// robotContainer.m_intakeUpDownSubsystem);
+		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
 
-		// indexerShootButton.whenPressed(indexShootCommand);
+		indexerShootButton.whenPressed(indexShootCommand);
 
-		// indexerShootButton
-		// .whenReleased(new InstantCommand(() ->
-		// CommandScheduler.getInstance().cancel(indexShootCommand)));
+		indexerShootButton
+				.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
 	}
 
 	public void bindIntakeControls(RobotContainer robotContainer) {
@@ -191,11 +192,11 @@ public class OI {
 			return;
 		}
 
-		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem));
-		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		frontIntakeUpDown.whenReleased(new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem, false));
+		frontIntakeUpDown.whenPressed(new IntakeFrontUpCommand(robotContainer.m_intakeUpDownSubsystem, false));
 
-		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem));
-		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem));
+		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem, false));
+		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem, false));
 
 		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 

@@ -1,7 +1,5 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.FlywheelConstants.NEO_RPM_TO_FLYWHEEL_MPS;
-
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -76,7 +74,7 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	@Config.NumberSlider(name = "Set Flywheel speed in Meters per Second", tabName = "Flywheel", min = 0, max = 7000, width = 3, height = 1, rowIndex = 1, columnIndex = 2)
-	public void setRPMFromMPS(double wantedVelocity) {
+	public void setRPM(double wantedVelocity) {
 //		double wantedRPM = -NEO_RPM_TO_FLYWHEEL_MPS.calculateRatio(wantedVelocity);
 
 		m_pidLeftController.setReference(-wantedVelocity, ControlType.kVelocity);
@@ -84,13 +82,13 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	@Log.NumberBar(min = 0, max = 7000, name = "Left Flywheel Motor", tabName = "Flywheel", width = 2, height = 1, rowIndex = 0, columnIndex = 0)
-	public double currentLeftSpeedInMetersPerSecond() {
-		return /* NEO_RPM_TO_FLYWHEEL_MPS.calculateReverseRatio( */m_leftEncoder.getVelocity()/* ) */;
+	public double currentLeftSpeed() {
+		return m_leftEncoder.getVelocity();
 	}
 
-	@Log.NumberBar(min = 0, max = 30, name = "Right Flywheel Motor", tabName = "Flywheel", width = 2, height = 1, rowIndex = 1, columnIndex = 0)
-	public double currentRightSpeedInMetersPerSecond() {
-		return -NEO_RPM_TO_FLYWHEEL_MPS.calculateReverseRatio(m_rightEncoder.getVelocity());
+	@Log.NumberBar(min = 0, max = 7000, name = "Right Flywheel Motor", tabName = "Flywheel", width = 2, height = 1, rowIndex = 0, columnIndex = 0)
+	public double currentRightSpeed() {
+		return -m_rightEncoder.getVelocity();
 	}
 
 	@Config(defaultValueNumeric = FlywheelConstants.P, name = "Set Flywheel P", tabName = "Flywheel", width = 1, height = 1, columnIndex = 5, rowIndex = 0)

@@ -44,13 +44,11 @@ public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public boolean allBackSensorsOff() {
-		return !m_intakeBackSensor.get() && !m_indexBackSensor.get() && !m_indexBackMidSensor.get()
-				&& !m_indexBackInnerSensor.get();
+		return !m_indexBackSensor.get() && !m_indexBackMidSensor.get() && !m_indexBackInnerSensor.get();
 	}
 
 	public boolean allFrontSensorsOff() {
-		return !m_intakeFrontSensor.get() && !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get()
-				&& !m_indexFrontInnerSensor.get();
+		return !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get() && !m_indexFrontInnerSensor.get();
 	}
 
 	public boolean allInnerSensorsOff() {
