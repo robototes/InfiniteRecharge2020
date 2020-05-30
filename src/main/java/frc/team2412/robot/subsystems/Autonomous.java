@@ -80,7 +80,7 @@ public class Autonomous {
 		double robotY = Math.pow(hypotenuseinMeters.distance, 2) - Math.pow(inititationLineMeters, 2);
 
 		Pose2d currentPose = new Pose2d(new Translation2d(inititationLineMeters, -robotY),
-				Rotation2d.fromDegrees(RobotMap.m_robotContainer.m_driveBaseSubsystem.getHeading()));
+				Rotation2d.fromDegrees(RobotMap.m_robotContainer.m_driveBaseSubsystem.getGyroHeading()));
 
 		trajectory = TrajectoryGenerator.generateTrajectory(currentPose, List.of(new Translation2d(5.411, -0.70485)),
 				new Pose2d(7.231, 0.70485, currentPose.getRotation()), config);

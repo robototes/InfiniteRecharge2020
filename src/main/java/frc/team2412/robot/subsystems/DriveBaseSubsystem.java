@@ -5,6 +5,7 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroRe
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -32,12 +33,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	@Log.Dial(max = 1, min = -1, showValue = true, tabName = "Drivebase Subsystem")
 	public double m_currentYSpeed;
-
-	@Log.SpeedController(name = "Left Motor Speed", tabName = "Drivebase Subsystem")
-	public SpeedControllerGroup m_leftMotors;
-
-	@Log.SpeedController(name = "Right Motor Speed", tabName = "Drivebase Subsystem")
-	public SpeedControllerGroup m_rightMotors;
 
 	private DifferentialDriveOdometry m_odometry;
 
@@ -69,8 +64,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotor1.setInverted(true);
 		m_rightMotor2.setInverted(true);
 
-		m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
-		m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
 //		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
 		m_gyro = gyro;
@@ -184,13 +177,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
-		m_leftMotors.setVoltage(leftVolts);
-		m_rightMotors.setVoltage(rightVolts);
+		m_leftMotor1.setVoltage(leftVolts);
+		m_rightMotor1.setVoltage(rightVolts);
 //		m_drive.feed();
-	}
-
-	public double getHeading() {
-		return Math.IEEEremainder(m_gyro.getAngle(), 360) * (kGyroReversed ? -1.0 : 1.0);
 	}
 
 	public double getTurnRate() {

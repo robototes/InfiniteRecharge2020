@@ -27,38 +27,31 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		m_flywheelRightMotor = flywheelRightMotor;
 
 		m_flywheelRightMotor.setInverted(true);
-		System.out.println(m_flywheelRightMotor.getInverted());
-		System.out.println(m_flywheelLeftMotor.getInverted());
-
-		m_leftEncoder = m_flywheelLeftMotor.getEncoder();
-		m_pidLeftController = m_flywheelLeftMotor.getPIDController();
-
-		m_pidLeftController.setP(FlywheelConstants.P);
-		m_pidLeftController.setI(FlywheelConstants.I);
-		m_pidLeftController.setD(FlywheelConstants.D);
-		m_pidLeftController.setFF(FlywheelConstants.FF);
-
-		m_rightEncoder = m_flywheelRightMotor.getEncoder();
-		m_pidRightController = m_flywheelRightMotor.getPIDController();
-
-		m_pidRightController.setP(FlywheelConstants.P);
-		m_pidRightController.setI(FlywheelConstants.I);
-		m_pidRightController.setD(FlywheelConstants.D);
-		m_pidRightController.setFF(FlywheelConstants.FF);
-
-		m_flywheelLeftMotor.setIdleMode(IdleMode.kCoast);
-		m_flywheelRightMotor.setIdleMode(IdleMode.kCoast);
-
+		
+		configureMotor(m_flywheelLeftMotor, m_leftEncoder, m_pidLeftController);
+		configureMotor(m_flywheelRightMotor, m_rightEncoder, m_pidRightController);
+		setPIDtoDefault();
 	}
 
+	private void configureMotor(CANSparkMax motor, CANEncoder encoder, CANPIDController pidController) {
+		encoder = motor.getEncoder();
+		pidController = m_flywheelRightMotor.getPIDController();
+		motor.setIdleMode(IdleMode.kCoast);
+	}
+	
 	@Config.NumberSlider(min = -1, max = 0, name = "Set speed", tabName = "Flywheel", width = 3, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setSpeed(double speed) {
 		if (speed <= 0) {
-			System.out.println(speed);
-
 			m_flywheelLeftMotor.set(speed);
 			m_flywheelRightMotor.set(speed);
 		}
+	}
+	
+	public void setPIDtoDefault() {
+		setP(FlywheelConstants.P);
+		setI(FlywheelConstants.I);
+		setD(FlywheelConstants.D);
+		setFF(FlywheelConstants.FF);
 	}
 
 	public void shoot() {
@@ -119,7 +112,4 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		return m_flywheelLeftMotor.getOutputCurrent() + m_flywheelRightMotor.getOutputCurrent();
 	}
 
-	@Override
-	public void periodic() {
-	}
 }

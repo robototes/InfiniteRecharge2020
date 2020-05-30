@@ -8,6 +8,7 @@ import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotState;
+import frc.team2412.robot.RobotState.ClimbState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 import io.github.oblarg.oblog.Loggable;
@@ -24,7 +25,7 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	@Log.NumberBar(min = -1, max = 1, name = "Right Climb Speed", tabName = "Climb", methodName = "get")
 	private CANSparkMax m_rightClimbMotor;
 
-	private CANEncoder m_encoder;
+	private CANEncoder m_rightEncoder;
 	private CANEncoder m_leftEncoder;
 
 	private CANPIDController m_pidController;
@@ -36,9 +37,13 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 		m_leftClimbMotor = leftClimbMotor;
 		m_rightClimbMotor = rightClimbMotor;
 
+		m_rightClimbMotor.setInverted(true);
+
 		m_pidController = m_rightClimbMotor.getPIDController();
 
-		m_encoder = m_rightClimbMotor.getEncoder();
+		m_rightEncoder = m_rightClimbMotor.getEncoder();
+		m_rightEncoder.setInverted(true);
+
 		m_leftEncoder = m_leftClimbMotor.getEncoder();
 		m_pidController.setP(0.005);
 	}
@@ -49,22 +54,19 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void climbExtendArm() {
-		m_rightClimbMotor.set(ClimbConstants.MAX_SPEED);
-		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
+		setMotors(ClimbConstants.MAX_SPEED);
 	}
 
 	public void climbRetractArm() {
-		m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED);
-		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
+		setMotors(-ClimbConstants.MAX_SPEED);
 	}
 
 	public void climbStop() {
-		m_rightClimbMotor.set(0);
-		RobotState.m_climbState = RobotState.ClimbState.NOT_CLIMBING;
+		setMotors(0);
 	}
 
 	public double getEncoderValue() {
-		return m_encoder.getPosition();
+		return m_rightEncoder.getPosition();
 	}
 
 	@Override
@@ -77,24 +79,23 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	public void setMotors(double value) {
 		// left : 0-75
 		// right: -75 - 0
-		if (value < 0 && m_encoder.getPosition() < 0 || value > 0 && m_encoder.getPosition() > -76) {
-			m_rightClimbMotor.set(-value);
-		} else {
-			m_rightClimbMotor.set(0);
-		}
+		setMotor(value, m_rightClimbMotor, m_rightEncoder);
+		setMotor(value, m_leftClimbMotor, m_leftEncoder);
 
-		if (value < 0 && m_leftEncoder.getPosition() > 0 || value > 0 && m_leftEncoder.getPosition() < 76) {
-			m_leftClimbMotor.set(value);
+		RobotState.m_climbState = m_rightClimbMotor.get() != 0 || m_leftClimbMotor.get() != 0 ? ClimbState.CLIMBING
+				: ClimbState.NOT_CLIMBING;
+	}
+
+	private void setMotor(double value, CANSparkMax motor, CANEncoder encoder) {
+		if (value < 0 && 0 < encoder.getPosition() || 0 < value && encoder.getPosition() < 76) {
+			motor.set(value);
 		} else {
-			m_leftClimbMotor.set(0);
+			motor.set(0);
 		}
-		System.out.println("right: " + m_encoder.getPosition());
-		System.out.println("left: " + m_leftEncoder.getPosition());
-		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
 	}
 
 	public void setReference(ClimbHeight newHeight) {
-		this.reference = newHeight;
+		reference = newHeight;
 		Distance travelFromOffset = newHeight.value.subtract(ClimbConstants.CLIMB_OFFSET_HEIGHT);
 		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
