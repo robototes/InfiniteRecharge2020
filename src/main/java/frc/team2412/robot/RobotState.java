@@ -3,6 +3,7 @@ package frc.team2412.robot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.RobotController;
+import frc.team2412.robot.subsystems.constants.LiftConstants.LiftState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
@@ -24,7 +25,7 @@ public class RobotState implements Loggable {
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
 	@Log.ToString(tabName = "Robot State")
-	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
+	public static LiftState m_liftSolenoidState = LiftState.DOWN;
 
 	@Log.ToString(tabName = "Robot State")
 	public static GearboxState m_gearState = GearboxState.LOW;
@@ -99,19 +100,6 @@ public class RobotState implements Loggable {
 				return "Not Climbing, woohoo";
 			} else {
 				return "We climbin boiz";
-			}
-		}
-	}
-
-	public static enum LiftState {
-		WITHDRAWN, EXTENDED;
-
-		@Override
-		public String toString() {
-			if (this.equals(WITHDRAWN)) {
-				return "Withdrawn";
-			} else {
-				return "Extended";
 			}
 		}
 	}

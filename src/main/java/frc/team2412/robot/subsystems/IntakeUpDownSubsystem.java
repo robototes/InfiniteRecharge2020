@@ -12,6 +12,7 @@ public class IntakeUpDownSubsystem extends SubsystemBase implements Loggable {
 	private Solenoid m_frontIntakeUpDown;
 	@Log(tabName = "Intake")
 	private Solenoid m_backIntakeUpDown;
+	
 	@Log.ToString(tabName = "Intake")
 	private IntakeState m_currentState = IntakeState.WITHDRAWN;
 

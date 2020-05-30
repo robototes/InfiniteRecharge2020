@@ -20,6 +20,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
+	
 	@Log(name = "Limelight Subsystem", tabName = "Turret")
 	public LimelightSubsystem m_limelightSubsystem;
 
@@ -71,49 +72,80 @@ public class RobotContainer implements Loggable {
 
 	public RobotContainer() {
 		if (RobotMap.CLIMB_CONNECTED) {
-			m_climbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
-			m_climbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
+			configureClimb();
 		}
 
 		if (RobotMap.INDEX_CONNECTED) {
-			m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front,
-					RobotMap.frontMid, RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back,
-					RobotMap.intakeBack);
-
-			m_indexerMotorSubsystem = new IndexerSubsystemSuperStructure(RobotMap.indexFrontMotor,
-					RobotMap.indexleftMidMotor, RobotMap.indexRightMidMotor, RobotMap.indexBackMotor,
-					m_indexerSensorSubsystem);
-
+			configureIndexer();
 		}
 
 		if (RobotMap.LIFT_CONNECTED) {
-			m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+			configureLift();
 		}
 
 		if (RobotMap.DRIVE_BASE_CONNECTED) {
-			m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro,
-					RobotMap.driveLeftFront, RobotMap.driveLeftBack, RobotMap.driveRightFront, RobotMap.driveRightBack);
+			configureDrivebase();
 		}
 
 		if (RobotMap.INTAKE_CONNECTED) {
-			m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
-
-			m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
-					RobotMap.backIntakeLiftSolenoid);
+			configureIntake();
 		}
 
 		if (RobotMap.CONTROL_PANEL_CONNECTED) {
-			m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor,
-					RobotMap.colorSensorMotor);
+			configureControlPanel();
 		}
 
 		if (RobotMap.SHOOTER_CONNECTED) {
-			m_limelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
-			m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_limelightSubsystem);
-
-			m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
-
-			m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
+			configureShooter();
 		}
 	}
+
+	private void configureLift() {
+		m_liftSubsystem = new LiftSubsystem(RobotMap.liftUpDown);
+	}
+
+	private void configureShooter() {
+		m_limelightSubsystem = new LimelightSubsystem(RobotMap.limelight);
+		m_turretSubsystem = new TurretSubsystem(RobotMap.turretMotor, m_limelightSubsystem);
+
+		m_flywheelSubsystem = new FlywheelSubsystem(RobotMap.flywheelLeftMotor, RobotMap.flywheelRightMotor);
+
+		m_hoodSubsystem = new HoodSubsystem(RobotMap.hoodServo1, RobotMap.hoodServo2);
+	}
+
+	private void configureControlPanel() {
+		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor,
+				RobotMap.colorSensorMotor);
+	}
+
+	private void configureIntake() {
+		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
+
+		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
+				RobotMap.backIntakeLiftSolenoid);
+	}
+
+	private void configureDrivebase() {
+		m_driveBaseSubsystem = new DriveBaseSubsystem(RobotMap.driveSolenoid, RobotMap.driveGyro,
+				RobotMap.driveLeftFront, RobotMap.driveLeftBack, RobotMap.driveRightFront, RobotMap.driveRightBack);
+	}
+
+	private void configureIndexer() {
+		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front,
+				RobotMap.frontMid, RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back,
+				RobotMap.intakeBack);
+
+		m_indexerMotorSubsystem = new IndexerSubsystemSuperStructure(RobotMap.indexFrontMotor,
+				RobotMap.indexleftMidMotor, RobotMap.indexRightMidMotor, RobotMap.indexBackMotor,
+				m_indexerSensorSubsystem);
+	}
+
+	private void configureClimb() {
+		m_climbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
+		m_climbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
+	}
+	
+	
+	
+	
 }

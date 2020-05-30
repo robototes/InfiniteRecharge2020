@@ -44,13 +44,7 @@ public class Robot extends TimedRobot implements Loggable {
 		Logger.configureLoggingAndConfig(m_robotContainer, false);
 		// Shuffleboard.startRecording();
 
-		DriverStation driverStation = DriverStation.getInstance();
-
-		RobotState.eventName = driverStation.getEventName();
-		RobotState.matchType = driverStation.getMatchType();
-		RobotState.matchNumber = driverStation.getMatchNumber();
-		RobotState.alliance = driverStation.getAlliance();
-		RobotState.location = driverStation.getLocation();
+		configureRobotState();
 	}
 
 	/**
@@ -151,4 +145,15 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void testPeriodic() {
 	}
+	
+	private void configureRobotState() {
+		DriverStation driverStation = DriverStation.getInstance();
+
+		RobotState.eventName = driverStation.getEventName();
+		RobotState.matchType = driverStation.getMatchType();
+		RobotState.matchNumber = driverStation.getMatchNumber();
+		RobotState.alliance = driverStation.getAlliance();
+		RobotState.location = driverStation.getLocation();
+	}
+	
 }
