@@ -20,7 +20,7 @@ import io.github.oblarg.oblog.annotations.Log;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
-	
+
 	@Log(name = "Limelight Subsystem", tabName = "Turret")
 	public LimelightSubsystem m_limelightSubsystem;
 
@@ -114,8 +114,7 @@ public class RobotContainer implements Loggable {
 	}
 
 	private void configureControlPanel() {
-		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor,
-				RobotMap.colorSensorMotor);
+		m_controlPanelColorSubsystem = new ControlPanelColorSubsystem(RobotMap.colorSensor, RobotMap.colorSensorMotor);
 	}
 
 	private void configureIntake() {
@@ -131,9 +130,8 @@ public class RobotContainer implements Loggable {
 	}
 
 	private void configureIndexer() {
-		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front,
-				RobotMap.frontMid, RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back,
-				RobotMap.intakeBack);
+		m_indexerSensorSubsystem = new IndexerSensorSubsystem(RobotMap.intakeFront, RobotMap.front, RobotMap.frontMid,
+				RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
 		m_indexerMotorSubsystem = new IndexerSubsystemSuperStructure(RobotMap.indexFrontMotor,
 				RobotMap.indexleftMidMotor, RobotMap.indexRightMidMotor, RobotMap.indexBackMotor,
@@ -144,8 +142,5 @@ public class RobotContainer implements Loggable {
 		m_climbLiftSubsystem = new ClimbLiftSubsystem(RobotMap.climbLeftPneumatic, RobotMap.climbRightPneumatic);
 		m_climbMotorSubsystem = new ClimbMotorSubsystem(RobotMap.leftClimbMotor, RobotMap.rightClimbMotor);
 	}
-	
-	
-	
-	
+
 }

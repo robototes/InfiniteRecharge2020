@@ -145,7 +145,7 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void testPeriodic() {
 	}
-	
+
 	private void configureRobotState() {
 		DriverStation driverStation = DriverStation.getInstance();
 
@@ -155,5 +155,5 @@ public class Robot extends TimedRobot implements Loggable {
 		RobotState.alliance = driverStation.getAlliance();
 		RobotState.location = driverStation.getLocation();
 	}
-	
+
 }

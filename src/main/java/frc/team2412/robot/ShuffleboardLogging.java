@@ -35,7 +35,7 @@ public class ShuffleboardLogging {
 
 		m_innerGoalWidget = m_driverView.add("Inner Goal Possible", false).withPosition(1, 1).withSize(2, 2)
 				.withProperties(Map.of("colorWhenFalse", "white"));
-		
+
 		m_innerGoalEntry = m_innerGoalWidget.getEntry();
 
 	}
@@ -51,15 +51,15 @@ public class ShuffleboardLogging {
 
 		m_outerGoalWidget.withProperties(Map.of("colorWhenTrue", outerGoalColor));
 		m_outerGoalEntry.setBoolean(true);
-		
+
 		Color innerGoalColor = Color.white;
-		
-		if(innnerGoalAimed) {
+
+		if (innnerGoalAimed) {
 			innerGoalColor.equals(Color.green);
-		} else if(innerGoalPossible) {
+		} else if (innerGoalPossible) {
 			innerGoalColor.equals(Color.yellow);
 		}
-		
+
 		m_innerGoalWidget.withProperties(Map.of("colorwhenTrue", innerGoalColor));
 		m_innerGoalEntry.setBoolean(true);
 

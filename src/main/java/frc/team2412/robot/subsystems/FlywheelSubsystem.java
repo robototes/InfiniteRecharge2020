@@ -27,7 +27,7 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		m_flywheelRightMotor = flywheelRightMotor;
 
 		m_flywheelRightMotor.setInverted(true);
-		
+
 		configureMotor(m_flywheelLeftMotor, m_leftEncoder, m_pidLeftController);
 		configureMotor(m_flywheelRightMotor, m_rightEncoder, m_pidRightController);
 		setPIDtoDefault();
@@ -38,7 +38,7 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		pidController = m_flywheelRightMotor.getPIDController();
 		motor.setIdleMode(IdleMode.kCoast);
 	}
-	
+
 	@Config.NumberSlider(min = -1, max = 0, name = "Set speed", tabName = "Flywheel", width = 3, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setSpeed(double speed) {
 		if (speed <= 0) {
@@ -46,7 +46,7 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 			m_flywheelRightMotor.set(speed);
 		}
 	}
-	
+
 	public void setPIDtoDefault() {
 		setP(FlywheelConstants.P);
 		setI(FlywheelConstants.I);
