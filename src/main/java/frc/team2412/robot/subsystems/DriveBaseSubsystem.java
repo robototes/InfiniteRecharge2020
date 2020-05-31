@@ -1,5 +1,6 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ENCODER_TICKS_PER_SECOND;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
@@ -169,9 +170,9 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
 		return new DifferentialDriveWheelSpeeds(
 				m_leftMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
-						* metersPerWheelRevolution * 10,
+						* metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND,
 				m_rightMotor1.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
-						* metersPerWheelRevolution * 10);
+						* metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {

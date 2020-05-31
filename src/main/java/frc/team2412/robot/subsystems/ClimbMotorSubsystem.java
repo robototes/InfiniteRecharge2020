@@ -1,5 +1,12 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.CLIMB_OFFSET_HEIGHT;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.DEADBAND;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_ARM_EXTENSION;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_SPEED;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MIN_ARM_EXTENSION;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -9,7 +16,6 @@ import com.robototes.units.Distance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.RobotState;
 import frc.team2412.robot.RobotState.ClimbState;
-import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
@@ -49,16 +55,16 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public boolean atReference() {
-		return Math.abs(ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES
-				.calculateReverseRatio(m_currentClimbHeight.subtract(reference.value))) > ClimbConstants.DEADBAND;
+		return Math.abs(MOTOR_REVOLUTIONS_TO_INCHES
+				.calculateReverseRatio(m_currentClimbHeight.subtract(reference.value))) > DEADBAND;
 	}
 
 	public void climbExtendArm() {
-		setMotors(ClimbConstants.MAX_SPEED);
+		setMotors(MAX_SPEED);
 	}
 
 	public void climbRetractArm() {
-		setMotors(-ClimbConstants.MAX_SPEED);
+		setMotors(-MAX_SPEED);
 	}
 
 	public void climbStop() {
@@ -71,8 +77,8 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 	@Override
 	public void periodic() {
-		double heightFromOffset = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateRatio(getEncoderValue());
-		m_currentClimbHeight = new Distance(heightFromOffset).add(ClimbConstants.CLIMB_OFFSET_HEIGHT);
+		double heightFromOffset = MOTOR_REVOLUTIONS_TO_INCHES.calculateRatio(getEncoderValue());
+		m_currentClimbHeight = new Distance(heightFromOffset).add(CLIMB_OFFSET_HEIGHT);
 	}
 
 	@Config.NumberSlider
@@ -87,7 +93,8 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	private void setMotor(double value, CANSparkMax motor, CANEncoder encoder) {
-		if (value < 0 && 0 < encoder.getPosition() || 0 < value && encoder.getPosition() < 76) {
+		if (value < 0 && MIN_ARM_EXTENSION < encoder.getPosition()
+				|| 0 < value && encoder.getPosition() < MAX_ARM_EXTENSION) {
 			motor.set(value);
 		} else {
 			motor.set(0);
@@ -96,8 +103,8 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 	public void setReference(ClimbHeight newHeight) {
 		reference = newHeight;
-		Distance travelFromOffset = newHeight.value.subtract(ClimbConstants.CLIMB_OFFSET_HEIGHT);
-		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
+		Distance travelFromOffset = newHeight.value.subtract(CLIMB_OFFSET_HEIGHT);
+		double wantedRotations = MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
 		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;

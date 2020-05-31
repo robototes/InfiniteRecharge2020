@@ -9,6 +9,7 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -32,6 +33,8 @@ public class Robot extends TimedRobot implements Loggable {
 
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	private OI m_OI = RobotMap.m_OI;
+
+	private static boolean log = true;
 
 	Command autoCommand;
 
@@ -57,8 +60,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 * and SmartDashboard integrated updating.
 	 */
 
-	private static boolean log = true;
-
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
@@ -66,6 +67,8 @@ public class Robot extends TimedRobot implements Loggable {
 			Logger.updateEntries();
 		m_robotContainer.logger.periodic();
 		log = !log;
+
+		timeRemaining = Timer.getMatchTime();
 	}
 
 	/**
@@ -73,7 +76,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void autonomousInit() {
-		timeRemaining = 150.0;
 		/*
 		 * Limelight Spin up turret Shoot command
 		 * 
@@ -102,7 +104,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		timeRemaining -= 0.02;
+
 	}
 
 	/**
@@ -110,7 +112,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopInit() {
-		timeRemaining = 135.0;
 		CommandScheduler.getInstance().cancel(autoCommand);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
@@ -127,7 +128,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		timeRemaining -= 0.02;
+
 	}
 
 	@Override

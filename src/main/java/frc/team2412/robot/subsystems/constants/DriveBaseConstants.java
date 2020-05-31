@@ -9,6 +9,8 @@ public class DriveBaseConstants {
 
 	public static final double encoderTicksPerRevolution = 4096.0;
 
+	public static final int ENCODER_TICKS_PER_SECOND = 10;
+
 	public static final double highGearRatio = 1 / 7.08;
 	public static final double lowGearRatio = 1 / 6.13;
 
