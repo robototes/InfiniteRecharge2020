@@ -1,7 +1,12 @@
 package frc.team2412.robot;
 
+import static frc.team2412.robot.RobotMapConstants.CLIMB_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.DRIVE_BASE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INDEX_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INTAKE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.SHOOTER_CONNECTED;
+
 import edu.wpi.first.wpilibj.RobotController;
-import static frc.team2412.robot.RobotMapConstants.*;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import io.github.oblarg.oblog.Loggable;

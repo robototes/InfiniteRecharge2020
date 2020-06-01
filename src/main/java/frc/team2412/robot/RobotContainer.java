@@ -1,5 +1,13 @@
 package frc.team2412.robot;
 
+import static frc.team2412.robot.RobotMapConstants.CLIMB_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.CONTROL_PANEL_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.DRIVE_BASE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INDEX_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INTAKE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.LIFT_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.SHOOTER_CONNECTED;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.team2412.robot.subsystems.ClimbLiftSubsystem;
@@ -17,8 +25,6 @@ import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
-
-import static frc.team2412.robot.RobotMapConstants.*;
 
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {

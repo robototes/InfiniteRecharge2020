@@ -1,5 +1,11 @@
 package frc.team2412.robot;
 
+import static frc.team2412.robot.RobotMapConstants.CLIMB_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.DRIVE_BASE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INDEX_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INTAKE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.LIFT_CONNECTED;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,7 +33,6 @@ import frc.team2412.robot.commands.intake.front.IntakeFrontOutCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
-import static frc.team2412.robot.RobotMapConstants.*;
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
 

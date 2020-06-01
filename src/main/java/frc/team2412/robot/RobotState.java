@@ -1,5 +1,11 @@
 package frc.team2412.robot;
 
+import static frc.team2412.robot.RobotMapConstants.CLIMB_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.DRIVE_BASE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INDEX_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INTAKE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.SHOOTER_CONNECTED;
+
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.RobotController;
@@ -7,7 +13,6 @@ import frc.team2412.robot.subsystems.constants.LiftConstants.LiftState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
-import static frc.team2412.robot.RobotMapConstants.*;
 public class RobotState implements Loggable {
 
 	private RobotContainer m_robotContainer;

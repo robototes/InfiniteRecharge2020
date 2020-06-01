@@ -1,11 +1,14 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.blueTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.greenTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.redTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.yellowTarget;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-
-import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.*;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
