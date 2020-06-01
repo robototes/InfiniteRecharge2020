@@ -18,6 +18,8 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Log;
 
+import static frc.team2412.robot.RobotMapConstants.*;
+
 // this is the class for containing all the subsystems and OI of the robot
 public class RobotContainer implements Loggable {
 
@@ -71,31 +73,31 @@ public class RobotContainer implements Loggable {
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	public RobotContainer() {
-		if (RobotMap.CLIMB_CONNECTED) {
+		if (CLIMB_CONNECTED) {
 			configureClimb();
 		}
 
-		if (RobotMap.INDEX_CONNECTED) {
+		if (INDEX_CONNECTED) {
 			configureIndexer();
 		}
 
-		if (RobotMap.LIFT_CONNECTED) {
+		if (LIFT_CONNECTED) {
 			configureLift();
 		}
 
-		if (RobotMap.DRIVE_BASE_CONNECTED) {
+		if (DRIVE_BASE_CONNECTED) {
 			configureDrivebase();
 		}
 
-		if (RobotMap.INTAKE_CONNECTED) {
+		if (INTAKE_CONNECTED) {
 			configureIntake();
 		}
 
-		if (RobotMap.CONTROL_PANEL_CONNECTED) {
+		if (CONTROL_PANEL_CONNECTED) {
 			configureControlPanel();
 		}
 
-		if (RobotMap.SHOOTER_CONNECTED) {
+		if (SHOOTER_CONNECTED) {
 			configureShooter();
 		}
 	}

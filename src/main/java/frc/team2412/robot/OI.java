@@ -27,7 +27,7 @@ import frc.team2412.robot.commands.intake.front.IntakeFrontOutCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
-
+import static frc.team2412.robot.RobotMapConstants.*;
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
 
@@ -171,7 +171,7 @@ public class OI {
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {
-		if (!RobotMap.INDEX_CONNECTED) {
+		if (!INDEX_CONNECTED) {
 			return;
 		}
 
@@ -188,7 +188,7 @@ public class OI {
 	}
 
 	public void bindIntakeControls(RobotContainer robotContainer) {
-		if (!RobotMap.INTAKE_CONNECTED) {
+		if (!INTAKE_CONNECTED) {
 			return;
 		}
 
@@ -222,7 +222,7 @@ public class OI {
 	}
 
 	public void bindClimbControls(RobotContainer robotContainer) {
-		if (!RobotMap.CLIMB_CONNECTED) {
+		if (!CLIMB_CONNECTED) {
 			return;
 		}
 
@@ -232,7 +232,7 @@ public class OI {
 	}
 
 	public void bindLiftControls(RobotContainer robotContainer) {
-		if (!RobotMap.LIFT_CONNECTED) {
+		if (!LIFT_CONNECTED) {
 			return;
 		}
 
@@ -243,7 +243,7 @@ public class OI {
 	}
 
 	public void bindDriverControls(RobotContainer robotContainer) {
-		if (!RobotMap.DRIVE_BASE_CONNECTED) {
+		if (!DRIVE_BASE_CONNECTED) {
 			return;
 		}
 

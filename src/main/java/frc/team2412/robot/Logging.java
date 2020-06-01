@@ -1,6 +1,7 @@
 package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.RobotController;
+import static frc.team2412.robot.RobotMapConstants.*;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import io.github.oblarg.oblog.Loggable;
@@ -75,23 +76,23 @@ public class Logging implements Loggable, Sendable {
 
 //		backIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.backMotorOn()
 //				: false;
-		backIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isBackIntakeUp()
+		backIntakeUp = INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isBackIntakeUp()
 				: false;
-		frontIntakeUp = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isFrontIntakeUp()
+		frontIntakeUp = INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeUpDownSubsystem.isFrontIntakeUp()
 				: false;
 //		frontIntakeOn = RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.FrontMotorOn()
 //				: false;
 
 		powerCellCount = RobotState.m_ballCount;
 
-		currentDrawDial = (RobotMap.CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
+		currentDrawDial = (CLIMB_CONNECTED ? RobotMap.m_robotContainer.m_climbMotorSubsystem.getCurrentDraw()
 				: 0)
-				+ (RobotMap.DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
+				+ (DRIVE_BASE_CONNECTED ? RobotMap.m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ (SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ (INDEX_CONNECTED ? RobotMap.m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ (INTAKE_CONNECTED ? RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw()
 						: 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
+				+ (SHOOTER_CONNECTED ? RobotMap.m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 
 		// 6.8 V is the warning level for brownout
