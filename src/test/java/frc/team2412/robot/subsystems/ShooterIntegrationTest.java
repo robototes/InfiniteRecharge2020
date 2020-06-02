@@ -52,7 +52,5 @@ public class ShooterIntegrationTest {
 
 		assertEquals("Value of index outside bounds", new InterpolatingDouble(6.0), interpolatedValueOutside.i);
 		assertEquals("Value of square outside bounds", new InterpolatingDouble(28.0), interpolatedValueOutside.isq);
-
 	}
-
 }
