@@ -138,24 +138,27 @@ public class IndexBitmapCommand extends CommandBase {
 		}
 
 		// System.out.println(
-		// 	"Sensor values: " + Integer.toBinaryString(sensorBitmap) +
-		// 	", Index command: " + indexCommand.ordinal() +
-		// 	", Intake on: " + intakeOn +
-		// 	", Intake dir: " + intakeDirection.ordinal());
+		// "Sensor values: " + Integer.toBinaryString(sensorBitmap) +
+		// ", Index command: " + indexCommand.ordinal() +
+		// ", Intake on: " + intakeOn +
+		// ", Intake dir: " + intakeDirection.ordinal());
 
 		if (indexCommand != null) {
 			final IndexDirection frontIndexDirection = indexCommand.getFrontIndexDirection(intakeOn);
 			final IndexDirection backIndexDirection = indexCommand.getBackIndexDirection(intakeOn);
-			boolean runLift = ((frontIndexDirection == IndexDirection.IN) || (frontIndexDirection == IndexDirection.OUT)) ||
-			((backIndexDirection == IndexDirection.IN) || (backIndexDirection == IndexDirection.OUT));
+			boolean runLift = ((frontIndexDirection == IndexDirection.IN)
+					|| (frontIndexDirection == IndexDirection.OUT))
+					|| ((backIndexDirection == IndexDirection.IN) || (backIndexDirection == IndexDirection.OUT));
 
 			if (runLift) {
 				lastIndexRunTimeMicroSec = RobotController.getFPGATime();
-			} else if (RobotController.getFPGATime() < lastIndexRunTimeMicroSec + 1000 * IndexerConstants.LIFT_DOWN_MS_DURATION_AFTER_SHUFFLE) {
+			} else if (RobotController.getFPGATime() < lastIndexRunTimeMicroSec
+					+ 1000 * IndexerConstants.LIFT_DOWN_MS_DURATION_AFTER_SHUFFLE) {
 				runLift = true;
 			}
-			
-			m_indexerSubsystem.getIndexerMotorLiftSubsystem().set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
+
+			m_indexerSubsystem.getIndexerMotorLiftSubsystem()
+					.set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
 			switch (intakeDirection) {
 			case BOTH:
 			case FRONT:

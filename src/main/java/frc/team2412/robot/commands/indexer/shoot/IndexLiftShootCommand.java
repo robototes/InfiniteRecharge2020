@@ -12,35 +12,36 @@ import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class IndexLiftShootCommand extends CommandBase {
-  /**
-   * Creates a new IndexLiftShootCommand.
-   */
+	/**
+	 * Creates a new IndexLiftShootCommand.
+	 */
 
-  private IndexerSubsystemSuperStructure m_IndexerSubsystemSuperStructure;
-  public IndexLiftShootCommand(IndexerSubsystemSuperStructure indexerSubsystemSuperStructure) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.m_IndexerSubsystemSuperStructure = indexerSubsystemSuperStructure;
-  }
+	private IndexerSubsystemSuperStructure m_IndexerSubsystemSuperStructure;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(-IndexerConstants.MAX_LIFT_SPEED/2);
-  }
+	public IndexLiftShootCommand(IndexerSubsystemSuperStructure indexerSubsystemSuperStructure) {
+		// Use addRequirements() here to declare subsystem dependencies.
+		this.m_IndexerSubsystemSuperStructure = indexerSubsystemSuperStructure;
+	}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(-IndexerConstants.MAX_LIFT_SPEED / 2);
+	}
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+	}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+	}
+
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		return true;
+	}
 }

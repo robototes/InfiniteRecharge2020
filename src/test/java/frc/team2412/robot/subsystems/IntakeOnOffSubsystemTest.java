@@ -16,18 +16,16 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.commands.intake.IntakeFrontOffIntakeBackOnCommand;
-import frc.team2412.robot.commands.intake.IntakeFrontOnIntakeBackOffCommand;
-import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
-import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontOffCommand;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class IntakeOnOffSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	IntakeOnOffSubsystem realIntakeMotorOnOffSubsystem;
+	IntakeMotorSubsystem realIntakeMotorOnOffSubsystem;
 	CANSparkMax mockedIntakeFrontMotor;
 	CANSparkMax mockedIntakeBackMotor;
 
@@ -53,7 +51,7 @@ public class IntakeOnOffSubsystemTest {
 		mockedIntakeFrontMotor = mock(CANSparkMax.class);
 		mockedIntakeBackMotor = mock(CANSparkMax.class);
 
-		realIntakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
+		realIntakeMotorOnOffSubsystem = new IntakeMotorSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
 	}
 
 	@Ignore
@@ -142,36 +140,6 @@ public class IntakeOnOffSubsystemTest {
 
 	@Ignore
 	@Test
-	public void IntakeFrontOffIntakeBackOnIntakeMotorOnOffSubsystemCallsMotorSet() {
-		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedIntakeFrontMotor);
-		reset(mockedIntakeBackMotor);
-
-		// Create command
-		IntakeFrontOffIntakeBackOnCommand intakeFrontOffIntakeBackOnCommand = new IntakeFrontOffIntakeBackOnCommand(
-				realIntakeMotorOnOffSubsystem);
-
-		// Create a fake button that will be "pressed"
-		MockButton fakeButton = new MockButton();
-
-		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(intakeFrontOffIntakeBackOnCommand);
-
-		// Push the button and run the scheduler once
-		fakeButton.push();
-		CommandScheduler.getInstance().run();
-		fakeButton.release();
-
-		// Verify that the solenoid was set correctly
-		verify(mockedIntakeFrontMotor, times(1)).set(0);
-		verify(mockedIntakeBackMotor, times(1)).set(1);
-
-		// Clear the scheduler
-		TestWithScheduler.schedulerClear();
-	}
-
-	@Ignore
-	@Test
 	public void IntakeFrontOnCommandOnIntakeMotorOnOffSubsystemCallsMotorSet() {
 		// Reset the subsystem to make sure all mock values are reset
 		reset(mockedIntakeFrontMotor);
@@ -193,36 +161,6 @@ public class IntakeOnOffSubsystemTest {
 
 		// Verify that the solenoid was set correctly
 		verify(mockedIntakeFrontMotor, times(1)).set(1);
-
-		// Clear the scheduler
-		TestWithScheduler.schedulerClear();
-	}
-
-	@Ignore
-	@Test
-	public void IntakeFrontOnIntakeBackOffIntakeMotorOnOffSubsystemCallsMotorSet() {
-		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedIntakeFrontMotor);
-		reset(mockedIntakeBackMotor);
-
-		// Create command
-		IntakeFrontOnIntakeBackOffCommand intakeFrontOnIntakeBackOffCommand = new IntakeFrontOnIntakeBackOffCommand(
-				realIntakeMotorOnOffSubsystem);
-
-		// Create a fake button that will be "pressed"
-		MockButton fakeButton = new MockButton();
-
-		// Tell the button to run example command when pressed
-		fakeButton.whenPressed(intakeFrontOnIntakeBackOffCommand);
-
-		// Push the button and run the scheduler once
-		fakeButton.push();
-		CommandScheduler.getInstance().run();
-		fakeButton.release();
-
-		// Verify that the solenoid was set correctly
-		verify(mockedIntakeFrontMotor, times(1)).set(1);
-		verify(mockedIntakeBackMotor, times(1)).set(0);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();

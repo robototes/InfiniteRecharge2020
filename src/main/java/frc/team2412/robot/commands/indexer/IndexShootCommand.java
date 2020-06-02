@@ -10,8 +10,7 @@ public class IndexShootCommand extends SequentialCommandGroup {
 
 	public IndexShootCommand(IndexerSubsystemSuperStructure indexerSubsystemSuperStructure) {
 		addRequirements(indexerSubsystemSuperStructure);
-		this.addCommands(
-				new IndexLiftShootCommand(indexerSubsystemSuperStructure),
+		this.addCommands(new IndexLiftShootCommand(indexerSubsystemSuperStructure),
 				new IndexShootSelectionCommand(indexerSubsystemSuperStructure),
 				new IndexPulseCommand(indexerSubsystemSuperStructure),
 				new IndexShootSelectionCommand(indexerSubsystemSuperStructure),

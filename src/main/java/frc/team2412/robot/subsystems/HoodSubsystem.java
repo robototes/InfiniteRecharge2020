@@ -14,6 +14,12 @@ import io.github.oblarg.oblog.annotations.Log;
 
 public class HoodSubsystem extends SubsystemBase implements Loggable {
 
+	@Log(name = "Extend Servos Fully", tabName = "Hood", width = 2, height = 1, columnIndex = 4, rowIndex = 2)
+	Command extendServoCommand;
+
+	@Log(name = "Retract Servos Fully", tabName = "Hood", width = 2, height = 1, columnIndex = 4, rowIndex = 2)
+	Command retractServoCommand;
+
 	@Log(name = "Right Servo", tabName = "Hood", width = 2, height = 1, columnIndex = 0, rowIndex = 0)
 	private Servo m_hoodServo1;
 
@@ -31,36 +37,23 @@ public class HoodSubsystem extends SubsystemBase implements Loggable {
 		return m_hoodServo2.get();
 	}
 
-	@Log(name = "Extend Servos Fully", tabName = "Hood", width = 2, height = 1, columnIndex = 4, rowIndex = 2)
-	Command extendServoCommand;
-
-	@Log(name = "Retract Servos Fully", tabName = "Hood", width = 2, height = 1, columnIndex = 4, rowIndex = 2)
-	Command retractServoCommand;
-
 	public void servoExtend() {
-		m_hoodServo1.set(1 - HoodConstants.MAX_EXTENSION);
-		m_hoodServo2.set(HoodConstants.MAX_EXTENSION);
+		setServo(HoodConstants.MAX_EXTENSION);
 	}
 
 	public void servoWithdraw() {
-		m_hoodServo1.set(1 - HoodConstants.MAX_WITHDRAWL);
-		m_hoodServo2.set(HoodConstants.MAX_WITHDRAWL);
-
+		setServo(HoodConstants.MAX_WITHDRAWL);
 	}
 
 	@Config.NumberSlider(max = 0.65, min = 0, name = "Set Servo Angle", tabName = "Hood", width = 2, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setServo(double angle) {
 		angle = Math.min(angle, HoodConstants.MAX_EXTENSION);
-		m_hoodServo2.set(angle);
 		m_hoodServo1.set(1 - angle);
+		m_hoodServo2.set(angle);
 	}
 
-	@Override
-	public void periodic() {
-	}
-
-	public void add(double m_increment) {
-		this.setServo(Math.min(getServo() + m_increment, HoodConstants.MAX_EXTENSION));
+	public void add(double increment) {
+		setServo(getServo() + increment);
 	}
 
 }

@@ -25,7 +25,7 @@ import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeState;
 public class IntakeUpDownSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	IntakeUpDownSubsystem realIntakeUpDownSubsystem;
+	IntakeLiftSubsystem realIntakeUpDownSubsystem;
 	Solenoid mockedLiftSolenoid;
 	Solenoid mockedLiftSolenoid2;
 
@@ -48,7 +48,7 @@ public class IntakeUpDownSubsystemTest {
 		mockedLiftSolenoid = mock(Solenoid.class);
 		mockedLiftSolenoid2 = mock(Solenoid.class);
 
-		realIntakeUpDownSubsystem = new IntakeUpDownSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
+		realIntakeUpDownSubsystem = new IntakeLiftSubsystem(mockedLiftSolenoid, mockedLiftSolenoid2);
 	}
 
 	@Ignore
