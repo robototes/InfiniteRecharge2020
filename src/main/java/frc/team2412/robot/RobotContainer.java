@@ -16,8 +16,8 @@ import frc.team2412.robot.subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
+import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
@@ -48,10 +48,10 @@ public class RobotContainer implements Loggable {
 	public DriveBaseSubsystem m_driveBaseSubsystem;
 
 	@Log(name = "Intake Motors Subsystem", tabName = "Intake")
-	public IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
+	public IntakeMotorSubsystem m_intakeMotorOnOffSubsystem;
 
 	@Log(name = "Intake Subsystem", tabName = "Intake")
-	public IntakeUpDownSubsystem m_intakeUpDownSubsystem;
+	public IntakeLiftSubsystem m_intakeUpDownSubsystem;
 
 	@Log(name = "Control Panel Subsystem", tabName = "Control Panel")
 	public ControlPanelColorSubsystem m_controlPanelColorSubsystem;
@@ -71,9 +71,6 @@ public class RobotContainer implements Loggable {
 
 	@Log(name = "Climb Motor Subsystem", tabName = "Climb")
 	public ClimbMotorSubsystem m_climbMotorSubsystem;
-
-	@Log(tabName = "Driver View")
-	public Logging logger = new Logging();
 
 	// A chooser for autonomous commands
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -126,9 +123,9 @@ public class RobotContainer implements Loggable {
 	}
 
 	private void configureIntake() {
-		m_intakeMotorOnOffSubsystem = new IntakeOnOffSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
+		m_intakeMotorOnOffSubsystem = new IntakeMotorSubsystem(RobotMap.intakeFrontMotor, RobotMap.intakeBackMotor);
 
-		m_intakeUpDownSubsystem = new IntakeUpDownSubsystem(RobotMap.frontIntakeliftSolenoid,
+		m_intakeUpDownSubsystem = new IntakeLiftSubsystem(RobotMap.frontIntakeliftSolenoid,
 				RobotMap.backIntakeLiftSolenoid);
 	}
 

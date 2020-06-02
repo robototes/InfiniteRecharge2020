@@ -34,8 +34,6 @@ public class Robot extends TimedRobot implements Loggable {
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
 	private OI m_OI = RobotMap.m_OI;
 
-	private static boolean log = true;
-
 	Command autoCommand;
 
 	/**
@@ -63,11 +61,6 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		if (log)
-			Logger.updateEntries();
-		m_robotContainer.logger.periodic();
-		log = !log;
-
 		timeRemaining = Timer.getMatchTime();
 	}
 

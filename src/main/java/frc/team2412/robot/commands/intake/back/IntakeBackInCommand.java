@@ -1,17 +1,17 @@
 package frc.team2412.robot.commands.intake.back;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 
 public class IntakeBackInCommand extends CommandBase {
 
-	private IntakeOnOffSubsystem m_intakeOnOffSubsystem;
+	private IntakeMotorSubsystem m_intakeOnOffSubsystem;
 
-	public IntakeBackInCommand(IntakeOnOffSubsystem intakeOnOffSubsystem) {
+	public IntakeBackInCommand(IntakeMotorSubsystem intakeOnOffSubsystem) {
 		this(intakeOnOffSubsystem, true);
 	}
 
-	public IntakeBackInCommand(IntakeOnOffSubsystem intakeOnOffSubsystem, boolean require) {
+	public IntakeBackInCommand(IntakeMotorSubsystem intakeOnOffSubsystem, boolean require) {
 		if (require) {
 			addRequirements(intakeOnOffSubsystem);
 		}

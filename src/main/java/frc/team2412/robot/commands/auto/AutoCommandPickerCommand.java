@@ -7,8 +7,8 @@ import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
-import frc.team2412.robot.subsystems.IntakeUpDownSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
+import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
@@ -16,8 +16,8 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class AutoCommandPickerCommand extends CommandBase {
 
 	DriveBaseSubsystem m_driveBaseSubsystem;
-	IntakeOnOffSubsystem m_intakeOnOffSubsystem;
-	IntakeUpDownSubsystem m_intakeUpDownSubsystem;
+	IntakeMotorSubsystem m_intakeOnOffSubsystem;
+	IntakeLiftSubsystem m_intakeUpDownSubsystem;
 	LiftSubsystem m_liftSubsystem;
 	FlywheelSubsystem m_flywheelSubsystem;
 	IndexerSensorSubsystem m_indexerSensorSubsystem;
@@ -26,8 +26,8 @@ public class AutoCommandPickerCommand extends CommandBase {
 
 	Command m_command;
 
-	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeOnOffSubsystem intakeOnOffSubsystem,
-			IntakeUpDownSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
+	public AutoCommandPickerCommand(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
+			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
 			FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
 			IndexerSubsystemSuperStructure indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
 
