@@ -1,7 +1,8 @@
 package frc.team2412.robot.subsystems.constants;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.List;
+import java.util.function.Function;
 
 import com.robototes.math.Interpolable;
 import com.robototes.math.InterpolatingDouble;
@@ -69,73 +70,47 @@ public class ShooterConstants {
 		// add in data here
 
 		// sort data
-		distanceData.sort(new Comparator<ShooterDistanceDataPoint>() {
-			@Override
-			public int compare(ShooterDistanceDataPoint o1, ShooterDistanceDataPoint o2) {
-				return o1.m_ty.compareTo(o2.m_ty);
-			}
-		});
+		distanceData.sort((o1, o2) -> o1.m_ty.compareTo(o2.m_ty));
 
-		skewData.sort(new Comparator<ShooterSkewDataPoint>() {
-			@Override
-			public int compare(ShooterSkewDataPoint o1, ShooterSkewDataPoint o2) {
-				return o1.m_ts.compareTo(o2.m_ts);
+		skewData.sort((o1, o2) -> o1.m_ts.compareTo(o2.m_ts));
+	}
+
+	public static <T extends Interpolable<T>> T interpolateInList(List<T> list,
+			Function<T, InterpolatingDouble> fieldSupplier, double t_in) {
+		InterpolatingDouble tyInter = new InterpolatingDouble(t_in);
+
+		T lowerQuery = list.get(0);
+		T upperQuery = list.get(list.size() - 1);
+
+		for (T point : list) {
+			if (fieldSupplier.apply(point).compareTo(tyInter) <= 0
+					&& fieldSupplier.apply(lowerQuery).compareTo(fieldSupplier.apply(point)) < 0) {
+				lowerQuery = point;
 			}
-		});
+
+			if (fieldSupplier.apply(point).compareTo(tyInter) > 0
+					&& fieldSupplier.apply(upperQuery).compareTo(fieldSupplier.apply(point)) > 0) {
+				upperQuery = point;
+			}
+		}
+		if (lowerQuery == upperQuery) {
+			if (lowerQuery == list.get(0)) {
+				upperQuery = list.get(1);
+			} else {
+				lowerQuery = list.get(list.size() - 2);
+			}
+		}
+		double t = fieldSupplier.apply(lowerQuery).inverseInterpolate(fieldSupplier.apply(upperQuery), tyInter);
+
+		return lowerQuery.interpolate(upperQuery, t);
 	}
 
 	public static ShooterDistanceDataPoint getDistanceDataPointFromTy(double ty) {
-		InterpolatingDouble tyInter = new InterpolatingDouble(ty);
-
-		ShooterDistanceDataPoint lowerQuery = distanceData.get(0);
-		ShooterDistanceDataPoint upperQuery = distanceData.get(distanceData.size() - 1);
-
-		for (ShooterDistanceDataPoint point : distanceData) {
-			if (point.m_ty.compareTo(tyInter) <= 0 && lowerQuery.m_ty.compareTo(point.m_ty) < 0) {
-				lowerQuery = point;
-			}
-
-			if (point.m_ty.compareTo(tyInter) > 0 && upperQuery.m_ty.compareTo(point.m_ty) > 0) {
-				upperQuery = point;
-			}
-		}
-		if (lowerQuery == upperQuery) {
-			if (lowerQuery == distanceData.get(0)) {
-				upperQuery = distanceData.get(1);
-			} else {
-				lowerQuery = distanceData.get(distanceData.size() - 2);
-			}
-		}
-		double t = lowerQuery.m_ty.inverseInterpolate(upperQuery.m_ty, tyInter);
-
-		return lowerQuery.interpolate(upperQuery, t);
+		return interpolateInList(distanceData, p -> p.m_ty, ty);
 	}
 
 	public static ShooterSkewDataPoint getSkewDataPointFromTs(double ts) {
-		InterpolatingDouble tsInter = new InterpolatingDouble(ts);
-
-		ShooterSkewDataPoint lowerQuery = skewData.get(0);
-		ShooterSkewDataPoint upperQuery = skewData.get(skewData.size() - 1);
-
-		for (ShooterSkewDataPoint point : skewData) {
-			if (point.m_ts.compareTo(tsInter) <= 0 && lowerQuery.m_ts.compareTo(point.m_ts) < 0) {
-				lowerQuery = point;
-			}
-
-			if (point.m_ts.compareTo(tsInter) > 0 && upperQuery.m_ts.compareTo(point.m_ts) > 0) {
-				upperQuery = point;
-			}
-		}
-		if (lowerQuery == upperQuery) {
-			if (lowerQuery == skewData.get(0)) {
-				upperQuery = skewData.get(1);
-			} else {
-				lowerQuery = skewData.get(skewData.size() - 2);
-			}
-		}
-		double t = lowerQuery.m_ts.inverseInterpolate(upperQuery.m_ts, tsInter);
-
-		return lowerQuery.interpolate(upperQuery, t);
+		return interpolateInList(skewData, p -> p.m_ts, ts);
 	}
 
 }
