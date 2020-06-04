@@ -11,55 +11,39 @@ import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.team2412.robot.subsystems.constants.LiftConstants.LiftState;
 import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
-public class RobotState implements Loggable {
+
+public class RobotState {
 
 	private RobotContainer m_robotContainer;
 
-	@Log.ToString(tabName = "Robot State")
 	public static UnbalancedSide m_unbalancedSide = UnbalancedSide.FRONT;
 
-	@Log.Dial(min = 0, max = 5, showValue = true, name = "Power Cell Count", tabName = "Robot State")
 	public static int m_ballCount = 0;
 
-	@Log.ToString(tabName = "Robot State")
 	public static IntakeDirection m_intakeDirection = IntakeDirection.NONE;
 
-	@Log.ToString(tabName = "Robot State")
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
-	@Log.ToString(tabName = "Robot State")
 	public static LiftState m_liftSolenoidState = LiftState.DOWN;
 
-	@Log.ToString(tabName = "Robot State")
 	public static GearboxState m_gearState = GearboxState.LOW;
 
-	@Log.ToString(tabName = "Robot State")
 	public static BrownoutStage m_brownoutStage = BrownoutStage.ZERO;
 
-	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean sixBallAuto = true;
 
-	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean threeBallAuto = false;
 
-	@Config.ToggleSwitch(tabName = "Robot State")
 	public static boolean justMoveAuto = true;
 
-	@Log(tabName = "Misc.")
 	public static String eventName = "N/A";
 
-	@Log.ToString(tabName = "Misc.")
 	public static MatchType matchType = MatchType.None;
 
-	@Log(tabName = "Misc.")
 	public static int matchNumber = 0;
 
-	@Log.ToString(tabName = "Misc.")
 	public static Alliance alliance = Alliance.Invalid;
 
-	@Log(tabName = "Misc.")
 	public static int location = 0;
 
 	public RobotState(RobotContainer robotContainer) {

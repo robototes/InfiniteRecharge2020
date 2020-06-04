@@ -13,9 +13,8 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ControlPanelConstants;
-import io.github.oblarg.oblog.Loggable;
 
-public class ControlPanelColorSubsystem extends SubsystemBase implements Loggable {
+public class ControlPanelColorSubsystem extends SubsystemBase {
 
 	private ColorSensorV3 m_colorSensor;
 	private ColorMatch m_colorMatcher = new ColorMatch();

@@ -17,8 +17,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.Logger;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,7 +25,7 @@ import io.github.oblarg.oblog.Logger;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot implements Loggable {
+public class Robot extends TimedRobot {
 
 	public double timeRemaining;
 
@@ -42,9 +40,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void robotInit() {
-		Logger.configureLoggingAndConfig(m_robotContainer, false);
-		// Shuffleboard.startRecording();
-
 		configureRobotState();
 	}
 

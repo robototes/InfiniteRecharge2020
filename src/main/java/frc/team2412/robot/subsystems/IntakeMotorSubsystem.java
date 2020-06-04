@@ -2,13 +2,8 @@ package frc.team2412.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.IntakeConstants;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
 public class IntakeMotorSubsystem extends SubsystemBase {
 

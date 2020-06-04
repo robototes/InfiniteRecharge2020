@@ -18,11 +18,8 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.team2412.robot.RobotState;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
+public class DriveBaseSubsystem extends SubsystemBase {
 
 	public WPI_TalonFX m_leftMotor1, m_leftMotor2, m_rightMotor1, m_rightMotor2;
 
@@ -30,7 +27,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public Solenoid m_gearShifter;
 
-	@Log.Dial(max = 1, min = -1, showValue = true, tabName = "Drivebase Subsystem")
 	public double m_currentYSpeed;
 
 	private DifferentialDriveOdometry m_odometry;
@@ -38,15 +34,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@SuppressWarnings("unused")
 	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
-	@Config.ToggleButton(name = "Toggle joystick drive", tabName = "Drivebase Subsystem")
 	private boolean oneJoystickDrive = false;
 
-	@Log.BooleanBox(name = "In 1 joystick", tabName = "Drivebase Subsystem", colorWhenFalse = "red", colorWhenTrue = "green")
 	private boolean inOneJoystickDrive = oneJoystickDrive;
 
 //	DifferentialDrive m_drive;
 
-	@Log(tabName = "Drivebase Subsystem")
 	public double m_driveBaseCurrentDraw;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,

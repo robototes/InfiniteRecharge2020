@@ -8,11 +8,8 @@ import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.FlywheelConstants;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class FlywheelSubsystem extends SubsystemBase implements Loggable {
+public class FlywheelSubsystem extends SubsystemBase  {
 
 	private CANSparkMax m_flywheelLeftMotor;
 	private CANEncoder m_leftEncoder;
@@ -39,7 +36,6 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		motor.setIdleMode(IdleMode.kCoast);
 	}
 
-	@Config.NumberSlider(min = -1, max = 0, name = "Set speed", tabName = "Flywheel", width = 3, height = 1, columnIndex = 2, rowIndex = 0)
 	public void setSpeed(double speed) {
 		if (speed <= 0) {
 			m_flywheelLeftMotor.set(speed);
@@ -66,7 +62,6 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		return m_flywheelLeftMotor.get();
 	}
 
-	@Config.NumberSlider(name = "Set Flywheel speed in Meters per Second", tabName = "Flywheel", min = 0, max = 7000, width = 3, height = 1, rowIndex = 1, columnIndex = 2)
 	public void setRPM(double wantedVelocity) {
 //		double wantedRPM = -NEO_RPM_TO_FLYWHEEL_MPS.calculateRatio(wantedVelocity);
 
@@ -74,35 +69,29 @@ public class FlywheelSubsystem extends SubsystemBase implements Loggable {
 		m_pidRightController.setReference(-wantedVelocity, ControlType.kVelocity);
 	}
 
-	@Log.NumberBar(min = 0, max = 7000, name = "Left Flywheel Motor", tabName = "Flywheel", width = 2, height = 1, rowIndex = 0, columnIndex = 0)
 	public double currentLeftSpeed() {
 		return m_leftEncoder.getVelocity();
 	}
 
-	@Log.NumberBar(min = 0, max = 7000, name = "Right Flywheel Motor", tabName = "Flywheel", width = 2, height = 1, rowIndex = 0, columnIndex = 0)
 	public double currentRightSpeed() {
 		return -m_rightEncoder.getVelocity();
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.P, name = "Set Flywheel P", tabName = "Flywheel", width = 1, height = 1, columnIndex = 5, rowIndex = 0)
 	public void setP(double newP) {
 		m_pidLeftController.setP(newP);
 		m_pidRightController.setP(newP);
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.I, name = "Set Flywheel I", tabName = "Flywheel", width = 1, height = 1, columnIndex = 5, rowIndex = 1)
 	public void setI(double newI) {
 		m_pidLeftController.setI(newI);
 		m_pidRightController.setI(newI);
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.D, name = "Set Flywheel D", tabName = "Flywheel", width = 1, height = 1, columnIndex = 5, rowIndex = 2)
 	public void setD(double newD) {
 		m_pidLeftController.setD(newD);
 		m_pidRightController.setD(newD);
 	}
 
-	@Config(defaultValueNumeric = FlywheelConstants.FF, name = "Set Flywheel FF", tabName = "Flywheel", width = 1, height = 1, columnIndex = 5, rowIndex = 3)
 	public void setFF(double newFF) {
 		m_pidLeftController.setFF(newFF);
 		m_pidRightController.setFF(newFF);
