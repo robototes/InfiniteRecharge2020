@@ -14,7 +14,7 @@ import io.github.oblarg.oblog.Loggable;
 
 public class RobotState {
 
-	private RobotContainer m_robotContainer;
+	private final RobotContainer m_robotContainer;
 
 	public static UnbalancedSide m_unbalancedSide = UnbalancedSide.FRONT;
 
@@ -50,7 +50,7 @@ public class RobotState {
 		m_robotContainer = robotContainer;
 	}
 
-	public static enum UnbalancedSide {
+	public enum UnbalancedSide {
 		FRONT, BACK;
 
 		@Override
@@ -63,7 +63,7 @@ public class RobotState {
 		}
 	}
 
-	public static enum IntakeDirection {
+	public enum IntakeDirection {
 		NONE, FRONT, BACK, BOTH;
 
 		@Override
@@ -80,7 +80,7 @@ public class RobotState {
 		}
 	}
 
-	public static enum ClimbState {
+	public enum ClimbState {
 		CLIMBING, NOT_CLIMBING;
 
 		@Override
@@ -93,7 +93,7 @@ public class RobotState {
 		}
 	}
 
-	public static enum GearboxState {
+	public enum GearboxState {
 		HIGH, LOW;
 		@Override
 		public String toString() {
@@ -106,13 +106,7 @@ public class RobotState {
 	}
 
 	public static UnbalancedSide flip(UnbalancedSide s) {
-		switch (s) {
-		case FRONT:
-			return UnbalancedSide.BACK;
-		default:
-			return UnbalancedSide.FRONT;
-		}
-
+		return s == UnbalancedSide.FRONT ? UnbalancedSide.BACK : s;
 	}
 
 	public static int getBallCount() {
@@ -167,23 +161,22 @@ public class RobotState {
 	}
 
 	public double getTotalCurrentDraw() {
-		double currentDraw = (CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
+
+		return (CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
 				+ (DRIVE_BASE_CONNECTED ? m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
 				+ (SHOOTER_CONNECTED ? m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
 				+ (INDEX_CONNECTED ? m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
 				+ (INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
 				+ (SHOOTER_CONNECTED ? m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
-
-		return currentDraw;
 	}
 
-	public static enum BrownoutStage {
+	public enum BrownoutStage {
 		ZERO(1), ONE(0.75), TWO(0.5), THREE(0);
 
 		double value;
 
-		private BrownoutStage(double value) {
+		BrownoutStage(double value) {
 			this.value = value;
 		}
 
