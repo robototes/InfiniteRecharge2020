@@ -68,7 +68,7 @@ public class RobotMap {
 
 	// motors
 	public static CANSparkMax indexFrontMotor, indexBackMotor;
-	public static CANSparkMax indexleftMidMotor = new CANSparkMax(CANBus.INDEX_LEFT_MID.id, MotorType.kBrushless);
+	public static CANSparkMax indexLeftMidMotor = new CANSparkMax(CANBus.INDEX_LEFT_MID.id, MotorType.kBrushless);
 
 	public static CANSparkMax indexRightMidMotor = new CANSparkMax(CANBus.INDEX_RIGHT_MID.id, MotorType.kBrushless);
 

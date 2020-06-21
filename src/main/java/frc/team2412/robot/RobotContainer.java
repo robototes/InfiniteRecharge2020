@@ -120,7 +120,7 @@ public class RobotContainer{
 				RobotMap.frontInner, RobotMap.backInner, RobotMap.backMid, RobotMap.back, RobotMap.intakeBack);
 
 		m_indexerMotorSubsystem = new IndexerSubsystemSuperStructure(RobotMap.indexFrontMotor,
-				RobotMap.indexleftMidMotor, RobotMap.indexRightMidMotor, RobotMap.indexBackMotor,
+				RobotMap.indexLeftMidMotor, RobotMap.indexRightMidMotor, RobotMap.indexBackMotor,
 				m_indexerSensorSubsystem);
 	}
 

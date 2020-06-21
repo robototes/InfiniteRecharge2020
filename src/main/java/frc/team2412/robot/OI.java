@@ -36,27 +36,27 @@ import frc.team2412.robot.commands.lift.LiftUpCommand;
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
 
-	public static interface ButtonEnumInterface {
+	public interface ButtonEnumInterface {
 
-		public int getButtonID();
+		int getButtonID();
 
-		public int getJoystickID();
+		int getJoystickID();
 
-		public default Button createFrom(Joystick stick) {
+		default Button createFrom(Joystick stick) {
 			if (stick.getPort() != getJoystickID()) {
 				System.err.println("Warning! Binding button to the wrong stick!");
 			}
 			return new JoystickButton(stick, getButtonID());
 		}
 
-		public default Button createFrom(XboxController controller) {
+		default Button createFrom(XboxController controller) {
 			if (controller.getPort() != getJoystickID()) {
 				System.err.println("Warning! Binding button to the wrong stick!");
 			}
 			return new Button(() -> controller.getRawButton(getButtonID()));
 		}
 
-		public default Button createFromPOV(XboxController controller) {
+		default Button createFromPOV(XboxController controller) {
 			if (controller.getPort() != getJoystickID()) {
 				System.err.println("Warning! Binding button to the wrong stick!");
 			}
@@ -69,7 +69,7 @@ public class OI {
 
 		public int id;
 
-		private Joysticks(int id) {
+		Joysticks(int id) {
 			this.id = id;
 		}
 	}
@@ -81,7 +81,7 @@ public class OI {
 		public Joysticks stick;
 		public int buttonID;
 
-		private DriverControls(Joysticks stick, int buttonID) {
+		DriverControls(Joysticks stick, int buttonID) {
 			this.stick = stick;
 			this.buttonID = buttonID;
 		}
@@ -104,7 +104,7 @@ public class OI {
 
 		public int buttonID;
 
-		private CodriverControls(int buttonID) {
+		CodriverControls(int buttonID) {
 			this.buttonID = buttonID;
 		}
 
@@ -125,7 +125,7 @@ public class OI {
 
 		public int buttonID;
 
-		private CodriverManualControls(int buttonID) {
+		CodriverManualControls(int buttonID) {
 			this.buttonID = buttonID;
 		}
 
