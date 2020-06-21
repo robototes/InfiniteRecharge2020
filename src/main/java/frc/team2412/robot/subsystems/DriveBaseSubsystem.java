@@ -174,8 +174,5 @@ public class DriveBaseSubsystem extends SubsystemBase {
 //		m_drive.feed();
 	}
 
-	public double getTurnRate() {
-		return m_gyro.getRate() * (kGyroReversed ? -1.0 : 1.0);
-	}
 
 }

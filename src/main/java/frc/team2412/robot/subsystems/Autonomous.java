@@ -96,12 +96,10 @@ public class Autonomous {
 
 	public RamseteCommand getRamseteCommand(Trajectory trajectory) {
 
-		RamseteCommand ramseteCommand = new RamseteCommand(trajectory, driveSub::getPose, ramseteControlller,
+		// Run path following command, then stop at the end.
+		return new RamseteCommand(trajectory, driveSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
 				// RamseteCommand passes volts to the callback
 				driveSub::tankDriveVolts, driveSub);
-
-		// Run path following command, then stop at the end.
-		return ramseteCommand;
 	}
 }
