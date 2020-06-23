@@ -110,12 +110,10 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public void shiftToHighGear() {
 		m_gearShifter.set(true);
-		RobotState.m_gearState = RobotState.GearboxState.HIGH;
 	}
 
 	public void shiftToLowGear() {
 		m_gearShifter.set(false);
-		RobotState.m_gearState = RobotState.GearboxState.LOW;
 	}
 
 	public double getGyroHeading() {

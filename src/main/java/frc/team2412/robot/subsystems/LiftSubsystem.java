@@ -22,7 +22,10 @@ public class LiftSubsystem extends SubsystemBase{
 
 	private void setLift(LiftState value) {
 		m_liftUpDown.set(value.value);
-		RobotState.m_liftSolenoidState = value;
+	}
+
+	public LiftState getLiftState(){
+		return m_liftUpDown.get() == LiftState.UP.value ? LiftState.UP : LiftState.DOWN;
 	}
 
 }
