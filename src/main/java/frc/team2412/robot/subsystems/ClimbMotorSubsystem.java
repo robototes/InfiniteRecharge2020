@@ -78,8 +78,6 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		setMotor(value, m_rightClimbMotor, m_rightEncoder);
 		setMotor(value, m_leftClimbMotor, m_leftEncoder);
 
-		RobotState.m_climbState = m_rightClimbMotor.get() != 0 || m_leftClimbMotor.get() != 0 ? ClimbState.CLIMBING
-				: ClimbState.NOT_CLIMBING;
 	}
 
 	private void setMotor(double value, CANSparkMax motor, CANEncoder encoder) {
@@ -97,12 +95,14 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		double wantedRotations = MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
-		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
-
 	}
 
 	public double getCurrentDraw() {
 		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
+	}
+
+	public boolean getIsClimbing(){
+		return m_leftClimbMotor.get() != 0 || m_rightClimbMotor.get() !=0;
 	}
 
 }
