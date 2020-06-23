@@ -2,14 +2,16 @@ package frc.team2412.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team2412.robot.RobotState;
-import frc.team2412.robot.RobotState.IntakeDirection;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
+import frc.team2412.robot.subsystems.constants.IntakeConstants;
+import frc.team2412.robot.subsystems.constants.IntakeConstants.*;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class IndexBitmapCommand extends CommandBase {
 	private final IndexerSubsystemSuperStructure m_indexerSubsystem;
-	private static IntakeDirection s_lastIntakeDirection = IntakeDirection.NONE;
+	private static IntakeConstants.IntakeDirection s_lastIntakeDirection = IntakeConstants.IntakeDirection.NONE;
+	private final IntakeMotorSubsystem m_intakeMotorSubsystem;
 	private double lastIndexRunTimeMicroSec = 0.0;
 
 	static enum IndexDirection {
@@ -92,8 +94,9 @@ public class IndexBitmapCommand extends CommandBase {
 		}
 	}
 
-	public IndexBitmapCommand(final IndexerSubsystemSuperStructure indexerMotorSubsystem) {
+	public IndexBitmapCommand(final IndexerSubsystemSuperStructure indexerMotorSubsystem, final IntakeMotorSubsystem intakeMotorSubsystem) {
 		m_indexerSubsystem = indexerMotorSubsystem;
+		m_intakeMotorSubsystem = intakeMotorSubsystem;
 
 		// Only require the index motor subsystem, as the sensors can be read by
 		// multiple commands simultaneously without issues
@@ -102,7 +105,7 @@ public class IndexBitmapCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		IntakeDirection intakeDirection = RobotState.getintakeDirection();
+		IntakeDirection intakeDirection = m_intakeMotorSubsystem.getIntakeDirection();
 		final boolean intakeOn = (intakeDirection != IntakeDirection.NONE);
 		if (intakeDirection == IntakeDirection.NONE) {
 			if (s_lastIntakeDirection == IntakeDirection.BACK) {

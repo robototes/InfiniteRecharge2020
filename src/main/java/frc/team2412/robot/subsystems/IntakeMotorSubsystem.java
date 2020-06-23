@@ -71,6 +71,10 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 		return m_intakeBackMotor.getOutputCurrent() + m_intakeFrontMotor.getOutputCurrent();
 	}
 
+	public IntakeDirection getIntakeDirection() {
+		return m_intakeDirection;
+	}
+
 	public void periodic() {
 		if(m_intakeFrontMotor.get() != 0 && m_intakeBackMotor.get() != 0){
 			m_intakeDirection = IntakeDirection.BOTH;
