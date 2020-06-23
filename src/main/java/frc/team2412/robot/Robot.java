@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		configureRobotState();
+
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
 		m_robotContainer.m_indexerMotorSubsystem
-				.setDefaultCommand(new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem));
+				.setDefaultCommand(new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem, m_robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
@@ -133,16 +133,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-	}
-
-	private void configureRobotState() {
-		DriverStation driverStation = DriverStation.getInstance();
-
-		RobotState.eventName = driverStation.getEventName();
-		RobotState.matchType = driverStation.getMatchType();
-		RobotState.matchNumber = driverStation.getMatchNumber();
-		RobotState.alliance = driverStation.getAlliance();
-		RobotState.location = driverStation.getLocation();
 	}
 
 }

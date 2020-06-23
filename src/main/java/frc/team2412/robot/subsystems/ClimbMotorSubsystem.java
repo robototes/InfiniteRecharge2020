@@ -14,8 +14,6 @@ import com.revrobotics.ControlType;
 import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotState;
-import frc.team2412.robot.RobotState.ClimbState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
 
 public class ClimbMotorSubsystem extends SubsystemBase {
