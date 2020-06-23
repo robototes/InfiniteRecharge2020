@@ -2,10 +2,14 @@ package frc.team2412.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 
+import static frc.team2412.robot.subsystems.constants.IntakeConstants.MAX_INTAKE_SPEED;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.subsystems.constants.IntakeConstants;
+import frc.team2412.robot.subsystems.constants.IntakeConstants.*;
 
 public class IntakeMotorSubsystem extends SubsystemBase {
+
+	public static IntakeDirection m_intakeDirection;
 
 	public CANSparkMax m_intakeFrontMotor;
 	public CANSparkMax m_intakeBackMotor;
@@ -29,11 +33,11 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 	}
 
 	public void backIntakeIn() {
-		set(m_intakeBackMotor, IntakeConstants.MAX_INTAKE_SPEED);
+		set(m_intakeBackMotor, MAX_INTAKE_SPEED);
 	}
 
 	public void backIntakeOut() {
-		set(m_intakeBackMotor, -IntakeConstants.MAX_INTAKE_SPEED);
+		set(m_intakeBackMotor, -MAX_INTAKE_SPEED);
 	}
 
 	public void frontIntakeOff() {
@@ -41,11 +45,11 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 	}
 
 	public void frontIntakeIn() {
-		set(m_intakeFrontMotor, IntakeConstants.MAX_INTAKE_SPEED);
+		set(m_intakeFrontMotor, MAX_INTAKE_SPEED);
 	}
 
 	public void frontIntakeOut() {
-		set(m_intakeFrontMotor, -IntakeConstants.MAX_INTAKE_SPEED);
+		set(m_intakeFrontMotor, -MAX_INTAKE_SPEED);
 	}
 
 	public void intakeOff() {
@@ -67,4 +71,15 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 		return m_intakeBackMotor.getOutputCurrent() + m_intakeFrontMotor.getOutputCurrent();
 	}
 
+	public void periodic() {
+		if(m_intakeFrontMotor.get() != 0 && m_intakeBackMotor.get() != 0){
+			m_intakeDirection = IntakeDirection.BOTH;
+		} else if(m_intakeFrontMotor.get() != 0){
+			m_intakeDirection = IntakeDirection.FRONT;
+		} else if (m_intakeBackMotor.get() != 0){
+			m_intakeDirection = IntakeDirection.BACK;
+		} else{
+			m_intakeDirection = IntakeDirection.NONE;
+		}
+	}
 }
