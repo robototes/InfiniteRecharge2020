@@ -49,4 +49,15 @@ public class IndexerSubsystemSuperStructure extends SubsystemBase implements Log
 		return m_IndexerSensorSubsystem;
 	}
 
+	public void setAllSubsystemsToZero() {
+		getIndexerMotorFrontSubsystem().set(0);
+		getIndexerMotorBackSubsystem().set(0);
+		getIndexerMotorLiftSubsystem().set(0);
+	}
+
+	public void setFrontAndBack(double frontSpeed, double backSpeed) {
+		getIndexerMotorFrontSubsystem().set(frontSpeed);
+		getIndexerMotorBackSubsystem().set(backSpeed);
+	}
+
 }
