@@ -9,12 +9,12 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
-import frc.team2412.robot.commands.hood.HoodJoystickCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
 import io.github.oblarg.oblog.Loggable;
@@ -45,13 +45,7 @@ public class Robot extends TimedRobot implements Loggable {
 		Logger.configureLoggingAndConfig(m_robotContainer, false);
 		// Shuffleboard.startRecording();
 
-		DriverStation driverStation = DriverStation.getInstance();
-
-		RobotState.eventName = driverStation.getEventName();
-		RobotState.matchType = driverStation.getMatchType();
-		RobotState.matchNumber = driverStation.getMatchNumber();
-		RobotState.alliance = driverStation.getAlliance();
-		RobotState.location = driverStation.getLocation();
+		configureRobotState();
 	}
 
 	/**
@@ -64,14 +58,10 @@ public class Robot extends TimedRobot implements Loggable {
 	 * and SmartDashboard integrated updating.
 	 */
 
-	 private static boolean log = true;
-
-		@Override
+	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		if (log) Logger.updateEntries();
-		m_robotContainer.logger.periodic();
-		log = !log;
+		timeRemaining = Timer.getMatchTime();
 	}
 
 	/**
@@ -79,7 +69,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void autonomousInit() {
-		timeRemaining = 150.0;
 		/*
 		 * Limelight Spin up turret Shoot command
 		 * 
@@ -108,7 +97,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		timeRemaining -= 0.02;
+
 	}
 
 	/**
@@ -116,29 +105,27 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopInit() {
-		timeRemaining = 135.0;
 		CommandScheduler.getInstance().cancel(autoCommand);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		m_robotContainer.m_indexerMotorSubsystem.setDefaultCommand(
-			new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem)
-		);
+		m_robotContainer.m_indexerMotorSubsystem
+				.setDefaultCommand(new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem));
 
 		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
-		// 		new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> m_OI.codriverStick.getY() * 0.5 + 0.5));
+		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
+		// m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}
-	//
 
 	/**
 	 * This function is called periodically during operator control.
 	 */
 	@Override
 	public void teleopPeriodic() {
-		timeRemaining -= 0.02;
+
 	}
 
-		@Override
-		public void disabledInit() {
+	@Override
+	public void disabledInit() {
 
 	}
 
@@ -152,4 +139,15 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void testPeriodic() {
 	}
+
+	private void configureRobotState() {
+		DriverStation driverStation = DriverStation.getInstance();
+
+		RobotState.eventName = driverStation.getEventName();
+		RobotState.matchType = driverStation.getMatchType();
+		RobotState.matchNumber = driverStation.getMatchNumber();
+		RobotState.alliance = driverStation.getAlliance();
+		RobotState.location = driverStation.getLocation();
+	}
+
 }

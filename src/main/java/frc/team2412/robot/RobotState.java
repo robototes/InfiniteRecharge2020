@@ -1,12 +1,18 @@
 package frc.team2412.robot;
 
+import static frc.team2412.robot.RobotMapConstants.CLIMB_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.DRIVE_BASE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INDEX_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.INTAKE_CONNECTED;
+import static frc.team2412.robot.RobotMapConstants.SHOOTER_CONNECTED;
+
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.RobotController;
+import frc.team2412.robot.subsystems.constants.LiftConstants.LiftState;
 import io.github.oblarg.oblog.Loggable;
 import io.github.oblarg.oblog.annotations.Config;
 import io.github.oblarg.oblog.annotations.Log;
-
 public class RobotState implements Loggable {
 
 	private RobotContainer m_robotContainer;
@@ -24,7 +30,7 @@ public class RobotState implements Loggable {
 	public static ClimbState m_climbState = ClimbState.NOT_CLIMBING;
 
 	@Log.ToString(tabName = "Robot State")
-	public static LiftState m_liftSolenoidState = LiftState.WITHDRAWN;
+	public static LiftState m_liftSolenoidState = LiftState.DOWN;
 
 	@Log.ToString(tabName = "Robot State")
 	public static GearboxState m_gearState = GearboxState.LOW;
@@ -103,19 +109,6 @@ public class RobotState implements Loggable {
 		}
 	}
 
-	public static enum LiftState {
-		WITHDRAWN, EXTENDED;
-
-		@Override
-		public String toString() {
-			if (this.equals(WITHDRAWN)) {
-				return "Withdrawn";
-			} else {
-				return "Extended";
-			}
-		}
-	}
-
 	public static enum GearboxState {
 		HIGH, LOW;
 		@Override
@@ -177,7 +170,7 @@ public class RobotState implements Loggable {
 		return m_climbState;
 	}
 
-	public static void setclimbState(ClimbState m_climbState) {
+	public static void setClimbState(ClimbState m_climbState) {
 		RobotState.m_climbState = m_climbState;
 	}
 
@@ -190,12 +183,12 @@ public class RobotState implements Loggable {
 	}
 
 	public double getTotalCurrentDraw() {
-		double currentDraw = (RobotMap.CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.DRIVE_BASE_CONNECTED ? m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INDEX_CONNECTED ? m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
-				+ (RobotMap.SHOOTER_CONNECTED ? m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
+		double currentDraw = (CLIMB_CONNECTED ? m_robotContainer.m_climbMotorSubsystem.getCurrentDraw() : 0)
+				+ (DRIVE_BASE_CONNECTED ? m_robotContainer.m_driveBaseSubsystem.getCurrentDraw() : 0)
+				+ (SHOOTER_CONNECTED ? m_robotContainer.m_flywheelSubsystem.getCurrentDraw() : 0)
+				+ (INDEX_CONNECTED ? m_robotContainer.m_indexerMotorSubsystem.getCurrentDraw() : 0)
+				+ (INTAKE_CONNECTED ? m_robotContainer.m_intakeMotorOnOffSubsystem.getCurrentDraw() : 0)
+				+ (SHOOTER_CONNECTED ? m_robotContainer.m_turretSubsystem.getCurrentDraw() : 0)
 				+ RobotMap.compressor.getCompressorCurrent();
 
 		return currentDraw;

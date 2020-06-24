@@ -1,17 +1,17 @@
 package frc.team2412.robot.commands.intake.front;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team2412.robot.subsystems.IntakeOnOffSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 
 public class IntakeFrontOutCommand extends CommandBase {
 
-	private IntakeOnOffSubsystem m_intakeMotorOnOffSubsystem;
+	private IntakeMotorSubsystem m_intakeMotorOnOffSubsystem;
 
-	public IntakeFrontOutCommand(IntakeOnOffSubsystem intakeMotorOnOffSubsystem) {
+	public IntakeFrontOutCommand(IntakeMotorSubsystem intakeMotorOnOffSubsystem) {
 		this(intakeMotorOnOffSubsystem, true);
 	}
 
-	public IntakeFrontOutCommand(IntakeOnOffSubsystem intakeMotorOnOffSubsystem, boolean require) {
+	public IntakeFrontOutCommand(IntakeMotorSubsystem intakeMotorOnOffSubsystem, boolean require) {
 		if (require) {
 			addRequirements(intakeMotorOnOffSubsystem);
 		}

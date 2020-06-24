@@ -1,5 +1,10 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.blueTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.greenTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.redTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.yellowTarget;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -25,32 +30,27 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, WPI_TalonFX motor) {
 		this.m_colorSensor = colorSensor;
 		this.m_wheelMotor = motor;
+		
+		m_colorMatcher.addColorMatch(redTarget);
+		m_colorMatcher.addColorMatch(blueTarget);
+		m_colorMatcher.addColorMatch(greenTarget);
+		m_colorMatcher.addColorMatch(yellowTarget);
 	}
 
 	public Color colorMatch(Color detectedColor) {
 		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-		if (match.color == ControlPanelConstants.blueTarget) {
-			return ControlPanelConstants.blueTarget;
-		} else if (match.color == ControlPanelConstants.redTarget) {
-			return ControlPanelConstants.redTarget;
-		} else if (match.color == ControlPanelConstants.greenTarget) {
-			return ControlPanelConstants.greenTarget;
-		} else if (match.color == ControlPanelConstants.yellowTarget) {
-			return ControlPanelConstants.yellowTarget;
-		}
-
-		return detectedColor;
+		return match.color;
 
 	}
 
 	public String colorToString(Color m_color) {
-		if (m_color.equals(ControlPanelConstants.blueTarget))
+		if (m_color.equals(blueTarget))
 			return "blue";
-		if (m_color.equals(ControlPanelConstants.greenTarget))
+		if (m_color.equals(greenTarget))
 			return "green";
-		if (m_color.equals(ControlPanelConstants.redTarget))
+		if (m_color.equals(redTarget))
 			return "red";
-		if (m_color.equals(ControlPanelConstants.yellowTarget))
+		if (m_color.equals(yellowTarget))
 			return "yellow";
 		else {
 			return "Unknown";
@@ -58,13 +58,13 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	}
 
 	public Color getColorUnderBar(Color readColor) {
-		if (readColor.equals(ControlPanelConstants.blueTarget)) {
+		if (readColor.equals(blueTarget)) {
 			return ControlPanelConstants.redTarget;
-		} else if (readColor.equals(ControlPanelConstants.greenTarget)) {
+		} else if (readColor.equals(greenTarget)) {
 			return ControlPanelConstants.yellowTarget;
-		} else if (readColor.equals(ControlPanelConstants.redTarget)) {
+		} else if (readColor.equals(redTarget)) {
 			return ControlPanelConstants.blueTarget;
-		} else if (readColor.equals(ControlPanelConstants.yellowTarget)) {
+		} else if (readColor.equals(yellowTarget)) {
 			return ControlPanelConstants.greenTarget;
 		} else {
 			return Color.kBlack;

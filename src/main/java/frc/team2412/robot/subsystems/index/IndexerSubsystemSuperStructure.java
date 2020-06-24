@@ -11,9 +11,11 @@ public class IndexerSubsystemSuperStructure extends SubsystemBase implements Log
 	private IndexerMotorBackSubsystem m_IndexerMotorBackSubsystem;
 	private IndexerMotorFrontSubsystem m_IndexerMotorFrontSubsystem;
 	private IndexerMotorLiftSubsystem m_IndexerMotorLiftSubsystem;
-	// See https://oblog-docs.readthedocs.io/en/latest/loggables.html#excluding-and-re-including-loggables
-	// Must specifically include this since it's excluded elsewhere to avoid duplicate logging of the indexer sensors
-	@Log.Include 
+	// See
+	// https://oblog-docs.readthedocs.io/en/latest/loggables.html#excluding-and-re-including-loggables
+	// Must specifically include this since it's excluded elsewhere to avoid
+	// duplicate logging of the indexer sensors
+	@Log.Include
 	private IndexerSensorSubsystem m_IndexerSensorSubsystem;
 
 	public IndexerSubsystemSuperStructure(CANSparkMax frontMotor, CANSparkMax midLeftMotor, CANSparkMax midRightMotor,
