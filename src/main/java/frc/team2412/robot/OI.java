@@ -36,27 +36,27 @@ import frc.team2412.robot.commands.lift.LiftUpCommand;
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
 
-	public interface ButtonEnumInterface {
+	public static interface ButtonEnumInterface {
 
-		int getButtonID();
+		public int getButtonID();
 
-		int getJoystickID();
+		public int getJoystickID();
 
-		default Button createFrom(Joystick stick) {
+		public default Button createFrom(Joystick stick) {
 			if (stick.getPort() != getJoystickID()) {
 				System.err.println("Warning! Binding button to the wrong stick!");
 			}
 			return new JoystickButton(stick, getButtonID());
 		}
 
-		default Button createFrom(XboxController controller) {
+		public default Button createFrom(XboxController controller) {
 			if (controller.getPort() != getJoystickID()) {
 				System.err.println("Warning! Binding button to the wrong stick!");
 			}
 			return new Button(() -> controller.getRawButton(getButtonID()));
 		}
 
-		default Button createFromPOV(XboxController controller) {
+		public default Button createFromPOV(XboxController controller) {
 			if (controller.getPort() != getJoystickID()) {
 				System.err.println("Warning! Binding button to the wrong stick!");
 			}
@@ -64,24 +64,24 @@ public class OI {
 		}
 	}
 
-	public enum Joysticks {
+	public static enum Joysticks {
 		DRIVER_RIGHT(0), DRIVER_LEFT(1), CODRIVER(2), CODRIVER_MANUAL(3);
 
 		public int id;
 
-		Joysticks(int id) {
+		private Joysticks(int id) {
 			this.id = id;
 		}
 	}
 
-	public enum DriverControls implements ButtonEnumInterface {
+	public static enum DriverControls implements ButtonEnumInterface {
 		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT, 1),
 		ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
 		public Joysticks stick;
 		public int buttonID;
 
-		DriverControls(Joysticks stick, int buttonID) {
+		private DriverControls(Joysticks stick, int buttonID) {
 			this.stick = stick;
 			this.buttonID = buttonID;
 		}
@@ -98,13 +98,13 @@ public class OI {
 
 	}
 
-	public enum CodriverControls implements ButtonEnumInterface {
+	public static enum CodriverControls implements ButtonEnumInterface {
 		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
 		INTAKE_FRONT_OUT(5);
 
 		public int buttonID;
 
-		CodriverControls(int buttonID) {
+		private CodriverControls(int buttonID) {
 			this.buttonID = buttonID;
 		}
 
@@ -120,12 +120,12 @@ public class OI {
 
 	}
 
-	public enum CodriverManualControls implements ButtonEnumInterface {
+	public static enum CodriverManualControls implements ButtonEnumInterface {
 		CLIMB_MODE(5);
 
 		public int buttonID;
 
-		CodriverManualControls(int buttonID) {
+		private CodriverManualControls(int buttonID) {
 			this.buttonID = buttonID;
 		}
 
