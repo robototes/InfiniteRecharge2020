@@ -17,8 +17,8 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	private DigitalInput[] m_sensorArray;
 
 	public IndexerSensorSubsystem(DigitalInput intakeFront, DigitalInput front, DigitalInput frontMid,
-			DigitalInput frontInner, DigitalInput backInner, DigitalInput backMid, DigitalInput back,
-			DigitalInput intakeBack) {
+								  DigitalInput frontInner, DigitalInput backInner, DigitalInput backMid, DigitalInput back,
+								  DigitalInput intakeBack) {
 		m_intakeFrontSensor = intakeFront;
 		m_indexFrontSensor = front;
 		m_indexFrontMidSensor = frontMid;
@@ -28,8 +28,8 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 		m_indexBackSensor = back;
 		m_intakeBackSensor = intakeBack;
 
-		m_sensorArray = new DigitalInput[] { m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor,
-				m_indexBackInnerSensor, m_indexBackMidSensor, m_indexBackSensor };
+		m_sensorArray = new DigitalInput[]{m_indexFrontSensor, m_indexFrontMidSensor, m_indexFrontInnerSensor,
+				m_indexBackInnerSensor, m_indexBackMidSensor, m_indexBackSensor};
 
 	}
 

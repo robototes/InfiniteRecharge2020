@@ -9,7 +9,7 @@ import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.FlywheelConstants;
 
-public class FlywheelSubsystem extends SubsystemBase  {
+public class FlywheelSubsystem extends SubsystemBase {
 
 	private CANSparkMax m_flywheelLeftMotor;
 	private CANEncoder m_leftEncoder;

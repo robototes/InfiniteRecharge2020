@@ -3,15 +3,16 @@ package frc.team2412.robot.subsystems.constants;
 public class IndexerConstants {
 	public enum UnbalancedSide {
 		FRONT, BACK;
+
 		public void flip() {
 			UnbalancedSide s = this;
 			switch (s) {
-			case FRONT:
-				s = UnbalancedSide.BACK;
-				break;
-			case BACK:
-				s = UnbalancedSide.FRONT;
-				break;
+				case FRONT:
+					s = UnbalancedSide.BACK;
+					break;
+				case BACK:
+					s = UnbalancedSide.FRONT;
+					break;
 			}
 		}
 	}

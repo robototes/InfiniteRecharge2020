@@ -12,7 +12,7 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class StartUpCommand extends ParallelCommandGroup {
 
 	public StartUpCommand(LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem, HoodSubsystem hoodSubsystem,
-			IndexerSubsystemSuperStructure motorSubsystem) {
+						  IndexerSubsystemSuperStructure motorSubsystem) {
 
 		addCommands(
 

@@ -12,7 +12,7 @@ public class FlywheelSetSpeedCommand extends CommandBase {
 	Supplier<ShooterDistanceDataPoint> m_distanceSupplier;
 
 	public FlywheelSetSpeedCommand(FlywheelSubsystem m_flywheelSubsystem,
-			Supplier<ShooterDistanceDataPoint> m_distanceSupplier) {
+								   Supplier<ShooterDistanceDataPoint> m_distanceSupplier) {
 		this.m_flywheelSubsystem = m_flywheelSubsystem;
 		this.m_distanceSupplier = m_distanceSupplier;
 	}

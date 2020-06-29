@@ -43,7 +43,7 @@ public class RobotMapConstants {
 		}
 	}
 
-	public static  enum PWMPort {
+	public static enum PWMPort {
 		HOOD_SERVO_1(0), HOOD_SERVO_2(1);
 
 		public final int id;
@@ -74,5 +74,5 @@ public class RobotMapConstants {
 			return indexCANID;
 		}
 	}
-	
+
 }

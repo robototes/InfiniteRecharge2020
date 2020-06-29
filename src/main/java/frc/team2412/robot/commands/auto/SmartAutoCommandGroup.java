@@ -10,8 +10,8 @@ import frc.team2412.robot.subsystems.Autonomous;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
@@ -19,23 +19,23 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class SmartAutoCommandGroup extends SequentialCommandGroup {
 
 	public SmartAutoCommandGroup(Autonomous autonomous, DriveBaseSubsystem driveBaseSubsystem,
-			IntakeMotorSubsystem intakeOnOffSubsystem, IntakeLiftSubsystem intakeUpDownSubsystem,
-			LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
-			IndexerSensorSubsystem indexerSensorSubsystem, IndexerSubsystemSuperStructure indexerSuperSubsystem,
-			HoodSubsystem hoodSubsystem) {
+								 IntakeMotorSubsystem intakeOnOffSubsystem, IntakeLiftSubsystem intakeUpDownSubsystem,
+								 LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
+								 IndexerSensorSubsystem indexerSensorSubsystem, IndexerSubsystemSuperStructure indexerSuperSubsystem,
+								 HoodSubsystem hoodSubsystem) {
 
 		if (autonomous.getIfTrenchPossible()) {
 			addCommands(new ParallelCommandGroup(
-					//
-					autonomous.getAutoCommand(),
-					//
-					new IntakeFrontDownCommand(intakeUpDownSubsystem),
-					//
-					new LiftUpCommand(liftSubsystem, indexerSuperSubsystem),
-					//
-					new IndexShootCommand(indexerSuperSubsystem)
-			//
-			),
+							//
+							autonomous.getAutoCommand(),
+							//
+							new IntakeFrontDownCommand(intakeUpDownSubsystem),
+							//
+							new LiftUpCommand(liftSubsystem, indexerSuperSubsystem),
+							//
+							new IndexShootCommand(indexerSuperSubsystem)
+							//
+					),
 					//
 					new ParallelCommandGroup(
 							//
@@ -46,7 +46,7 @@ public class SmartAutoCommandGroup extends SequentialCommandGroup {
 							autonomous.getTrenchMovementCommand(),
 							//
 							new IndexShootCommand(indexerSuperSubsystem)
-					//
+							//
 					)
 
 			);

@@ -13,8 +13,8 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class RobotShootCommand extends ParallelCommandGroup {
 
 	public RobotShootCommand(LimelightSubsystem limelightSubsystem, TurretSubsystem turretSubsystem,
-			HoodSubsystem hoodSubsystem, FlywheelSubsystem flywheelSubsystem,
-			IndexerSubsystemSuperStructure indexerSubsystemSuperStructure, LiftSubsystem liftSubsystem) {
+							 HoodSubsystem hoodSubsystem, FlywheelSubsystem flywheelSubsystem,
+							 IndexerSubsystemSuperStructure indexerSubsystemSuperStructure, LiftSubsystem liftSubsystem) {
 
 		this.addCommands(
 				new SetShooterValueCommand(limelightSubsystem, turretSubsystem, hoodSubsystem, flywheelSubsystem),

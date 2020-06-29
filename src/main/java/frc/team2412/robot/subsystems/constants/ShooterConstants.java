@@ -22,7 +22,7 @@ public class ShooterConstants {
 		public InterpolatingDouble m_distance;
 
 		public ShooterDistanceDataPoint(InterpolatingDouble m_ty, InterpolatingDouble m_hoodAngle,
-				InterpolatingDouble m_shooterPower, InterpolatingDouble m_distance) {
+										InterpolatingDouble m_shooterPower, InterpolatingDouble m_distance) {
 			this.m_ty = m_ty;
 			this.m_hoodAngle = m_hoodAngle;
 			this.m_shooterPower = m_shooterPower;
@@ -48,7 +48,7 @@ public class ShooterConstants {
 		public boolean m_outerGoalPossible;
 
 		public ShooterSkewDataPoint(InterpolatingDouble m_ts, InterpolatingDouble m_turretDeltaForInner,
-				boolean m_innerGoalPossible, boolean m_outerGoalPossible) {
+									boolean m_innerGoalPossible, boolean m_outerGoalPossible) {
 			this.m_ts = m_ts;
 			this.m_turretDeltaForInner = m_turretDeltaForInner;
 			this.m_innerGoalPossible = m_innerGoalPossible;
@@ -76,7 +76,7 @@ public class ShooterConstants {
 	}
 
 	public static <T extends Interpolable<T>> T interpolateInList(List<T> list,
-			Function<T, InterpolatingDouble> fieldSupplier, double t_in) {
+																  Function<T, InterpolatingDouble> fieldSupplier, double t_in) {
 		InterpolatingDouble tyInter = new InterpolatingDouble(t_in);
 
 		T lowerQuery = list.get(0);

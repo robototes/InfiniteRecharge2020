@@ -12,7 +12,7 @@ public class IndexerSubsystemSuperStructure extends SubsystemBase {
 	private IndexerSensorSubsystem m_IndexerSensorSubsystem;
 
 	public IndexerSubsystemSuperStructure(CANSparkMax frontMotor, CANSparkMax midLeftMotor, CANSparkMax midRightMotor,
-			CANSparkMax backMotor, IndexerSensorSubsystem indexerSensorSubsystem) {
+										  CANSparkMax backMotor, IndexerSensorSubsystem indexerSensorSubsystem) {
 
 		m_IndexerMotorFrontSubsystem = new IndexerMotorFrontSubsystem(frontMotor);
 		m_IndexerMotorLiftSubsystem = new IndexerMotorLiftSubsystem(midLeftMotor, midRightMotor);

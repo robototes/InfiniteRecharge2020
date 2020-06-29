@@ -7,7 +7,6 @@
 
 package frc.team2412.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -66,12 +65,12 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		/*
 		 * Limelight Spin up turret Shoot command
-		 * 
-		 * Move towards tranch
-		 * 
-		 * 
-		 * 
-		 * 
+		 *
+		 * Move towards trench
+		 *
+		 *
+		 *
+		 *
 		 * *
 		 */
 

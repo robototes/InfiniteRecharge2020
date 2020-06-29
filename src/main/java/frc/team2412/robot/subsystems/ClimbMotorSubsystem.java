@@ -101,8 +101,8 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
 	}
 
-	public boolean getIsClimbing(){
-		return m_leftClimbMotor.get() != 0 || m_rightClimbMotor.get() !=0;
+	public boolean getIsClimbing() {
+		return m_leftClimbMotor.get() != 0 || m_rightClimbMotor.get() != 0;
 	}
 
 }

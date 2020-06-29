@@ -14,7 +14,7 @@ import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
-public class TurretSubsystem extends PIDSubsystem  {
+public class TurretSubsystem extends PIDSubsystem {
 
 	private Rotations m_currentAngle;
 	private WPI_TalonSRX m_turretMotor;

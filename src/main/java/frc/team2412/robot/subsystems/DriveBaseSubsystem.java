@@ -42,7 +42,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	public double m_driveBaseCurrentDraw;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
-			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
+							  WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
 
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;

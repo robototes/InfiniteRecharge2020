@@ -1,12 +1,8 @@
 package frc.team2412.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.commands.hood.HoodExtendCommand;
-import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.subsystems.constants.HoodConstants;
-import io.github.oblarg.oblog.Loggable;
 
 // @Author Rahul Singh && Sumedh Panatula
 

@@ -16,8 +16,8 @@ import frc.team2412.robot.subsystems.ControlPanelColorSubsystem;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
-import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.LiftSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
@@ -25,7 +25,7 @@ import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 // this is the class for containing all the subsystems and OI of the robot
-public class RobotContainer{
+public class RobotContainer {
 
 	public LimelightSubsystem m_limelightSubsystem;
 

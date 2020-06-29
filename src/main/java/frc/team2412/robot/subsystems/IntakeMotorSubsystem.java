@@ -1,11 +1,11 @@
 package frc.team2412.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-
 import static frc.team2412.robot.subsystems.constants.IntakeConstants.MAX_INTAKE_SPEED;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.subsystems.constants.IntakeConstants.*;
+import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeDirection;
 
 public class IntakeMotorSubsystem extends SubsystemBase {
 
@@ -20,7 +20,7 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 
 		m_intakeBackMotor.setInverted(true);
 		m_intakeFrontMotor.setInverted(true);
-		
+
 		setName("Intake Motor Subsystem");
 	}
 
@@ -76,13 +76,13 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 	}
 
 	public void periodic() {
-		if(m_intakeFrontMotor.get() != 0 && m_intakeBackMotor.get() != 0){
+		if (m_intakeFrontMotor.get() != 0 && m_intakeBackMotor.get() != 0) {
 			m_intakeDirection = IntakeDirection.BOTH;
-		} else if(m_intakeFrontMotor.get() != 0){
+		} else if (m_intakeFrontMotor.get() != 0) {
 			m_intakeDirection = IntakeDirection.FRONT;
-		} else if (m_intakeBackMotor.get() != 0){
+		} else if (m_intakeBackMotor.get() != 0) {
 			m_intakeDirection = IntakeDirection.BACK;
-		} else{
+		} else {
 			m_intakeDirection = IntakeDirection.NONE;
 		}
 	}

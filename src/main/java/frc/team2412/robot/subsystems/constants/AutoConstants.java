@@ -45,10 +45,10 @@ public class AutoConstants {
 	// Create config for trajectory
 	public static TrajectoryConfig config = new TrajectoryConfig(kMaxSpeedMetersPerSecond,
 			kMaxAccelerationMetersPerSecondSquared)
-					// Add kinematics to ensure max speed is actually obeyed
-					.setKinematics(kDriveKinematics)
-					// Apply the voltage constraint
-					.addConstraint(autoVoltageConstraint);
+			// Add kinematics to ensure max speed is actually obeyed
+			.setKinematics(kDriveKinematics)
+			// Apply the voltage constraint
+			.addConstraint(autoVoltageConstraint);
 
 	public static SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts,
 			kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);

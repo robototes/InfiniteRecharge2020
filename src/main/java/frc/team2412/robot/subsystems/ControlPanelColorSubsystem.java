@@ -29,7 +29,7 @@ public class ControlPanelColorSubsystem extends SubsystemBase {
 	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, WPI_TalonFX motor) {
 		this.m_colorSensor = colorSensor;
 		this.m_wheelMotor = motor;
-		
+
 		m_colorMatcher.addColorMatch(redTarget);
 		m_colorMatcher.addColorMatch(blueTarget);
 		m_colorMatcher.addColorMatch(greenTarget);

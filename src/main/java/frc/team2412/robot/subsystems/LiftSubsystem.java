@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.LiftConstants.LiftState;
 
-public class LiftSubsystem extends SubsystemBase{
+public class LiftSubsystem extends SubsystemBase {
 
 	private DoubleSolenoid m_liftUpDown;
 
@@ -24,7 +24,7 @@ public class LiftSubsystem extends SubsystemBase{
 		m_liftUpDown.set(value.value);
 	}
 
-	public LiftState getLiftState(){
+	public LiftState getLiftState() {
 		return m_liftUpDown.get() == LiftState.UP.value ? LiftState.UP : LiftState.DOWN;
 	}
 

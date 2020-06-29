@@ -16,7 +16,7 @@ import frc.team2412.robot.subsystems.constants.ShooterConstants;
 import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceDataPoint;
 import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterSkewDataPoint;
 
-public class LimelightSubsystem extends SubsystemBase{
+public class LimelightSubsystem extends SubsystemBase {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop

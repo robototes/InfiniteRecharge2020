@@ -15,7 +15,7 @@ public class TurretAddSupplierCommand extends TurretAddRotateCommand {
 	Supplier<ShooterSkewDataPoint> angleToAdd;
 
 	public TurretAddSupplierCommand(TurretSubsystem turretSubsystem,
-			Supplier<ShooterSkewDataPoint> angleToAddToRotate) {
+									Supplier<ShooterSkewDataPoint> angleToAddToRotate) {
 		super(turretSubsystem, new Rotations(0));
 
 		angleToAdd = angleToAddToRotate;
@@ -27,7 +27,7 @@ public class TurretAddSupplierCommand extends TurretAddRotateCommand {
 		Rotations currentAngle = new Rotations(m_TurretSubsystem.getCurrentAngle().getValue());
 		configureSetpoint(TICKS_PER_DEGREE
 				* currentAngle.add(new Rotations(angleToAdd.get().m_turretDeltaForInner.value(), RotationUnits.DEGREE))
-						.convertTo(RotationUnits.DEGREE));
+				.convertTo(RotationUnits.DEGREE));
 	}
 
 }
