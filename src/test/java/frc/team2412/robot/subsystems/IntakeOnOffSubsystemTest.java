@@ -28,9 +28,11 @@ import frc.team2412.robot.subsystems.constants.IntakeConstants;
 public class IntakeOnOffSubsystemTest {
 
 	// Mock instance of Example Subsystem
-	IntakeMotorSubsystem realIntakeMotorOnOffSubsystem;
-	CANSparkMax mockedIntakeFrontMotor;
-	CANSparkMax mockedIntakeBackMotor;
+	CANSparkMax mockedIntakeFrontMotor = mock(CANSparkMax.class);
+	CANSparkMax mockedIntakeBackMotor = mock(CANSparkMax.class);
+
+	IntakeMotorSubsystem realIntakeMotorOnOffSubsystem = new IntakeMotorSubsystem(mockedIntakeFrontMotor,
+			mockedIntakeBackMotor);
 
 	// This is called after tests, and makes sure that nothing is left open and
 	// everything is ready for the next test class
@@ -51,18 +53,12 @@ public class IntakeOnOffSubsystemTest {
 		TestWithScheduler.schedulerClear();
 		MockHardwareExtension.beforeAll();
 
-		mockedIntakeFrontMotor = mock(CANSparkMax.class);
-		mockedIntakeBackMotor = mock(CANSparkMax.class);
-
-		realIntakeMotorOnOffSubsystem = new IntakeMotorSubsystem(mockedIntakeFrontMotor, mockedIntakeBackMotor);
+		reset(mockedIntakeFrontMotor);
+		reset(mockedIntakeBackMotor);
 	}
 
 	public <T extends Command> void IntakeTest(Function<IntakeMotorSubsystem, T> commandContructor,
 			CANSparkMax changedMotor, double wantedValue) {
-		// Reset the subsystem to make sure all mock values are reset
-		reset(mockedIntakeFrontMotor);
-		reset(mockedIntakeBackMotor);
-
 		// Create command
 		Command intakeCommand = commandContructor.apply(realIntakeMotorOnOffSubsystem);
 

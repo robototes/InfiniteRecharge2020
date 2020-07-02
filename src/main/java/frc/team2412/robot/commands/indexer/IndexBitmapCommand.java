@@ -120,9 +120,15 @@ public class IndexBitmapCommand extends CommandBase {
 
 		int sensorBitmap = getSensorBitmap(intakeDirection);
 
-		Arrays.stream(IndexCommandEntry.values()).filter(c -> c.expectedBits == (sensorBitmap & c.validBits)).findAny()
-				.ifPresentOrElse(command -> runCommandPresent(command, intakeDirection, intakeOn),
-						m_indexerSubsystem::setAllSubsystemsToZero);
+		Arrays.stream(IndexCommandEntry.values()) // loop over all the different IndexCommandEntries
+				.filter(c -> c.expectedBits == (sensorBitmap & c.validBits)) // Remove the commands that dont meet this
+																				// condition
+				.findAny() // Find one of the filtered commands
+				.ifPresentOrElse(command -> runCommandPresent(command, intakeDirection, intakeOn), // Run the code if
+																									// the command
+																									// exists
+						m_indexerSubsystem::setAllSubsystemsToZero); // If the command doesnt exist turn all of index
+																		// off
 
 		// System.out.println(
 		// "Sensor values: " + Integer.toBinaryString(sensorBitmap) +
