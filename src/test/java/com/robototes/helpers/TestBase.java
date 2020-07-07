@@ -1,7 +1,8 @@
 package com.robototes.helpers;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import org.junit.After;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -23,7 +24,7 @@ public class TestBase {
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
 
-		verify(changedObject, times(1)).set(wantedValue);
+		verify(changedObject).set(wantedValue);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
@@ -40,7 +41,7 @@ public class TestBase {
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
 
-		verify(changedObject, times(1)).set(wantedValue);
+		verify(changedObject).set(wantedValue);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
@@ -57,10 +58,18 @@ public class TestBase {
 		CommandScheduler.getInstance().run();
 		fakeButton.release();
 
-		verify(changedObject, times(1)).set(wantedValue);
+		verify(changedObject).set(wantedValue);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
+	}
+
+	// This is called after tests, and makes sure that nothing is left open and
+	// everything is ready for the next test class
+	@After
+	public void after() {
+		TestWithScheduler.schedulerDestroy();
+		MockHardwareExtension.afterAll();
 	}
 
 }
