@@ -2,20 +2,15 @@ package frc.team2412.robot.subsystems;
 
 import static frc.team2412.robot.subsystems.constants.IntakeConstants.MAX_INTAKE_SPEED;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.revrobotics.CANSparkMax;
-import com.robototes.helpers.MockButton;
 import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestBase;
 import com.robototes.helpers.TestWithScheduler;
 
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
