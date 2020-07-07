@@ -14,15 +14,15 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class EliMemeAutoCommandGroup extends SequentialCommandGroup {
 
 	public EliMemeAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
-								   IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
-								   FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
-								   IndexerSubsystemSuperStructure indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
+			IndexerSensorSubsystem indexerSensorSubsystem, IndexerSubsystemSuperStructure indexerMotorSubsystem,
+			HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 
 				new StartUpCommand(liftSubsystem, flywheelSubsystem, hoodSubsystem, indexerMotorSubsystem),
 				new IndexShootCommand(indexerMotorSubsystem)
-				// new MoveToPowerCellsCommand(driveBaseSubsystem)
+		// new MoveToPowerCellsCommand(driveBaseSubsystem)
 
 		);
 	}

@@ -12,7 +12,7 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class IntakeEverythingOnCommandGroup extends ParallelCommandGroup {
 	public IntakeEverythingOnCommandGroup(IntakeMotorSubsystem intakeOnOffSubsystem,
-										  IntakeLiftSubsystem intakeUpDownSubsystem, IndexerSubsystemSuperStructure indexerMotorSubsystem) {
+			IntakeLiftSubsystem intakeUpDownSubsystem, IndexerSubsystemSuperStructure indexerMotorSubsystem) {
 
 		addCommands(new IntakeFrontInCommand(intakeOnOffSubsystem), new IntakeBackInCommand(intakeOnOffSubsystem),
 				new IntakeFrontDownCommand(intakeUpDownSubsystem), new IntakeBackDownCommand(intakeUpDownSubsystem),

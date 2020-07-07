@@ -14,7 +14,7 @@ import frc.team2412.robot.subsystems.TurretSubsystem;
 public class SetShooterValueCommand extends ParallelCommandGroup {
 
 	public SetShooterValueCommand(LimelightSubsystem limelightSubsystem, TurretSubsystem turretSubsystem,
-								  HoodSubsystem hoodSubsystem, FlywheelSubsystem flywheelSubsystem) {
+			HoodSubsystem hoodSubsystem, FlywheelSubsystem flywheelSubsystem) {
 
 		this.addCommands(
 				new ConditionalCommand(new TurretAddSupplierCommand(turretSubsystem, limelightSubsystem::getSkewData),

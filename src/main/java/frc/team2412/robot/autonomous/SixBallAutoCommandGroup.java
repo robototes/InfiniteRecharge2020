@@ -15,9 +15,9 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class SixBallAutoCommandGroup extends SequentialCommandGroup {
 
 	public SixBallAutoCommandGroup(DriveBaseSubsystem driveBaseSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem,
-								   IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem,
-								   FlywheelSubsystem flywheelSubsystem, IndexerSensorSubsystem indexerSensorSubsystem,
-								   IndexerSubsystemSuperStructure indexerMotorSubsystem, HoodSubsystem hoodSubsystem) {
+			IntakeLiftSubsystem intakeUpDownSubsystem, LiftSubsystem liftSubsystem, FlywheelSubsystem flywheelSubsystem,
+			IndexerSensorSubsystem indexerSensorSubsystem, IndexerSubsystemSuperStructure indexerMotorSubsystem,
+			HoodSubsystem hoodSubsystem) {
 
 		addCommands(
 

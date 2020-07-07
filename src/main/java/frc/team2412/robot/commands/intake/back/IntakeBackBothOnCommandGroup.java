@@ -6,7 +6,7 @@ import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 
 public class IntakeBackBothOnCommandGroup extends ParallelCommandGroup {
 	public IntakeBackBothOnCommandGroup(IntakeLiftSubsystem intakeUpDownSubsystem,
-										IntakeMotorSubsystem intakeOnOffSubsystem) {
+			IntakeMotorSubsystem intakeOnOffSubsystem) {
 		addCommands(new IntakeBackUpCommand(intakeUpDownSubsystem), new IntakeBackInCommand(intakeOnOffSubsystem));
 	}
 

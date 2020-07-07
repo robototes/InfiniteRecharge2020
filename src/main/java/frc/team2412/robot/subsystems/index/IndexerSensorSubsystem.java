@@ -17,8 +17,8 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	private DigitalInput[] m_sensorArray;
 
 	public IndexerSensorSubsystem(DigitalInput intakeFront, DigitalInput front, DigitalInput frontMid,
-								  DigitalInput frontInner, DigitalInput backInner, DigitalInput backMid, DigitalInput back,
-								  DigitalInput intakeBack) {
+			DigitalInput frontInner, DigitalInput backInner, DigitalInput backMid, DigitalInput back,
+			DigitalInput intakeBack) {
 		m_intakeFrontSensor = intakeFront;
 		m_indexFrontSensor = front;
 		m_indexFrontMidSensor = frontMid;

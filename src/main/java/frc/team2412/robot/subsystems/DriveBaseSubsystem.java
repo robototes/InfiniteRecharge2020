@@ -37,12 +37,12 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	private boolean inOneJoystickDrive = oneJoystickDrive;
 
-//	DifferentialDrive m_drive;
+	// DifferentialDrive m_drive;
 
 	public double m_driveBaseCurrentDraw;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
-							  WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
+			WPI_TalonFX rightMotor1, WPI_TalonFX rightMotor2) {
 
 		m_leftMotor1 = leftMotor1;
 		m_leftMotor2 = leftMotor2;
@@ -55,7 +55,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		m_rightMotor1.setInverted(true);
 		m_rightMotor2.setInverted(true);
 
-//		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+		// m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
 		m_gyro = gyro;
 		m_gearShifter = gearShifter;
@@ -83,12 +83,12 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
-//		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
+		// m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
 	}
 
 	public void setDriveSpeed(double forwardness, double turn) {
-//		m_drive.arcadeDrive(forwardness, turn);
-//		m_currentYSpeed = forwardness;
+		// m_drive.arcadeDrive(forwardness, turn);
+		// m_currentYSpeed = forwardness;
 	}
 
 	public void angleDrive(double angle) {
@@ -168,8 +168,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		m_leftMotor1.setVoltage(leftVolts);
 		m_rightMotor1.setVoltage(rightVolts);
-//		m_drive.feed();
+		// m_drive.feed();
 	}
-
 
 }

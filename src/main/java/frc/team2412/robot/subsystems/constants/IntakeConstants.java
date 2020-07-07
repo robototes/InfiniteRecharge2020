@@ -31,7 +31,7 @@ public class IntakeConstants {
 
 	public static enum IntakeState {
 
-		//Creates a value called up which is equal to kForward
+		// Creates a value called up which is equal to kForward
 		EXTENDED(true),
 
 		// Creates a value called down which is equal to kReverse

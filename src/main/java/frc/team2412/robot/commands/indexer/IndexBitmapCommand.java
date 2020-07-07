@@ -19,7 +19,8 @@ public class IndexBitmapCommand extends CommandBase {
 	private final IntakeMotorSubsystem m_intakeMotorSubsystem;
 	private double lastIndexRunTimeMicroSec = 0.0;
 
-	public IndexBitmapCommand(final IndexerSubsystemSuperStructure indexerMotorSubsystem, final IntakeMotorSubsystem intakeMotorSubsystem) {
+	public IndexBitmapCommand(final IndexerSubsystemSuperStructure indexerMotorSubsystem,
+			final IntakeMotorSubsystem intakeMotorSubsystem) {
 		m_indexerSubsystem = indexerMotorSubsystem;
 		m_intakeMotorSubsystem = intakeMotorSubsystem;
 
@@ -67,18 +68,18 @@ public class IndexBitmapCommand extends CommandBase {
 					.set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
 
 			switch (intakeDirection) {
-				case BOTH:
-				case FRONT:
+				case BOTH :
+				case FRONT :
 					m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
 					m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
 					break;
-				case BACK:
+				case BACK :
 					// Swap the front & back motor values since the IndexCommandEntry assumes intake
 					// from the front
 					m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
 					m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
 					break;
-				default:
+				default :
 					m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
 					m_indexerSubsystem.getIndexerMotorBackSubsystem().set(0);
 					break;
@@ -91,8 +92,8 @@ public class IndexBitmapCommand extends CommandBase {
 	}
 
 	private boolean shouldRunLift(IndexDirection frontIndexDirection, IndexDirection backIndexDirection) {
-		return frontIndexDirection == IndexDirection.IN || frontIndexDirection == IndexDirection.OUT ||
-				backIndexDirection == IndexDirection.IN || backIndexDirection == IndexDirection.OUT;
+		return frontIndexDirection == IndexDirection.IN || frontIndexDirection == IndexDirection.OUT
+				|| backIndexDirection == IndexDirection.IN || backIndexDirection == IndexDirection.OUT;
 	}
 
 	@Override
@@ -118,16 +119,16 @@ public class IndexBitmapCommand extends CommandBase {
 	private int getSensorBitmap(IntakeDirection intakeDirection) {
 		int sensorBitmap = 0;
 		switch (intakeDirection) {
-			case BOTH:
-			case FRONT:
+			case BOTH :
+			case FRONT :
 				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapFrontLSB()
 						& VALID_SENSOR_BITS);
 				break;
-			case BACK:
+			case BACK :
 				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapBackLSB()
 						& VALID_SENSOR_BITS);
 				break;
-			case NONE:
+			case NONE :
 				assert (false);
 				break;
 		}
@@ -136,12 +137,12 @@ public class IndexBitmapCommand extends CommandBase {
 
 	private double getIndexerMotorSpeed(IndexDirection direction) {
 		switch (direction) {
-			case IN:
+			case IN :
 				return -IndexerConstants.MAX_SPEED;
-			case OUT:
+			case OUT :
 				return IndexerConstants.MAX_SPEED;
-			case OFF:
-			default:
+			case OFF :
+			default :
 				return 0;
 		}
 	}

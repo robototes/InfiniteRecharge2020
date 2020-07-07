@@ -33,7 +33,6 @@ import frc.team2412.robot.RobotMapConstants.PneumaticPort;
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
 
-
 	// SET THESE TO CHANGE MODULE
 	public static IndexIntakeModule frontIndexIntakeModule = IndexIntakeModule.ONE;
 	public static IndexIntakeModule backIndexIntakeModule = IndexIntakeModule.TWO;
@@ -149,8 +148,8 @@ public class RobotMap {
 	// Limelight subsystem
 	// ----------------------------------------------------------------------------------------------
 	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
-	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.ON, CamMode.VISION_PROCESSER, Pipeline.FOUR,
-			StreamMode.STANDARD, SnapshotMode.OFF);
+	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.ON, CamMode.VISION_PROCESSER,
+			Pipeline.FOUR, StreamMode.STANDARD, SnapshotMode.OFF);
 
 	// Compressor
 	public static Compressor compressor = new Compressor();

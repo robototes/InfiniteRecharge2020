@@ -102,8 +102,8 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().cancel(autoCommand);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		m_robotContainer.m_indexerMotorSubsystem
-				.setDefaultCommand(new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem, m_robotContainer.m_intakeMotorOnOffSubsystem));
+		m_robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
+				m_robotContainer.m_indexerMotorSubsystem, m_robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->

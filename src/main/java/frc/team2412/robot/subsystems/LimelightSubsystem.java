@@ -43,8 +43,7 @@ public class LimelightSubsystem extends SubsystemBase {
 	}
 
 	public void getCameraStream() {
-		limeCam = new HttpCamera("limelight", "http://10.24.12.3:5801/stream.mjpg",
-				HttpCameraKind.kMJPGStreamer);
+		limeCam = new HttpCamera("limelight", "http://10.24.12.3:5801/stream.mjpg", HttpCameraKind.kMJPGStreamer);
 	}
 
 	public void getValues() {

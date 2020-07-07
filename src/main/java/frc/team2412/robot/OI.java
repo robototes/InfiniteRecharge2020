@@ -76,8 +76,8 @@ public class OI {
 	}
 
 	public static enum DriverControls implements ButtonEnumInterface {
-		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT, 1),
-		ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
+		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT,
+				1), ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
 		public Joysticks stick;
 		public int buttonID;
@@ -100,8 +100,8 @@ public class OI {
 	}
 
 	public static enum CodriverControls implements ButtonEnumInterface {
-		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
-		INTAKE_FRONT_OUT(5);
+		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(
+				6), INTAKE_FRONT_OUT(5);
 
 		public int buttonID;
 
