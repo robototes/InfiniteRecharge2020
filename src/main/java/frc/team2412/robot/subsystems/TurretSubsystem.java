@@ -13,23 +13,16 @@ import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class TurretSubsystem extends PIDSubsystem implements Loggable {
+public class TurretSubsystem extends PIDSubsystem {
 
-	@Log.ToString(tabName = "Turret")
 	private Rotations m_currentAngle;
-	@Log(tabName = "Turret")
 	private WPI_TalonSRX m_turretMotor;
 
-	@Log.Exclude
 	private LimelightSubsystem m_limelightSubsystem;
 
 	private int m_turretOffsetPosition = 0;
 	private int m_turretPastPosition;
-	@Log(tabName = "Turret")
 	private int m_turretCurrentPosition;
 
 	public TurretSubsystem(WPI_TalonSRX turretMotor, LimelightSubsystem limelightSubsystem) {
@@ -45,7 +38,6 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 	}
 
 	@Override
-	@Log(tabName = "Turret")
 	public double getMeasurement() {
 		return m_turretCurrentPosition - m_turretOffsetPosition;
 	}
@@ -81,7 +73,6 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 		// System.out.println(getMeasurement());
 	}
 
-	@Config.NumberSlider(tabName = "Turret", min = -1, max = 1)
 	public void set(double output) {
 		output = MathUtils.constrain(output, -1, 1);
 

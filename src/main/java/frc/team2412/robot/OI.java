@@ -33,6 +33,7 @@ import frc.team2412.robot.commands.intake.front.IntakeFrontOutCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
+
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
 
@@ -64,7 +65,7 @@ public class OI {
 		}
 	}
 
-	public enum Joysticks {
+	public static enum Joysticks {
 		DRIVER_RIGHT(0), DRIVER_LEFT(1), CODRIVER(2), CODRIVER_MANUAL(3);
 
 		public int id;
@@ -74,7 +75,7 @@ public class OI {
 		}
 	}
 
-	public enum DriverControls implements ButtonEnumInterface {
+	public static enum DriverControls implements ButtonEnumInterface {
 		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT, 1),
 		ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
@@ -98,7 +99,7 @@ public class OI {
 
 	}
 
-	public enum CodriverControls implements ButtonEnumInterface {
+	public static enum CodriverControls implements ButtonEnumInterface {
 		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
 		INTAKE_FRONT_OUT(5);
 
@@ -120,7 +121,7 @@ public class OI {
 
 	}
 
-	public enum CodriverManualControls implements ButtonEnumInterface {
+	public static enum CodriverManualControls implements ButtonEnumInterface {
 		CLIMB_MODE(5);
 
 		public int buttonID;

@@ -15,22 +15,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ShooterConstants;
 import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceDataPoint;
 import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterSkewDataPoint;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class LimelightSubsystem extends SubsystemBase implements Loggable {
+public class LimelightSubsystem extends SubsystemBase {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
-	@Log
 	public ShooterDistanceDataPoint m_distanceData;
-	@Log.ToString(tabName = "Turret")
 	public Rotations m_yawFromTarget;
-	@Log
 	public ShooterSkewDataPoint m_skewData;
 
-	@Log.CameraStream(tabName = "Turret")
-	@Log.CameraStream(tabName = "Driver View")
 	public HttpCamera limeCam;
 
 	// Store the limelight
@@ -50,10 +43,7 @@ public class LimelightSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void getCameraStream() {
-		HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.24.12.3:5801/stream.mjpg",
-				HttpCameraKind.kMJPGStreamer);
-
-		limeCam = limelightFeed;
+		limeCam = new HttpCamera("limelight", "http://10.24.12.3:5801/stream.mjpg", HttpCameraKind.kMJPGStreamer);
 	}
 
 	public void getValues() {

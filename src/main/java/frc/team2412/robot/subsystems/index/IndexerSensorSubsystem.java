@@ -2,26 +2,16 @@ package frc.team2412.robot.subsystems.index;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class IndexerSensorSubsystem extends SubsystemBase implements Loggable {
+public class IndexerSensorSubsystem extends SubsystemBase {
 
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackInnerSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackMidSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexBackSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexFrontInnerSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexFrontMidSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_indexFrontSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_intakeBackSensor;
-	@Log.BooleanBox(tabName = "Indexer", colorWhenTrue = "red", colorWhenFalse = "green", methodName = "get")
 	private DigitalInput m_intakeFrontSensor;
 
 	private DigitalInput[] m_sensorArray;

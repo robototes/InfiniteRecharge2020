@@ -5,24 +5,24 @@ import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class ControlPanelConstants {
-	
+
 	public static enum Colors {
-		
-		BLUE(blueTarget, "BLUE"), GREEN(greenTarget, "GREEN"), RED(redTarget, "RED"), YELLOW(yellowTarget,"YELLOW");
-		
+
+		BLUE(blueTarget, "BLUE"), GREEN(greenTarget, "GREEN"), RED(redTarget, "RED"), YELLOW(yellowTarget, "YELLOW");
+
 		public Color color;
-		
+
 		public String name;
-		
+
 		private Colors(Color color, String name) {
 			this.color = color;
 			this.name = name;
 		}
-				
+
 		public String toString() {
 			return name;
-		}		
-				
+		}
+
 	}
 
 	public static Color blueTarget = ColorMatch.makeColor(0, 0, 255);

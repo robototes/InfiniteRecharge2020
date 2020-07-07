@@ -7,7 +7,6 @@
 
 package frc.team2412.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,8 +16,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.Logger;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,7 +24,7 @@ import io.github.oblarg.oblog.Logger;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot implements Loggable {
+public class Robot extends TimedRobot {
 
 	public double timeRemaining;
 
@@ -42,10 +39,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void robotInit() {
-		Logger.configureLoggingAndConfig(m_robotContainer, false);
-		// Shuffleboard.startRecording();
 
-		configureRobotState();
 	}
 
 	/**
@@ -71,12 +65,12 @@ public class Robot extends TimedRobot implements Loggable {
 	public void autonomousInit() {
 		/*
 		 * Limelight Spin up turret Shoot command
-		 * 
-		 * Move towards tranch
-		 * 
-		 * 
-		 * 
-		 * 
+		 *
+		 * Move towards trench
+		 *
+		 *
+		 *
+		 *
 		 * *
 		 */
 
@@ -108,8 +102,8 @@ public class Robot extends TimedRobot implements Loggable {
 		CommandScheduler.getInstance().cancel(autoCommand);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		m_robotContainer.m_indexerMotorSubsystem
-				.setDefaultCommand(new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem));
+		m_robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
+				m_robotContainer.m_indexerMotorSubsystem, m_robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
@@ -138,16 +132,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void testPeriodic() {
-	}
-
-	private void configureRobotState() {
-		DriverStation driverStation = DriverStation.getInstance();
-
-		RobotState.eventName = driverStation.getEventName();
-		RobotState.matchType = driverStation.getMatchType();
-		RobotState.matchNumber = driverStation.getMatchNumber();
-		RobotState.alliance = driverStation.getAlliance();
-		RobotState.location = driverStation.getLocation();
 	}
 
 }

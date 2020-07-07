@@ -7,9 +7,8 @@ import com.revrobotics.ControlType;
 import com.robototes.math.MathUtils;
 
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
-import io.github.oblarg.oblog.Loggable;
 
-public interface IIndexMotorSubsystem extends Loggable {
+public interface IIndexMotorSubsystem {
 
 	public enum IndexMotorSubsystemType {
 		BACK(IndexerConstants.MAX_SPEED), FRONT(IndexerConstants.MAX_SPEED), LIFT(IndexerConstants.MAX_LIFT_SPEED);

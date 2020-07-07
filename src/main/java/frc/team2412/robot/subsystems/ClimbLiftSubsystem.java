@@ -3,20 +3,16 @@ package frc.team2412.robot.subsystems;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbState;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class ClimbLiftSubsystem extends SubsystemBase implements Loggable {
+public class ClimbLiftSubsystem extends SubsystemBase {
 
 	// For Pneumatics
-	@Log(tabName = "Climb")
-	private Solenoid m_leftPneumatic;
-	@Log(tabName = "Climb")
-	private Solenoid m_rightPneumatic;
+	private Solenoid m_leftSolenoid;
+	private Solenoid m_rightSolenoid;
 
-	public ClimbLiftSubsystem(Solenoid leftPneumatic, Solenoid rightPneumatic) {
-		m_leftPneumatic = leftPneumatic;
-		m_rightPneumatic = rightPneumatic;
+	public ClimbLiftSubsystem(Solenoid leftSolenoid, Solenoid rightSolenoid) {
+		m_leftSolenoid = leftSolenoid;
+		m_rightSolenoid = rightSolenoid;
 	}
 
 	public void deployRails() {
@@ -28,7 +24,7 @@ public class ClimbLiftSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	private void setClimb(ClimbState newState) {
-		m_leftPneumatic.set(newState.value);
-		m_rightPneumatic.set(newState.value);
+		m_leftSolenoid.set(newState.value);
+		m_rightSolenoid.set(newState.value);
 	}
 }
