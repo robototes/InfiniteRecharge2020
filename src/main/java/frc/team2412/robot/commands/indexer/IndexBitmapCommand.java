@@ -1,5 +1,7 @@
 package frc.team2412.robot.commands.indexer;
 
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.RobotState;
@@ -102,85 +104,95 @@ public class IndexBitmapCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		IntakeDirection intakeDirection = RobotState.getintakeDirection();
-		final boolean intakeOn = (intakeDirection != IntakeDirection.NONE);
-		if (intakeDirection == IntakeDirection.NONE) {
+		IntakeDirection realIntakeDirection = RobotState.getintakeDirection();
+		final IntakeDirection intakeDirection;
+		final boolean intakeOn = (realIntakeDirection != IntakeDirection.NONE);
+		if (realIntakeDirection == IntakeDirection.NONE) {
 			if (s_lastIntakeDirection == IntakeDirection.BACK) {
 				intakeDirection = IntakeDirection.BACK;
 			} else {
 				intakeDirection = IntakeDirection.FRONT;
 			}
 		} else {
-			s_lastIntakeDirection = intakeDirection;
+			intakeDirection = realIntakeDirection;
+			s_lastIntakeDirection = realIntakeDirection;
 		}
 
-		int sensorBitmap = 0;
-		switch (intakeDirection) {
-		case BOTH:
-		case FRONT:
-			sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapFrontLSB()
-					& VALID_SENSOR_BITS);
-			break;
-		case BACK:
-			sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapBackLSB()
-					& VALID_SENSOR_BITS);
-			break;
-		case NONE:
-			assert (false);
-			break;
-		}
+		int sensorBitmap = getSensorBitmap(intakeDirection);
 
-		IndexCommandEntry indexCommand = null;
-		for (final IndexCommandEntry entry : IndexCommandEntry.values()) {
-			if (entry.expectedBits == (sensorBitmap & entry.validBits)) {
-				indexCommand = entry;
-			}
-		}
+		Arrays.stream(IndexCommandEntry.values()) // loop over all the different IndexCommandEntries
+				.filter(c -> c.expectedBits == (sensorBitmap & c.validBits)) // Remove the commands that dont meet this
+																				// condition
+				.findAny() // Find one of the filtered commands
+				.ifPresentOrElse(command -> runCommandPresent(command, intakeDirection, intakeOn), // Run the code if
+																									// the command
+																									// exists
+						m_indexerSubsystem::setAllSubsystemsToZero); // If the command doesnt exist turn all of index
+																		// off
 
 		// System.out.println(
 		// "Sensor values: " + Integer.toBinaryString(sensorBitmap) +
 		// ", Index command: " + indexCommand.ordinal() +
 		// ", Intake on: " + intakeOn +
 		// ", Intake dir: " + intakeDirection.ordinal());
+	}
 
-		if (indexCommand != null) {
-			final IndexDirection frontIndexDirection = indexCommand.getFrontIndexDirection(intakeOn);
-			final IndexDirection backIndexDirection = indexCommand.getBackIndexDirection(intakeOn);
-			boolean runLift = ((frontIndexDirection == IndexDirection.IN)
-					|| (frontIndexDirection == IndexDirection.OUT))
-					|| ((backIndexDirection == IndexDirection.IN) || (backIndexDirection == IndexDirection.OUT));
+	private void runCommandPresent(IndexCommandEntry indexCommand, IntakeDirection intakeDirection,
+			final boolean intakeOn) {
+		final IndexDirection frontIndexDirection = indexCommand.getFrontIndexDirection(intakeOn);
+		final IndexDirection backIndexDirection = indexCommand.getBackIndexDirection(intakeOn);
+		boolean runLift = shouldRunLift(frontIndexDirection, backIndexDirection);
 
-			if (runLift) {
-				lastIndexRunTimeMicroSec = RobotController.getFPGATime();
-			} else if (RobotController.getFPGATime() < lastIndexRunTimeMicroSec
-					+ 1000 * IndexerConstants.LIFT_DOWN_MS_DURATION_AFTER_SHUFFLE) {
-				runLift = true;
-			}
+		if (runLift) {
+			lastIndexRunTimeMicroSec = RobotController.getFPGATime();
+		} else if (RobotController.getFPGATime() < lastIndexRunTimeMicroSec
+				+ 1000 * IndexerConstants.LIFT_DOWN_MS_DURATION_AFTER_SHUFFLE) {
+			runLift = true;
+		}
 
-			m_indexerSubsystem.getIndexerMotorLiftSubsystem()
-					.set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
-			switch (intakeDirection) {
+		m_indexerSubsystem.getIndexerMotorLiftSubsystem()
+				.set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
+		switch (intakeDirection) {
 			case BOTH:
 			case FRONT:
-				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
-				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
+				m_indexerSubsystem.setFrontAndBack(getIndexerMotorSpeed(frontIndexDirection),
+						getIndexerMotorSpeed(backIndexDirection));
 				break;
 			case BACK:
 				// Swap the front & back motor values since the IndexCommandEntry assumes intake
 				// from the front
-				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
-				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
+				m_indexerSubsystem.setFrontAndBack(getIndexerMotorSpeed(backIndexDirection),
+						getIndexerMotorSpeed(frontIndexDirection));
 				break;
 			default:
-				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
-				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(0);
+				m_indexerSubsystem.setFrontAndBack(0, 0);
 				break;
-			}
-		} else {
-			m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
-			m_indexerSubsystem.getIndexerMotorBackSubsystem().set(0);
-			m_indexerSubsystem.getIndexerMotorLiftSubsystem().set(0);
 		}
+	}
+
+	private boolean shouldRunLift(final IndexDirection frontIndexDirection, final IndexDirection backIndexDirection) {
+		return ((frontIndexDirection == IndexDirection.IN) || (frontIndexDirection == IndexDirection.OUT))
+				|| ((backIndexDirection == IndexDirection.IN) || (backIndexDirection == IndexDirection.OUT));
+	}
+
+	private int getSensorBitmap(IntakeDirection intakeDirection) {
+		int sensorBitmap = 0;
+		switch (intakeDirection) {
+			case BOTH:
+			case FRONT:
+				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapFrontLSB()
+						& VALID_SENSOR_BITS);
+				break;
+			case BACK:
+				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapBackLSB()
+						& VALID_SENSOR_BITS);
+				break;
+			case NONE:
+			default:
+				assert (false);
+				break;
+		}
+		return sensorBitmap;
 	}
 
 	@Override
@@ -192,13 +204,13 @@ public class IndexBitmapCommand extends CommandBase {
 
 	private double getIndexerMotorSpeed(IndexDirection direction) {
 		switch (direction) {
-		case IN:
-			return -IndexerConstants.MAX_SPEED;
-		case OUT:
-			return IndexerConstants.MAX_SPEED;
-		case OFF:
-		default:
-			return 0;
+			case IN:
+				return -IndexerConstants.MAX_SPEED;
+			case OUT:
+				return IndexerConstants.MAX_SPEED;
+			case OFF:
+			default:
+				return 0;
 		}
 	}
 }
