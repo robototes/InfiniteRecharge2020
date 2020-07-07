@@ -8,12 +8,12 @@ public class IndexerConstants {
 		public void flip() {
 			UnbalancedSide s = this;
 			switch (s) {
-				case FRONT :
-					s = UnbalancedSide.BACK;
-					break;
-				case BACK :
-					s = UnbalancedSide.FRONT;
-					break;
+			case FRONT:
+				s = UnbalancedSide.BACK;
+				break;
+			case BACK:
+				s = UnbalancedSide.FRONT;
+				break;
 			}
 		}
 	}
@@ -61,13 +61,13 @@ public class IndexerConstants {
 		// Don't move, as there's nothing in the outer slots -or-
 		// Back side has inner and outer slots full, front side only has middle slot
 		// full
-		A(0b100001, 0b000000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF), B(
-				0b101111, 0b101010, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
+		A(0b100001, 0b000000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
+		B(0b101111, 0b101010, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
 
 		// Back side has outer slot full and inner slot empty, so move back ball(s) in
 		// Front side has outer slot empty and inner or middle slot full, so don't move
-		C(0b101111, 0b100010, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN), D(0b101101,
-				0b100100, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN),
+		C(0b101111, 0b100010, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN),
+		D(0b101101, 0b100100, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN),
 
 		// Back side has outer and inner slots full, so don't move. Front side has inner
 		// slot full so disable taking more balls

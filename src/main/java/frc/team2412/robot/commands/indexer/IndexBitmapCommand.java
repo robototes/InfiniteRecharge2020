@@ -68,21 +68,21 @@ public class IndexBitmapCommand extends CommandBase {
 					.set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
 
 			switch (intakeDirection) {
-				case BOTH :
-				case FRONT :
-					m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
-					m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
-					break;
-				case BACK :
-					// Swap the front & back motor values since the IndexCommandEntry assumes intake
-					// from the front
-					m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
-					m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
-					break;
-				default :
-					m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
-					m_indexerSubsystem.getIndexerMotorBackSubsystem().set(0);
-					break;
+			case BOTH:
+			case FRONT:
+				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
+				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
+				break;
+			case BACK:
+				// Swap the front & back motor values since the IndexCommandEntry assumes intake
+				// from the front
+				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(getIndexerMotorSpeed(backIndexDirection));
+				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(getIndexerMotorSpeed(frontIndexDirection));
+				break;
+			default:
+				m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
+				m_indexerSubsystem.getIndexerMotorBackSubsystem().set(0);
+				break;
 			}
 		} else {
 			m_indexerSubsystem.getIndexerMotorFrontSubsystem().set(0);
@@ -119,31 +119,31 @@ public class IndexBitmapCommand extends CommandBase {
 	private int getSensorBitmap(IntakeDirection intakeDirection) {
 		int sensorBitmap = 0;
 		switch (intakeDirection) {
-			case BOTH :
-			case FRONT :
-				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapFrontLSB()
-						& VALID_SENSOR_BITS);
-				break;
-			case BACK :
-				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapBackLSB()
-						& VALID_SENSOR_BITS);
-				break;
-			case NONE :
-				assert (false);
-				break;
+		case BOTH:
+		case FRONT:
+			sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapFrontLSB()
+					& VALID_SENSOR_BITS);
+			break;
+		case BACK:
+			sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapBackLSB()
+					& VALID_SENSOR_BITS);
+			break;
+		case NONE:
+			assert (false);
+			break;
 		}
 		return sensorBitmap;
 	}
 
 	private double getIndexerMotorSpeed(IndexDirection direction) {
 		switch (direction) {
-			case IN :
-				return -IndexerConstants.MAX_SPEED;
-			case OUT :
-				return IndexerConstants.MAX_SPEED;
-			case OFF :
-			default :
-				return 0;
+		case IN:
+			return -IndexerConstants.MAX_SPEED;
+		case OUT:
+			return IndexerConstants.MAX_SPEED;
+		case OFF:
+		default:
+			return 0;
 		}
 	}
 }

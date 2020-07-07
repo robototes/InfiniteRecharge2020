@@ -8,8 +8,8 @@ import com.robototes.units.UnitTypes.RotationUnits;
 public class ClimbConstants {
 
 	public static enum ClimbHeight {
-		BOTTOM(new Distance(56, DistanceUnits.INCH)), MIDDLE(new Distance(64, DistanceUnits.INCH)), TOP(
-				new Distance(72, DistanceUnits.INCH));
+		BOTTOM(new Distance(56, DistanceUnits.INCH)), MIDDLE(new Distance(64, DistanceUnits.INCH)),
+		TOP(new Distance(72, DistanceUnits.INCH));
 
 		public Distance value;
 

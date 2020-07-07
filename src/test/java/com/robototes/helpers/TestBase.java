@@ -15,7 +15,7 @@ public class TestBase {
 		MockHardwareExtension.afterAll();
 	}
 
-	public void runTest(Command command){
+	public void runTest(Command command) {
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
