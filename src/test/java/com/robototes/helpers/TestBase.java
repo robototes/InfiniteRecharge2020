@@ -6,6 +6,7 @@ import org.junit.After;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -48,6 +49,23 @@ public class TestBase {
 	}
 
 	public void test(Command command, DoubleSolenoid changedObject, Value wantedValue) {
+		MockButton fakeButton = new MockButton();
+
+		// Tell the button to run example command when pressed
+		fakeButton.whenPressed(command);
+
+		// Push the button and run the scheduler once
+		fakeButton.push();
+		CommandScheduler.getInstance().run();
+		fakeButton.release();
+
+		verify(changedObject).set(wantedValue);
+
+		// Clear the scheduler
+		TestWithScheduler.schedulerClear();
+	}
+	
+	public void test(Command command, Servo changedObject, double wantedValue) {
 		MockButton fakeButton = new MockButton();
 
 		// Tell the button to run example command when pressed
