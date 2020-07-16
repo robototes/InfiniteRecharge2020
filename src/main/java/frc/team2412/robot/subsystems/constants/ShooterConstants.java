@@ -43,7 +43,7 @@ public class ShooterConstants {
 		@Log.ToString
 		public InterpolatingDouble m_turretDeltaForInner;
 		@Log.ToString
-		public boolean m_innerGoalPossible;
+		public boolean innerGoalPossible;
 		@Log.ToString
 		public boolean m_outerGoalPossible;
 
@@ -51,7 +51,7 @@ public class ShooterConstants {
 				boolean m_innerGoalPossible, boolean m_outerGoalPossible) {
 			this.m_ts = m_ts;
 			this.m_turretDeltaForInner = m_turretDeltaForInner;
-			this.m_innerGoalPossible = m_innerGoalPossible;
+			this.innerGoalPossible = m_innerGoalPossible;
 			this.m_outerGoalPossible = m_outerGoalPossible;
 		}
 
@@ -59,7 +59,7 @@ public class ShooterConstants {
 		public ShooterSkewDataPoint interpolate(ShooterSkewDataPoint other, double t) {
 			return new ShooterSkewDataPoint(m_ts.interpolate(other.m_ts, t),
 					m_turretDeltaForInner.interpolate(other.m_turretDeltaForInner, t),
-					m_innerGoalPossible && other.m_innerGoalPossible, m_outerGoalPossible && other.m_outerGoalPossible);
+					innerGoalPossible && other.innerGoalPossible, m_outerGoalPossible && other.m_outerGoalPossible);
 		}
 	}
 

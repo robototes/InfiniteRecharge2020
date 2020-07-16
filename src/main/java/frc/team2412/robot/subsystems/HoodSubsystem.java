@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.HoodConstants;
 
-// @Author Rahul Singh && Sumedh Panatula
-
 public class HoodSubsystem extends SubsystemBase {
 
 	private Servo m_hoodServo1;

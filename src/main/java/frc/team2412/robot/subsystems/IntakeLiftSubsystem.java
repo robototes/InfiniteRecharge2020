@@ -6,47 +6,47 @@ import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeState;
 
 public class IntakeLiftSubsystem extends SubsystemBase {
 
-	private Solenoid m_frontIntakeUpDown;
-	private Solenoid m_backIntakeUpDown;
+	private Solenoid frontSolenoid;
+	private Solenoid backSolenoid;
 
-	private IntakeState m_currentState = IntakeState.WITHDRAWN;
+	private IntakeState currentState = IntakeState.WITHDRAWN;
 
-	public IntakeLiftSubsystem(Solenoid frontIntakeUpDown, Solenoid backIntakeUpDown) {
-		this.m_frontIntakeUpDown = frontIntakeUpDown;
-		this.m_backIntakeUpDown = backIntakeUpDown;
+	public IntakeLiftSubsystem(Solenoid frontSolenoid, Solenoid backSolenoid) {
+		this.frontSolenoid = frontSolenoid;
+		this.backSolenoid = backSolenoid;
 	}
 
 	public IntakeState getCurrentState() {
-		return m_currentState;
+		return currentState;
 	}
 
 	public void frontIntakeUp() {
-		setIntake(IntakeState.WITHDRAWN, m_frontIntakeUpDown);
+		setIntake(IntakeState.WITHDRAWN, frontSolenoid);
 	}
 
 	public void frontIntakeDown() {
-		setIntake(IntakeState.EXTENDED, m_frontIntakeUpDown);
+		setIntake(IntakeState.EXTENDED, frontSolenoid);
 	}
 
 	public void backIntakeUp() {
-		setIntake(IntakeState.WITHDRAWN, m_backIntakeUpDown);
+		setIntake(IntakeState.WITHDRAWN, backSolenoid);
 	}
 
 	public void backIntakeDown() {
-		setIntake(IntakeState.EXTENDED, m_backIntakeUpDown);
+		setIntake(IntakeState.EXTENDED, backSolenoid);
 	}
 
 	public boolean isFrontIntakeUp() {
-		return m_frontIntakeUpDown.get();
+		return frontSolenoid.get();
 	}
 
 	public boolean isBackIntakeUp() {
-		return m_backIntakeUpDown.get();
+		return backSolenoid.get();
 	}
 
 	private void setIntake(IntakeState newState, Solenoid solenoid) {
 		solenoid.set(newState.value);
-		m_currentState = newState;
+		currentState = newState;
 	}
 
 }
