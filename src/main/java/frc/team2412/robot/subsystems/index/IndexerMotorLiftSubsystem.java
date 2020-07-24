@@ -6,18 +6,12 @@ import com.revrobotics.CANSparkMax;
 import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
 public class IndexerMotorLiftSubsystem extends SubsystemBase implements IIndexMotorSubsystem {
 
-	@Log.ToString(methodName = "getPosition", name = "Current Lift Motor Position", tabName = "Index")
 	CANEncoder m_encoder;
-	@Log.Exclude
 	CANSparkMax m_leftLiftMotor;
-	@Log.Exclude
 	CANPIDController m_pidController;
-	@Log.NumberBar(min = -1, max = 1, methodName = "get", name = "Current Lift Motor Speed", tabName = "Index")
 	CANSparkMax m_rightLiftMotor;
 
 	public IndexerMotorLiftSubsystem(CANSparkMax rightLiftMotor, CANSparkMax leftLiftMotor) {
@@ -33,7 +27,6 @@ public class IndexerMotorLiftSubsystem extends SubsystemBase implements IIndexMo
 	}
 
 	@Override
-	@Config.NumberSlider(min = -1, max = 1, name = "Set Lift Motor Speed")
 	public void set(double speed) {
 		double newSpeed = MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
 		m_rightLiftMotor.set(newSpeed);
