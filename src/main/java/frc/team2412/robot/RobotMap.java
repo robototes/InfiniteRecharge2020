@@ -33,7 +33,6 @@ import frc.team2412.robot.RobotMapConstants.PneumaticPort;
 //remember to declare robot container at the bottom of this class
 public class RobotMap {
 
-
 	// SET THESE TO CHANGE MODULE
 	public static IndexIntakeModule frontIndexIntakeModule = IndexIntakeModule.ONE;
 	public static IndexIntakeModule backIndexIntakeModule = IndexIntakeModule.TWO;
@@ -68,7 +67,7 @@ public class RobotMap {
 
 	// motors
 	public static CANSparkMax indexFrontMotor, indexBackMotor;
-	public static CANSparkMax indexleftMidMotor = new CANSparkMax(CANBus.INDEX_LEFT_MID.id, MotorType.kBrushless);
+	public static CANSparkMax indexLeftMidMotor = new CANSparkMax(CANBus.INDEX_LEFT_MID.id, MotorType.kBrushless);
 
 	public static CANSparkMax indexRightMidMotor = new CANSparkMax(CANBus.INDEX_RIGHT_MID.id, MotorType.kBrushless);
 
@@ -149,16 +148,14 @@ public class RobotMap {
 	// Limelight subsystem
 	// ----------------------------------------------------------------------------------------------
 	public static NetworkTable limelightNetworkTable = NetworkTableInstance.create().getTable("limelight");
-	public static Limelight limelight =  new Limelight(limelightNetworkTable, LEDMode.ON, CamMode.VISION_PROCESSER, Pipeline.FOUR,
-					StreamMode.STANDARD, SnapshotMode.OFF);
+	public static Limelight limelight = new Limelight(limelightNetworkTable, LEDMode.ON, CamMode.VISION_PROCESSER,
+			Pipeline.FOUR, StreamMode.STANDARD, SnapshotMode.OFF);
 
 	// Compressor
 	public static Compressor compressor = new Compressor();
 
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();
-
-	public static RobotState m_robotState = new RobotState(m_robotContainer);
 
 	// OI
 	public static OI m_OI = new OI(m_robotContainer);

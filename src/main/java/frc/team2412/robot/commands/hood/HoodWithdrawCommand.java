@@ -17,7 +17,6 @@ public class HoodWithdrawCommand extends CommandBase {
 		m_HoodSubsystem.servoWithdraw();
 	}
 
-//adrak sucks
 	@Override
 	public boolean isFinished() {
 		return true;

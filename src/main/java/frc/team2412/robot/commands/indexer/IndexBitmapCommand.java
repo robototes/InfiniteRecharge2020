@@ -1,101 +1,30 @@
 package frc.team2412.robot.commands.indexer;
 
+import static frc.team2412.robot.subsystems.constants.IndexerConstants.VALID_SENSOR_BITS;
+
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team2412.robot.RobotState;
-import frc.team2412.robot.RobotState.IntakeDirection;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
+import frc.team2412.robot.subsystems.constants.IndexerConstants.IndexCommandEntry;
+import frc.team2412.robot.subsystems.constants.IndexerConstants.IndexDirection;
+import frc.team2412.robot.subsystems.constants.IntakeConstants;
+import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeDirection;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class IndexBitmapCommand extends CommandBase {
+
 	private final IndexerSubsystemSuperStructure m_indexerSubsystem;
-	private static IntakeDirection s_lastIntakeDirection = IntakeDirection.NONE;
+	private static IntakeConstants.IntakeDirection s_lastIntakeDirection = IntakeConstants.IntakeDirection.NONE;
+	private final IntakeMotorSubsystem m_intakeMotorSubsystem;
 	private double lastIndexRunTimeMicroSec = 0.0;
 
-	static enum IndexDirection {
-		IN, OUT, OFF, DISABLED
-	}
-
-	static final int VALID_SENSOR_BITS = 0b111111;
-
-	static enum IndexCommandEntry {
-		// Bit flags Intake Off Intake On
-		// Valid expected Front motor Back motor Front motor Back motor
-
-		// Don't move, as there's nothing in the outer slots -or-
-		// Back side has inner and outer slots full, front side only has middle slot
-		// full
-		A(0b100001, 0b000000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
-		B(0b101111, 0b101010, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.OFF),
-
-		// Back side has outer slot full and inner slot empty, so move back ball(s) in
-		// Front side has outer slot empty and inner or middle slot full, so don't move
-		C(0b101111, 0b100010, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN),
-		D(0b101101, 0b100100, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN),
-
-		// Back side has outer and inner slots full, so don't move. Front side has inner
-		// slot full so disable taking more balls
-		E(0b101100, 0b101100, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.DISABLED, IndexDirection.DISABLED),
-		// Back side has outer slot full and inner slot empty, so move balls in. Front
-		// side has inner slot full so disable taking more balls
-		F(0b101101, 0b100101, IndexDirection.OFF, IndexDirection.IN, IndexDirection.DISABLED, IndexDirection.DISABLED),
-
-		// Back side has outer and inner slots full and front side is empty, so move
-		// front side balls in if intake is on
-		G(0b101111, 0b101000, IndexDirection.OFF, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF),
-
-		// Back side has outer slot empty and front side has inner slot empty and outer
-		// slot full, so move front side in
-		H(0b100101, 0b000001, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF),
-		// Back side has inner and outer slots full, and front side has inner slot empty
-		// and outer slot full, so move front side in
-		J(0b101101, 0b101001, IndexDirection.IN, IndexDirection.OFF, IndexDirection.IN, IndexDirection.OFF),
-
-		// Back side has outer slot full and inner slot open, and front side has inner
-		// and middle open. Move back side in, and front side in if intake is on
-		K(0b101110, 0b100000, IndexDirection.OFF, IndexDirection.IN, IndexDirection.IN, IndexDirection.IN),
-
-		// Back side has outer slot full and inner slot open, and front side has inner
-		// open and middle and outer full. Move both sides in
-		L(0b101111, 0b100011, IndexDirection.IN, IndexDirection.IN, IndexDirection.IN, IndexDirection.IN),
-
-		// Back side has outer slot open and front side has inner and outer slots full,
-		// so move back side out and front side in
-		M(0b100101, 0b000101, IndexDirection.IN, IndexDirection.OUT, IndexDirection.IN, IndexDirection.OUT);
-
-		public final int validBits;
-		public final int expectedBits;
-		private final IndexDirection intakeOffFrontIndexDir;
-		private final IndexDirection intakeOffBackIndexDir;
-		private final IndexDirection intakeOnFrontIndexDir;
-		private final IndexDirection intakeOnBackIndexDir;
-
-		// Get index motor directions for a given Intake state
-		public IndexDirection getFrontIndexDirection(final boolean intakeOn) {
-			return intakeOn ? intakeOnFrontIndexDir : intakeOffFrontIndexDir;
-		}
-
-		public IndexDirection getBackIndexDirection(final boolean intakeOn) {
-			return intakeOn ? intakeOnBackIndexDir : intakeOffBackIndexDir;
-		}
-
-		private IndexCommandEntry(final int validBits, final int expectedBits,
-				final IndexDirection intakeOffFrontIndexDir, final IndexDirection intakeOffBackIndexDir,
-				final IndexDirection intakeOnFrontIndexDir, final IndexDirection intakeOnBackIndexDir) {
-			assert ((validBits & expectedBits) == expectedBits);
-			this.validBits = validBits;
-			this.expectedBits = expectedBits;
-			this.intakeOffFrontIndexDir = intakeOffFrontIndexDir;
-			this.intakeOffBackIndexDir = intakeOffBackIndexDir;
-			this.intakeOnFrontIndexDir = intakeOnFrontIndexDir;
-			this.intakeOnBackIndexDir = intakeOnBackIndexDir;
-		}
-	}
-
-	public IndexBitmapCommand(final IndexerSubsystemSuperStructure indexerMotorSubsystem) {
+	public IndexBitmapCommand(final IndexerSubsystemSuperStructure indexerMotorSubsystem,
+			final IntakeMotorSubsystem intakeMotorSubsystem) {
 		m_indexerSubsystem = indexerMotorSubsystem;
+		m_intakeMotorSubsystem = intakeMotorSubsystem;
 
 		// Only require the index motor subsystem, as the sensors can be read by
 		// multiple commands simultaneously without issues
@@ -104,7 +33,7 @@ public class IndexBitmapCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		IntakeDirection realIntakeDirection = RobotState.getintakeDirection();
+		IntakeDirection realIntakeDirection = m_intakeMotorSubsystem.getIntakeDirection();
 		final IntakeDirection intakeDirection;
 		final boolean intakeOn = (realIntakeDirection != IntakeDirection.NONE);
 		if (realIntakeDirection == IntakeDirection.NONE) {
@@ -121,20 +50,14 @@ public class IndexBitmapCommand extends CommandBase {
 		int sensorBitmap = getSensorBitmap(intakeDirection);
 
 		Arrays.stream(IndexCommandEntry.values()) // loop over all the different IndexCommandEntries
-				.filter(c -> c.expectedBits == (sensorBitmap & c.validBits)) // Remove the commands that dont meet this
-																				// condition
-				.findAny() // Find one of the filtered commands
-				.ifPresentOrElse(command -> runCommandPresent(command, intakeDirection, intakeOn), // Run the code if
-																									// the command
-																									// exists
-						m_indexerSubsystem::setAllSubsystemsToZero); // If the command doesnt exist turn all of index
-																		// off
-
-		// System.out.println(
-		// "Sensor values: " + Integer.toBinaryString(sensorBitmap) +
-		// ", Index command: " + indexCommand.ordinal() +
-		// ", Intake on: " + intakeOn +
-		// ", Intake dir: " + intakeDirection.ordinal());
+				.filter(c -> c.expectedBits == (sensorBitmap & c.validBits))
+				// Remove the commands that dont meet this condition
+				.findAny()
+				// Find one of the filtered commands
+				.ifPresentOrElse(command -> runCommandPresent(command, intakeDirection, intakeOn),
+						m_indexerSubsystem::setAllSubsystemsToZero);
+		// Run the code if the command exists. If the command doesnt exist turn all of
+		// index off
 	}
 
 	private void runCommandPresent(IndexCommandEntry indexCommand, IntakeDirection intakeDirection,
@@ -153,20 +76,20 @@ public class IndexBitmapCommand extends CommandBase {
 		m_indexerSubsystem.getIndexerMotorLiftSubsystem()
 				.set(runLift ? IndexerConstants.LIFT_DOWN_SPEED_FOR_INDEX : 0.0);
 		switch (intakeDirection) {
-			case BOTH:
-			case FRONT:
-				m_indexerSubsystem.setFrontAndBack(getIndexerMotorSpeed(frontIndexDirection),
-						getIndexerMotorSpeed(backIndexDirection));
-				break;
-			case BACK:
-				// Swap the front & back motor values since the IndexCommandEntry assumes intake
-				// from the front
-				m_indexerSubsystem.setFrontAndBack(getIndexerMotorSpeed(backIndexDirection),
-						getIndexerMotorSpeed(frontIndexDirection));
-				break;
-			default:
-				m_indexerSubsystem.setFrontAndBack(0, 0);
-				break;
+		case BOTH:
+		case FRONT:
+			m_indexerSubsystem.setFrontAndBack(getIndexerMotorSpeed(frontIndexDirection),
+					getIndexerMotorSpeed(backIndexDirection));
+			break;
+		case BACK:
+			// Swap the front & back motor values since the IndexCommandEntry assumes intake
+			// from the front
+			m_indexerSubsystem.setFrontAndBack(getIndexerMotorSpeed(backIndexDirection),
+					getIndexerMotorSpeed(frontIndexDirection));
+			break;
+		default:
+			m_indexerSubsystem.setFrontAndBack(0, 0);
+			break;
 		}
 	}
 
@@ -178,19 +101,19 @@ public class IndexBitmapCommand extends CommandBase {
 	private int getSensorBitmap(IntakeDirection intakeDirection) {
 		int sensorBitmap = 0;
 		switch (intakeDirection) {
-			case BOTH:
-			case FRONT:
-				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapFrontLSB()
-						& VALID_SENSOR_BITS);
-				break;
-			case BACK:
-				sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapBackLSB()
-						& VALID_SENSOR_BITS);
-				break;
-			case NONE:
-			default:
-				assert (false);
-				break;
+		case BOTH:
+		case FRONT:
+			sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapFrontLSB()
+					& VALID_SENSOR_BITS);
+			break;
+		case BACK:
+			sensorBitmap = (m_indexerSubsystem.getIndexerSensorSubsystem().getSensorBitmapBackLSB()
+					& VALID_SENSOR_BITS);
+			break;
+		case NONE:
+		default:
+			assert (false);
+			break;
 		}
 		return sensorBitmap;
 	}
@@ -204,13 +127,13 @@ public class IndexBitmapCommand extends CommandBase {
 
 	private double getIndexerMotorSpeed(IndexDirection direction) {
 		switch (direction) {
-			case IN:
-				return -IndexerConstants.MAX_SPEED;
-			case OUT:
-				return IndexerConstants.MAX_SPEED;
-			case OFF:
-			default:
-				return 0;
+		case IN:
+			return -IndexerConstants.MAX_SPEED;
+		case OUT:
+			return IndexerConstants.MAX_SPEED;
+		case OFF:
+		default:
+			return 0;
 		}
 	}
 }

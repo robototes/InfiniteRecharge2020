@@ -2,15 +2,10 @@ package frc.team2412.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotState;
 import frc.team2412.robot.subsystems.constants.LiftConstants.LiftState;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class LiftSubsystem extends SubsystemBase implements Loggable {
+public class LiftSubsystem extends SubsystemBase {
 
-	// creates a Solenoid to use, mainly for ease
-	@Log(tabName = "Lift")
 	private DoubleSolenoid m_liftUpDown;
 
 	public LiftSubsystem(DoubleSolenoid liftUpDown) {
@@ -27,7 +22,10 @@ public class LiftSubsystem extends SubsystemBase implements Loggable {
 
 	private void setLift(LiftState value) {
 		m_liftUpDown.set(value.value);
-		RobotState.m_liftSolenoidState = value;
+	}
+
+	public LiftState getLiftState() {
+		return m_liftUpDown.get() == LiftState.UP.value ? LiftState.UP : LiftState.DOWN;
 	}
 
 }

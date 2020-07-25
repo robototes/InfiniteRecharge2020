@@ -14,21 +14,13 @@ import com.revrobotics.ControlType;
 import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.RobotState;
-import frc.team2412.robot.RobotState.ClimbState;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
+public class ClimbMotorSubsystem extends SubsystemBase {
 
-	@Log.ToString(tabName = "Climb")
 	public Distance m_currentClimbHeight;
 
-	@Log.NumberBar(min = -1, max = 1, name = "Left Climb Speed", tabName = "Climb", methodName = "get")
 	private CANSparkMax m_leftClimbMotor;
-	@Log.NumberBar(min = -1, max = 1, name = "Right Climb Speed", tabName = "Climb", methodName = "get")
 	private CANSparkMax m_rightClimbMotor;
 
 	private CANEncoder m_rightEncoder;
@@ -36,7 +28,6 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 
 	private CANPIDController m_pidController;
 
-	@Log.ToString(tabName = "Climb")
 	private ClimbHeight reference;
 
 	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
@@ -81,15 +72,12 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 		m_currentClimbHeight = new Distance(heightFromOffset).add(CLIMB_OFFSET_HEIGHT);
 	}
 
-	@Config.NumberSlider
 	public void setMotors(double value) {
 		// left : 0-75
 		// right: -75 - 0
 		setMotor(value, m_rightClimbMotor, m_rightEncoder);
 		setMotor(value, m_leftClimbMotor, m_leftEncoder);
 
-		RobotState.m_climbState = m_rightClimbMotor.get() != 0 || m_leftClimbMotor.get() != 0 ? ClimbState.CLIMBING
-				: ClimbState.NOT_CLIMBING;
 	}
 
 	private void setMotor(double value, CANSparkMax motor, CANEncoder encoder) {
@@ -107,12 +95,14 @@ public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
 		double wantedRotations = MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
 		m_pidController.setReference(wantedRotations, ControlType.kPosition);
-		RobotState.m_climbState = RobotState.ClimbState.CLIMBING;
-
 	}
 
 	public double getCurrentDraw() {
 		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
+	}
+
+	public boolean getIsClimbing() {
+		return m_leftClimbMotor.get() != 0 || m_rightClimbMotor.get() != 0;
 	}
 
 }

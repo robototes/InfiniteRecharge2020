@@ -58,9 +58,10 @@ public class RobotMapConstants {
 		ONE(CANBus.INTAKE1.id, CANBus.INDEX1.id), TWO(CANBus.INTAKE2.id, CANBus.INDEX2.id),
 		THREE(CANBus.INTAKE3.id, CANBus.INDEX3.id);
 
-		private int indexCANID, intakeCANID;
+		private final int indexCANID;
+		private final int intakeCANID;
 
-		IndexIntakeModule(int intakeID, int indexID) {
+		private IndexIntakeModule(int intakeID, int indexID) {
 			indexCANID = indexID;
 			intakeCANID = intakeID;
 		}
@@ -73,5 +74,5 @@ public class RobotMapConstants {
 			return indexCANID;
 		}
 	}
-	
+
 }

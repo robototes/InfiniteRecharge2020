@@ -17,12 +17,8 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
-import frc.team2412.robot.RobotState;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
+public class DriveBaseSubsystem extends SubsystemBase {
 
 	public WPI_TalonFX m_leftMotor1, m_leftMotor2, m_rightMotor1, m_rightMotor2;
 
@@ -30,7 +26,6 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public Solenoid m_gearShifter;
 
-	@Log.Dial(max = 1, min = -1, showValue = true, tabName = "Drivebase Subsystem")
 	public double m_currentYSpeed;
 
 	private DifferentialDriveOdometry m_odometry;
@@ -38,15 +33,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	@SuppressWarnings("unused")
 	private double m_rightMotorRevolutions, m_leftMotorRevolutions;
 
-	@Config.ToggleButton(name = "Toggle joystick drive", tabName = "Drivebase Subsystem")
 	private boolean oneJoystickDrive = false;
 
-	@Log.BooleanBox(name = "In 1 joystick", tabName = "Drivebase Subsystem", colorWhenFalse = "red", colorWhenTrue = "green")
 	private boolean inOneJoystickDrive = oneJoystickDrive;
 
-//	DifferentialDrive m_drive;
+	// DifferentialDrive m_drive;
 
-	@Log(tabName = "Drivebase Subsystem")
 	public double m_driveBaseCurrentDraw;
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftMotor1, WPI_TalonFX leftMotor2,
@@ -63,7 +55,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 		m_rightMotor1.setInverted(true);
 		m_rightMotor2.setInverted(true);
 
-//		m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+		// m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
 		m_gyro = gyro;
 		m_gearShifter = gearShifter;
@@ -91,12 +83,12 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	}
 
 	public void oneJoystickDrive(Joystick joystick) {
-//		m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
+		// m_drive.arcadeDrive(-1 * joystick.getY(), joystick.getTwist(), true);
 	}
 
 	public void setDriveSpeed(double forwardness, double turn) {
-//		m_drive.arcadeDrive(forwardness, turn);
-//		m_currentYSpeed = forwardness;
+		// m_drive.arcadeDrive(forwardness, turn);
+		// m_currentYSpeed = forwardness;
 	}
 
 	public void angleDrive(double angle) {
@@ -118,12 +110,10 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 
 	public void shiftToHighGear() {
 		m_gearShifter.set(true);
-		RobotState.m_gearState = RobotState.GearboxState.HIGH;
 	}
 
 	public void shiftToLowGear() {
 		m_gearShifter.set(false);
-		RobotState.m_gearState = RobotState.GearboxState.LOW;
 	}
 
 	public double getGyroHeading() {
@@ -178,11 +168,7 @@ public class DriveBaseSubsystem extends SubsystemBase implements Loggable {
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		m_leftMotor1.setVoltage(leftVolts);
 		m_rightMotor1.setVoltage(rightVolts);
-//		m_drive.feed();
-	}
-
-	public double getTurnRate() {
-		return m_gyro.getRate() * (kGyroReversed ? -1.0 : 1.0);
+		// m_drive.feed();
 	}
 
 }
