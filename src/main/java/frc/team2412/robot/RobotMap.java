@@ -5,8 +5,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.Rev2mDistanceSensor.Port;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.Rev2mDistanceSensor;
 import com.robototes.sensors.Limelight;
 import com.robototes.sensors.Limelight.CamMode;
 import com.robototes.sensors.Limelight.LEDMode;
@@ -158,6 +160,7 @@ public class RobotMap {
 	public static DigitalInput frontInner = INDEX_CONNECTED ? new DigitalInput(DIOPort.FRONT_INNER_SENSOR.id) : null;
 	public static DigitalInput frontMid = INDEX_CONNECTED ? new DigitalInput(DIOPort.FRONT_MID_SENSOR.id) : null;
 	public static DigitalInput front = INDEX_CONNECTED ? new DigitalInput(DIOPort.FRONT_SENSOR.id) : null;
+	public static Rev2mDistanceSensor tof2mDistance = new Rev2mDistanceSensor(Port.kOnboard);
 
 	private static class IndexIntakeSelector {
 		IndexIntakeSelector() {

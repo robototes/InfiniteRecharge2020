@@ -9,6 +9,7 @@ package frc.team2412.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -124,6 +125,9 @@ public class Robot extends TimedRobot implements Loggable {
 			new IndexBitmapCommand(m_robotContainer.m_indexerMotorSubsystem)
 		);
 
+		RobotMap.tof2mDistance.setAutomaticMode(true);
+		RobotMap.tof2mDistance.setEnabled(true);
+
 		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// 		new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () -> m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}
@@ -135,11 +139,17 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void teleopPeriodic() {
 		timeRemaining -= 0.02;
+		final boolean rangeValid = RobotMap.tof2mDistance.isRangeValid();
+		SmartDashboard.putBoolean("2m Distance value", rangeValid);
+		if(rangeValid) {
+			SmartDashboard.putNumber("2m Distance range", RobotMap.tof2mDistance.getRange());
+			SmartDashboard.putNumber("2m Distance timestamp", RobotMap.tof2mDistance.getTimestamp());
+		  }
 	}
 
-		@Override
-		public void disabledInit() {
-
+	@Override
+	public void disabledInit() {
+		RobotMap.tof2mDistance.setEnabled(false);
 	}
 
 	@Override
