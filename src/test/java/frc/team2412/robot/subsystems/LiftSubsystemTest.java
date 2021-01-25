@@ -3,6 +3,7 @@ package frc.team2412.robot.subsystems;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.robototes.helpers.MockHardwareExtension;
@@ -37,11 +38,13 @@ public class LiftSubsystemTest extends TestBase {
 		realLiftSubsystem = new LiftSubsystem(mockedLiftSolenoid);
 	}
 
+	@Ignore
 	@Test
 	public void LiftDownCommandTest() {
 		test(new LiftDownCommand(realLiftSubsystem, mockedIndexerMotorSubsystem), mockedLiftSolenoid, Value.kReverse);
 	}
 
+	@Ignore
 	@Test
 	public void LiftUpCommandTest() {
 		test(new LiftUpCommand(realLiftSubsystem, mockedIndexerMotorSubsystem), mockedLiftSolenoid, Value.kForward);

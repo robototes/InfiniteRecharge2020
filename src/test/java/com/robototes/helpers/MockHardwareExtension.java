@@ -1,8 +1,8 @@
 package com.robototes.helpers;
 
 import edu.wpi.first.hal.HAL;
-import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 
 /**
  * JUnit 5 testing extension which ensures all WPILib foundational bits are
