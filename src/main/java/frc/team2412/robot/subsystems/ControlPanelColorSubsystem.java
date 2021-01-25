@@ -16,40 +16,40 @@ import frc.team2412.robot.subsystems.constants.ControlPanelConstants;
 
 public class ControlPanelColorSubsystem extends SubsystemBase {
 
-	private ColorSensorV3 m_colorSensor;
-	private ColorMatch m_colorMatcher = new ColorMatch();
-	private WPI_TalonFX m_wheelMotor;
+	private ColorSensorV3 colorSensor;
+	private ColorMatch colorMatcher = new ColorMatch();
+	private WPI_TalonFX wheelMotor;
 
-	private Color m_currentColor;
+	private Color currentColor;
 
-	private Color m_startColor;
-	private Color m_ColorUnderBar;
+	private Color startColor;
+	private Color ColorUnderBar;
 	private int rotationCount = 0;
 
 	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, WPI_TalonFX motor) {
-		this.m_colorSensor = colorSensor;
-		this.m_wheelMotor = motor;
+		this.colorSensor = colorSensor;
+		this.wheelMotor = motor;
 
-		m_colorMatcher.addColorMatch(redTarget);
-		m_colorMatcher.addColorMatch(blueTarget);
-		m_colorMatcher.addColorMatch(greenTarget);
-		m_colorMatcher.addColorMatch(yellowTarget);
+		colorMatcher.addColorMatch(redTarget);
+		colorMatcher.addColorMatch(blueTarget);
+		colorMatcher.addColorMatch(greenTarget);
+		colorMatcher.addColorMatch(yellowTarget);
 	}
 
 	public Color colorMatch(Color detectedColor) {
-		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+		ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
 		return match.color;
 
 	}
 
-	public String colorToString(Color m_color) {
-		if (m_color.equals(blueTarget))
+	public String colorToString(Color color) {
+		if (color.equals(blueTarget))
 			return "blue";
-		if (m_color.equals(greenTarget))
+		if (color.equals(greenTarget))
 			return "green";
-		if (m_color.equals(redTarget))
+		if (color.equals(redTarget))
 			return "red";
-		if (m_color.equals(yellowTarget))
+		if (color.equals(yellowTarget))
 			return "yellow";
 		else {
 			return "Unknown";
@@ -72,29 +72,29 @@ public class ControlPanelColorSubsystem extends SubsystemBase {
 
 	public void rotateControlPanel() {
 		rotationCount = 0;
-		m_startColor = colorMatch(m_colorSensor.getColor());
-		m_wheelMotor.set(0.5);
+		startColor = colorMatch(colorSensor.getColor());
+		wheelMotor.set(0.5);
 		while (rotationCount <= 7) {
-			m_currentColor = colorMatch(m_colorSensor.getColor());
-			if (m_currentColor.equals(m_startColor)) {
+			currentColor = colorMatch(colorSensor.getColor());
+			if (currentColor.equals(startColor)) {
 				rotationCount++;
 			}
 		}
-		m_wheelMotor.set(0);
+		wheelMotor.set(0);
 	}
 
 	public void setToTargetColor() {
 
-		m_currentColor = colorMatch(m_colorSensor.getColor());
-		m_ColorUnderBar = getColorUnderBar(m_currentColor);
+		currentColor = colorMatch(colorSensor.getColor());
+		ColorUnderBar = getColorUnderBar(currentColor);
 
-		while (m_ColorUnderBar != ControlPanelConstants.TargetColor) {
-			m_wheelMotor.set(0.25);
-			m_currentColor = colorMatch(m_colorSensor.getColor());
-			m_ColorUnderBar = getColorUnderBar(m_currentColor);
+		while (ColorUnderBar != ControlPanelConstants.TargetColor) {
+			wheelMotor.set(0.25);
+			currentColor = colorMatch(colorSensor.getColor());
+			ColorUnderBar = getColorUnderBar(currentColor);
 		}
 
-		m_wheelMotor.set(0);
+		wheelMotor.set(0);
 
 	}
 }

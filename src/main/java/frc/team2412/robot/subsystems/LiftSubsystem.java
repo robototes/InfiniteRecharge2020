@@ -6,10 +6,10 @@ import frc.team2412.robot.subsystems.constants.LiftConstants.LiftState;
 
 public class LiftSubsystem extends SubsystemBase {
 
-	private DoubleSolenoid m_liftUpDown;
+	private DoubleSolenoid liftDoubleSolenoid;
 
-	public LiftSubsystem(DoubleSolenoid liftUpDown) {
-		this.m_liftUpDown = liftUpDown;
+	public LiftSubsystem(DoubleSolenoid liftDoubleSolenoid) {
+		this.liftDoubleSolenoid = liftDoubleSolenoid;
 	}
 
 	public void liftDown() {
@@ -21,11 +21,11 @@ public class LiftSubsystem extends SubsystemBase {
 	}
 
 	private void setLift(LiftState value) {
-		m_liftUpDown.set(value.value);
+		liftDoubleSolenoid.set(value.value);
 	}
 
 	public LiftState getLiftState() {
-		return m_liftUpDown.get() == LiftState.UP.value ? LiftState.UP : LiftState.DOWN;
+		return liftDoubleSolenoid.get() == LiftState.UP.value ? LiftState.UP : LiftState.DOWN;
 	}
 
 }

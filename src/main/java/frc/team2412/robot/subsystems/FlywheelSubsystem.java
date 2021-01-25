@@ -11,35 +11,35 @@ import frc.team2412.robot.subsystems.constants.FlywheelConstants;
 
 public class FlywheelSubsystem extends SubsystemBase {
 
-	private CANSparkMax m_flywheelLeftMotor;
-	private CANEncoder m_leftEncoder;
-	private CANPIDController m_pidLeftController;
+	private CANSparkMax leftMotor;
+	private CANEncoder leftEncoder;
+	private CANPIDController leftPIDController;
 
-	private CANSparkMax m_flywheelRightMotor;
-	private CANEncoder m_rightEncoder;
-	private CANPIDController m_pidRightController;
+	private CANSparkMax rightMotor;
+	private CANEncoder rightEncoder;
+	private CANPIDController rightPIDController;
 
-	public FlywheelSubsystem(CANSparkMax flywheelLeftMotor, CANSparkMax flywheelRightMotor) {
-		m_flywheelLeftMotor = flywheelLeftMotor;
-		m_flywheelRightMotor = flywheelRightMotor;
+	public FlywheelSubsystem(CANSparkMax leftMotor, CANSparkMax rightMotor) {
+		this.leftMotor = leftMotor;
+		this.rightMotor = rightMotor;
 
-		m_flywheelRightMotor.setInverted(true);
+		this.rightMotor.setInverted(true);
 
-		configureMotor(m_flywheelLeftMotor, m_leftEncoder, m_pidLeftController);
-		configureMotor(m_flywheelRightMotor, m_rightEncoder, m_pidRightController);
+		configureMotor(this.leftMotor, leftEncoder, leftPIDController);
+		configureMotor(this.rightMotor, rightEncoder, rightPIDController);
 		setPIDtoDefault();
 	}
 
 	private void configureMotor(CANSparkMax motor, CANEncoder encoder, CANPIDController pidController) {
 		encoder = motor.getEncoder();
-		pidController = m_flywheelRightMotor.getPIDController();
+		pidController = rightMotor.getPIDController();
 		motor.setIdleMode(IdleMode.kCoast);
 	}
 
 	public void setSpeed(double speed) {
 		if (speed <= 0) {
-			m_flywheelLeftMotor.set(speed);
-			m_flywheelRightMotor.set(speed);
+			leftMotor.set(speed);
+			rightMotor.set(speed);
 		}
 	}
 
@@ -51,54 +51,54 @@ public class FlywheelSubsystem extends SubsystemBase {
 	}
 
 	public void shoot() {
-		// m_flywheelLeftMotor.set(1.0);
+		// flywheelLeftMotor.set(1.0);
 	}
 
 	public void stop() {
-		// m_flywheelLeftMotor.set(0.0);
+		// flywheelLeftMotor.set(0.0);
 	}
 
 	public double getSpeed() {
-		return m_flywheelLeftMotor.get();
+		return leftMotor.get();
 	}
 
 	public void setRPM(double wantedVelocity) {
 		// double wantedRPM = -NEO_RPM_TO_FLYWHEEL_MPS.calculateRatio(wantedVelocity);
 
-		m_pidLeftController.setReference(-wantedVelocity, ControlType.kVelocity);
-		m_pidRightController.setReference(-wantedVelocity, ControlType.kVelocity);
+		leftPIDController.setReference(-wantedVelocity, ControlType.kVelocity);
+		rightPIDController.setReference(-wantedVelocity, ControlType.kVelocity);
 	}
 
 	public double currentLeftSpeed() {
-		return m_leftEncoder.getVelocity();
+		return leftEncoder.getVelocity();
 	}
 
 	public double currentRightSpeed() {
-		return -m_rightEncoder.getVelocity();
+		return -rightEncoder.getVelocity();
 	}
 
 	public void setP(double newP) {
-		m_pidLeftController.setP(newP);
-		m_pidRightController.setP(newP);
+		leftPIDController.setP(newP);
+		rightPIDController.setP(newP);
 	}
 
 	public void setI(double newI) {
-		m_pidLeftController.setI(newI);
-		m_pidRightController.setI(newI);
+		leftPIDController.setI(newI);
+		rightPIDController.setI(newI);
 	}
 
 	public void setD(double newD) {
-		m_pidLeftController.setD(newD);
-		m_pidRightController.setD(newD);
+		leftPIDController.setD(newD);
+		rightPIDController.setD(newD);
 	}
 
 	public void setFF(double newFF) {
-		m_pidLeftController.setFF(newFF);
-		m_pidRightController.setFF(newFF);
+		leftPIDController.setFF(newFF);
+		rightPIDController.setFF(newFF);
 	}
 
 	public double getCurrentDraw() {
-		return m_flywheelLeftMotor.getOutputCurrent() + m_flywheelRightMotor.getOutputCurrent();
+		return leftMotor.getOutputCurrent() + rightMotor.getOutputCurrent();
 	}
 
 }

@@ -7,12 +7,12 @@ import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbState;
 public class ClimbLiftSubsystem extends SubsystemBase {
 
 	// For Pneumatics
-	private Solenoid m_leftSolenoid;
-	private Solenoid m_rightSolenoid;
+	private Solenoid leftSolenoid;
+	private Solenoid rightSolenoid;
 
 	public ClimbLiftSubsystem(Solenoid leftSolenoid, Solenoid rightSolenoid) {
-		m_leftSolenoid = leftSolenoid;
-		m_rightSolenoid = rightSolenoid;
+		this.leftSolenoid = leftSolenoid;
+		this.rightSolenoid = rightSolenoid;
 	}
 
 	public void deployRails() {
@@ -24,7 +24,7 @@ public class ClimbLiftSubsystem extends SubsystemBase {
 	}
 
 	private void setClimb(ClimbState newState) {
-		m_leftSolenoid.set(newState.value);
-		m_rightSolenoid.set(newState.value);
+		leftSolenoid.set(newState.value);
+		rightSolenoid.set(newState.value);
 	}
 }

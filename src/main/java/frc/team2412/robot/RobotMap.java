@@ -44,10 +44,10 @@ public class RobotMap {
 	// -------------------------------------------------------------------------
 
 	// DriveBase Motors
-	public static WPI_TalonFX driveLeftFront = new WPI_TalonFX(CANBus.DRIVE_LEFT_FRONT.id);
-	public static WPI_TalonFX driveLeftBack = new WPI_TalonFX(CANBus.DRIVE_LEFT_BACK.id);
-	public static WPI_TalonFX driveRightFront = new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id);
-	public static WPI_TalonFX driveRightBack = new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id);
+	public static WPI_TalonFX driveLeftFrontMotor = new WPI_TalonFX(CANBus.DRIVE_LEFT_FRONT.id);
+	public static WPI_TalonFX driveLeftBackMotor = new WPI_TalonFX(CANBus.DRIVE_LEFT_BACK.id);
+	public static WPI_TalonFX driveRightFrontMotor = new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id);
+	public static WPI_TalonFX driveRightBackMotor = new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id);
 	// DriveBase
 	public static final Gyro driveGyro = new AHRS();
 
@@ -55,12 +55,12 @@ public class RobotMap {
 	public static Solenoid driveSolenoid = new Solenoid(PneumaticPort.DRIVE.id);
 
 	// climb Pneumatics
-	public static Solenoid climbLeftPneumatic = new Solenoid(PneumaticPort.CLIMB_LEFT.id);
-	public static Solenoid climbRightPneumatic = new Solenoid(PneumaticPort.CLIMB_RIGHT.id);
+	public static Solenoid climbLeftSolenoid = new Solenoid(PneumaticPort.CLIMB_LEFT.id);
+	public static Solenoid climbRightSolenoid = new Solenoid(PneumaticPort.CLIMB_RIGHT.id);
 
 	// Motors
-	public static CANSparkMax leftClimbMotor = new CANSparkMax(CANBus.CLIMB1.id, MotorType.kBrushless);
-	public static CANSparkMax rightClimbMotor = new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless);
+	public static CANSparkMax climbLeftMotor = new CANSparkMax(CANBus.CLIMB1.id, MotorType.kBrushless);
+	public static CANSparkMax climbRightMotor = new CANSparkMax(CANBus.CLIMB2.id, MotorType.kBrushless);
 
 	// INDEX SUBSYSTEM
 	// ---------------------------------------------------------------------------
@@ -74,12 +74,12 @@ public class RobotMap {
 	public static CANSparkMax intakeFrontMotor, intakeBackMotor;
 
 	// sensors
-	public static DigitalInput back = new DigitalInput(DIOPort.BACK_SENSOR.id);
-	public static DigitalInput backMid = new DigitalInput(DIOPort.BACK_MID_SENSOR.id);
-	public static DigitalInput backInner = new DigitalInput(DIOPort.BACK_INNER_SENSOR.id);
-	public static DigitalInput frontInner = new DigitalInput(DIOPort.FRONT_INNER_SENSOR.id);
-	public static DigitalInput frontMid = new DigitalInput(DIOPort.FRONT_MID_SENSOR.id);
-	public static DigitalInput front = new DigitalInput(DIOPort.FRONT_SENSOR.id);
+	public static DigitalInput indexBackSensor = new DigitalInput(DIOPort.BACK_SENSOR.id);
+	public static DigitalInput indexBackMidSensor = new DigitalInput(DIOPort.BACK_MID_SENSOR.id);
+	public static DigitalInput indexBackInnerSensor = new DigitalInput(DIOPort.BACK_INNER_SENSOR.id);
+	public static DigitalInput indexFrontInnerSensor = new DigitalInput(DIOPort.FRONT_INNER_SENSOR.id);
+	public static DigitalInput indexFrontMidSensor = new DigitalInput(DIOPort.FRONT_MID_SENSOR.id);
+	public static DigitalInput indexFrontSensor = new DigitalInput(DIOPort.FRONT_SENSOR.id);
 
 	private static class IndexIntakeSelector {
 		IndexIntakeSelector() {
@@ -108,8 +108,8 @@ public class RobotMap {
 	public static IndexIntakeSelector indexSelector = new IndexIntakeSelector();
 
 	// INDEXER CONTROLS THESE NOT INTAKE FYI
-	public static DigitalInput intakeFront = new DigitalInput(DIOPort.INTAKE_FRONT_SENSOR.id);
-	public static DigitalInput intakeBack = new DigitalInput(DIOPort.INTAKE_BACK_SENSOR.id);
+	public static DigitalInput intakeFrontSensor = new DigitalInput(DIOPort.INTAKE_FRONT_SENSOR.id);
+	public static DigitalInput intakeBackSensor = new DigitalInput(DIOPort.INTAKE_BACK_SENSOR.id);
 
 	// Turret Subsystem
 	// ------------------------------------------------------------------------------
@@ -128,12 +128,12 @@ public class RobotMap {
 
 	// Intake Subsystem
 	// -------------------------------------------------------------------------------
-	public static Solenoid frontIntakeliftSolenoid = new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id);
-	public static Solenoid backIntakeLiftSolenoid = new Solenoid(PneumaticPort.INTAKE_BACK_UP.id);
+	public static Solenoid intakeFrontSolenoid = new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id);
+	public static Solenoid intakeBackSolenoid = new Solenoid(PneumaticPort.INTAKE_BACK_UP.id);
 
 	// Lift Subsystem
 	// -------------------------------------------------------------------------------
-	public static DoubleSolenoid liftUpDown = new DoubleSolenoid(PneumaticPort.LIFT_UP.id, PneumaticPort.LIFT_DOWN.id);
+	public static DoubleSolenoid liftDoubleSolenoid = new DoubleSolenoid(PneumaticPort.LIFT_UP.id, PneumaticPort.LIFT_DOWN.id);
 
 	// CONTROL PANEL SUBSYSTEM
 	// ----------------------------------------------------------------------

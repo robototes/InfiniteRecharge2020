@@ -73,7 +73,7 @@ public class Autonomous {
 	public void getTrajectoryPossible() {
 
 		Distance hypoteneuseinInch = new Distance(
-				RobotMap.m_robotContainer.m_limelightSubsystem.m_distanceData.m_distance.value());
+				RobotMap.m_robotContainer.m_limelightSubsystem.distanceData.m_distance.value());
 
 		Distance hypotenuseinMeters = new Distance(hypoteneuseinInch.distance, DistanceUnits.METER);
 

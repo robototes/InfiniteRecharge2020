@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.team2412.robot.commands.climb.ClimbDeployRailsCommand;
+import frc.team2412.robot.commands.climb.ClimbLiftUpCommand;
 import frc.team2412.robot.commands.climb.ClimbJoystickCommand;
-import frc.team2412.robot.commands.climb.ClimbRetractRailsCommand;
+import frc.team2412.robot.commands.climb.ClimbLiftDownCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
@@ -233,8 +233,8 @@ public class OI {
 		}
 
 		climbModeButton.whileHeld(new ClimbJoystickCommand(codriverManualStick, robotContainer.m_climbMotorSubsystem));
-		climbModeButton.whenPressed(new ClimbDeployRailsCommand(robotContainer.m_climbLiftSubsystem));
-		climbModeButton.whenReleased(new ClimbRetractRailsCommand(robotContainer.m_climbLiftSubsystem));
+		climbModeButton.whenPressed(new ClimbLiftUpCommand(robotContainer.m_climbLiftSubsystem));
+		climbModeButton.whenReleased(new ClimbLiftDownCommand(robotContainer.m_climbLiftSubsystem));
 	}
 
 	public void bindLiftControls(RobotContainer robotContainer) {
