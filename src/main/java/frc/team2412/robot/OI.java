@@ -233,7 +233,7 @@ public class OI {
 		}
 
 		climbModeButton.whileHeld(new ClimbJoystickCommand(codriverManualStick, robotContainer.m_climbMotorSubsystem));
-		climbModeButton.whenPressed(new ClimbLiftUpCommand(robotContainer.m_climbLiftSubsystem));
+		climbModeButton.whenPressed(new ClimbLiftUpCommand(robotContainer.m_climbLiftSubsystem, robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		climbModeButton.whenReleased(new ClimbLiftDownCommand(robotContainer.m_climbLiftSubsystem));
 	}
 
