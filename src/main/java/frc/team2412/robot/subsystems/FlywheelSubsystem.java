@@ -11,19 +11,23 @@ import frc.team2412.robot.subsystems.constants.FlywheelConstants;
 
 public class FlywheelSubsystem extends SubsystemBase {
 
-	private CANSparkMax leftMotor;
-	private CANEncoder leftEncoder;
-	private CANPIDController leftPIDController;
+	private final CANSparkMax leftMotor;
+	private final CANEncoder leftEncoder;
+	private final CANPIDController leftPIDController;
 
-	private CANSparkMax rightMotor;
-	private CANEncoder rightEncoder;
-	private CANPIDController rightPIDController;
+	private final CANSparkMax rightMotor;
+	private final CANEncoder rightEncoder;
+	private final CANPIDController rightPIDController;
 
 	public FlywheelSubsystem(CANSparkMax leftMotor, CANSparkMax rightMotor) {
 		this.leftMotor = leftMotor;
-		this.rightMotor = rightMotor;
+		this.leftEncoder = leftMotor.getEncoder();
+		this.leftPIDController = leftMotor.getPIDController();
 
+		this.rightMotor = rightMotor;
 		this.rightMotor.setInverted(true);
+		this.rightEncoder = rightMotor.getEncoder();
+		this.rightPIDController = rightMotor.getPIDController();
 
 		configureMotor(this.leftMotor, leftEncoder, leftPIDController);
 		configureMotor(this.rightMotor, rightEncoder, rightPIDController);
