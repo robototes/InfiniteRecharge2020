@@ -1,5 +1,10 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.blueTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.greenTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.redTarget;
+import static frc.team2412.robot.subsystems.constants.ControlPanelConstants.yellowTarget;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -8,49 +13,43 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ControlPanelConstants;
-import io.github.oblarg.oblog.Loggable;
 
-public class ControlPanelColorSubsystem extends SubsystemBase implements Loggable {
+public class ControlPanelColorSubsystem extends SubsystemBase {
 
-	private ColorSensorV3 m_colorSensor;
-	private ColorMatch m_colorMatcher = new ColorMatch();
-	private WPI_TalonFX m_wheelMotor;
+	private ColorSensorV3 colorSensor;
+	private ColorMatch colorMatcher = new ColorMatch();
+	private WPI_TalonFX wheelMotor;
 
-	private Color m_currentColor;
+	private Color currentColor;
 
-	private Color m_startColor;
-	private Color m_ColorUnderBar;
+	private Color startColor;
+	private Color ColorUnderBar;
 	private int rotationCount = 0;
 
 	public ControlPanelColorSubsystem(ColorSensorV3 colorSensor, WPI_TalonFX motor) {
-		this.m_colorSensor = colorSensor;
-		this.m_wheelMotor = motor;
+		this.colorSensor = colorSensor;
+		this.wheelMotor = motor;
+
+		colorMatcher.addColorMatch(redTarget);
+		colorMatcher.addColorMatch(blueTarget);
+		colorMatcher.addColorMatch(greenTarget);
+		colorMatcher.addColorMatch(yellowTarget);
 	}
 
 	public Color colorMatch(Color detectedColor) {
-		ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
-		if (match.color == ControlPanelConstants.blueTarget) {
-			return ControlPanelConstants.blueTarget;
-		} else if (match.color == ControlPanelConstants.redTarget) {
-			return ControlPanelConstants.redTarget;
-		} else if (match.color == ControlPanelConstants.greenTarget) {
-			return ControlPanelConstants.greenTarget;
-		} else if (match.color == ControlPanelConstants.yellowTarget) {
-			return ControlPanelConstants.yellowTarget;
-		}
-
-		return detectedColor;
+		ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
+		return match.color;
 
 	}
 
-	public String colorToString(Color m_color) {
-		if (m_color.equals(ControlPanelConstants.blueTarget))
+	public String colorToString(Color color) {
+		if (color.equals(blueTarget))
 			return "blue";
-		if (m_color.equals(ControlPanelConstants.greenTarget))
+		if (color.equals(greenTarget))
 			return "green";
-		if (m_color.equals(ControlPanelConstants.redTarget))
+		if (color.equals(redTarget))
 			return "red";
-		if (m_color.equals(ControlPanelConstants.yellowTarget))
+		if (color.equals(yellowTarget))
 			return "yellow";
 		else {
 			return "Unknown";
@@ -58,13 +57,13 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 	}
 
 	public Color getColorUnderBar(Color readColor) {
-		if (readColor.equals(ControlPanelConstants.blueTarget)) {
+		if (readColor.equals(blueTarget)) {
 			return ControlPanelConstants.redTarget;
-		} else if (readColor.equals(ControlPanelConstants.greenTarget)) {
+		} else if (readColor.equals(greenTarget)) {
 			return ControlPanelConstants.yellowTarget;
-		} else if (readColor.equals(ControlPanelConstants.redTarget)) {
+		} else if (readColor.equals(redTarget)) {
 			return ControlPanelConstants.blueTarget;
-		} else if (readColor.equals(ControlPanelConstants.yellowTarget)) {
+		} else if (readColor.equals(yellowTarget)) {
 			return ControlPanelConstants.greenTarget;
 		} else {
 			return Color.kBlack;
@@ -73,29 +72,29 @@ public class ControlPanelColorSubsystem extends SubsystemBase implements Loggabl
 
 	public void rotateControlPanel() {
 		rotationCount = 0;
-		m_startColor = colorMatch(m_colorSensor.getColor());
-		m_wheelMotor.set(0.5);
+		startColor = colorMatch(colorSensor.getColor());
+		wheelMotor.set(0.5);
 		while (rotationCount <= 7) {
-			m_currentColor = colorMatch(m_colorSensor.getColor());
-			if (m_currentColor.equals(m_startColor)) {
+			currentColor = colorMatch(colorSensor.getColor());
+			if (currentColor.equals(startColor)) {
 				rotationCount++;
 			}
 		}
-		m_wheelMotor.set(0);
+		wheelMotor.set(0);
 	}
 
 	public void setToTargetColor() {
 
-		m_currentColor = colorMatch(m_colorSensor.getColor());
-		m_ColorUnderBar = getColorUnderBar(m_currentColor);
+		currentColor = colorMatch(colorSensor.getColor());
+		ColorUnderBar = getColorUnderBar(currentColor);
 
-		while (m_ColorUnderBar != ControlPanelConstants.TargetColor) {
-			m_wheelMotor.set(0.25);
-			m_currentColor = colorMatch(m_colorSensor.getColor());
-			m_ColorUnderBar = getColorUnderBar(m_currentColor);
+		while (ColorUnderBar != ControlPanelConstants.TargetColor) {
+			wheelMotor.set(0.25);
+			currentColor = colorMatch(colorSensor.getColor());
+			ColorUnderBar = getColorUnderBar(currentColor);
 		}
 
-		m_wheelMotor.set(0);
+		wheelMotor.set(0);
 
 	}
 }

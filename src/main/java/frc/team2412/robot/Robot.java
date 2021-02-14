@@ -7,12 +7,15 @@
 
 package frc.team2412.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.Logger;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.team2412.robot.commands.hood.HoodAdjustCommand;
+import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
+import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,16 +24,14 @@ import io.github.oblarg.oblog.Logger;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot implements Loggable {
+public class Robot extends TimedRobot {
 
 	public double timeRemaining;
 
-	// Have instances of robot container and OI for easy access
 	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
-	@SuppressWarnings("unused")
 	private OI m_OI = RobotMap.m_OI;
 
-	public DriverStation driverStation = DriverStation.getInstance();
+	Command autoCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -38,16 +39,6 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void robotInit() {
-
-		m_robotContainer.m_turretSubsystem.initTurretEncoder();
-		Logger.configureLoggingAndConfig(this, false);
-		Shuffleboard.startRecording();
-
-		RobotState.eventName = driverStation.getEventName();
-		RobotState.matchType = driverStation.getMatchType();
-		RobotState.matchNumber = driverStation.getMatchNumber();
-		RobotState.alliance = driverStation.getAlliance();
-		RobotState.location = driverStation.getLocation();
 
 	}
 
@@ -64,7 +55,7 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		Logger.updateEntries();
+		timeRemaining = Timer.getMatchTime();
 	}
 
 	/**
@@ -72,18 +63,27 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void autonomousInit() {
-		timeRemaining = 150;
 		/*
 		 * Limelight Spin up turret Shoot command
-		 * 
-		 * Move towards tranch
-		 * 
-		 * 
-		 * 
-		 * 
+		 *
+		 * Move towards trench
+		 *
+		 *
+		 *
+		 *
 		 * *
 		 */
 
+		autoCommand = new HoodWithdrawCommand(m_robotContainer.m_hoodSubsystem)
+				.andThen(new HoodAdjustCommand(m_robotContainer.m_hoodSubsystem, .300))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
+				.andThen(new WaitCommand(2))
+				// Add index shooting back in here
+				.andThen(new WaitCommand(8))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
+				.andThen(new WaitCommand(1))
+				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
+		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		timeRemaining -= 0.02;
+
 	}
 
 	/**
@@ -99,6 +99,15 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopInit() {
+		CommandScheduler.getInstance().cancel(autoCommand);
+		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
+
+		m_robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
+				m_robotContainer.m_indexerMotorSubsystem, m_robotContainer.m_intakeMotorOnOffSubsystem));
+
+		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
+		// m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}
 
 	/**
@@ -106,7 +115,7 @@ public class Robot extends TimedRobot implements Loggable {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		timeRemaining -= 0.02;
+
 	}
 
 	@Override
@@ -124,4 +133,5 @@ public class Robot extends TimedRobot implements Loggable {
 	@Override
 	public void testPeriodic() {
 	}
+
 }

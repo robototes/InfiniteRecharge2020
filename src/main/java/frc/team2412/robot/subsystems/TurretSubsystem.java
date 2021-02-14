@@ -13,74 +13,66 @@ import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class TurretSubsystem extends PIDSubsystem implements Loggable {
+public class TurretSubsystem extends PIDSubsystem {
 
-	@Log.ToString
-	private Rotations m_currentAngle;
-	@Log
-	private WPI_TalonSRX m_turretMotor;
+	private Rotations currentAngle;
+	private WPI_TalonSRX motor;
 
-	private LimelightSubsystem m_limelightSubsystem;
-	private int m_turretOffsetPosition = 0;
-	private int m_turretPastPosition;
-	private int m_turretCurrentPosition;
+	private LimelightSubsystem limelightSubsystem;
 
-	public TurretSubsystem(WPI_TalonSRX turretMotor, LimelightSubsystem limelightSubsystem) {
+	private int turretOffsetPosition = 0;
+	private int turretPastPosition;
+	private int turretCurrentPosition;
+
+	public TurretSubsystem(WPI_TalonSRX motor, LimelightSubsystem limelightSubsystem) {
 		super(TURRET_PID_CONTROLLER);
-		this.m_turretMotor = turretMotor;
-		m_limelightSubsystem = limelightSubsystem;
+		this.motor = motor;
+		this.limelightSubsystem = limelightSubsystem;
 
 		initTurretEncoder();
-
-		setDefaultCommand(new TurretFollowLimelightCommand(this, m_limelightSubsystem));
 	}
 
 	public Rotations getCurrentAngle() {
-		return m_currentAngle;
+		return currentAngle;
 	}
 
 	@Override
 	public double getMeasurement() {
-		return m_turretCurrentPosition - m_turretOffsetPosition;
+		return turretCurrentPosition - turretOffsetPosition;
 	}
 
 	public void initTurretEncoder() {
-		m_turretMotor.configFactoryDefault();
-		m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-		m_turretMotor.setSelectedSensorPosition(0);
+		motor.configFactoryDefault();
+		motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+		motor.setSelectedSensorPosition(0);
 
-		m_turretMotor.setNeutralMode(NeutralMode.Brake);
+		motor.setNeutralMode(NeutralMode.Brake);
 
-		m_turretOffsetPosition = m_turretMotor.getSelectedSensorPosition(0);
-		m_turretCurrentPosition = 0;
-		m_turretPastPosition = 0;
+		turretOffsetPosition = motor.getSelectedSensorPosition(0);
+		turretCurrentPosition = 0;
+		turretPastPosition = 0;
 
 		periodic();
 	}
 
 	@Override
 	public void periodic() {
-		m_turretCurrentPosition = m_turretMotor.getSelectedSensorPosition(0);
+		turretCurrentPosition = motor.getSelectedSensorPosition(0);
 
-		if (m_turretCurrentPosition - m_turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
-			m_turretOffsetPosition += TICKS_PER_REVOLUTION;
+		if (turretCurrentPosition - turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
+			turretOffsetPosition += TICKS_PER_REVOLUTION;
 
-		} else if (Math.abs(m_turretCurrentPosition - m_turretPastPosition) > ENCODER_MAX_ERROR_JUMP) {
-			m_turretCurrentPosition = m_turretPastPosition;
+		} else if (Math.abs(turretCurrentPosition - turretPastPosition) > ENCODER_MAX_ERROR_JUMP) {
+			turretCurrentPosition = turretPastPosition;
 		}
 
-		m_turretPastPosition = m_turretCurrentPosition;
-		m_currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
+		turretPastPosition = turretCurrentPosition;
+		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
 				RotationUnits.DEGREE);
-		System.out.println(getMeasurement());
+		// System.out.println(getMeasurement());
 	}
 
-	@Config
 	public void set(double output) {
 		output = MathUtils.constrain(output, -1, 1);
 
@@ -88,15 +80,15 @@ public class TurretSubsystem extends PIDSubsystem implements Loggable {
 			output = 0;
 		}
 
-		m_turretMotor.set(output);
+		motor.set(output);
 	}
 
 	@Override
 	public void useOutput(double output, double setpoint) {
-		m_turretMotor.set(output);
+		motor.set(output);
 	}
 
 	public double getCurrentDraw() {
-		return m_turretMotor.getStatorCurrent();
+		return motor.getStatorCurrent();
 	}
 }

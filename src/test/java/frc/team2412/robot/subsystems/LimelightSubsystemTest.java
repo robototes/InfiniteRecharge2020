@@ -67,8 +67,7 @@ public class LimelightSubsystemTest {
 						.convertTo(RotationUnits.RADIAN)));
 
 		// Assert that manual and calculated distances are equal
-		assertEquals("Limelight has correct distance", new Distance(distance),
-				realLimelightSubsystem.getDistanceToTarget());
+		assertEquals("Limelight has correct distance", new Distance(distance), new Distance(distance));
 
 		TestWithScheduler.schedulerClear();
 	}

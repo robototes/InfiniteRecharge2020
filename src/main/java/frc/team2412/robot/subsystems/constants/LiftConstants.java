@@ -19,14 +19,6 @@ public class LiftConstants {
 			this.value = value;
 		}
 
-		public String toString() {
-			if (this.equals(DOWN)) {
-				return "Down";
-			} else {
-				return "Up";
-			}
-
-		}
 	}
 
 }

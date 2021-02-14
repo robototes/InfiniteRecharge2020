@@ -2,6 +2,23 @@ package frc.team2412.robot.subsystems.constants;
 
 public class IntakeConstants {
 
+	public enum IntakeDirection {
+		NONE, FRONT, BACK, BOTH;
+
+		@Override
+		public String toString() {
+			if (this.equals(FRONT)) {
+				return "Front";
+			} else if (this.equals(BACK)) {
+				return "Back";
+			} else if (this.equals(BOTH)) {
+				return "Both";
+			} else {
+				return "None";
+			}
+		}
+	}
+
 	public static enum IntakeLastMotor {
 		FRONT(1), BOTH(0), BACK(-1);
 
@@ -28,6 +45,6 @@ public class IntakeConstants {
 		}
 	}
 
-	public static final double MAX_INTAKE_SPEED = 1;
+	public static final double MAX_INTAKE_SPEED = 0.75;
 
 }

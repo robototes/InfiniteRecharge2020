@@ -12,9 +12,13 @@ public class LimelightReadCommand extends CommandBase {
 		m_LimelightSubsystem = limelightSubsystem;
 	}
 
+	public void intialize() {
+		m_LimelightSubsystem.startLimelight();
+	}
+
 	@Override
 	public void end(boolean cancelled) {
-		if (!cancelled)
+		if (cancelled)
 			m_LimelightSubsystem.stopLimelight();
 	}
 
@@ -25,6 +29,6 @@ public class LimelightReadCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		return true;
 	}
 }

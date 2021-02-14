@@ -1,5 +1,12 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.CLIMB_OFFSET_HEIGHT;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.DEADBAND;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_ARM_EXTENSION;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_SPEED;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MIN_ARM_EXTENSION;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -7,77 +14,95 @@ import com.revrobotics.ControlType;
 import com.robototes.units.Distance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.subsystems.constants.ClimbConstants;
 import frc.team2412.robot.subsystems.constants.ClimbConstants.ClimbHeight;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
 
-public class ClimbMotorSubsystem extends SubsystemBase implements Loggable {
+public class ClimbMotorSubsystem extends SubsystemBase {
 
-	@Log
-	public Distance m_currentClimbHeight;
-	@Log.Encoder
-	private CANEncoder m_encoder;
-	@Log
-	private CANSparkMax m_leftClimbMotor;
-	@Config.PIDController
-	private CANPIDController m_pidController;
-	@Log
-	private CANSparkMax m_rightClimbMotor;
+	public Distance currentClimbHeight;
+
+	private CANSparkMax leftMotor;
+	private CANSparkMax rightMotor;
+
+	private CANEncoder rightEncoder;
+	private CANEncoder leftEncoder;
+
+	private CANPIDController PIDController;
+
 	private ClimbHeight reference;
 
-	public ClimbMotorSubsystem(CANSparkMax leftClimbMotor, CANSparkMax rightClimbMotor) {
-		m_leftClimbMotor = leftClimbMotor;
-		m_rightClimbMotor = rightClimbMotor;
-		m_leftClimbMotor.follow(rightClimbMotor);
+	public ClimbMotorSubsystem(CANSparkMax leftMotor, CANSparkMax rightMotor) {
+		this.leftMotor = leftMotor;
+		this.rightMotor = rightMotor;
 
-		m_pidController = m_rightClimbMotor.getPIDController();
-		m_encoder = m_rightClimbMotor.getEncoder();
-		m_pidController.setP(0.005);
+		this.rightMotor.setInverted(true);
+
+		PIDController = this.rightMotor.getPIDController();
+
+		rightEncoder = this.rightMotor.getEncoder();
+		rightEncoder.setInverted(true);
+
+		leftEncoder = this.leftMotor.getEncoder();
+		PIDController.setP(0.005);
 	}
 
 	public boolean atReference() {
-		return Math.abs(ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES
-				.calculateReverseRatio(m_currentClimbHeight.subtract(reference.value))) > ClimbConstants.DEADBAND;
+		return Math.abs(MOTOR_REVOLUTIONS_TO_INCHES
+				.calculateReverseRatio(currentClimbHeight.subtract(reference.value))) > DEADBAND;
 	}
 
 	public void climbExtendArm() {
-		m_rightClimbMotor.set(ClimbConstants.MAX_SPEED);
+		setMotors(MAX_SPEED);
 	}
 
 	public void climbRetractArm() {
-		m_rightClimbMotor.set(-ClimbConstants.MAX_SPEED);
+		setMotors(-MAX_SPEED);
 	}
 
 	public void climbStop() {
-		m_rightClimbMotor.set(0);
+		setMotors(0);
 	}
 
 	public double getEncoderValue() {
-		return m_encoder.getPosition();
+		return rightEncoder.getPosition();
 	}
 
 	@Override
 	public void periodic() {
-		double heightFromOffset = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateRatio(getEncoderValue());
-		m_currentClimbHeight = new Distance(heightFromOffset).add(ClimbConstants.CLIMB_OFFSET_HEIGHT);
+		double heightFromOffset = MOTOR_REVOLUTIONS_TO_INCHES.calculateRatio(getEncoderValue());
+		currentClimbHeight = new Distance(heightFromOffset).add(CLIMB_OFFSET_HEIGHT);
 	}
 
 	public void setMotors(double value) {
-		m_rightClimbMotor.set(value);
+		// left : 0-75
+		// right: -75 - 0
+		setMotor(value, rightMotor, rightEncoder);
+		setMotor(value, leftMotor, leftEncoder);
+
+	}
+
+	private void setMotor(double value, CANSparkMax motor, CANEncoder encoder) {
+		if (value < 0 && MIN_ARM_EXTENSION < encoder.getPosition()
+				|| 0 < value && encoder.getPosition() < MAX_ARM_EXTENSION) {
+			motor.set(value);
+		} else {
+			motor.set(0);
+		}
 	}
 
 	public void setReference(ClimbHeight newHeight) {
-		this.reference = newHeight;
-		Distance travelFromOffset = newHeight.value.subtract(ClimbConstants.CLIMB_OFFSET_HEIGHT);
-		double wantedRotations = ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
+		reference = newHeight;
+		Distance travelFromOffset = newHeight.value.subtract(CLIMB_OFFSET_HEIGHT);
+		double wantedRotations = MOTOR_REVOLUTIONS_TO_INCHES.calculateReverseRatio(travelFromOffset);
 
-		m_pidController.setReference(wantedRotations, ControlType.kPosition);
+		PIDController.setReference(wantedRotations, ControlType.kPosition);
 	}
 
 	public double getCurrentDraw() {
-		return m_leftClimbMotor.getOutputCurrent() + m_rightClimbMotor.getOutputCurrent();
+		return leftMotor.getOutputCurrent() + rightMotor.getOutputCurrent();
+	}
+
+	public boolean getIsClimbing() {
+		return leftMotor.get() != 0 || rightMotor.get() != 0;
 	}
 
 }
