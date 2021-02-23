@@ -1,8 +1,11 @@
 package frc.team2412.robot.subsystems.constants;
 
+import java.util.List;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
@@ -58,4 +61,12 @@ public class AutoConstants {
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
 
 	public static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
+	
+	// Barrel Route points
+	public static Translation2d cone1 = new Translation2d(15,0);
+	
+	public static List<Translation2d> interiorWaypointsBouncePath = List.of(cone1);
+	
+	
+	
 }

@@ -27,28 +27,21 @@ public class Autonomous {
 
 	public Trajectory trajectory;
 
-	private boolean trenchPossible = true;
-
-	public Autonomous() {
-		getTrajectoryPossible();
-	}
-
-	public boolean getIfTrenchPossible() {
-		return trenchPossible;
-	}
-
-	public Command getAutoCommand() {
-		return getRamseteCommand(trajectory);
-	}
-
-	public Command getTrenchMovementCommand() {
-		return getRamseteCommand(getTrenchTrajectory());
-	}
-
-	public Trajectory getTrenchTrajectory() {
-		return TrajectoryGenerator.generateTrajectory(driveSub.getPose(), List.of(new Translation2d(8.076, -0.70485)),
+	public Trajectory getBouncePathTrajectory() {
+		
+		
+		return TrajectoryGenerator.generateTrajectory(driveSub.getPose(), 
+				
+				List.of(new Translation2d(15, 0), new Translation2d(15, 3)),
+				
+				
+				
 				new Pose2d(9.646, 0.704, driveSub.getPose().getRotation()), config);
+	
+	
+	
 	}
+	
 
 	public Command getMoveCertainAmountCommand(double finalX, double finalY) {
 
@@ -66,31 +59,6 @@ public class Autonomous {
 
 		// Run path following command, then stop at the end.
 		return ramseteCommand.andThen(() -> driveSub.tankDriveVolts(0, 0));
-
-	}
-
-	// Crazy Auto idea
-	public void getTrajectoryPossible() {
-
-		Distance hypoteneuseinInch = new Distance(
-				RobotMap.m_robotContainer.m_limelightSubsystem.distanceData.m_distance.value());
-
-		Distance hypotenuseinMeters = new Distance(hypoteneuseinInch.distance, DistanceUnits.METER);
-
-		double robotY = Math.pow(hypotenuseinMeters.distance, 2) - Math.pow(inititationLineMeters, 2);
-
-		Pose2d currentPose = new Pose2d(new Translation2d(inititationLineMeters, -robotY),
-				Rotation2d.fromDegrees(RobotMap.m_robotContainer.m_driveBaseSubsystem.getGyroHeading()));
-
-		trajectory = TrajectoryGenerator.generateTrajectory(currentPose, List.of(new Translation2d(5.411, -0.70485)),
-				new Pose2d(7.231, 0.70485, currentPose.getRotation()), config);
-
-		if (trajectory.getTotalTimeSeconds() < controlPanelCutOff) {
-			trenchPossible = false;
-			trajectory = TrajectoryGenerator.generateTrajectory(currentPose,
-					List.of(new Translation2d(6, -4), new Translation2d(6.25, -3)),
-					new Pose2d(5.5, -2.4, Rotation2d.fromDegrees(180)), config);
-		}
 
 	}
 
