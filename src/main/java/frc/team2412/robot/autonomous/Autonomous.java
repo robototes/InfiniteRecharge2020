@@ -1,18 +1,16 @@
 package frc.team2412.robot.autonomous;
 
+import static frc.team2412.robot.subsystems.constants.AutoConstants.bounceEnd;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.bounceStart;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.controlPanelCutOff;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.inititationLineMeters;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.interiorWaypointsBouncePath;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.pidController;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.ramseteControlller;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.simpleMotorFeedforward;
 
 import java.util.List;
-
-import com.robototes.units.Distance;
-import com.robototes.units.UnitTypes.DistanceUnits;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -21,27 +19,10 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.team2412.robot.RobotMap;
 
 public class Autonomous {
 
 	public Trajectory trajectory;
-
-	public Trajectory getBouncePathTrajectory() {
-		
-		
-		return TrajectoryGenerator.generateTrajectory(driveSub.getPose(), 
-				
-				List.of(new Translation2d(15, 0), new Translation2d(15, 3)),
-				
-				
-				
-				new Pose2d(9.646, 0.704, driveSub.getPose().getRotation()), config);
-	
-	
-	
-	}
-	
 
 	public Command getMoveCertainAmountCommand(double finalX, double finalY) {
 
