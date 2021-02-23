@@ -1,10 +1,20 @@
 package frc.team2412.robot.subsystems.constants;
 
+import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
+
+import java.util.List;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
@@ -58,4 +68,23 @@ public class AutoConstants {
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
 
 	public static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
+	
+	
+	// Barrel Route points
+	public static final Translation2d barrelStart = new Translation2d(4.102, -8.095);
+	public static final Translation2d barrelOne = new Translation2d(13.785, -8.727);
+	public static final Translation2d barrelTwo = new Translation2d(12.554, -11.456);
+	public static final Translation2d barrelThree  = new Translation2d(12.388, -8.262);
+	public static final Translation2d barrelFour = new Translation2d(21.772, -4.734);
+	public static final Translation2d barrelFive = new Translation2d(18.544, -4.102); 	
+	public static final Translation2d barrelSix = new Translation2d(25.299, -11.29);
+	public static final Translation2d barrelSeven = new Translation2d(26.464, -8.827);
+	public static final Translation2d barrelEnd = new Translation2d(4.302, -6.165);
+	
+	public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree, barrelFour, barrelFive, barrelSix, barrelSeven);
+	
+	public final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
+			new Pose2d(barrelStart, new Rotation2d(0)), interiorWaypointsBarrelPath,
+			new Pose2d(barrelEnd, new Rotation2d(0)), config);
+
 }
