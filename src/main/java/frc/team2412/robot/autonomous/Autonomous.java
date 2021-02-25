@@ -1,19 +1,16 @@
 package frc.team2412.robot.autonomous;
 
-import static frc.team2412.robot.subsystems.constants.AutoConstants.bounceEnd;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.bounceStart;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.interiorWaypointsBouncePath;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.pidController;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.ramseteControlller;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.simpleMotorFeedforward;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.squarePathTrajectory;
 
 import java.util.List;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -50,5 +47,11 @@ public class Autonomous {
 				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
 				// RamseteCommand passes volts to the callback
 				driveSub::tankDriveVolts, driveSub);
+	}
+
+	public static RamseteCommand getSquarePathCommand() {
+		return new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
+				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController, driveSub::tankDriveVolts,
+				driveSub);
 	}
 }

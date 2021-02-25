@@ -1,10 +1,5 @@
 package frc.team2412.robot.subsystems.constants;
 
-import static frc.team2412.robot.subsystems.constants.AutoConstants.bounceEnd;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.bounceStart;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.interiorWaypointsBouncePath;
-
 import java.util.List;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -88,12 +83,16 @@ public class AutoConstants {
 			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
 			new Pose2d(bounceEnd, new Rotation2d(0)), config);
 	
+	public static final Translation2d squareBeginning = new Translation2d(0,0);
 	public static final Translation2d squareTop = new Translation2d(2,0);
 	public static final Translation2d squareTopRight = new Translation2d(2, -2);
 	public static final Translation2d squareBottomRight = new Translation2d(0, -2);
 	
 	public static final List<Translation2d> squareWaypoints = List.of(squareTop, squareTopRight, squareBottomRight);
 	
+	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(
+			new Pose2d(squareBeginning, new Rotation2d(0)), squareWaypoints,
+			new Pose2d(squareBeginning, new Rotation2d(0)), config);
 	
 
 }

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.commands.climb.ClimbLiftUpCommand;
+import frc.team2412.robot.autonomous.Autonomous;
 import frc.team2412.robot.commands.climb.ClimbJoystickCommand;
 import frc.team2412.robot.commands.climb.ClimbLiftDownCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
@@ -169,6 +170,8 @@ public class OI {
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
+		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand());
+		
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);
 		bindIntakeControls(robotContainer);
@@ -187,7 +190,7 @@ public class OI {
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
 
-		indexerShootButton.whenPressed(indexShootCommand);
+//		indexerShootButton.whenPressed(indexShootCommand);
 
 		indexerShootButton
 				.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
