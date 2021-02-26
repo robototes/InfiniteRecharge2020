@@ -71,15 +71,15 @@ public class AutoConstants {
 	
 	
 	// Barrel Route points
-	public static final Translation2d barrelStart = new Translation2d(4.102, -8.095);
-	public static final Translation2d barrelOne = new Translation2d(13.785, -8.727);
-	public static final Translation2d barrelTwo = new Translation2d(12.554, -11.456);
-	public static final Translation2d barrelThree  = new Translation2d(12.388, -8.262);
-	public static final Translation2d barrelFour = new Translation2d(21.772, -4.734);
-	public static final Translation2d barrelFive = new Translation2d(18.544, -4.102); 	
-	public static final Translation2d barrelSix = new Translation2d(25.299, -11.29);
-	public static final Translation2d barrelSeven = new Translation2d(26.464, -8.827);
-	public static final Translation2d barrelEnd = new Translation2d(4.302, -6.165);
+	public static final Translation2d barrelStart = new Translation2d(1.5, -2.632);
+	public static final Translation2d barrelOne = new Translation2d(4.674, -3.403);
+	public static final Translation2d barrelTwo = new Translation2d(4.174, -3.808);
+	public static final Translation2d barrelThree  = new Translation2d(3.564, -3.353);
+	public static final Translation2d barrelFour = new Translation2d(7.135, -1.911);
+	public static final Translation2d barrelFive = new Translation2d(6.248, -1.356);
+	public static final Translation2d barrelSix = new Translation2d(8.422, -3.863);
+	public static final Translation2d barrelSeven = new Translation2d(8.466, -2.854);
+	public static final Translation2d barrelEnd = new Translation2d(1.445, -2.099);
 	
 	public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree, barrelFour, barrelFive, barrelSix, barrelSeven);
 	
