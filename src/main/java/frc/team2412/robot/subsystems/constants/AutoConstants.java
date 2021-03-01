@@ -1,6 +1,11 @@
 package frc.team2412.robot.subsystems.constants;
 
+
+import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
+
 import java.util.List;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -52,6 +57,25 @@ public class AutoConstants {
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
 	public static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
+
+	
+	
+	// Barrel Route points
+	public static final Translation2d barrelStart = new Translation2d(1.5, -2.632);
+	public static final Translation2d barrelOne = new Translation2d(4.674, -3.403);
+	public static final Translation2d barrelTwo = new Translation2d(4.174, -3.808);
+	public static final Translation2d barrelThree  = new Translation2d(3.564, -3.353);
+	public static final Translation2d barrelFour = new Translation2d(7.135, -1.911);
+	public static final Translation2d barrelFive = new Translation2d(6.248, -1.356);
+	public static final Translation2d barrelSix = new Translation2d(8.422, -3.863);
+	public static final Translation2d barrelSeven = new Translation2d(8.466, -2.854);
+	public static final Translation2d barrelEnd = new Translation2d(1.445, -2.099);
+	
+	public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree, barrelFour, barrelFive, barrelSix, barrelSeven);
+	
+	public final Trajectory barrelPathTrajectory = TrajectoryGenerator.generateTrajectory(
+			new Pose2d(barrelStart, new Rotation2d(0)), interiorWaypointsBarrelPath,
+			new Pose2d(barrelEnd, new Rotation2d(0)), config);
 
 	public static Translation2d slalomPointOne = new Translation2d(0.868, -4.273);
 	public static Translation2d slalomPointTwo = new Translation2d(2.233, -4.063);
