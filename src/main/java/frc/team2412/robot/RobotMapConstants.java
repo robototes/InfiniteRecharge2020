@@ -8,7 +8,7 @@ public class RobotMapConstants {
 	public static boolean INDEX_CONNECTED = false;
 	public static boolean INTAKE_CONNECTED = false;
 	public static boolean LIFT_CONNECTED = false;
-	public static boolean DRIVE_BASE_CONNECTED = false;
+	public static boolean DRIVE_BASE_CONNECTED = true;
 
 	public static enum CANBus {
 		INTAKE1(11), INDEX1(12), INTAKE2(21), INDEX2(22), INTAKE3(31), INDEX3(32), INDEX_LEFT_MID(40),

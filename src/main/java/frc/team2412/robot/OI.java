@@ -176,7 +176,7 @@ public class OI {
 		bindDriverControls(robotContainer);
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
-		bindIndexControls(robotContainer);
+	//	bindIndexControls(robotContainer);
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {
@@ -190,7 +190,7 @@ public class OI {
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
 
-//		indexerShootButton.whenPressed(indexShootCommand);
+		indexerShootButton.whenPressed(indexShootCommand);
 
 		indexerShootButton
 				.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
