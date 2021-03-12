@@ -1,8 +1,5 @@
 package frc.team2412.robot.subsystems.constants;
 
-import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
-
 import java.util.List;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -20,12 +17,17 @@ import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 
 public class AutoConstants {
+	
 	public static final double MAX_VOLTAGE = 12;
+	
 	public static final boolean kGyroReversed = false;
+	
 	public static final double ksVolts = 0.185;
 	public static final double kvVoltSecondsPerMeter = 0.0754;
 	public static final double kaVoltSecondsSquaredPerMeter = 0.0105;
+	
 	public static final double kPDriveVel = 0.488;
+	
 	public static final double kTrackwidthMeters = 0.5461; // Horizontal distance between wheels
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
@@ -38,8 +40,6 @@ public class AutoConstants {
 
 	public static final double kRamseteB = 2; // makes a more straight curve
 	public static final double kRamseteZeta = 0.7; // limits the correction
-	public static final double controlPanelCutOff = 4.0;
-	public static final double inititationLineMeters = 3.048;
 
 	public static SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts,
 			kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);
