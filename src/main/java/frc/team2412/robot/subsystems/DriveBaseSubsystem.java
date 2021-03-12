@@ -1,8 +1,8 @@
 package frc.team2412.robot.subsystems;
 
+import static frc.team2412.robot.subsystems.constants.AutoConstants.kGyroReversed;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ENCODER_TICKS_PER_SECOND;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.kGyroReversed;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
@@ -155,11 +155,11 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		return new DifferentialDriveWheelSpeeds(
-				leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
-						* metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND,
-				rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution * lowGearRatio
-						* metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND);
+		double leftMetersPerSecond = leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution
+				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
+		double rightMetersPerSecond = rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution
+				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
+		return new DifferentialDriveWheelSpeeds(leftMetersPerSecond, rightMetersPerSecond);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
