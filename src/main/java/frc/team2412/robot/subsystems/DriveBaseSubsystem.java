@@ -1,22 +1,32 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.AutoConstants.kGyroReversed;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ENCODER_TICKS_PER_SECOND;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.*;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.*;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.simulation.EncoderSim;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpiutil.math.VecBuilder;
 
 public class DriveBaseSubsystem extends SubsystemBase {
 
@@ -63,6 +73,9 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		leftMotorRevolutions = leftFrontMotor.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 
 		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+		if (RobotBase.isSimulation()) {
+			simulationSetup();
+		}
 	}
 
 	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
@@ -166,6 +179,51 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		leftFrontMotor.setVoltage(leftVolts);
 		rightFrontMotor.setVoltage(rightVolts);
 		// drive.feed();
+	}
+
+	// Simulator
+	// _________________________________________________________________________________________________
+
+	public DifferentialDrivetrainSim drivetrainSim;
+	private EncoderSim leftEncoderSim;
+	private EncoderSim rightEncoderSim;
+	private Field2d fieldSim;
+	private AHRS gyroSim;
+
+	/**
+	 * // Create the simulation model of our drivetrain. private
+	 * DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim( //
+	 * Create a linear system from our characterization gains.
+	 * LinearSystemId.identifyDrivetrainSystem(KvLinear, KaLinear, KvAngular,
+	 * KaAngular), DCMotor.getNEO(2), // 2 NEO motors on each side of the
+	 * drivetrain. 7.29, // 7.29:1 gearing reduction. 0.7112, // The track width is
+	 * 0.7112 meters. Units.inchesToMeters(3), // The robot uses 3" radius wheels.
+	 * 
+	 * // The standard deviations for measurement noise: // x and y: 0.001 m //
+	 * heading: 0.001 rad // l and r velocity: 0.1 m/s // l and r position: 0.005 m
+	 * VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
+	 */
+	
+	static final double KvLinear = 1.98;
+	static final double KaLinear = 0.2;
+	static final double KvAngular = 1.5;
+	static final double KaAngular = 0.3;
+
+	private void simulationSetup() {
+		drivetrainSim = new DifferentialDrivetrainSim(
+				// Create a linear system from our characterization gains.
+				LinearSystemId.identifyDrivetrainSystem(KvLinear, KaLinear, KvAngular, KaAngular),
+				DCMotor.getFalcon500(2), // 2 Falcon500 motors on each side of the drivetrain.
+				6.13, // 6.13:1 gearing reduction.
+				kTrackwidthMeters, // The track width is 0.7112 meters.
+				wheelDiameterMeters, // The robot uses 3" radius wheels.
+
+				// The standard deviations for measurement noise:
+				// x and y: 0.001 m
+				// heading: 0.001 rad
+				// l and r velocity: 0.1 m/s
+				// l and r position: 0.005 m
+				VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
 	}
 
 }

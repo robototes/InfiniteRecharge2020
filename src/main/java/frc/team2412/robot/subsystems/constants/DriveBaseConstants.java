@@ -2,7 +2,7 @@ package frc.team2412.robot.subsystems.constants;
 
 public class DriveBaseConstants {
 
-	private static final double wheelDiameterMeters = 0.1524;
+	public static final double wheelDiameterMeters = 0.1524;
 	public static final double metersPerWheelRevolution = wheelDiameterMeters * Math.PI;
 
 	public static final double encoderTicksPerRevolution = 2048.0;
