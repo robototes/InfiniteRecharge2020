@@ -164,8 +164,6 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		driveBaseCurrentDraw = rightFrontMotor.getStatorCurrent() + rightBackMotor.getStatorCurrent()
 				+ leftFrontMotor.getStatorCurrent() + leftBackMotor.getStatorCurrent();
 
-		fieldSim.setRobotPose(getPose());
-	//	System.out.println(getPose());
 	}
 
 	// Trajectory stuff
@@ -193,28 +191,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	// _________________________________________________________________________________________________
 
 	public DifferentialDrivetrainSim drivetrainSim;
-	private EncoderSim leftEncoderSim;
-	private EncoderSim rightEncoderSim;
 	private Field2d fieldSim;
-	private AHRS gyroSim;
-
-	/**
-	 * // Create the simulation model of our drivetrain. private
-	 * DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim( //
-	 * Create a linear system from our characterization gains.
-	 * LinearSystemId.identifyDrivetrainSystem(KvLinear, KaLinear, KvAngular,
-	 * KaAngular), DCMotor.getNEO(2), // 2 NEO motors on each side of the
-	 * drivetrain. 7.29, // 7.29:1 gearing reduction. 0.7112, // The track width is
-	 * 0.7112 meters. Units.inchesToMeters(3), // The robot uses 3" radius wheels.
-	 * 
-	 * // The standard deviations for measurement noise: 
-	 * // x and y: 0.001 m 
-	 * // heading: 0.001 rad 
-	 * // l and r velocity: 0.1 m/s 
-	 * // l and r position: 0.005 m
-	 * VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
-	 */
-
 
 	private void simulationSetup() {
 		drivetrainSim = new DifferentialDrivetrainSim(
@@ -231,23 +208,22 @@ public class DriveBaseSubsystem extends SubsystemBase {
 				// l and r velocity: 0.1 m/s
 				// l and r position: 0.005 m
 				VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
-		
-		
-		 // the Field2d class lets us visualize our robot in the simulation GUI.
-	      fieldSim = new Field2d();
-	      SmartDashboard.putData("Field", fieldSim);
-		
-		
-	//	leftEncoderSim = new EncoderSim();
+
+		// the Field2d class lets us visualize our robot in the simulation GUI.
+		fieldSim = new Field2d();
+		SmartDashboard.putData("Field", fieldSim);
 	}
 
+	int count = 0;
+
 	public void simulationPeriodic() {
-		drivetrainSim.setInputs(
-		        -leftFrontMotor.get() * RobotController.getBatteryVoltage(),
-		        rightFrontMotor.get() * RobotController.getBatteryVoltage());
+		drivetrainSim.setInputs(-leftFrontMotor.get() * RobotController.getBatteryVoltage(),
+				rightFrontMotor.get() * RobotController.getBatteryVoltage());
 		drivetrainSim.update(0.020);
 		fieldSim.setRobotPose(drivetrainSim.getPose());
-		System.out.println("updated in simluation periodic");
-		System.out.println(drivetrainSim.getPose());
+		if (count++ % 20 == 0) {
+			System.out.println("updated in simluation periodic");
+			System.out.println(drivetrainSim.getPose());
+		}
 	}
 }

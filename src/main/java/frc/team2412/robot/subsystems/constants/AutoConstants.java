@@ -37,11 +37,11 @@ public class AutoConstants {
 	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 	
 	
-	// dummy values, need to hcange with characteriaation
-	public static final double KvLinear = 1.98;
-	public static final double KaLinear = 0.2;
-	public static final double KvAngular = 1.5;
-	public static final double KaAngular = 0.3;
+	// dummy values, need to change with characteriaation
+	public static final double KvLinear = 1.65;
+	public static final double KaLinear = 0.18;
+	public static final double KvAngular = 1.4;
+	public static final double KaAngular = 0.2;
 
 	// Ramsete Controller Value
 
