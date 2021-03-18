@@ -1,29 +1,35 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.AutoConstants.*;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.*;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.KaAngular;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.KaLinear;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.KvAngular;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.KvLinear;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.kGyroReversed;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.kTrackwidthMeters;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ENCODER_TICKS_PER_SECOND;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.wheelDiameterMeters;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpiutil.math.VecBuilder;
@@ -158,6 +164,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		driveBaseCurrentDraw = rightFrontMotor.getStatorCurrent() + rightBackMotor.getStatorCurrent()
 				+ leftFrontMotor.getStatorCurrent() + leftBackMotor.getStatorCurrent();
 
+		fieldSim.setRobotPose(getPose());
+	//	System.out.println(getPose());
 	}
 
 	// Trajectory stuff
@@ -199,15 +207,14 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	 * drivetrain. 7.29, // 7.29:1 gearing reduction. 0.7112, // The track width is
 	 * 0.7112 meters. Units.inchesToMeters(3), // The robot uses 3" radius wheels.
 	 * 
-	 * // The standard deviations for measurement noise: // x and y: 0.001 m //
-	 * heading: 0.001 rad // l and r velocity: 0.1 m/s // l and r position: 0.005 m
+	 * // The standard deviations for measurement noise: 
+	 * // x and y: 0.001 m 
+	 * // heading: 0.001 rad 
+	 * // l and r velocity: 0.1 m/s 
+	 * // l and r position: 0.005 m
 	 * VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
 	 */
-	
-	static final double KvLinear = 1.98;
-	static final double KaLinear = 0.2;
-	static final double KvAngular = 1.5;
-	static final double KaAngular = 0.3;
+
 
 	private void simulationSetup() {
 		drivetrainSim = new DifferentialDrivetrainSim(
@@ -216,7 +223,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 				DCMotor.getFalcon500(2), // 2 Falcon500 motors on each side of the drivetrain.
 				6.13, // 6.13:1 gearing reduction.
 				kTrackwidthMeters, // The track width is 0.7112 meters.
-				wheelDiameterMeters, // The robot uses 3" radius wheels.
+				wheelDiameterMeters, // The robot uses 4" radius wheels.
 
 				// The standard deviations for measurement noise:
 				// x and y: 0.001 m
@@ -224,6 +231,23 @@ public class DriveBaseSubsystem extends SubsystemBase {
 				// l and r velocity: 0.1 m/s
 				// l and r position: 0.005 m
 				VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
+		
+		
+		 // the Field2d class lets us visualize our robot in the simulation GUI.
+	      fieldSim = new Field2d();
+	      SmartDashboard.putData("Field", fieldSim);
+		
+		
+	//	leftEncoderSim = new EncoderSim();
 	}
 
+	public void simulationPeriodic() {
+		drivetrainSim.setInputs(
+		        -leftFrontMotor.get() * RobotController.getBatteryVoltage(),
+		        rightFrontMotor.get() * RobotController.getBatteryVoltage());
+		drivetrainSim.update(0.020);
+		fieldSim.setRobotPose(drivetrainSim.getPose());
+		System.out.println("updated in simluation periodic");
+		System.out.println(drivetrainSim.getPose());
+	}
 }
