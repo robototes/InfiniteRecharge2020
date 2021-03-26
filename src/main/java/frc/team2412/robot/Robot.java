@@ -7,6 +7,8 @@
 
 package frc.team2412.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,8 +30,8 @@ public class Robot extends TimedRobot {
 
 	public double timeRemaining;
 
-	private RobotContainer m_robotContainer = RobotMap.m_robotContainer;
-	private OI m_OI = RobotMap.m_OI;
+	private RobotContainer robotContainer = RobotMap.m_robotContainer;
+	private OI OI = RobotMap.m_OI;
 
 	Command autoCommand;
 
@@ -39,7 +41,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-
+		RobotMap.driveRightFrontMotor.setNeutralMode(NeutralMode.Brake);
+		RobotMap.driveRightBackMotor.setNeutralMode(NeutralMode.Brake);
+		RobotMap.driveLeftBackMotor.setNeutralMode(NeutralMode.Brake);
+		RobotMap.driveLeftBackMotor.setNeutralMode(NeutralMode.Brake);
 	}
 
 	/**
@@ -74,15 +79,15 @@ public class Robot extends TimedRobot {
 		 * *
 		 */
 
-		autoCommand = new HoodWithdrawCommand(m_robotContainer.m_hoodSubsystem)
-				.andThen(new HoodAdjustCommand(m_robotContainer.m_hoodSubsystem, .300))
-				.andThen(new InstantCommand(() -> m_robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
+		autoCommand = new HoodWithdrawCommand(robotContainer.m_hoodSubsystem)
+				.andThen(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, .300))
+				.andThen(new InstantCommand(() -> robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
 				.andThen(new WaitCommand(2))
 				// Add index shooting back in here
 				.andThen(new WaitCommand(8))
-				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
+				.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
 				.andThen(new WaitCommand(1))
-				.andThen(new InstantCommand(() -> m_robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
+				.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
 		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 
@@ -102,8 +107,8 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().cancel(autoCommand);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		m_robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
-				m_robotContainer.m_indexerMotorSubsystem, m_robotContainer.m_intakeMotorOnOffSubsystem));
+		robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
+				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
 		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
