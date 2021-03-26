@@ -1,6 +1,11 @@
 package frc.team2412.robot.subsystems.constants;
 
+
+import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
+
 import java.util.List;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -53,6 +58,25 @@ public class AutoConstants {
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
 	public static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
 
+	
+	
+	// Barrel Route points
+	public static final Translation2d barrelStart = new Translation2d(1.5, -2.632);
+	public static final Translation2d barrelOne = new Translation2d(4.674, -3.403);
+	public static final Translation2d barrelTwo = new Translation2d(4.174, -3.808);
+	public static final Translation2d barrelThree  = new Translation2d(3.564, -3.353);
+	public static final Translation2d barrelFour = new Translation2d(7.135, -1.911);
+	public static final Translation2d barrelFive = new Translation2d(6.248, -1.356);
+	public static final Translation2d barrelSix = new Translation2d(8.422, -3.863);
+	public static final Translation2d barrelSeven = new Translation2d(8.466, -2.854);
+	public static final Translation2d barrelEnd = new Translation2d(1.445, -2.099);
+	
+	public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree, barrelFour, barrelFive, barrelSix, barrelSeven);
+	
+	public final Trajectory barrelPathTrajectory = TrajectoryGenerator.generateTrajectory(
+			new Pose2d(barrelStart, new Rotation2d(0)), interiorWaypointsBarrelPath,
+			new Pose2d(barrelEnd, new Rotation2d(0)), config);
+
 	public static Translation2d slalomPointOne = new Translation2d(0.868, -4.273);
 	public static Translation2d slalomPointTwo = new Translation2d(2.233, -4.063);
 	public static Translation2d slalomPointThree = new Translation2d(3.02, -2.898);
@@ -75,5 +99,34 @@ public class AutoConstants {
 	public final Trajectory slalomPathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(slalomPointOne, new Rotation2d(0)), interiorWaypointsSlalomPath,
 			new Pose2d(slalomPointFourteen, new Rotation2d(0)), config);
+
+	// Bounce Route points
+	public static final Translation2d bounceStart = new Translation2d(1, -2.5);
+	public static final Translation2d bounceStar1 = new Translation2d(2.5, -0.75);
+	public static final Translation2d bouncePoint1 = new Translation2d(4.3, -4.163);
+	public static final Translation2d bounceStar2 = new Translation2d(5, -0.75);
+	public static final Translation2d bouncePoint2 = new Translation2d(5.5, -4);
+	public static final Translation2d bouncePoint3 = new Translation2d(7.25, -3.3);
+	public static final Translation2d bounceStar3 = new Translation2d(7.5, -0.75);
+	public static final Translation2d bounceEnd = new Translation2d(9, -2.5);
+
+	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStar1, bouncePoint1,
+			bounceStar2, bouncePoint2, bouncePoint3, bounceStar3);
+	
+	public final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
+			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
+			new Pose2d(bounceEnd, new Rotation2d(0)), config);
+	
+	public static final Translation2d squareBeginning = new Translation2d(0,0);
+	public static final Translation2d squareTop = new Translation2d(2,0);
+	public static final Translation2d squareTopRight = new Translation2d(2, -2);
+	public static final Translation2d squareBottomRight = new Translation2d(0, -2);
+	
+	public static final List<Translation2d> squareWaypoints = List.of(squareTop, squareTopRight, squareBottomRight);
+	
+	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(
+			new Pose2d(squareBeginning, new Rotation2d(0)), squareWaypoints,
+			new Pose2d(squareBeginning, new Rotation2d(0)), config);
+	
 
 }
