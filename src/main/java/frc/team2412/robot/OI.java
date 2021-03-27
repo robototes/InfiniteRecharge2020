@@ -170,7 +170,10 @@ public class OI {
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
-		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand().andThen(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem)));
+
+		//indexerShootButton.whenPressed(Autonomous.getMoveCertainAmountCommand(1.0, 0.0));
+		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand()
+			.andThen(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem)));
 		
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);

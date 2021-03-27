@@ -115,7 +115,7 @@ public class AutoConstants {
 	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStar1, bouncePoint1,
 			bounceStar2, bouncePoint2, bouncePoint3, bounceStar3);
 	
-	public final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
+	public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
 			new Pose2d(bounceEnd, new Rotation2d(0)), config);
 	

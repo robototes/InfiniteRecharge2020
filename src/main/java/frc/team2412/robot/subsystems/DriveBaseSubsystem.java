@@ -142,14 +142,13 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		// metersPerWheelRevolution + " " + (rightMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
 		// metersPerWheelRevolution);
 
-		odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
+		double angle = gyro.getAngle();
+		odometry.update(Rotation2d.fromDegrees(angle),
 		(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution,
 		(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution);
-	//	System.out.println("odometry" + odometry.getPoseMeters());
-
-
+		//System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle));
 
 		driveBaseCurrentDraw = rightFrontMotor.getStatorCurrent() + rightBackMotor.getStatorCurrent()
 				+ leftFrontMotor.getStatorCurrent() + leftBackMotor.getStatorCurrent();
