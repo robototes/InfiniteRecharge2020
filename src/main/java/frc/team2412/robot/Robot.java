@@ -45,6 +45,15 @@ public class Robot extends TimedRobot {
 		RobotMap.driveRightBackMotor.setNeutralMode(NeutralMode.Brake);
 		RobotMap.driveLeftBackMotor.setNeutralMode(NeutralMode.Brake);
 		RobotMap.driveLeftBackMotor.setNeutralMode(NeutralMode.Brake);
+		System.out.println("gyro connected: " + RobotMap.driveGyro.isConnected());
+		if (RobotMap.driveGyro.isConnected()) {
+			while (RobotMap.driveGyro.isCalibrating()) {
+				try {
+					System.out.println("Waiting for gyro calibrarion");
+					Thread.sleep(50);
+				} catch (InterruptedException ignored) {}
+			}
+		}
 	}
 
 	/**
