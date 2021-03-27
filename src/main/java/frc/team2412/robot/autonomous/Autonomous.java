@@ -50,8 +50,13 @@ public class Autonomous {
 	}
 
 	public static RamseteCommand getSquarePathCommand() {
-		return new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
+	
+		RamseteCommand command = new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
 				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController, driveSub::tankDriveVolts,
 				driveSub);
+
+				System.out.println(squarePathTrajectory.getTotalTimeSeconds());
+				System.out.println(squarePathTrajectory.getStates());
+				return command;
 	}
 }
