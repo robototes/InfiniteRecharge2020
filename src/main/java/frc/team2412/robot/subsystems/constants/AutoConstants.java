@@ -50,7 +50,9 @@ public class AutoConstants {
 					// Add kinematics to ensure max speed is actually obeyed
 					.setKinematics(kDriveKinematics)
 					// Apply the voltage constraint
-					.addConstraint(autoVoltageConstraint);
+					.addConstraint(autoVoltageConstraint)
+					// Go forwards?
+					.setReversed(true);
 
 	public static SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts,kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);
 
