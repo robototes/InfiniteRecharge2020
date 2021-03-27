@@ -7,12 +7,12 @@ public class DriveBaseConstants {
 	private static double wheelDiameterMeters = 0.1524;
 	public static final double metersPerWheelRevolution = wheelDiameterMeters * Math.PI;
 
-	public static final double encoderTicksPerRevolution = 4096.0;
+	public static final double encoderTicksPerRevolution = 2048.0;
 
 	public static final int ENCODER_TICKS_PER_SECOND = 10;
 
-	public static final double highGearRatio = 1 / 7.08;
-	public static final double lowGearRatio = 1 / 6.13;
+	public static final double highGearRatio = 1 / -8.16;
+	public static final double lowGearRatio = 1 / -17.65;
 
 	public static final double MAX_VOLTAGE = 12;
 
