@@ -27,7 +27,7 @@ import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
  * project.
  */
 public class Robot extends TimedRobot {
-
+											
 	public double timeRemaining;
 
 	private RobotContainer robotContainer = RobotMap.m_robotContainer;
