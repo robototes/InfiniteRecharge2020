@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 public class Autonomous {
@@ -49,6 +50,16 @@ public class Autonomous {
 				driveSub::tankDriveVolts, driveSub);
 	}
 
+	public static InstantCommand resetPositionCommand() {
+		InstantCommand command = new InstantCommand( new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		return command;
+	}
 	public static RamseteCommand getSquarePathCommand() {
 	
 		RamseteCommand command = new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,

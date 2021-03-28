@@ -121,7 +121,8 @@ public class AutoConstants {
 	
 	public static final Translation2d squareBeginning = new Translation2d(0,0);
 	
-	public static final List<Pose2d> squareWaypoints = List.of(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)),new Pose2d(new Translation2d(1, 0), new Rotation2d(0)));
+	public static final List<Pose2d> squareWaypoints = List.of(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(180)),
+		new Pose2d(new Translation2d(1, 0), Rotation2d.fromDegrees(180)));
 	
 	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			squareWaypoints, config);

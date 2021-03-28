@@ -40,6 +40,9 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public double driveBaseCurrentDraw;
 
+	private int telemetryCounter = 5;
+
+
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftFrontMotor, WPI_TalonFX leftBackMotor,
 			WPI_TalonFX rightFrontMotor, WPI_TalonFX rightBackMotor) {
 
@@ -142,13 +145,17 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		// metersPerWheelRevolution + " " + (rightMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
 		// metersPerWheelRevolution);
 
-		double angle = gyro.getAngle();
+		double angle = -180;//gyro.getAngle();
 		odometry.update(Rotation2d.fromDegrees(angle),
 		(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution,
 		(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution);
-		//System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle));
+
+		if (--telemetryCounter == 0) {
+			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle));
+			telemetryCounter = 5;
+		}
 
 		driveBaseCurrentDraw = rightFrontMotor.getStatorCurrent() + rightBackMotor.getStatorCurrent()
 				+ leftFrontMotor.getStatorCurrent() + leftBackMotor.getStatorCurrent();
@@ -160,6 +167,12 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public Pose2d getPose() {
 		return odometry.getPoseMeters();
+	}
+
+	public void resetPos() {
+		rightFrontMotor.setSelectedSensorPosition(0);
+		leftFrontMotor.setSelectedSensorPosition(0);
+		odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(-180));
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
