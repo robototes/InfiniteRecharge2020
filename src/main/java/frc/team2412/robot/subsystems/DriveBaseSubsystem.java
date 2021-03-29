@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.team2412.robot.RobotMap;
 
 public class DriveBaseSubsystem extends SubsystemBase {
 
@@ -39,6 +40,9 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	// DifferentialDrive drive;
 
 	public double driveBaseCurrentDraw;
+
+	private int telemetryCounter = 0;
+
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftFrontMotor, WPI_TalonFX leftBackMotor,
 			WPI_TalonFX rightFrontMotor, WPI_TalonFX rightBackMotor) {
@@ -138,11 +142,21 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		rightMotorRevolutions = rightFrontMotor.getSelectedSensorPosition();
 		leftMotorRevolutions = leftFrontMotor.getSelectedSensorPosition();
 
-		// odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
-		// (leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
-		// metersPerWheelRevolution,
-		// (rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
+		// System.out.println((leftMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
+		// metersPerWheelRevolution + " " + (rightMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
 		// metersPerWheelRevolution);
+
+		double angle = gyro.getAngle();
+		odometry.update(Rotation2d.fromDegrees(angle),
+		(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
+		metersPerWheelRevolution,
+		(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
+		metersPerWheelRevolution);
+
+		if (--telemetryCounter <= 0) {
+			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " " + String.valueOf(RobotMap.driveGyro.isConnected()));
+			telemetryCounter = 10;
+		}
 
 		driveBaseCurrentDraw = rightFrontMotor.getStatorCurrent() + rightBackMotor.getStatorCurrent()
 				+ leftFrontMotor.getStatorCurrent() + leftBackMotor.getStatorCurrent();
@@ -154,6 +168,12 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public Pose2d getPose() {
 		return odometry.getPoseMeters();
+	}
+
+	public void resetPos() {
+		rightFrontMotor.setSelectedSensorPosition(0);
+		leftFrontMotor.setSelectedSensorPosition(0);
+		odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(-180));
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {

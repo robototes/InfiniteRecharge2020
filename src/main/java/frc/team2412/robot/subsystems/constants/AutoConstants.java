@@ -50,7 +50,9 @@ public class AutoConstants {
 					// Add kinematics to ensure max speed is actually obeyed
 					.setKinematics(kDriveKinematics)
 					// Apply the voltage constraint
-					.addConstraint(autoVoltageConstraint);
+					.addConstraint(autoVoltageConstraint)
+					// Go forwards?
+					.setReversed(true);
 
 	public static SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts,kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);
 
@@ -113,20 +115,17 @@ public class AutoConstants {
 	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStar1, bouncePoint1,
 			bounceStar2, bouncePoint2, bouncePoint3, bounceStar3);
 	
-	public final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
+	public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
 			new Pose2d(bounceEnd, new Rotation2d(0)), config);
 	
 	public static final Translation2d squareBeginning = new Translation2d(0,0);
-	public static final Translation2d squareTop = new Translation2d(2,0);
-	public static final Translation2d squareTopRight = new Translation2d(2, -2);
-	public static final Translation2d squareBottomRight = new Translation2d(0, -2);
 	
-	public static final List<Translation2d> squareWaypoints = List.of(squareTop, squareTopRight, squareBottomRight);
+	public static final List<Pose2d> squareWaypoints = List.of(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(180)),
+		new Pose2d(new Translation2d(1, 0), Rotation2d.fromDegrees(180)));
 	
 	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(
-			new Pose2d(squareBeginning, new Rotation2d(0)), squareWaypoints,
-			new Pose2d(squareBeginning, new Rotation2d(0)), config);
+			squareWaypoints, config);
 	
 
 }
