@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.team2412.robot.RobotMap;
 
 public class DriveBaseSubsystem extends SubsystemBase {
 
@@ -40,7 +41,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	public double driveBaseCurrentDraw;
 
-	private int telemetryCounter = 5;
+	private int telemetryCounter = 0;
 
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftFrontMotor, WPI_TalonFX leftBackMotor,
@@ -145,16 +146,16 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		// metersPerWheelRevolution + " " + (rightMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
 		// metersPerWheelRevolution);
 
-		double angle = -180;//gyro.getAngle();
+		double angle = gyro.getAngle();
 		odometry.update(Rotation2d.fromDegrees(angle),
 		(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution,
 		(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution);
 
-		if (--telemetryCounter == 0) {
-			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle));
-			telemetryCounter = 5;
+		if (--telemetryCounter <= 0) {
+			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " " + String.valueOf(RobotMap.driveGyro.isConnected()));
+			telemetryCounter = 10;
 		}
 
 		driveBaseCurrentDraw = rightFrontMotor.getStatorCurrent() + rightBackMotor.getStatorCurrent()
