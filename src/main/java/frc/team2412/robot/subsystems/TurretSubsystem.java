@@ -43,21 +43,23 @@ public class TurretSubsystem extends PIDSubsystem {
 	}
 
 	public void initTurretEncoder() {
-		motor.configFactoryDefault();
-		motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-		motor.setSelectedSensorPosition(0);
+//		motor.configFactoryDefault();
+//		motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+//		motor.setSelectedSensorPosition(0);
 
 		motor.setNeutralMode(NeutralMode.Brake);
 
-		turretOffsetPosition = motor.getSelectedSensorPosition(0);
+	//	turretOffsetPosition = motor.getSelectedSensorPosition(0);
+		turretOffsetPosition = 0;
 		turretCurrentPosition = 0;
 		turretPastPosition = 0;
 
 		periodic();
 	}
 
-	@Override
-	public void periodic() {
+	//@Override
+	//disabled for at home
+	/*public void periodic() {
 		turretCurrentPosition = motor.getSelectedSensorPosition(0);
 
 		if (turretCurrentPosition - turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
@@ -70,15 +72,16 @@ public class TurretSubsystem extends PIDSubsystem {
 		turretPastPosition = turretCurrentPosition;
 		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
 				RotationUnits.DEGREE);
-		// System.out.println(getMeasurement());
-	}
+		// System.out.println(getMeasurement());*/
+	@Override
+	public void periodic() {}
 
 	public void set(double output) {
-		output = MathUtils.constrain(output, -1, 1);
+//		output = MathUtils.constrain(output, -1, 1);
 
-		if (output < 0.05 && output > -0.05) {
-			output = 0;
-		}
+//		if (output < 0.05 && output > -0.05) {
+		output = 0;
+//		}
 
 		motor.set(output);
 	}
