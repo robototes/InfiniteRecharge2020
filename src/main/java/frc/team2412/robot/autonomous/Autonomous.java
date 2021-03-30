@@ -60,7 +60,7 @@ public class Autonomous {
 		});
 		return command;
 	}
-	public static RamseteCommand getSquarePathCommand() {
+	public static Command getSquarePathCommand() {
 	
 		RamseteCommand command = new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
 				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController, driveSub::tankDriveVolts,
@@ -69,6 +69,7 @@ public class Autonomous {
 		System.out.println("square path command timing:");
 		System.out.println(squarePathTrajectory.getTotalTimeSeconds());
 		System.out.println(squarePathTrajectory.getStates());
-		return command;
+		// Run path following command, then stop at the end.
+		return command.andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 }
