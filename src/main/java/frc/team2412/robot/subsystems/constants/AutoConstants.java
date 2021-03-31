@@ -61,9 +61,7 @@ public class AutoConstants {
 					// Add kinematics to ensure max speed is actually obeyed
 					.setKinematics(kDriveKinematics)
 					// Apply the voltage constraint
-					.addConstraint(autoVoltageConstraint)
-					// Go forwards?
-					.setReversed(true);
+					.addConstraint(autoVoltageConstraint);
 
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
@@ -130,8 +128,8 @@ public class AutoConstants {
 	
 	public static final Translation2d squareBeginning = new Translation2d(0,0);
 	
-	public static final List<Pose2d> squareWaypoints = List.of(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(180)),
-		new Pose2d(new Translation2d(1, 0), Rotation2d.fromDegrees(180)));
+	public static final List<Pose2d> squareWaypoints = List.of(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
+		new Pose2d(new Translation2d(1, 0), Rotation2d.fromDegrees(0)));
 	
 	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			squareWaypoints, config);
