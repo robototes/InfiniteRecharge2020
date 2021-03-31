@@ -1,5 +1,6 @@
 package frc.team2412.robot.autonomous;
 
+import static frc.team2412.robot.subsystems.constants.AutoConstants.bouncePathTrajectory;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.kDriveKinematics;
@@ -60,8 +61,8 @@ public class Autonomous {
 		});
 		return command;
 	}
+
 	public static Command getSquarePathCommand() {
-	
 		RamseteCommand command = new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
 				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController, driveSub::tankDriveVolts,
 				driveSub);
@@ -70,6 +71,15 @@ public class Autonomous {
 		System.out.println(squarePathTrajectory.getTotalTimeSeconds());
 		System.out.println(squarePathTrajectory.getStates());
 		// Run path following command, then stop at the end.
+		return command.andThen(() -> driveSub.tankDriveVolts(0, 0));
+	}
+
+	
+	public static Command getBouncePathCommand() {
+		RamseteCommand command = new RamseteCommand(bouncePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
+				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController, driveSub::tankDriveVolts,
+				driveSub);
+						// Run path following command, then stop at the end.
 		return command.andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 }
