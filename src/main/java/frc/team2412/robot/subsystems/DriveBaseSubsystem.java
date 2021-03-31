@@ -59,6 +59,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 
 	private int telemetryCounter = 0;
 
+	private boolean isSimulation = RobotBase.isSimulation();
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftFrontMotor, WPI_TalonFX leftBackMotor,
 			WPI_TalonFX rightFrontMotor, WPI_TalonFX rightBackMotor) {
@@ -83,7 +84,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		leftMotorRevolutions = leftFrontMotor.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 
 		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
-		if (RobotBase.isSimulation()) {
+		if (isSimulation) {
 			simulationSetup();
 		}
 	}
@@ -172,7 +173,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution);
 
-		if (!RobotBase.isSimulation() && (--telemetryCounter <= 0)) {
+		if (!isSimulation && (--telemetryCounter <= 0)) {
 			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " " + String.valueOf(RobotMap.driveGyro.isConnected()));
 			telemetryCounter = 10;
 		}
@@ -186,7 +187,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	// _________________________________________________________________________________________________
 
 	public Pose2d getPose() {
-		return odometry.getPoseMeters();
+		return isSimulation ? drivetrainSim.getPose() : odometry.getPoseMeters();
 	}
 
 	public void resetPos() {
@@ -196,9 +197,11 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		double leftMetersPerSecond = (leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
+		double leftMetersPerSecond = isSimulation ? drivetrainSim.getLeftVelocityMetersPerSecond() :
+			(leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
 				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
-		double rightMetersPerSecond = (rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
+		double rightMetersPerSecond = isSimulation ? drivetrainSim.getRightVelocityMetersPerSecond() :
+			(rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
 				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
 		return new DifferentialDriveWheelSpeeds(leftMetersPerSecond, rightMetersPerSecond);
 	}
