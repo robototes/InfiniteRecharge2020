@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.SPI;
 import frc.team2412.robot.RobotMapConstants.CANBus;
 import frc.team2412.robot.RobotMapConstants.DIOPort;
 import frc.team2412.robot.RobotMapConstants.IndexIntakeModule;
@@ -49,7 +49,7 @@ public class RobotMap {
 	public static WPI_TalonFX driveRightFrontMotor = new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id);
 	public static WPI_TalonFX driveRightBackMotor = new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id);
 	// DriveBase
-	public static final Gyro driveGyro = new AHRS();
+	public static final AHRS driveGyro = new AHRS(SPI.Port.kMXP);
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(PneumaticPort.DRIVE.id);

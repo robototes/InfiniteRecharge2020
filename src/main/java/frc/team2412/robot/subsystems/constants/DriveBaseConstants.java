@@ -1,9 +1,11 @@
 package frc.team2412.robot.subsystems.constants;
 
+import edu.wpi.first.wpilibj.util.Units;
+
 public class DriveBaseConstants {
 
-	public static final double wheelDiameterMeters = 0.1524;
-	public static final double metersPerWheelRevolution = wheelDiameterMeters * Math.PI;
+	public static final double wheelRadiusMeters = Units.inchesToMeters(3);
+	public static final double metersPerWheelRevolution = wheelRadiusMeters * 2 * Math.PI;
 
 	public static final double encoderTicksPerRevolution = 2048.0;
 

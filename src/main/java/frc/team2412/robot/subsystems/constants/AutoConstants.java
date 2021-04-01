@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 
@@ -28,13 +29,13 @@ public class AutoConstants {
 	
 	public static final double kPDriveVel = 0.488;
 	
-	public static final double kTrackwidthMeters = 0.5461; // Horizontal distance between wheels
+	public static final double kTrackwidthMeters = Units.inchesToMeters(21.5); // Horizontal distance between wheels
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 3; // Max speed we can drive
+	public static final double kMaxSpeedMetersPerSecond = 2; // Max speed we can drive
 
-	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+	public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 	
 	
 	// dummy values, need to change with characteriaation
@@ -65,7 +66,6 @@ public class AutoConstants {
 
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
-	public static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
 
 	// Barrel Route points
 	public static final Translation2d barrelStart = new Translation2d(1.5, -2.632);
@@ -118,17 +118,21 @@ public class AutoConstants {
 	public static final Translation2d bounceStar3 = new Translation2d(7.5, -0.75);
 	public static final Translation2d bounceEnd = new Translation2d(9, -2.5);
 
-	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStar1, bouncePoint1, bounceStar2,
-			bouncePoint2, bouncePoint3, bounceStar3);
-
-	public final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
+	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStar1, bouncePoint1,
+			bounceStar2, bouncePoint2, bouncePoint3, bounceStar3);
+	
+	public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
 			new Pose2d(bounceEnd, new Rotation2d(0)), config);
 
 	
 	public static final Translation2d squareBeginning = new Translation2d(0,0);
 	
-	public static final List<Pose2d> squareWaypoints = List.of(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)),new Pose2d(new Translation2d(1, 0), new Rotation2d(0)));
+	public static final List<Pose2d> squareWaypoints = List.of(new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
+		new Pose2d(new Translation2d(1, 0), Rotation2d.fromDegrees(0)),
+		new Pose2d(new Translation2d(1, 1), Rotation2d.fromDegrees(-180)),
+		new Pose2d(new Translation2d(0, 1), Rotation2d.fromDegrees(-180)),
+		new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)));
 	
 	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			squareWaypoints, config);

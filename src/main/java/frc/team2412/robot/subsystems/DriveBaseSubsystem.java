@@ -10,10 +10,9 @@ import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.ENCODER
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.encoderTicksPerRevolution;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.lowGearRatio;
 import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.metersPerWheelRevolution;
-import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.wheelDiameterMeters;
+import static frc.team2412.robot.subsystems.constants.DriveBaseConstants.wheelRadiusMeters;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -25,7 +24,6 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
-import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
@@ -33,6 +31,9 @@ import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpiutil.math.VecBuilder;
+
+import frc.team2412.robot.RobotMap;
+import frc.team2412.robot.subsystems.constants.DriveBaseConstants;
 
 public class DriveBaseSubsystem extends SubsystemBase {
 
@@ -55,6 +56,10 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	// DifferentialDrive drive;
 
 	public double driveBaseCurrentDraw;
+
+	private int telemetryCounter = 0;
+
+	private boolean isSimulation = RobotBase.isSimulation();
 
 	public DriveBaseSubsystem(Solenoid gearShifter, Gyro gyro, WPI_TalonFX leftFrontMotor, WPI_TalonFX leftBackMotor,
 			WPI_TalonFX rightFrontMotor, WPI_TalonFX rightBackMotor) {
@@ -79,7 +84,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		leftMotorRevolutions = leftFrontMotor.getSelectedSensorPosition() / encoderTicksPerRevolution * lowGearRatio;
 
 		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
-		if (RobotBase.isSimulation()) {
+		if (isSimulation) {
 			simulationSetup();
 		}
 	}
@@ -157,14 +162,21 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		rightMotorRevolutions = rightFrontMotor.getSelectedSensorPosition();
 		leftMotorRevolutions = leftFrontMotor.getSelectedSensorPosition();
 
-		odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
+		// System.out.println((leftMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
+		// metersPerWheelRevolution + " " + (rightMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
+		// metersPerWheelRevolution);
+
+		double angle = gyro.getAngle();
+		odometry.update(Rotation2d.fromDegrees(angle),
 		(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution,
 		(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
 		metersPerWheelRevolution);
-	//	System.out.println("odometry" + odometry.getPoseMeters());
 
-
+		if (!isSimulation && (--telemetryCounter <= 0)) {
+			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " " + String.valueOf(RobotMap.driveGyro.isConnected()));
+			telemetryCounter = 10;
+		}
 
 		driveBaseCurrentDraw = rightFrontMotor.getStatorCurrent() + rightBackMotor.getStatorCurrent()
 				+ leftFrontMotor.getStatorCurrent() + leftBackMotor.getStatorCurrent();
@@ -175,20 +187,33 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	// _________________________________________________________________________________________________
 
 	public Pose2d getPose() {
-		return odometry.getPoseMeters();
+		return isSimulation ? drivetrainSim.getPose() : odometry.getPoseMeters();
+	}
+
+	public void resetPos() {
+		rightFrontMotor.setSelectedSensorPosition(0);
+		leftFrontMotor.setSelectedSensorPosition(0);
+		odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(0));
+		if (isSimulation) {
+			drivetrainSim.setPose(new Pose2d());
+		}
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		double leftMetersPerSecond = leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution
+		double leftMetersPerSecond = isSimulation ? drivetrainSim.getLeftVelocityMetersPerSecond() :
+			(leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
 				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
-		double rightMetersPerSecond = rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution
+		double rightMetersPerSecond = isSimulation ? drivetrainSim.getRightVelocityMetersPerSecond() :
+			(rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
 				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
 		return new DifferentialDriveWheelSpeeds(leftMetersPerSecond, rightMetersPerSecond);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
-		leftFrontMotor.setVoltage(-rightVolts);
-		rightFrontMotor.setVoltage(-leftVolts);
+		//System.out.println("tankDriveVolts: " + leftVolts + ", " + rightVolts);
+
+		leftFrontMotor.setVoltage(isSimulation ? leftVolts : -rightVolts);
+		rightFrontMotor.setVoltage(isSimulation ? rightVolts : -leftVolts);
 		// drive.feed();
 	}
 
@@ -203,9 +228,9 @@ public class DriveBaseSubsystem extends SubsystemBase {
 				// Create a linear system from our characterization gains.
 				LinearSystemId.identifyDrivetrainSystem(KvLinear, KaLinear, KvAngular, KaAngular),
 				DCMotor.getFalcon500(2), // 2 Falcon500 motors on each side of the drivetrain.
-				6.13, // 6.13:1 gearing reduction.
+				1 / DriveBaseConstants.lowGearRatio, // low gear reduction.
 				kTrackwidthMeters, // The track width is 0.7112 meters.
-				wheelDiameterMeters, // The robot uses 4" radius wheels.
+				wheelRadiusMeters, // The robot uses 3" radius wheels.
 
 				// The standard deviations for measurement noise:
 				// x and y: 0.001 m
@@ -222,13 +247,14 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	int count = 0;
 
 	public void simulationPeriodic() {
-		drivetrainSim.setInputs(-leftFrontMotor.get() * RobotController.getBatteryVoltage(),
-				rightFrontMotor.get() * RobotController.getBatteryVoltage());
+		// Need to invert rightFrontMotor for simulation, as it's inverted on the physical robot
+		// such that negative power moves forwards
+		drivetrainSim.setInputs(leftFrontMotor.get() * RobotController.getBatteryVoltage(),
+				-rightFrontMotor.get() * RobotController.getBatteryVoltage());
 		drivetrainSim.update(0.020);
 		fieldSim.setRobotPose(drivetrainSim.getPose());
 		if (count++ % 20 == 0) {
-			System.out.println("updated in simluation periodic");
-			System.out.println(drivetrainSim.getPose());
+			System.out.println("updated in simluation periodic: " + drivetrainSim.getPose());
 		}
 	}
 }

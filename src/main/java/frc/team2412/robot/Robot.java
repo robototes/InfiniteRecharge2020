@@ -45,6 +45,15 @@ public class Robot extends TimedRobot {
 		RobotMap.driveRightBackMotor.setNeutralMode(NeutralMode.Brake);
 		RobotMap.driveLeftBackMotor.setNeutralMode(NeutralMode.Brake);
 		RobotMap.driveLeftBackMotor.setNeutralMode(NeutralMode.Brake);
+		System.out.println("gyro connected: " + RobotMap.driveGyro.isConnected());
+		if (RobotMap.driveGyro.isConnected()) {
+			while (RobotMap.driveGyro.isCalibrating()) {
+				try {
+					System.out.println("Waiting for gyro calibrarion");
+					Thread.sleep(50);
+				} catch (InterruptedException ignored) {}
+			}
+		}
 	}
 
 	/**
@@ -105,6 +114,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancel(autoCommand);
+		RobotMap.driveLeftFrontMotor.setSelectedSensorPosition(0);
+		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
 		robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
