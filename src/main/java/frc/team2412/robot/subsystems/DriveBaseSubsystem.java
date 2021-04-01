@@ -199,6 +199,17 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		}
 	}
 
+	public void setPose(Pose2d pose) {
+		//Encoders set to 0 regardless
+		rightFrontMotor.setSelectedSensorPosition(0);
+		leftFrontMotor.setSelectedSensorPosition(0);
+		//Sets it to new pose, handles gyro offset
+		odometry.resetPosition(pose, pose.getRotation());
+		if (isSimulation) {
+			drivetrainSim.setPose(pose);
+		}
+	}
+	
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
 		double leftMetersPerSecond = isSimulation ? drivetrainSim.getLeftVelocityMetersPerSecond() :
 			(leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)

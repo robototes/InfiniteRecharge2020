@@ -7,9 +7,12 @@ import static frc.team2412.robot.subsystems.constants.AutoConstants.pidControlle
 import static frc.team2412.robot.subsystems.constants.AutoConstants.ramseteControlller;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.simpleMotorFeedforward;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.squarePathTrajectory;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.squareWaypoints;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -31,8 +34,11 @@ public class Autonomous {
 		Translation2d currentTranslation = currentPose.getTranslation();
 
 		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(currentPose,
-				List.of(new Translation2d(currentTranslation.getX() + (finalX / 2), currentTranslation.getY() + finalY / 2)),
-				new Pose2d(currentTranslation.getX() + finalX, currentTranslation.getY() + finalY, currentPose.getRotation()), config);
+				List.of(new Translation2d(currentTranslation.getX() + (finalX / 2),
+						currentTranslation.getY() + finalY / 2)),
+				new Pose2d(currentTranslation.getX() + finalX, currentTranslation.getY() + finalY,
+						currentPose.getRotation()),
+				config);
 
 		RamseteCommand ramseteCommand = new RamseteCommand(exampleTrajectory, driveSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
@@ -54,7 +60,7 @@ public class Autonomous {
 	}
 
 	public static InstantCommand resetPositionCommand() {
-		InstantCommand command = new InstantCommand( new Runnable() {
+		InstantCommand command = new InstantCommand(new Runnable() {
 			@Override
 			public void run() {
 				driveSub.resetPos();
@@ -63,24 +69,37 @@ public class Autonomous {
 		return command;
 	}
 
+	public static InstantCommand setPositionCommand(Pose2d pose) {
+		InstantCommand command = new InstantCommand(new Runnable() {
+			@Override
+			public void run() {
+				driveSub.setPose(pose);
+			}
+		});
+		return command;
+	}
+
 	public static Command getSquarePathCommand() {
-		RamseteCommand command = new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
-				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController, driveSub::tankDriveVolts,
-				driveSub);
+
+		RamseteCommand command = new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
 
 		System.out.println("square path command timing:");
 		System.out.println(squarePathTrajectory.getTotalTimeSeconds());
 		System.out.println(squarePathTrajectory.getStates());
 		// Run path following command, then stop at the end.
-		return command.andThen(() -> driveSub.tankDriveVolts(0, 0));
+		return setPositionCommand(squarePathTrajectory.getInitialPose())
+				.andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
 	}
 
-	
 	public static Command getBouncePathCommand() {
-		RamseteCommand command = new RamseteCommand(bouncePathTrajectory, driveSub::getPose, ramseteControlller, simpleMotorFeedforward,
-				kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController, driveSub::tankDriveVolts,
-				driveSub);
-						// Run path following command, then stop at the end.
-		return command.andThen(() -> driveSub.tankDriveVolts(0, 0));
+		RamseteCommand command = new RamseteCommand(bouncePathTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
+		// Makes robot think it's in position to start the trajectory i.e. resets it
+		// Run path following command, then stop at the end.
+		return setPositionCommand(bouncePathTrajectory.getInitialPose())
+				.andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
 	}
 }
