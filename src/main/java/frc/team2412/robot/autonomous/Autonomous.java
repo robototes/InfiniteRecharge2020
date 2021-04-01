@@ -55,8 +55,7 @@ public class Autonomous {
 		InstantCommand command = new InstantCommand( new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-
+				driveSub.resetPos();
 			}
 		});
 		return command;

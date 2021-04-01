@@ -193,7 +193,10 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	public void resetPos() {
 		rightFrontMotor.setSelectedSensorPosition(0);
 		leftFrontMotor.setSelectedSensorPosition(0);
-		odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(-180));
+		odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(0));
+		if (isSimulation) {
+			drivetrainSim.setPose(new Pose2d());
+		}
 	}
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
