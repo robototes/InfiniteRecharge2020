@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 
@@ -28,13 +29,13 @@ public class AutoConstants {
 	
 	public static final double kPDriveVel = 0.488;
 	
-	public static final double kTrackwidthMeters = 0.5461; // Horizontal distance between wheels
+	public static final double kTrackwidthMeters = Units.inchesToMeters(21.5); // Horizontal distance between wheels
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 3; // Max speed we can drive
+	public static final double kMaxSpeedMetersPerSecond = 2; // Max speed we can drive
 
-	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+	public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 	
 	
 	// dummy values, need to change with characteriaation
@@ -65,7 +66,6 @@ public class AutoConstants {
 
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
-	public static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
 
 	// Barrel Route points
 	public static final Translation2d barrelStart = new Translation2d(1.5, -2.632);

@@ -2,7 +2,6 @@ package frc.team2412.robot.autonomous;
 
 import static frc.team2412.robot.subsystems.constants.AutoConstants.bouncePathTrajectory;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.driveSub;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.pidController;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.ramseteControlller;
@@ -18,10 +17,13 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.team2412.robot.RobotMap;
+import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 
 public class Autonomous {
 
 	public Trajectory trajectory;
+	private static DriveBaseSubsystem driveSub = RobotMap.m_robotContainer.m_driveBaseSubsystem;
 
 	public static Command getMoveCertainAmountCommand(double finalX, double finalY) {
 
