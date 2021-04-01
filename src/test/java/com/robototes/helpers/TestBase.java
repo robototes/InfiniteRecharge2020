@@ -64,7 +64,7 @@ public class TestBase {
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
 	}
-	
+
 	public void test(Command command, Servo changedObject, double wantedValue) {
 		MockButton fakeButton = new MockButton();
 

@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.team2412.robot.commands.climb.ClimbLiftUpCommand;
 import frc.team2412.robot.autonomous.Autonomous;
 import frc.team2412.robot.commands.climb.ClimbJoystickCommand;
 import frc.team2412.robot.commands.climb.ClimbLiftDownCommand;
+import frc.team2412.robot.commands.climb.ClimbLiftUpCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
@@ -78,8 +78,7 @@ public class OI {
 
 	public static enum DriverControls implements ButtonEnumInterface {
 		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT, 1),
-		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3),
-		ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
+		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3), ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
 		public Joysticks stick;
 		public int buttonID;
@@ -173,17 +172,18 @@ public class OI {
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
 
-		//indexerShootButton.whenPressed(Autonomous.getMoveCertainAmountCommand(1.0, 0.0));
+		// indexerShootButton.whenPressed(Autonomous.getMoveCertainAmountCommand(1.0,
+		// 0.0));
 		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand()
-			.andThen(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem)));
-		//resetPositionButton.whenPressed(Autonomous.getBouncePathCommand());
+				.andThen(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem)));
+		// resetPositionButton.whenPressed(Autonomous.getBouncePathCommand());
 		resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
-		
+
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
-	//	bindIndexControls(robotContainer);
+		// bindIndexControls(robotContainer);
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {
@@ -243,7 +243,8 @@ public class OI {
 		}
 
 		climbModeButton.whileHeld(new ClimbJoystickCommand(codriverManualStick, robotContainer.m_climbMotorSubsystem));
-		climbModeButton.whenPressed(new ClimbLiftUpCommand(robotContainer.m_climbLiftSubsystem, robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+		climbModeButton.whenPressed(new ClimbLiftUpCommand(robotContainer.m_climbLiftSubsystem,
+				robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		climbModeButton.whenReleased(new ClimbLiftDownCommand(robotContainer.m_climbLiftSubsystem));
 	}
 

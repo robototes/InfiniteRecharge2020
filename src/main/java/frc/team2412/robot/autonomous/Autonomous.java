@@ -7,12 +7,9 @@ import static frc.team2412.robot.subsystems.constants.AutoConstants.pidControlle
 import static frc.team2412.robot.subsystems.constants.AutoConstants.ramseteControlller;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.simpleMotorFeedforward;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.squarePathTrajectory;
-import static frc.team2412.robot.subsystems.constants.AutoConstants.squareWaypoints;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
