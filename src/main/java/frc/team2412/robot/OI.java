@@ -78,6 +78,7 @@ public class OI {
 
 	public static enum DriverControls implements ButtonEnumInterface {
 		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), SPIT(Joysticks.DRIVER_LEFT, 1),
+		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3),
 		ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
 		public Joysticks stick;
@@ -153,6 +154,7 @@ public class OI {
 	public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
 	public final Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
 	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
+	public final Button resetPositionButton = DriverControls.RESET_POSITION.createFrom(driverRightStick);
 
 	// Lift Controls
 	public final Button liftButton = CodriverControls.LIFT.createFrom(codriverStick);
@@ -170,7 +172,12 @@ public class OI {
 
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
-		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand().andThen(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem)));
+
+		//indexerShootButton.whenPressed(Autonomous.getMoveCertainAmountCommand(1.0, 0.0));
+		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand()
+			.andThen(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem)));
+		//resetPositionButton.whenPressed(Autonomous.getBouncePathCommand());
+		resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
 		
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);
