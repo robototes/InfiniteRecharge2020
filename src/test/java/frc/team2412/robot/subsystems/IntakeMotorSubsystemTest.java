@@ -45,7 +45,6 @@ public class IntakeMotorSubsystemTest extends TestBase {
 		test(new IntakeBackOutCommand(realIntakeMotorOnOffSubsystem), mockedIntakeBackMotor, -MAX_INTAKE_SPEED);
 	}
 
-	
 	@Test
 	public void IntakeBackOffCommandTest() {
 		test(new IntakeBackOffCommand(realIntakeMotorOnOffSubsystem), mockedIntakeBackMotor, 0);
@@ -55,7 +54,7 @@ public class IntakeMotorSubsystemTest extends TestBase {
 	public void IntakeBackOnCommandTest() {
 		test(new IntakeBackInCommand(realIntakeMotorOnOffSubsystem), mockedIntakeBackMotor, MAX_INTAKE_SPEED);
 	}
-	
+
 	@Test
 	public void IntakeFrontOutCommandTest() {
 		test(new IntakeFrontOutCommand(realIntakeMotorOnOffSubsystem), mockedIntakeFrontMotor, -MAX_INTAKE_SPEED);

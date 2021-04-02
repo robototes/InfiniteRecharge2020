@@ -13,6 +13,7 @@ public class TurretAddRotateCommand extends TurretRotateCommand {
 	private Rotations m_rotationsToAdd;
 
 	public TurretAddRotateCommand(TurretSubsystem turretSubsystem, Rotations angleToAddToRotate) {
+
 		super(turretSubsystem, turretSubsystem.getCurrentAngle().add(angleToAddToRotate));
 
 		m_rotationsToAdd = angleToAddToRotate;
