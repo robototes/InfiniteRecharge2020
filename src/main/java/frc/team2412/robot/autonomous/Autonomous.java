@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 
@@ -87,7 +88,7 @@ public class Autonomous {
 		System.out.println(squarePathTrajectory.getTotalTimeSeconds());
 		System.out.println(squarePathTrajectory.getStates());
 		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
+		return resetPositionCommand().andThen(new WaitCommand(1.0)).andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 
 	public static Command getBouncePathCommand() {
@@ -98,6 +99,6 @@ public class Autonomous {
 				driveSub::tankDriveVolts, driveSub);
 		// Makes robot think it's in position to start the trajectory i.e. resets it
 		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
+		return resetPositionCommand().andThen(new WaitCommand(1.0)).andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 }
