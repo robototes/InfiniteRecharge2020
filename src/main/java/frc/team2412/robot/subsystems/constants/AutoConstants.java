@@ -101,20 +101,20 @@ public class AutoConstants {
 			new Pose2d(barrelStart, new Rotation2d(0)), interiorWaypointsBarrelPath,
 			new Pose2d(barrelEnd, new Rotation2d(0)), config);
 
-	public static Translation2d slalomPointOne = new Translation2d(0.868, -4.273);
-	public static Translation2d slalomPointTwo = new Translation2d(2.233, -4.063);
-	public static Translation2d slalomPointThree = new Translation2d(3.02, -2.898);
-	public static Translation2d slalomPointFour = new Translation2d(4.844, -1.962);
-	public static Translation2d slalomPointFive = new Translation2d(6.839, -2.564);
-	public static Translation2d slalomPointSix = new Translation2d(7.379, -3.364);
-	public static Translation2d slalomPointSeven = new Translation2d(8.429, -4.289);
-	public static Translation2d slalomPointEight = new Translation2d(9.585, -3.247);
-	public static Translation2d slalomPointNine = new Translation2d(8.375, -2.213);
-	public static Translation2d slalomPointTen = new Translation2d(7.299, -3.308);
-	public static Translation2d slalomPointEleven = new Translation2d(6.758, -4.12);
-	public static Translation2d slalomPointTwelve = new Translation2d(3.937, -4.303);
-	public static Translation2d slalomPointThirteen = new Translation2d(2.05, -2.767);
-	public static Translation2d slalomPointFourteen = new Translation2d(0.664, -2.348);
+	public static Translation2d slalomPointOne = new Translation2d(0.794, -3.907);
+	public static Translation2d slalomPointTwo = new Translation2d(2.042, -3.715);
+	public static Translation2d slalomPointThree = new Translation2d(2.761, -2.65);
+	public static Translation2d slalomPointFour = new Translation2d(4.429, -1.794);
+	public static Translation2d slalomPointFive = new Translation2d(6.254, -2.345);
+	public static Translation2d slalomPointSix = new Translation2d(6.747, -3.076);
+	public static Translation2d slalomPointSeven = new Translation2d(7.707, -3.922);
+	public static Translation2d slalomPointEight = new Translation2d(8.765, -2.969);
+	public static Translation2d slalomPointNine = new Translation2d(7.658, -2.024);
+	public static Translation2d slalomPointTen = new Translation2d(6.103, -2.766);
+	public static Translation2d slalomPointEleven = new Translation2d(6.18, -3.767);
+	public static Translation2d slalomPointTwelve = new Translation2d(3.6, -3.935);
+	public static Translation2d slalomPointThirteen = new Translation2d(1.875, -2.530);
+	public static Translation2d slalomPointFourteen = new Translation2d(0.607, -2.147);
 
 	public static List<Translation2d> interiorWaypointsSlalomPath = List.of(slalomPointTwo, slalomPointThree,
 			slalomPointFour, slalomPointFive, slalomPointSix, slalomPointSeven, slalomPointEight, slalomPointNine,
