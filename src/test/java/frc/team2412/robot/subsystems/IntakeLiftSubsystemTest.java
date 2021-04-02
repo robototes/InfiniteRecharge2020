@@ -46,7 +46,7 @@ public class IntakeLiftSubsystemTest extends TestBase {
 	public void IntakeBackUpCommandTest() {
 		test(new IntakeBackUpCommand(realIntakeUpDownSubsystem), mockedBackSolenoid, false);
 	}
-	
+
 	@Test
 	public void IntakeFrontDownCommandTest() {
 		test(new IntakeFrontDownCommand(realIntakeUpDownSubsystem), mockedFrontSolenoid, true);
