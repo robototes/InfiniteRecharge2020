@@ -167,7 +167,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		// encoderTicksPerRevolution) * lowGearRatio *
 		// metersPerWheelRevolution);
 
-		double angle = gyro.getAngle();
+		double angle = getGyroHeading();
 		odometry.update(Rotation2d.fromDegrees(angle),
 				(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
 				(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
@@ -193,6 +193,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	public void resetPos() {
 		rightFrontMotor.setSelectedSensorPosition(0);
 		leftFrontMotor.setSelectedSensorPosition(0);
+		gyro.reset();
 		odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(0));
 		if (isSimulation) {
 			drivetrainSim.setPose(new Pose2d());
@@ -223,8 +224,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		// System.out.println("tankDriveVolts: " + leftVolts + ", " + rightVolts);
 
-		leftFrontMotor.setVoltage(isSimulation ? leftVolts : -rightVolts);
-		rightFrontMotor.setVoltage(isSimulation ? rightVolts : -leftVolts);
+		leftFrontMotor.setVoltage(isSimulation ? leftVolts : -leftVolts);
+		rightFrontMotor.setVoltage(isSimulation ? rightVolts : -rightVolts);
 		// drive.feed();
 	}
 

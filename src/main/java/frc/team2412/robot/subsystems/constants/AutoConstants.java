@@ -19,32 +19,51 @@ public class AutoConstants {
 
 	public static final double MAX_VOLTAGE = 12;
 
-	public static final boolean kGyroReversed = false;
+	public static final boolean kGyroReversed = true;
 
-	public static final double ksVolts = 0.185;
-	public static final double kvVoltSecondsPerMeter = 0.0754;
-	public static final double kaVoltSecondsSquaredPerMeter = 0.0105;
+	// Old characterization constants
+	// public static final double ksVolts = 0.185;
+	// public static final double kvVoltSecondsPerMeter = 0.0754;
+	// public static final double kaVoltSecondsSquaredPerMeter = 0.0105;
 
-	public static final double kPDriveVel = 0.488;
+	// public static final double kPDriveVel = 0.488;
 
-	public static final double kTrackwidthMeters = Units.inchesToMeters(21.5); // Horizontal distance between wheels
+	// public static final double kTrackwidthMeters = Units.inchesToMeters(21.5); // Horizontal distance between wheels
+
+	// Garage-measure characterization constants
+	public static final double /*kS*/ ksVolts = 0.6;
+	public static final double /*kV*/ kvVoltSecondsPerMeter = 3.97;
+	public static final double /*kA*/ kaVoltSecondsSquaredPerMeter = 0.266;
+
+	public static final double kPDriveVel = 1.69;
+
+	// Empirically measured in characterization
+	public static final double kTrackwidthMeters = 0.6419121763651794; // Horizontal distance between wheels
+
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 2; // Max speed we can drive
+	public static final double kMaxSpeedMetersPerSecond = 1; // Max speed we can drive
 
-	public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+	public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
 
-	// dummy values, need to change with characteriaation
-	public static final double KvLinear = 1.65;
-	public static final double KaLinear = 0.18;
-	public static final double KvAngular = 1.4;
-	public static final double KaAngular = 0.2;
+
+	// old constants
+	// public static final double KvLinear = 1.65;
+	// public static final double KaLinear = 0.18;
+	// public static final double KvAngular = 1.4;
+	// public static final double KaAngular = 0.2;
+
+	// Garage measured constants (for linear - made up for angular)
+	public static final double KvLinear = 3.97;
+	public static final double KaLinear = 0.266;
+	public static final double KvAngular = 3.7;
+	public static final double KaAngular = 0.26;
 
 	// Ramsete Controller Value
 
-	public static final double kRamseteB = 2; // makes a more straight curve
-	public static final double kRamseteZeta = 0.7; // limits the correction
+	public static final double kRamseteB = 2; //8; // makes a more straight curve
+	public static final double kRamseteZeta = 0.7; //2.0; // limits the correction
 
 	public static SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(ksVolts,
 			kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter);
@@ -124,12 +143,18 @@ public class AutoConstants {
 
 	public static final Translation2d squareBeginning = new Translation2d(0, 0);
 
+	private static final double squareX = 1.5;
+	private static final double squareY = 1;
 	public static final List<Pose2d> squareWaypoints = List.of(
 			new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
-			new Pose2d(new Translation2d(1, 0), Rotation2d.fromDegrees(0)),
-			new Pose2d(new Translation2d(1, 1), Rotation2d.fromDegrees(-180)),
-			new Pose2d(new Translation2d(0, 1), Rotation2d.fromDegrees(-180)),
-			new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)));
+			new Pose2d(new Translation2d(squareX, 0), Rotation2d.fromDegrees(0)),
+			new Pose2d(new Translation2d(squareX + 0.25, squareY/2), Rotation2d.fromDegrees(90)),
+			new Pose2d(new Translation2d(squareX, squareY), Rotation2d.fromDegrees(-180)),
+			new Pose2d(new Translation2d(0, squareY), Rotation2d.fromDegrees(-180)),
+			new Pose2d(new Translation2d(-0.25, squareY/2), Rotation2d.fromDegrees(-90)),
+			new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
+			new Pose2d(new Translation2d(0.25, 0), Rotation2d.fromDegrees(0))
+			);
 
 	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(squareWaypoints,
 			config);

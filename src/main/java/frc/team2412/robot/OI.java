@@ -174,8 +174,7 @@ public class OI {
 
 		// indexerShootButton.whenPressed(Autonomous.getMoveCertainAmountCommand(1.0,
 		// 0.0));
-		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand()
-				.andThen(new DriveShiftToHighGearCommand(robotContainer.m_driveBaseSubsystem)));
+		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand());
 		// resetPositionButton.whenPressed(Autonomous.getBouncePathCommand());
 		resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
 
