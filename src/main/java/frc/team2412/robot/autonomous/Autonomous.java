@@ -77,7 +77,8 @@ public class Autonomous {
 	}
 
 	public static Command getSquarePathCommand() {
-
+		Trajectory adjustedTrajectory = squarePathTrajectory.relativeTo(squarePathTrajectory.getInitialPose());
+		
 		RamseteCommand command = new RamseteCommand(squarePathTrajectory, driveSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
 				driveSub::tankDriveVolts, driveSub);
@@ -86,17 +87,17 @@ public class Autonomous {
 		System.out.println(squarePathTrajectory.getTotalTimeSeconds());
 		System.out.println(squarePathTrajectory.getStates());
 		// Run path following command, then stop at the end.
-		return setPositionCommand(squarePathTrajectory.getInitialPose())
-				.andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
+		return resetPositionCommand().andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
 	}
 
 	public static Command getBouncePathCommand() {
-		RamseteCommand command = new RamseteCommand(bouncePathTrajectory, driveSub::getPose, ramseteControlller,
+		Trajectory adjustedTrajectory = bouncePathTrajectory.relativeTo(bouncePathTrajectory.getInitialPose());
+
+		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
 				driveSub::tankDriveVolts, driveSub);
 		// Makes robot think it's in position to start the trajectory i.e. resets it
 		// Run path following command, then stop at the end.
-		return setPositionCommand(bouncePathTrajectory.getInitialPose())
-				.andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
+		return resetPositionCommand().andThen(command.andThen(() -> driveSub.tankDriveVolts(0, 0)));
 	}
 }
