@@ -1,16 +1,10 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.TurretConstants.ENCODER_MAX_ERROR_JUMP;
-import static frc.team2412.robot.subsystems.constants.TurretConstants.TICKS_PER_DEGREE;
-import static frc.team2412.robot.subsystems.constants.TurretConstants.TICKS_PER_REVOLUTION;
 import static frc.team2412.robot.subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.robototes.math.MathUtils;
 import com.robototes.units.Rotations;
-import com.robototes.units.UnitTypes.RotationUnits;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
@@ -49,7 +43,7 @@ public class TurretSubsystem extends PIDSubsystem {
 
 		motor.setNeutralMode(NeutralMode.Brake);
 
-	//	turretOffsetPosition = motor.getSelectedSensorPosition(0);
+		// turretOffsetPosition = motor.getSelectedSensorPosition(0);
 		turretOffsetPosition = 0;
 		turretCurrentPosition = 0;
 		turretPastPosition = 0;
@@ -57,24 +51,26 @@ public class TurretSubsystem extends PIDSubsystem {
 		periodic();
 	}
 
-	//@Override
-	//disabled for at home
-	/*public void periodic() {
-		turretCurrentPosition = motor.getSelectedSensorPosition(0);
-
-		if (turretCurrentPosition - turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
-			turretOffsetPosition += TICKS_PER_REVOLUTION;
-
-		} else if (Math.abs(turretCurrentPosition - turretPastPosition) > ENCODER_MAX_ERROR_JUMP) {
-			turretCurrentPosition = turretPastPosition;
-		}
-
-		turretPastPosition = turretCurrentPosition;
-		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE),
-				RotationUnits.DEGREE);
-		// System.out.println(getMeasurement());*/
+	// @Override
+	// disabled for at home
+	/*
+	 * public void periodic() { turretCurrentPosition =
+	 * motor.getSelectedSensorPosition(0);
+	 * 
+	 * if (turretCurrentPosition - turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
+	 * turretOffsetPosition += TICKS_PER_REVOLUTION;
+	 * 
+	 * } else if (Math.abs(turretCurrentPosition - turretPastPosition) >
+	 * ENCODER_MAX_ERROR_JUMP) { turretCurrentPosition = turretPastPosition; }
+	 * 
+	 * turretPastPosition = turretCurrentPosition; currentAngle = new
+	 * Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() /
+	 * TICKS_PER_DEGREE), RotationUnits.DEGREE); //
+	 * System.out.println(getMeasurement());
+	 */
 	@Override
-	public void periodic() {}
+	public void periodic() {
+	}
 
 	public void set(double output) {
 //		output = MathUtils.constrain(output, -1, 1);

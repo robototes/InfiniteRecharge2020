@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import frc.team2412.robot.RobotMapConstants.CANBus;
 import frc.team2412.robot.RobotMapConstants.DIOPort;
 import frc.team2412.robot.RobotMapConstants.IndexIntakeModule;
@@ -49,7 +49,7 @@ public class RobotMap {
 	public static WPI_TalonFX driveRightFrontMotor = new WPI_TalonFX(CANBus.DRIVE_RIGHT_FRONT.id);
 	public static WPI_TalonFX driveRightBackMotor = new WPI_TalonFX(CANBus.DRIVE_RIGHT_BACK.id);
 	// DriveBase
-	public static final Gyro driveGyro = new AHRS();
+	public static final AHRS driveGyro = new AHRS(SPI.Port.kMXP);
 
 	// DriveBase Solenoid
 	public static Solenoid driveSolenoid = new Solenoid(PneumaticPort.DRIVE.id);
@@ -133,7 +133,8 @@ public class RobotMap {
 
 	// Lift Subsystem
 	// -------------------------------------------------------------------------------
-	public static DoubleSolenoid liftDoubleSolenoid = new DoubleSolenoid(PneumaticPort.LIFT_UP.id, PneumaticPort.LIFT_DOWN.id);
+	public static DoubleSolenoid liftDoubleSolenoid = new DoubleSolenoid(PneumaticPort.LIFT_UP.id,
+			PneumaticPort.LIFT_DOWN.id);
 
 	// CONTROL PANEL SUBSYSTEM
 	// ----------------------------------------------------------------------
@@ -159,6 +160,5 @@ public class RobotMap {
 
 	// OI
 	public static OI m_OI = new OI(m_robotContainer);
-	
 
 }
