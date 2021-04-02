@@ -20,21 +20,29 @@ public class HoodSubsystem extends SubsystemBase {
 	}
 
 	public void servoExtend() {
-		setServo(HoodConstants.MAX_EXTENSION);
+		// changed for at home
+		// setServo(HoodConstants.MAX_EXTENSION);
+		setServo(HoodConstants.AT_HOME_ANGLE);
 	}
 
 	public void servoWithdraw() {
-		setServo(HoodConstants.MAX_WITHDRAWL);
+		// changed for at home
+		// setServo(HoodConstants.MAX_WITHDRAWL);
+		setServo(HoodConstants.AT_HOME_ANGLE);
 	}
 
 	public void setServo(double angle) {
-		angle = Math.min(angle, HoodConstants.MAX_EXTENSION);
+		// changed for at home
+		// angle = Math.min(angle, HoodConstants.MAX_EXTENSION);
+		angle = Math.min(angle, HoodConstants.AT_HOME_ANGLE);
 		m_hoodServo1.set(1 - angle);
 		m_hoodServo2.set(angle);
 	}
 
 	public void add(double increment) {
-		setServo(getServo() + increment);
+		// changed for at home
+		// setServo(getServo() + increment);
+		setServo(HoodConstants.AT_HOME_ANGLE);
 	}
 
 }

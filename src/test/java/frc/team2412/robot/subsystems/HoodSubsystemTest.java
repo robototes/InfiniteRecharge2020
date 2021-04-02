@@ -2,9 +2,11 @@ package frc.team2412.robot.subsystems;
 
 import static frc.team2412.robot.subsystems.constants.HoodConstants.MAX_EXTENSION;
 import static frc.team2412.robot.subsystems.constants.HoodConstants.MAX_WITHDRAWL;
+import static frc.team2412.robot.subsystems.constants.HoodConstants.AT_HOME_ANGLE;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.robototes.helpers.MockHardwareExtension;
@@ -33,14 +35,24 @@ public class HoodSubsystemTest extends TestBase {
 		realHoodSubsystem = new HoodSubsystem(mockedServo, mockedServo);
 
 	}
-
+	
+	// Ignored for Infinite Recharge At Home
+	@Ignore
 	@Test
 	public void HoodExtendCommandTest() {
 		test(new HoodExtendCommand(realHoodSubsystem), mockedServo, MAX_EXTENSION);
 	}
 
+	// Ignored for Infinite Recharge At Home
+	@Ignore
 	@Test
 	public void HoodWithdrawCommandTest() {
 		test(new HoodWithdrawCommand(realHoodSubsystem), mockedServo, MAX_WITHDRAWL);
+	}
+	
+
+	@Test
+	public void HoodAtHomeCommandTest() {
+		test(new HoodWithdrawCommand(realHoodSubsystem), mockedServo, AT_HOME_ANGLE);
 	}
 }

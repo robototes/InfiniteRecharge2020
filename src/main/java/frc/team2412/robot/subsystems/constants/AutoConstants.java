@@ -84,15 +84,16 @@ public class AutoConstants {
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
 
 	// Barrel Route points
-	public static final Translation2d barrelStart = new Translation2d(1.5, -2.632);
-	public static final Translation2d barrelOne = new Translation2d(4.674, -3.403);
-	public static final Translation2d barrelTwo = new Translation2d(4.174, -3.808);
-	public static final Translation2d barrelThree = new Translation2d(3.564, -3.353);
-	public static final Translation2d barrelFour = new Translation2d(7.135, -1.911);
-	public static final Translation2d barrelFive = new Translation2d(6.248, -1.356);
-	public static final Translation2d barrelSix = new Translation2d(8.422, -3.863);
-	public static final Translation2d barrelSeven = new Translation2d(8.466, -2.854);
-	public static final Translation2d barrelEnd = new Translation2d(1.445, -2.099);
+	public static final Translation2d barrelStart = new Translation2d(1.37, -2.41);
+	public static final Translation2d barrelOne = new Translation2d(4.27, -3.11);
+	public static final Translation2d barrelTwo = new Translation2d(3.82, -3.48);
+	public static final Translation2d barrelThree  = new Translation2d(3.26, -3.07);
+	public static final Translation2d barrelFour = new Translation2d(6.52, -1.75);
+	public static final Translation2d barrelFive = new Translation2d(5.71, -1.24);
+	public static final Translation2d barrelSix = new Translation2d(7.7, -3.53);
+	public static final Translation2d barrelSeven = new Translation2d(7.74, -2.61);
+	public static final Translation2d barrelEnd = new Translation2d(1.32, -1.92);
+
 
 	public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree,
 			barrelFour, barrelFive, barrelSix, barrelSeven);
