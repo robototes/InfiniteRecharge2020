@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpiutil.math.VecBuilder;
-
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.subsystems.constants.DriveBaseConstants;
 
@@ -162,19 +161,20 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		rightMotorRevolutions = rightFrontMotor.getSelectedSensorPosition();
 		leftMotorRevolutions = leftFrontMotor.getSelectedSensorPosition();
 
-		// System.out.println((leftMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
-		// metersPerWheelRevolution + " " + (rightMotorRevolutions / encoderTicksPerRevolution) * lowGearRatio *
+		// System.out.println((leftMotorRevolutions / encoderTicksPerRevolution) *
+		// lowGearRatio *
+		// metersPerWheelRevolution + " " + (rightMotorRevolutions /
+		// encoderTicksPerRevolution) * lowGearRatio *
 		// metersPerWheelRevolution);
 
 		double angle = gyro.getAngle();
 		odometry.update(Rotation2d.fromDegrees(angle),
-		(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
-		metersPerWheelRevolution,
-		(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) *
-		metersPerWheelRevolution);
+				(leftMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution,
+				(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		if (!isSimulation && (--telemetryCounter <= 0)) {
-			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " " + String.valueOf(RobotMap.driveGyro.isConnected()));
+			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " "
+					+ String.valueOf(RobotMap.driveGyro.isConnected()));
 			telemetryCounter = 10;
 		}
 
@@ -199,18 +199,29 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		}
 	}
 
+	public void setPose(Pose2d pose) {
+		// Encoders set to 0 regardless
+		rightFrontMotor.setSelectedSensorPosition(0);
+		leftFrontMotor.setSelectedSensorPosition(0);
+		// Sets it to new pose, handles gyro offset
+		odometry.resetPosition(pose, pose.getRotation());
+		if (isSimulation) {
+			drivetrainSim.setPose(pose);
+		}
+	}
+
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		double leftMetersPerSecond = isSimulation ? drivetrainSim.getLeftVelocityMetersPerSecond() :
-			(leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
-				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
-		double rightMetersPerSecond = isSimulation ? drivetrainSim.getRightVelocityMetersPerSecond() :
-			(rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution)
-				* lowGearRatio * metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
+		double leftMetersPerSecond = isSimulation ? drivetrainSim.getLeftVelocityMetersPerSecond()
+				: (leftFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution) * lowGearRatio
+						* metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
+		double rightMetersPerSecond = isSimulation ? drivetrainSim.getRightVelocityMetersPerSecond()
+				: (rightFrontMotor.getSelectedSensorVelocity() / encoderTicksPerRevolution) * lowGearRatio
+						* metersPerWheelRevolution * ENCODER_TICKS_PER_SECOND;
 		return new DifferentialDriveWheelSpeeds(leftMetersPerSecond, rightMetersPerSecond);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
-		//System.out.println("tankDriveVolts: " + leftVolts + ", " + rightVolts);
+		// System.out.println("tankDriveVolts: " + leftVolts + ", " + rightVolts);
 
 		leftFrontMotor.setVoltage(isSimulation ? leftVolts : -rightVolts);
 		rightFrontMotor.setVoltage(isSimulation ? rightVolts : -leftVolts);
@@ -247,7 +258,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	int count = 0;
 
 	public void simulationPeriodic() {
-		// Need to invert rightFrontMotor for simulation, as it's inverted on the physical robot
+		// Need to invert rightFrontMotor for simulation, as it's inverted on the
+		// physical robot
 		// such that negative power moves forwards
 		drivetrainSim.setInputs(leftFrontMotor.get() * RobotController.getBatteryVoltage(),
 				-rightFrontMotor.get() * RobotController.getBatteryVoltage());

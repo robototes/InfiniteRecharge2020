@@ -40,7 +40,7 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 		rightEncoder = this.rightMotor.getEncoder();
 		// Can't invert incoder for a brushless motor
-		//rightEncoder.setInverted(true);
+		// rightEncoder.setInverted(true);
 
 		leftEncoder = this.leftMotor.getEncoder();
 		PIDController.setP(0.005);

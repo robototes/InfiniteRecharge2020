@@ -27,7 +27,7 @@ import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
  * project.
  */
 public class Robot extends TimedRobot {
-											
+
 	public double timeRemaining;
 
 	private RobotContainer robotContainer = RobotMap.m_robotContainer;
@@ -51,7 +51,8 @@ public class Robot extends TimedRobot {
 				try {
 					System.out.println("Waiting for gyro calibrarion");
 					Thread.sleep(50);
-				} catch (InterruptedException ignored) {}
+				} catch (InterruptedException ignored) {
+				}
 			}
 		}
 	}

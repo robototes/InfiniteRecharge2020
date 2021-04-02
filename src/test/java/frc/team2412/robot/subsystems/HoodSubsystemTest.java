@@ -38,7 +38,7 @@ public class HoodSubsystemTest extends TestBase {
 	public void HoodExtendCommandTest() {
 		test(new HoodExtendCommand(realHoodSubsystem), mockedServo, MAX_EXTENSION);
 	}
-	
+
 	@Test
 	public void HoodWithdrawCommandTest() {
 		test(new HoodWithdrawCommand(realHoodSubsystem), mockedServo, MAX_WITHDRAWL);
