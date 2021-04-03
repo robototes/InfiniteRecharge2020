@@ -1,0 +1,13 @@
+### Gradle ###
+.gradle
+/build/
+
+### VS Code Specific Java Settings ###
+.settings/
+bin/
+imgui.ini
+./vscode
+.classpath
+
+### Other ###
+/.project
