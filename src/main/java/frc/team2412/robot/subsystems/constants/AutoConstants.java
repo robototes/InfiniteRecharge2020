@@ -30,15 +30,21 @@ public class AutoConstants {
 
 	// public static final double kTrackwidthMeters = Units.inchesToMeters(21.5); // Horizontal distance between wheels
 
-	// Garage-measure characterization constants
-	public static final double /*kS*/ ksVolts = 0.6;
-	public static final double /*kV*/ kvVoltSecondsPerMeter = 3.97;
-	public static final double /*kA*/ kaVoltSecondsSquaredPerMeter = 0.266;
+	// Garage-measured characterization constants
+	// public static final double /*kS*/ ksVolts = 0.6;
+	// public static final double /*kV*/ kvVoltSecondsPerMeter = 3.97;
+	// public static final double /*kA*/ kaVoltSecondsSquaredPerMeter = 0.266;
 
-	public static final double kPDriveVel = 1.69;
+	// public static final double kPDriveVel = 1.69;
+	// public static final double kTrackwidthMeters = 0.6419121763651794; // Horizontal distance between wheels
 
-	// Empirically measured in characterization
-	public static final double kTrackwidthMeters = 0.6419121763651794; // Horizontal distance between wheels
+	// ESCWest-measured characterization constants
+	public static final double /*kS*/ ksVolts = 0.578;
+	public static final double /*kV*/ kvVoltSecondsPerMeter = 3.99;
+	public static final double /*kA*/ kaVoltSecondsSquaredPerMeter = 0.309;
+
+	public static final double kPDriveVel = 1.74;
+	public static final double kTrackwidthMeters = 0.7833007425076656; // Horizontal distance between wheels
 
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
