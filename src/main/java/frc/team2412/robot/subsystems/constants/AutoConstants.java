@@ -126,14 +126,14 @@ public class AutoConstants {
 			new Pose2d(slalomPointFourteen, new Rotation2d(0)), config);
 
 	// Bounce Route points
-	public static final Translation2d bounceStart = new Translation2d(1, -2.5);
-	public static final Translation2d bounceStar1 = new Translation2d(2.5, -0.75);
-	public static final Translation2d bouncePoint1 = new Translation2d(4.3, -4.163);
-	public static final Translation2d bounceStar2 = new Translation2d(5, -0.75);
-	public static final Translation2d bouncePoint2 = new Translation2d(5.5, -4);
-	public static final Translation2d bouncePoint3 = new Translation2d(7.25, -3.3);
-	public static final Translation2d bounceStar3 = new Translation2d(7.5, -0.75);
-	public static final Translation2d bounceEnd = new Translation2d(9, -2.5);
+	public static final Translation2d bounceStart = new Translation2d(0.91, -2.29);
+	public static final Translation2d bounceStar1 = new Translation2d(2.29, -0.69);
+	public static final Translation2d bouncePoint1 = new Translation2d(3.93, -3.81);
+	public static final Translation2d bounceStar2 = new Translation2d(4.57, -0.69);
+	public static final Translation2d bouncePoint2 = new Translation2d(5.03, -3.66);
+	public static final Translation2d bouncePoint3 = new Translation2d(6.63, -3.02);
+	public static final Translation2d bounceStar3 = new Translation2d(6.86, -0.69);
+	public static final Translation2d bounceEnd = new Translation2d(8.23, -2.29);
 
 	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStar1, bouncePoint1, bounceStar2,
 			bouncePoint2, bouncePoint3, bounceStar3);
