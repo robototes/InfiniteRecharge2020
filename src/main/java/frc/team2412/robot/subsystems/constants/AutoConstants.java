@@ -49,9 +49,9 @@ public class AutoConstants {
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 1; // Max speed we can drive
+	public static final double kMaxSpeedMetersPerSecond = 2; // Max speed we can drive
 
-	public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
+	public static final double kMaxAccelerationMetersPerSecondSquared = 1;
 
 
 	// old constants
