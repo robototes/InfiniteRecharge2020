@@ -89,20 +89,42 @@ public class AutoConstants {
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
 
-	// Barrel Route points
-	public static final Translation2d barrelStart = new Translation2d(1.37, -2.41);
-	public static final Translation2d barrelOne = new Translation2d(5.27, -2.4);
-	public static final Translation2d barrelTwo = new Translation2d(4.5, -4.5);
-	public static final Translation2d barrelThree  = new Translation2d(3.26, -3.07);
-	public static final Translation2d barrelFour = new Translation2d(6.52, -2);
-	public static final Translation2d barrelFive = new Translation2d(5.71, -0.5);
-	public static final Translation2d barrelSix = new Translation2d(7, -3.53);
-	public static final Translation2d barrelSeven = new Translation2d(7.74, -2.61);
-	public static final Translation2d barrelEnd = new Translation2d(1.32, -1.92);
+	// Barrel Route points - Hits cones
+  	//   Left in if the new Barrel is not as good as expected.
+	// public static final Translation2d barrelStart = new Translation2d(1.37, -2.41);
+	// public static final Translation2d barrelOne = new Translation2d(5.27, -2.4);
+	// public static final Translation2d barrelTwo = new Translation2d(4.5, -4.5);
+	// public static final Translation2d barrelThree  = new Translation2d(3.26, -3.07);
+	// public static final Translation2d barrelFour = new Translation2d(6.52, -1.75);
+	// public static final Translation2d barrelFive = new Translation2d(5.71, -1.24);
+	// public static final Translation2d barrelSix = new Translation2d(7, -3.53);
+	// public static final Translation2d barrelSeven = new Translation2d(8, -3);
+	// public static final Translation2d barrelEight = new Translation2d(7.74, -2);
+	// public static final Translation2d barrelEnd = new Translation2d(1.37, -2.41);
 
+  	// public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree,
+	// 		barrelFour, barrelFive, barrelSix, barrelSeven);
 
+	// Barrel 3 Route points from Pathweaver
+  	//   More points and wider paths in an attempt to get around the cones
+	public static final Translation2d barrelStart = new Translation2d(1.01, -2.34);
+	public static final Translation2d barrelOne = new Translation2d(4.1, -2.24);
+	public static final Translation2d barrelTwo = new Translation2d(4.78, -3.11);
+	public static final Translation2d barrelThree = new Translation2d(3.8, -3.86);
+	public static final Translation2d barrelFour = new Translation2d(2.89, -3.01);
+	public static final Translation2d barrelFive = new Translation2d(3.76, -2.25);
+	public static final Translation2d barrelSix = new Translation2d(6.81, -2.05);
+	public static final Translation2d barrelSeven = new Translation2d(6.81, -0.89);
+	public static final Translation2d barrelEight = new Translation2d(5.31, -1.14);
+	public static final Translation2d barrelNine = new Translation2d(6.34, -3.08);
+	public static final Translation2d barrelTen = new Translation2d(8, -3.67);
+	public static final Translation2d barrelEleven = new Translation2d(8.53, -2.86);
+	public static final Translation2d barrelTwelve = new Translation2d(7.7, -2.22);
+	public static final Translation2d barrelEnd = new Translation2d(1.01, -2.34);
+	
 	public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree,
-			barrelFour, barrelFive, barrelSix, barrelSeven);
+			barrelFour, barrelFive, barrelSix, barrelSeven, barrelEight, barrelNine, barrelTen, barrelEleven,
+			barrelTwelve);
 
 	public static final Trajectory barrelPathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(barrelStart, new Rotation2d(0)), interiorWaypointsBarrelPath,
@@ -133,19 +155,45 @@ public class AutoConstants {
 			new Pose2d(slalomPointFourteen, new Rotation2d(180)), config);
 
 	// Bounce Route points
-	public static final Translation2d bounceStart = new Translation2d(0.91, -2.29);
-	public static final Translation2d bounceStart2 = new Translation2d(2, -2.2);
-	public static final Translation2d bounceStar1 = new Translation2d(2.29, -0.69);
-	public static final Translation2d bouncePoint1a = new Translation2d(3.5, -3.81);
-	public static final Translation2d bouncePoint1b = new Translation2d(4.45, -3.81);
-	public static final Translation2d bounceStar2 = new Translation2d(4.8, -0.69);
-	public static final Translation2d bouncePoint2 = new Translation2d(5.03, -3.66);
-	public static final Translation2d bouncePoint3 = new Translation2d(7, -3.02);
-	public static final Translation2d bounceStar3 = new Translation2d(7, -0.69);
-	public static final Translation2d bounceEnd = new Translation2d(8.23, -2);
+	// public static final Translation2d bounceStart = new Translation2d(0.91, -2.29);
+	// public static final Translation2d bounceStart2 = new Translation2d(2, -2.2);
+	// public static final Translation2d bounceStar1 = new Translation2d(2.29, -0.69);
+	// public static final Translation2d bouncePoint1a = new Translation2d(3.5, -3.81);
+	// public static final Translation2d bouncePoint1b = new Translation2d(4.45, -3.81);
+	// public static final Translation2d bounceStar2 = new Translation2d(4.8, -0.69);
+	// public static final Translation2d bouncePoint2 = new Translation2d(5.03, -3.66);
+	// public static final Translation2d bouncePoint3 = new Translation2d(7, -3.02);
+	// public static final Translation2d bounceStar3 = new Translation2d(7, -0.69);
+	// public static final Translation2d bounceEnd = new Translation2d(8.23, -2);
 
-	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStart2, bounceStar1, bouncePoint1a, bouncePoint1b, bounceStar2,
-			bouncePoint2, bouncePoint3, bounceStar3);
+	// public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStart2, bounceStar1, bouncePoint1a, bouncePoint1b, bounceStar2,
+	//		bouncePoint2, bouncePoint3, bounceStar3);
+
+  	// public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
+  	// 		new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
+  	// 		new Pose2d(bounceEnd, new Rotation2d(-180)), config);
+
+  	// Bounce 3 Route points
+  	//   More points to better round curves
+	public static final Translation2d bounceStart = new Translation2d(1.25, -2.27);
+	public static final Translation2d bounceOne = new Translation2d(2.1, -1.68);
+	public static final Translation2d bounceTwo = new Translation2d(2.32, -0.7);
+	public static final Translation2d bounceThree = new Translation2d(2.83, -2.51);
+	public static final Translation2d bounceFour = new Translation2d(3.25, -3.58);
+	public static final Translation2d bounceFive = new Translation2d(4.23, -3.73);
+	public static final Translation2d bounceSix = new Translation2d(4.58, -2.51);
+	public static final Translation2d bounceSeven = new Translation2d(4.61, -0.73);
+	public static final Translation2d bounceEight = new Translation2d(4.67, -2.65);
+	public static final Translation2d bounceNine = new Translation2d(5.02, -3.67);
+	public static final Translation2d bounceTen = new Translation2d(6.41, -3.71);
+	public static final Translation2d bounceEleven = new Translation2d(6.83, -2.32);
+	public static final Translation2d bounceTweleve = new Translation2d(6.96, -0.76);
+	public static final Translation2d bounceThirteen = new Translation2d(7.25, -1.98);
+	public static final Translation2d bounceEnd = new Translation2d(8.33, -2.45);
+
+	public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceOne, bounceTwo, bounceThree,
+			bounceFour, bounceFive, bounceSix, bounceSeven, bounceEight, bounceNine, bounceTen, bounceEleven,
+			bounceTweleve, bounceThirteen);
 
 	public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
