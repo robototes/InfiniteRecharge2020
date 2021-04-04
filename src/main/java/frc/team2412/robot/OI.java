@@ -174,8 +174,7 @@ public class OI {
 	// Constructor to set all of the commands and buttons
 	public OI(RobotContainer robotContainer) {
 
-		// indexerShootButton.whenPressed(Autonomous.getMoveCertainAmountCommand(1.0,
-		// 0.0));
+		//bounceRunButton.whenPressed(Autonomous.getSlalomPathCommand());
 		//indexerShootButton.whenPressed(Autonomous.getSquarePathCommand());
 		//resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
 		//bounceRunButton.whenPressed(Autonomous.getBouncePathCommand());
