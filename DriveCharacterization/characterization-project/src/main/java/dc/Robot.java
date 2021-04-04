@@ -62,6 +62,8 @@ public class Robot extends TimedRobot {
   static private int ENCODER_EPR = 2048;
   static private double GEARING = -17.65;
   
+  // 0.027126 meters per motor revolution in low gear
+  // 0.4787739 meters per wheel revolution
   private double encoderConstant = (1 / GEARING) * (1 / ENCODER_EDGES_PER_REV);
 
   Joystick stick;

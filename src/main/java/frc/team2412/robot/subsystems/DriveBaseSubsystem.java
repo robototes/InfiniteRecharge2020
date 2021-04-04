@@ -173,8 +173,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
 				(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		if (!isSimulation && (--telemetryCounter <= 0)) {
-			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " "
-					+ String.valueOf(RobotMap.driveGyro.isConnected()));
+			//System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " "
+			//		+ String.valueOf(RobotMap.driveGyro.isConnected()));
 			telemetryCounter = 10;
 		}
 

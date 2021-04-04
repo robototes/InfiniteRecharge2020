@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.team2412.robot.autonomous.Autonomous;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
@@ -89,15 +90,16 @@ public class Robot extends TimedRobot {
 		 * *
 		 */
 
-		autoCommand = new HoodWithdrawCommand(robotContainer.m_hoodSubsystem)
-				.andThen(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, .300))
-				.andThen(new InstantCommand(() -> robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
-				.andThen(new WaitCommand(2))
-				// Add index shooting back in here
-				.andThen(new WaitCommand(8))
-				.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
-				.andThen(new WaitCommand(1))
-				.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
+		// autoCommand = new HoodWithdrawCommand(robotContainer.m_hoodSubsystem)
+		// 		.andThen(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, .300))
+		// 		.andThen(new InstantCommand(() -> robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
+		// 		.andThen(new WaitCommand(2))
+		// 		// Add index shooting back in here
+		// 		.andThen(new WaitCommand(8))
+		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
+		// 		.andThen(new WaitCommand(1))
+		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
+		autoCommand = Autonomous.getBouncePathCommand();
 		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 
