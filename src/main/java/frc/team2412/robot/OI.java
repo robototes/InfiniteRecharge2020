@@ -176,9 +176,9 @@ public class OI {
 
 		// indexerShootButton.whenPressed(Autonomous.getMoveCertainAmountCommand(1.0,
 		// 0.0));
-		indexerShootButton.whenPressed(Autonomous.getSquarePathCommand());
-		resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
-		bounceRunButton.whenPressed(Autonomous.getBouncePathCommand());
+		//indexerShootButton.whenPressed(Autonomous.getSquarePathCommand());
+		//resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
+		//bounceRunButton.whenPressed(Autonomous.getBouncePathCommand());
 
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);
