@@ -183,7 +183,7 @@ public class OI {
 		bindDriverControls(robotContainer);
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
-		// bindIndexControls(robotContainer);
+		bindIndexControls(robotContainer);
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {
