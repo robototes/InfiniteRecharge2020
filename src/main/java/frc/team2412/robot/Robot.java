@@ -99,7 +99,8 @@ public class Robot extends TimedRobot {
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
 		// 		.andThen(new WaitCommand(1))
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
-		autoCommand = Autonomous.getBouncePathCommand();
+		//autoCommand = Autonomous.getBouncePathCommand();
+		autoCommand = Autonomous.getBarrelPathCommand();
 		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 

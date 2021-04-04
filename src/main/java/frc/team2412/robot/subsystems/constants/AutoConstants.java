@@ -49,9 +49,9 @@ public class AutoConstants {
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
 			kTrackwidthMeters);
 
-	public static final double kMaxSpeedMetersPerSecond = 2; // Max speed we can drive
+	public static final double kMaxSpeedMetersPerSecond = 2.0; // Max speed we can drive
 
-	public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+	public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
 
 
 	// old constants
@@ -120,15 +120,16 @@ public class AutoConstants {
 	public static final Translation2d barrelTen = new Translation2d(8, -3.67);
 	public static final Translation2d barrelEleven = new Translation2d(8.53, -2.86);
 	public static final Translation2d barrelTwelve = new Translation2d(7.7, -2.22);
-	public static final Translation2d barrelEnd = new Translation2d(1.01, -2.34);
+	public static final Translation2d barrelThirteen = new Translation2d(4.1, -2.24);
+	public static final Translation2d barrelEnd = new Translation2d(1.01, -1.84);
 	
 	public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree,
 			barrelFour, barrelFive, barrelSix, barrelSeven, barrelEight, barrelNine, barrelTen, barrelEleven,
-			barrelTwelve);
+			barrelTwelve, barrelThirteen);
 
 	public static final Trajectory barrelPathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(barrelStart, new Rotation2d(0)), interiorWaypointsBarrelPath,
-			new Pose2d(barrelStart, new Rotation2d(-180)), config);
+			new Pose2d(barrelEnd, new Rotation2d(-180)), config);
 
 	public static Translation2d slalomPointOne = new Translation2d(0.794, -3.907);
 	public static Translation2d slalomPointTwo = new Translation2d(2.042, -3.715);
