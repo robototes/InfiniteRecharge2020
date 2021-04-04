@@ -197,7 +197,7 @@ public class AutoConstants {
 
 	public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
-			new Pose2d(bounceEnd, new Rotation2d(0)), config);
+			new Pose2d(bounceEnd, new Rotation2d(-180)), config);
 
 	public static final Translation2d squareBeginning = new Translation2d(0, 0);
 
