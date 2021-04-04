@@ -1,6 +1,6 @@
 package frc.team2412.robot.autonomous;
 
-import static frc.team2412.robot.subsystems.constants.AutoConstants.bouncePathTrajectory;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.*;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.pidController;
@@ -94,6 +94,28 @@ public class Autonomous {
 		.andThen(new WaitCommand(1.0)).andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 
+	public static Command getBarrelPathCommand() {
+		Trajectory adjustedTrajectory = barrelPathTrajectory.relativeTo(barrelPathTrajectory.getInitialPose());
+
+		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
+		// Makes robot think it's in position to start the trajectory i.e. resets it
+		// Run path following command, then stop at the end.
+		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
+	}
+
+	public static Command getSlalomPathCommand() {
+		Trajectory adjustedTrajectory = slalomPathTrajectory.relativeTo(slalomPathTrajectory.getInitialPose());
+
+		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
+		// Makes robot think it's in position to start the trajectory i.e. resets it
+		// Run path following command, then stop at the end.
+		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
+	}
+
 	public static Command getBouncePathCommand() {
 		Trajectory adjustedTrajectory = bouncePathTrajectory.relativeTo(bouncePathTrajectory.getInitialPose());
 
@@ -102,6 +124,6 @@ public class Autonomous {
 				driveSub::tankDriveVolts, driveSub);
 		// Makes robot think it's in position to start the trajectory i.e. resets it
 		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(new WaitCommand(1.0)).andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
+		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 }
