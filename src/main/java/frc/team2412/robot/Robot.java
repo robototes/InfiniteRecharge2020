@@ -118,6 +118,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancel(autoCommand);
+		robotContainer.m_flywheelSubsystem.setSpeed(0.0);
 		RobotMap.driveLeftFrontMotor.setSelectedSensorPosition(0);
 		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);

@@ -9,7 +9,8 @@ import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceD
 public class FlywheelSetSpeedCommand extends CommandBase {
 
 	FlywheelSubsystem m_flywheelSubsystem;
-	Supplier<ShooterDistanceDataPoint> m_distanceSupplier;
+	Supplier<ShooterDistanceDataPoint> m_distanceSupplier = null;
+	double m_RPM = 0.0;
 
 	public FlywheelSetSpeedCommand(FlywheelSubsystem m_flywheelSubsystem,
 			Supplier<ShooterDistanceDataPoint> m_distanceSupplier) {
@@ -17,9 +18,19 @@ public class FlywheelSetSpeedCommand extends CommandBase {
 		this.m_distanceSupplier = m_distanceSupplier;
 	}
 
+	public FlywheelSetSpeedCommand(FlywheelSubsystem flywheelSubsystem,
+			double rpm) {
+		this.m_flywheelSubsystem = flywheelSubsystem;
+		this.m_RPM = rpm;
+	}
+
 	@Override
 	public void execute() {
-		m_flywheelSubsystem.setRPM(m_distanceSupplier.get().m_shooterPower.value());
+		if (m_distanceSupplier != null) {
+			m_flywheelSubsystem.setRPM(m_distanceSupplier.get().m_shooterPower.value());
+		} else {
+			m_flywheelSubsystem.setRPM(m_RPM);
+		}
 	}
 
 	@Override

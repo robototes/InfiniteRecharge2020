@@ -22,15 +22,17 @@ public class IndexShootSelectionCommand extends SelectCommand {
 		}
 
 		public ShootSelection getShooterSelection() {
-			if (!(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontInnerSensorValue()
-					|| m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackInnerSensorValue())) {
-				return ShootSelection.LARGEST;
-			} else if (m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().allInnerSensorsOn()) {
-				return ShootSelection.SHIFT;
-			} else if (m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackInnerSensorValue()) {
-				return ShootSelection.BACK;
-			}
-			return ShootSelection.FRONT;
+			// TODO: Fix
+			return ShootSelection.BACK;
+			// if (!(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontInnerSensorValue()
+			// 		|| m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackInnerSensorValue())) {
+			// 	return ShootSelection.LARGEST;
+			// } else if (m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().allInnerSensorsOn()) {
+			// 	return ShootSelection.SHIFT;
+			// } else if (m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackInnerSensorValue()) {
+			// 	return ShootSelection.BACK;
+			// }
+			// return ShootSelection.FRONT;
 		}
 	}
 

@@ -3,6 +3,7 @@ package frc.team2412.robot.subsystems.index;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.team2412.robot.subsystems.constants.IndexerConstants;
 
 public class IndexerSubsystemSuperStructure extends SubsystemBase {
 
@@ -49,7 +50,8 @@ public class IndexerSubsystemSuperStructure extends SubsystemBase {
 	}
 
 	public void setFrontAndBack(double frontSpeed, double backSpeed) {
-		getIndexerMotorFrontSubsystem().set(frontSpeed);
+		// TODO Undo
+		getIndexerMotorFrontSubsystem().set(-IndexerConstants.MAX_SPEED /*frontSpeed*/);
 		getIndexerMotorBackSubsystem().set(backSpeed);
 	}
 

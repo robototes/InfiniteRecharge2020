@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team2412.robot.autonomous.Autonomous;
@@ -20,6 +21,8 @@ import frc.team2412.robot.commands.climb.ClimbLiftUpCommand;
 import frc.team2412.robot.commands.drive.DriveCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
+import frc.team2412.robot.commands.flywheel.FlywheelSetSpeedCommand;
+import frc.team2412.robot.commands.hood.HoodSetAngleCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
@@ -79,6 +82,7 @@ public class OI {
 	public static enum DriverControls implements ButtonEnumInterface {
 		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), 
 		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3), BOUNCE_RUN(Joysticks.DRIVER_RIGHT, 4),
+		STOP_SHOOTER(Joysticks.DRIVER_RIGHT, 7),
 		SPIT(Joysticks.DRIVER_LEFT, 1), ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
 		public Joysticks stick;
@@ -154,8 +158,9 @@ public class OI {
 	public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
 	public final Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
 	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
-	public final Button resetPositionButton = DriverControls.RESET_POSITION.createFrom(driverRightStick);
+	public final Button startFlywheel = DriverControls.RESET_POSITION.createFrom(driverRightStick);
 	public final Button bounceRunButton = DriverControls.BOUNCE_RUN.createFrom(driverRightStick);
+	public final Button stopFlywheel = DriverControls.STOP_SHOOTER.createFrom(driverRightStick);
 
 	// Lift Controls
 	public final Button liftButton = CodriverControls.LIFT.createFrom(codriverStick);
@@ -178,6 +183,14 @@ public class OI {
 		//indexerShootButton.whenPressed(Autonomous.getSquarePathCommand());
 		//resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
 		//bounceRunButton.whenPressed(Autonomous.getBouncePathCommand());
+		startFlywheel.whenPressed(new ParallelCommandGroup(
+			new HoodSetAngleCommand(robotContainer.m_hoodSubsystem, 0.32),
+			new FlywheelSetSpeedCommand(robotContainer.m_flywheelSubsystem, 4500)
+		));
+		stopFlywheel.whenPressed(new ParallelCommandGroup(
+			new HoodSetAngleCommand(robotContainer.m_hoodSubsystem, 0.0),
+			new FlywheelSetSpeedCommand(robotContainer.m_flywheelSubsystem, 0)
+		));
 
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);

@@ -20,7 +20,8 @@ public class IndexSpitCommand extends CommandBase {
 	public void execute() {
 		m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().out();
 		m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().out();
-		m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().out();
+		// Stop jamming?
+		//m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().out();
 		m_intakeOnOffSubsystem.setIntake(-1);
 	}
 
