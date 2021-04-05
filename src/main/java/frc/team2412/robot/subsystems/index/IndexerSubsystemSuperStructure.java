@@ -50,8 +50,7 @@ public class IndexerSubsystemSuperStructure extends SubsystemBase {
 	}
 
 	public void setFrontAndBack(double frontSpeed, double backSpeed) {
-		// TODO Undo
-		getIndexerMotorFrontSubsystem().set(-IndexerConstants.MAX_SPEED /*frontSpeed*/);
+		getIndexerMotorFrontSubsystem().set(frontSpeed);
 		getIndexerMotorBackSubsystem().set(backSpeed);
 	}
 

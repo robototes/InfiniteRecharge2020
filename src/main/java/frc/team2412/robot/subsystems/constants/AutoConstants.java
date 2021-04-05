@@ -177,7 +177,7 @@ public class AutoConstants {
   	// Bounce 3 Route points
   	//   More points to better round curves
 	public static final Translation2d bounceStart = new Translation2d(1.25, -2.27);
-	public static final Translation2d bounceOne = new Translation2d(2.1, -1.68);
+	public static final Translation2d bounceOne = new Translation2d(2.25, -1.71);
 	public static final Translation2d bounceTwo = new Translation2d(2.32, -0.7);
 	public static final Translation2d bounceThree = new Translation2d(2.83, -2.51);
 	public static final Translation2d bounceFour = new Translation2d(3.25, -3.58);
@@ -199,6 +199,25 @@ public class AutoConstants {
 	public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
 			new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
 			new Pose2d(bounceEnd, new Rotation2d(-180)), config);
+
+	// Galactic Search points
+	public static final Translation2d searchStart = new Translation2d(0.69, -2.3);
+	public static final Translation2d searchOne = new Translation2d(2.36, -2.34);
+	public static final Translation2d searchTwo = new Translation2d(3.89, -3.11);
+	public static final Translation2d searchThree = new Translation2d(4.69, -3.87);
+	public static final Translation2d searchFour = new Translation2d(5.29, -2.98);
+	public static final Translation2d searchFive = new Translation2d(4.02, -1.25);
+	public static final Translation2d searchSix = new Translation2d(4.63, -0.82);
+	public static final Translation2d searchSeven = new Translation2d(5.45, -1.58);
+	public static final Translation2d searchEight = new Translation2d(6.95, -2.3);
+	public static final Translation2d searchEnd = new Translation2d(8.69, -2.4);
+	
+	public static List<Translation2d> interiorWaypointsSearchPath = List.of(searchOne, searchTwo, searchThree,
+			searchFour, searchFive, searchSix, searchSeven, searchEight);
+
+	public static final Trajectory searchPathTrajectory = TrajectoryGenerator.generateTrajectory(
+			new Pose2d(searchStart, new Rotation2d(0)), interiorWaypointsSearchPath,
+			new Pose2d(searchEnd, new Rotation2d(0)), config);
 
 	public static final Translation2d squareBeginning = new Translation2d(0, 0);
 

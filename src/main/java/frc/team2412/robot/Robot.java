@@ -14,11 +14,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.team2412.robot.autonomous.Autonomous;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -99,8 +102,12 @@ public class Robot extends TimedRobot {
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
 		// 		.andThen(new WaitCommand(1))
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
-		//autoCommand = Autonomous.getBouncePathCommand();
-		autoCommand = Autonomous.getBarrelPathCommand();
+		autoCommand = Autonomous.getBouncePathCommand();
+		//autoCommand = Autonomous.getBarrelPathCommand();
+
+		//autoCommand = new ParallelCommandGroup(Autonomous.getSearchPathCommand(),
+		//	new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem, false),
+		//	new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 
