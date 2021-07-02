@@ -22,6 +22,7 @@ import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
+import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -75,6 +76,9 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 		timeRemaining = Timer.getMatchTime();
+		// System.out.print("shooter: "+robotContainer.m_flywheelSubsystem.currentLeftSpeed());
+		// System.out.println("   hood: "+robotContainer.m_hoodSubsystem.getServo());
+
 	}
 
 	/**
@@ -133,7 +137,9 @@ public class Robot extends TimedRobot {
 		robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
 				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
-		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+
+
+				// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
 		// m_OI.codriverStick.getY() * 0.5 + 0.5));
 	}

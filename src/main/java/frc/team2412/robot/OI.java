@@ -6,6 +6,7 @@ import static frc.team2412.robot.RobotMapConstants.INDEX_CONNECTED;
 import static frc.team2412.robot.RobotMapConstants.INTAKE_CONNECTED;
 import static frc.team2412.robot.RobotMapConstants.LIFT_CONNECTED;
 
+import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -80,9 +81,9 @@ public class OI {
 	}
 
 	public static enum DriverControls implements ButtonEnumInterface {
-		SHOOT(Joysticks.DRIVER_RIGHT, 1), SHIFT(Joysticks.DRIVER_RIGHT, 2), 
+		SHOOT(Joysticks.DRIVER_RIGHT, 6), SHIFT(Joysticks.DRIVER_RIGHT, 5),/* 
 		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3), BOUNCE_RUN(Joysticks.DRIVER_RIGHT, 4),
-		STOP_SHOOTER(Joysticks.DRIVER_RIGHT, 7),
+		STOP_SHOOTER(Joysticks.DRIVER_RIGHT, 7),*/
 		SPIT(Joysticks.DRIVER_LEFT, 1), ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
 		public Joysticks stick;
@@ -149,7 +150,7 @@ public class OI {
 	}
 
 	// Joysticks
-	public final Joystick driverRightStick = new Joystick(Joysticks.DRIVER_RIGHT.id);
+	public final XboxController driverRightStick = new XboxController(Joysticks.DRIVER_RIGHT.id);
 	public final Joystick driverLeftStick = new Joystick(Joysticks.DRIVER_LEFT.id);
 	public final Joystick codriverStick = new Joystick(Joysticks.CODRIVER.id);
 	public final Joystick codriverManualStick = new Joystick(Joysticks.CODRIVER_MANUAL.id);
@@ -158,9 +159,9 @@ public class OI {
 	public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
 	public final Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
 	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
-	public final Button startFlywheel = DriverControls.RESET_POSITION.createFrom(driverRightStick);
-	public final Button bounceRunButton = DriverControls.BOUNCE_RUN.createFrom(driverRightStick);
-	public final Button stopFlywheel = DriverControls.STOP_SHOOTER.createFrom(driverRightStick);
+	// public final Button startFlywheel = DriverControls.RESET_POSITION.createFrom(driverRightStick);
+	// public final Button bounceRunButton = DriverControls.BOUNCE_RUN.createFrom(driverRightStick);
+	// public final Button stopFlywheel = DriverControls.STOP_SHOOTER.createFrom(driverRightStick);
 
 	// Lift Controls
 	public final Button liftButton = CodriverControls.LIFT.createFrom(codriverStick);
@@ -183,6 +184,7 @@ public class OI {
 		//indexerShootButton.whenPressed(Autonomous.getSquarePathCommand());
 		//resetPositionButton.whenPressed(Autonomous.resetPositionCommand());
 		//bounceRunButton.whenPressed(Autonomous.getBouncePathCommand());
+		/*
 		startFlywheel.whenPressed(new ParallelCommandGroup(
 			new HoodSetAngleCommand(robotContainer.m_hoodSubsystem, 0.32),
 			new FlywheelSetSpeedCommand(robotContainer.m_flywheelSubsystem, 4500)
@@ -191,12 +193,26 @@ public class OI {
 			new HoodSetAngleCommand(robotContainer.m_hoodSubsystem, 0.0),
 			new FlywheelSetSpeedCommand(robotContainer.m_flywheelSubsystem, 0)
 		));
+		*/
 
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
 		bindIndexControls(robotContainer);
+		new JoystickButton(driverRightStick, 8).whileHeld(()->{
+			// double a = RobotMap.limelight.getTY();
+			double a = -6.0;
+			robotContainer.m_flywheelSubsystem.setSpeed((19.118*a*a+213.926*a+3297.974)/-6000);
+			robotContainer.m_hoodSubsystem.setServo(0.000784*a*a+0.006898*a+0.30529);
+			System.out.println(a);
+		});
+		double[] s = new double[1];
+		new JoystickButton(driverRightStick, 1).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]+=0.05));
+		new JoystickButton(driverRightStick, 4).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]-=0.05));
+		new JoystickButton(driverRightStick, 2).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()+0.05));
+		new JoystickButton(driverRightStick, 3).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()-0.05));
+
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {

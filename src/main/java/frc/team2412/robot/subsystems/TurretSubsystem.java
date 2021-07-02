@@ -1,10 +1,12 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
+import static frc.team2412.robot.subsystems.constants.TurretConstants.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.robototes.units.Rotations;
+import com.robototes.units.UnitTypes.*;
+import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
@@ -53,31 +55,20 @@ public class TurretSubsystem extends PIDSubsystem {
 
 	// @Override
 	// disabled for at home
-	/*
-	 * public void periodic() { turretCurrentPosition =
-	 * motor.getSelectedSensorPosition(0);
-	 * 
-	 * if (turretCurrentPosition - turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
-	 * turretOffsetPosition += TICKS_PER_REVOLUTION;
-	 * 
-	 * } else if (Math.abs(turretCurrentPosition - turretPastPosition) >
-	 * ENCODER_MAX_ERROR_JUMP) { turretCurrentPosition = turretPastPosition; }
-	 * 
-	 * turretPastPosition = turretCurrentPosition; currentAngle = new
-	 * Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() /
-	 * TICKS_PER_DEGREE), RotationUnits.DEGREE); //
-	 * System.out.println(getMeasurement());
-	 */
-	@Override
-	public void periodic() {
+	
+	public void periodic() { 
+		turretCurrentPosition =	  motor.getSelectedSensorPosition(0);
+	  
+		turretPastPosition = turretCurrentPosition; 
+		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE), RotationUnits.DEGREE); 
 	}
 
 	public void set(double output) {
-//		output = MathUtils.constrain(output, -1, 1);
+		output = MathUtils.constrain(output, -1, 1);
 
-//		if (output < 0.05 && output > -0.05) {
-		output = 0;
-//		}
+		if (output < 0.05 && output > -0.05) {
+			output = 0;
+		}
 
 		motor.set(output);
 	}

@@ -35,6 +35,11 @@ public class ShooterConstants {
 					m_hoodAngle.interpolate(other.m_hoodAngle, t), m_shooterPower.interpolate(other.m_shooterPower, t),
 					m_distance.interpolate(other.m_distance, t));
 		}
+
+		public static ShooterDistanceDataPoint from(double m_ty, double m_hoodAngle, double m_shooterPower, double m_distance) {
+			return new ShooterDistanceDataPoint(new InterpolatingDouble(m_ty), new InterpolatingDouble(m_hoodAngle), 
+					new InterpolatingDouble(m_shooterPower), new InterpolatingDouble(m_distance));
+		}
 	}
 
 	public static class ShooterSkewDataPoint implements Interpolable<ShooterSkewDataPoint>, Loggable {
@@ -61,6 +66,11 @@ public class ShooterConstants {
 					m_turretDeltaForInner.interpolate(other.m_turretDeltaForInner, t),
 					innerGoalPossible && other.innerGoalPossible, m_outerGoalPossible && other.m_outerGoalPossible);
 		}
+
+		public static ShooterSkewDataPoint from(double m_ts, double m_turretDeltaForInner, boolean innerGoalPossible, boolean m_outerGoalPossible) {
+			return new ShooterSkewDataPoint(new InterpolatingDouble(m_ts), new InterpolatingDouble(m_turretDeltaForInner), 
+					innerGoalPossible, m_outerGoalPossible);
+		}
 	}
 
 	public static ArrayList<ShooterDistanceDataPoint> distanceData = new ArrayList<ShooterDistanceDataPoint>();
@@ -68,6 +78,9 @@ public class ShooterConstants {
 
 	static {
 		// add in data here
+		distanceData.add(ShooterDistanceDataPoint.from(-0.85, 0.3, -3750, 8));
+		distanceData.add(ShooterDistanceDataPoint.from(-7.95, 0.3, -3430, 12));
+		distanceData.add(ShooterDistanceDataPoint.from(-13.14, 0.35, -4420, 16));
 
 		// sort data
 		distanceData.sort((o1, o2) -> o1.m_ty.compareTo(o2.m_ty));
