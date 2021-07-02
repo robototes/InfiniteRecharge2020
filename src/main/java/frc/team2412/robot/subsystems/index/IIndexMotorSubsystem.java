@@ -43,7 +43,7 @@ public interface IIndexMotorSubsystem {
 	public IndexMotorSubsystemType getType();
 
 	public default void in() {
-		this.set(-this.getType().SPEED);
+		this.set(-this.getType().SPEED/*0.5*/);
 	}
 
 	public default void out() {
@@ -56,7 +56,8 @@ public interface IIndexMotorSubsystem {
 
 	public default void set(double speed) {
 		double newSpeed = MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
-		getMainMotor().set(newSpeed);
+		getMainMotor().set(newSpeed/*speed*/);
+		System.out.println("i am speed " + speed);
 	}
 
 	public default void stop() {

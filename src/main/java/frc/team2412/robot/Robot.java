@@ -134,8 +134,8 @@ public class Robot extends TimedRobot {
 		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
-				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		/*robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
+				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));*/
 
 
 

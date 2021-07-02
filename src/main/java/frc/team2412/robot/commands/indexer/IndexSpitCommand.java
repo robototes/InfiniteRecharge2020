@@ -8,11 +8,11 @@ public class IndexSpitCommand extends CommandBase {
 
 	private IndexerSubsystemSuperStructure m_indexerMotorSubsystem;
 	private IntakeMotorSubsystem m_intakeOnOffSubsystem;
-
-	public IndexSpitCommand(IndexerSubsystemSuperStructure motorSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem) {
+	private boolean isUsingLift;
+	public IndexSpitCommand(IndexerSubsystemSuperStructure motorSubsystem, IntakeMotorSubsystem intakeOnOffSubsystem, boolean useLift) {
 		m_indexerMotorSubsystem = motorSubsystem;
 		m_intakeOnOffSubsystem = intakeOnOffSubsystem;
-
+		isUsingLift = useLift;
 		addRequirements(motorSubsystem, intakeOnOffSubsystem);
 	}
 
@@ -21,7 +21,9 @@ public class IndexSpitCommand extends CommandBase {
 		m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().out();
 		m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().out();
 		// Stop jamming?
-		//m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().out();
+		if(isUsingLift) {
+			m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().out();
+		}
 		m_intakeOnOffSubsystem.setIntake(-1);
 	}
 

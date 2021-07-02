@@ -200,19 +200,35 @@ public class OI {
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
 		bindIndexControls(robotContainer);
-		new JoystickButton(driverRightStick, 8).whileHeld(()->{
+		new JoystickButton(driverRightStick, 6).whileHeld(()->{
 			// double a = RobotMap.limelight.getTY();
 			double a = -6.0;
-			robotContainer.m_flywheelSubsystem.setSpeed((19.118*a*a+213.926*a+3297.974)/-6000);
-			robotContainer.m_hoodSubsystem.setServo(0.000784*a*a+0.006898*a+0.30529);
+			/*(19.118*a*a+213.926*a+3297.974)/-6000*/
+			robotContainer.m_flywheelSubsystem.setSpeed(-0.6);
+			robotContainer.m_hoodSubsystem.setServo(/*0.000784*a*a+0.006898*a+0.30529*/0.03);
 			System.out.println(a);
 		});
+		new JoystickButton(driverRightStick, 3).whenPressed(()->{
+			// double a = RobotMap.limelight.getTY();
+			double a = -6.0;
+			/*(19.118*a*a+213.926*a+3297.974)/-6000*/
+			robotContainer.m_flywheelSubsystem.setSpeed(-0.7);
+			robotContainer.m_hoodSubsystem.setServo(/*0.000784*a*a+0.006898*a+0.30529*/0.03);
+		});
+		new JoystickButton(driverRightStick, 6).whenReleased(()->{
+			robotContainer.m_flywheelSubsystem.setSpeed(-0.4);
+			robotContainer.m_hoodSubsystem.setServo(/*0.000784*a*a+0.006898*a+0.30529*/0.0);
+		});
+		new JoystickButton(driverRightStick, 2).whenHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem, false));
+		new JoystickButton(driverRightStick, 4).whenHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem, true));
 		double[] s = new double[1];
-		new JoystickButton(driverRightStick, 1).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]+=0.05));
-		new JoystickButton(driverRightStick, 4).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]-=0.05));
-		new JoystickButton(driverRightStick, 2).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()+0.05));
-		new JoystickButton(driverRightStick, 3).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()-0.05));
-
+		// new JoystickButton(driverRightStick, 1).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]+=0.05));
+		// new JoystickButton(driverRightStick, 4).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]-=0.05));
+		// new JoystickButton(driverRightStick, 2).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()+0.05));
+		// new JoystickButton(driverRightStick, 3).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()-0.05));
+		new JoystickButton(driverRightStick, 1).whileHeld(()->robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().in());
+		new JoystickButton(driverRightStick, 1).whenReleased(()->robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().stop());
+		
 	}
 
 	public void bindIndexControls(RobotContainer robotContainer) {
@@ -221,7 +237,7 @@ public class OI {
 		}
 
 		indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem));
+				robotContainer.m_intakeMotorOnOffSubsystem, false));
 
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);

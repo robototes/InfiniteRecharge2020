@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team2412.robot.commands.indexer.shoot.IndexLiftShootCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexLiftStopCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexShootBackCommand;
+import frc.team2412.robot.commands.indexer.shoot.IndexShootFrontCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexShootSelectionCommand;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
@@ -13,7 +14,7 @@ public class IndexShootCommand extends SequentialCommandGroup {
 		addRequirements(indexerSubsystemSuperStructure);
 		this.addCommands(new IndexLiftShootCommand(indexerSubsystemSuperStructure),
 				//new IndexShootSelectionCommand(indexerSubsystemSuperStructure),
-				new IndexShootBackCommand(indexerSubsystemSuperStructure),
+				new IndexShootFrontCommand(indexerSubsystemSuperStructure),
 				new IndexPulseCommand(indexerSubsystemSuperStructure),
 				new IndexShootBackCommand(indexerSubsystemSuperStructure),
 				//new IndexShootSelectionCommand(indexerSubsystemSuperStructure),
