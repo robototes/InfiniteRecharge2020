@@ -28,7 +28,7 @@ public class IndexerMotorLiftSubsystem extends SubsystemBase implements IIndexMo
 
 	@Override
 	public void set(double speed) {
-		double newSpeed = MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
+		double newSpeed = -MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
 		m_rightLiftMotor.set(newSpeed);
 	}
 

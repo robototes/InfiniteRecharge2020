@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 import com.robototes.math.Interpolable;
 import com.robototes.math.InterpolatingDouble;
 
@@ -39,6 +41,10 @@ public class ShooterConstants {
 		public static ShooterDistanceDataPoint from(double m_ty, double m_hoodAngle, double m_shooterPower, double m_distance) {
 			return new ShooterDistanceDataPoint(new InterpolatingDouble(m_ty), new InterpolatingDouble(m_hoodAngle), 
 					new InterpolatingDouble(m_shooterPower), new InterpolatingDouble(m_distance));
+		}
+
+		public String toString() {
+			return String.format("m_ty: %f, m_shooterPower: %f, m_hoodAngle: %f", m_ty.value(), m_shooterPower.value(), m_hoodAngle.value());
 		}
 	}
 
@@ -79,7 +85,7 @@ public class ShooterConstants {
 	static {
 		// add in data here
 		distanceData.add(ShooterDistanceDataPoint.from(-0.85, 0.3, -3750, 8));
-		distanceData.add(ShooterDistanceDataPoint.from(-7.95, 0.3, -3430, 12));
+		distanceData.add(ShooterDistanceDataPoint.from(-7.95, 0.3, -4000, 12));
 		distanceData.add(ShooterDistanceDataPoint.from(-13.14, 0.35, -4420, 16));
 
 		// sort data
@@ -88,9 +94,13 @@ public class ShooterConstants {
 		skewData.sort((o1, o2) -> o1.m_ts.compareTo(o2.m_ts));
 	}
 
-	public static <T extends Interpolable<T>> T interpolateInList(List<T> list,
+	public static <T extends Interpolable<T>> @Nullable T interpolateInList(List<T> list,
 			Function<T, InterpolatingDouble> fieldSupplier, double t_in) {
 		InterpolatingDouble tyInter = new InterpolatingDouble(t_in);
+		if (list.isEmpty()) {
+			return null;
+		}
+
 
 		T lowerQuery = list.get(0);
 		T upperQuery = list.get(list.size() - 1);

@@ -6,6 +6,8 @@ import static frc.team2412.robot.RobotMapConstants.INDEX_CONNECTED;
 import static frc.team2412.robot.RobotMapConstants.INTAKE_CONNECTED;
 import static frc.team2412.robot.RobotMapConstants.LIFT_CONNECTED;
 
+import java.util.Optional;
+
 import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -24,8 +26,12 @@ import frc.team2412.robot.commands.drive.DriveShiftToHighGearCommand;
 import frc.team2412.robot.commands.drive.DriveShiftToLowGearCommand;
 import frc.team2412.robot.commands.flywheel.FlywheelSetSpeedCommand;
 import frc.team2412.robot.commands.hood.HoodSetAngleCommand;
+import frc.team2412.robot.commands.indexer.IndexAllInCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitCommand;
+import frc.team2412.robot.commands.indexer.shoot.IndexLiftShootCommand;
+import frc.team2412.robot.commands.indexer.shoot.IndexLiftStopCommand;
+import frc.team2412.robot.commands.indexer.shoot.IndexShiftBackCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
 import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
@@ -38,6 +44,10 @@ import frc.team2412.robot.commands.intake.front.IntakeFrontOutCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontUpCommand;
 import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
+import frc.team2412.robot.commands.limelight.LimelightReadCommand;
+import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
+import frc.team2412.robot.subsystems.constants.ShooterConstants;
+import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceDataPoint;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
 public class OI {
@@ -81,8 +91,9 @@ public class OI {
 	}
 
 	public static enum DriverControls implements ButtonEnumInterface {
-		SHOOT(Joysticks.DRIVER_RIGHT, 6), SHIFT(Joysticks.DRIVER_RIGHT, 5),/* 
-		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3), BOUNCE_RUN(Joysticks.DRIVER_RIGHT, 4),
+		START_SHOOT(Joysticks.DRIVER_RIGHT, 6), SHIFT(Joysticks.DRIVER_RIGHT, 5),RUN_LIFT(Joysticks.DRIVER_RIGHT, 4),
+		LIFT_DOWN(Joysticks.DRIVER_RIGHT, 2), TURRET_AUTOAIM(Joysticks.DRIVER_RIGHT, 3),/* 
+		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3), ,
 		STOP_SHOOTER(Joysticks.DRIVER_RIGHT, 7),*/
 		SPIT(Joysticks.DRIVER_LEFT, 1), ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
 
@@ -157,7 +168,7 @@ public class OI {
 
 	// Driver Controls
 	public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
-	public final Button indexerShootButton = DriverControls.SHOOT.createFrom(driverRightStick);
+	public final Button indexerShootButton = DriverControls.START_SHOOT.createFrom(driverRightStick);
 	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
 	// public final Button startFlywheel = DriverControls.RESET_POSITION.createFrom(driverRightStick);
 	// public final Button bounceRunButton = DriverControls.BOUNCE_RUN.createFrom(driverRightStick);
@@ -194,43 +205,39 @@ public class OI {
 			new FlywheelSetSpeedCommand(robotContainer.m_flywheelSubsystem, 0)
 		));
 		*/
-
+		DriverControls.TURRET_AUTOAIM.createFrom(driverRightStick).whileHeld(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_limelightSubsystem));
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
 		bindIndexControls(robotContainer);
-		new JoystickButton(driverRightStick, 6).whileHeld(()->{
-			// double a = RobotMap.limelight.getTY();
-			double a = -6.0;
-			/*(19.118*a*a+213.926*a+3297.974)/-6000*/
-			robotContainer.m_flywheelSubsystem.setSpeed(-0.6);
-			robotContainer.m_hoodSubsystem.setServo(/*0.000784*a*a+0.006898*a+0.30529*/0.03);
-			System.out.println(a);
-		});
-		new JoystickButton(driverRightStick, 3).whenPressed(()->{
-			// double a = RobotMap.limelight.getTY();
-			double a = -6.0;
-			/*(19.118*a*a+213.926*a+3297.974)/-6000*/
-			robotContainer.m_flywheelSubsystem.setSpeed(-0.7);
-			robotContainer.m_hoodSubsystem.setServo(/*0.000784*a*a+0.006898*a+0.30529*/0.03);
-		});
-		new JoystickButton(driverRightStick, 6).whenReleased(()->{
-			robotContainer.m_flywheelSubsystem.setSpeed(-0.4);
-			robotContainer.m_hoodSubsystem.setServo(/*0.000784*a*a+0.006898*a+0.30529*/0.0);
-		});
-		new JoystickButton(driverRightStick, 2).whenHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem, false));
-		new JoystickButton(driverRightStick, 4).whenHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem, true));
-		double[] s = new double[1];
-		// new JoystickButton(driverRightStick, 1).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]+=0.05));
-		// new JoystickButton(driverRightStick, 4).whenPressed(()->robotContainer.m_flywheelSubsystem.setSpeed(s[0]-=0.05));
-		// new JoystickButton(driverRightStick, 2).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()+0.05));
-		// new JoystickButton(driverRightStick, 3).whenPressed(()->robotContainer.m_hoodSubsystem.setServo(robotContainer.m_hoodSubsystem.getServo()-0.05));
-		new JoystickButton(driverRightStick, 1).whileHeld(()->robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().in());
-		new JoystickButton(driverRightStick, 1).whenReleased(()->robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().stop());
 		
-	}
+		double[] s = new double[1];
 
+		((Button) DriverControls.START_SHOOT.createFrom(driverRightStick).whenPressed(new LimelightReadCommand(robotContainer.m_limelightSubsystem)).whileActiveContinuous(() -> {
+			Optional<ShooterDistanceDataPoint> opPoint = robotContainer.m_limelightSubsystem.getDistanceData();
+			opPoint.ifPresent(point ->{
+				System.out.println(point);
+				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value() + s[0]) / 5500);
+				robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
+			});
+		})).whenReleased(() -> {
+			robotContainer.m_flywheelSubsystem.setSpeed(0);
+			robotContainer.m_hoodSubsystem.setServo(0);
+		});
+		
+        new JoystickButton(driverRightStick, 1).whenPressed(()->s[0]+=15);
+        new JoystickButton(driverRightStick, 4).whenPressed(()->s[0]-=15);
+
+		DriverControls.RUN_LIFT.createFrom(driverRightStick)
+			.whileHeld(new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem))
+			.whenReleased(new IndexLiftStopCommand(robotContainer.m_indexerMotorSubsystem));
+
+		DriverControls.LIFT_DOWN.createFrom(driverRightStick)
+			.whileHeld(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().in())
+			.whenReleased(new IndexLiftStopCommand(robotContainer.m_indexerMotorSubsystem));
+	}
+	
 	public void bindIndexControls(RobotContainer robotContainer) {
 		if (!INDEX_CONNECTED) {
 			return;
@@ -242,10 +249,10 @@ public class OI {
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
 
-		indexerShootButton.whenPressed(indexShootCommand);
+		// indexerShootButton.whenPressed(indexShootCommand);
 
-		indexerShootButton
-				.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
+		// indexerShootButton
+		// 		.whenReleased(new InstantCommand(() -> CommandScheduler.getInstance().cancel(indexShootCommand)));
 	}
 
 	public void bindIntakeControls(RobotContainer robotContainer) {
@@ -264,13 +271,13 @@ public class OI {
 		intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 		intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
-		intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().stop())));
 
-		intakeBackOut.whenPressed(new IntakeBackOutCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackOut.whileHeld(new IntakeBackOutCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().out())));
+		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().stop())));
 		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
-		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().in())));
 		// intakeBackIn.whileHeld(new
 		// IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(
 		// new InstantCommand(() ->{

@@ -57,7 +57,6 @@ public interface IIndexMotorSubsystem {
 	public default void set(double speed) {
 		double newSpeed = MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
 		getMainMotor().set(newSpeed/*speed*/);
-		System.out.println("i am speed " + speed);
 	}
 
 	public default void stop() {

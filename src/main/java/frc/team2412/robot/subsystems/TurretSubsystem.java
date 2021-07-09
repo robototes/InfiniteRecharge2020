@@ -57,7 +57,7 @@ public class TurretSubsystem extends PIDSubsystem {
 	// disabled for at home
 	
 	public void periodic() { 
-		turretCurrentPosition =	  motor.getSelectedSensorPosition(0);
+		turretCurrentPosition =	(int) limelightSubsystem.getYawFromTarget().rotations; //  motor.getSelectedSensorPosition(0);
 	  
 		turretPastPosition = turretCurrentPosition; 
 		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE), RotationUnits.DEGREE); 

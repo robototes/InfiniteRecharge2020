@@ -7,8 +7,14 @@
 
 package frc.team2412.robot;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -60,6 +66,12 @@ public class Robot extends TimedRobot {
 				}
 			}
 		}
+
+		RobotMap.intakeBackMotor.setSmartCurrentLimit(30);
+		RobotMap.indexBackMotor.setSmartCurrentLimit(30);
+
+		RobotMap.turretMotor.enableCurrentLimit(true);
+		RobotMap.turretMotor.configPeakCurrentLimit(5, 100);
 	}
 
 	/**
@@ -128,20 +140,29 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		System.out.println(Arrays.stream(NetworkTableInstance.getDefault().getEntries("", 0)).map(NetworkTableEntry::getName).collect(Collectors.toList()));
+
+		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
+		for(String key : table.getKeys()) {
+			System.out.println(table.getEntry(key).getName());
+		}
+
 		CommandScheduler.getInstance().cancel(autoCommand);
 		robotContainer.m_flywheelSubsystem.setSpeed(0.0);
 		RobotMap.driveLeftFrontMotor.setSelectedSensorPosition(0);
 		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		/*robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
-				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));*/
+		// robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
+		// 		robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
 
 
 				// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
 		// m_OI.codriverStick.getY() * 0.5 + 0.5));
+
 	}
 
 	/**
@@ -149,7 +170,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-
+		robotContainer.m_limelightSubsystem.getValues();
 	}
 
 	@Override
