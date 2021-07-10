@@ -48,6 +48,13 @@ public interface IIndexMotorSubsystem {
 
 	public default void out() {
 		this.set(this.getType().SPEED);
+		// System.out.println("Index: ID: " + getMainMotor().getDeviceId() +
+		// ", Faults: " + getMainMotor().getFaults() +
+		// ", Sticky fault: " + getMainMotor().getStickyFaults() +
+		// ", Last error: " + getMainMotor().getLastError() +
+		// ", Temp: " + getMainMotor().getMotorTemperature() +
+		// ", Current: " + getMainMotor().getOutputCurrent() +
+		// ", Position: " + getMainMotor().getEncoder().getPosition());
 	}
 
 	public default void pid(double rotations) {

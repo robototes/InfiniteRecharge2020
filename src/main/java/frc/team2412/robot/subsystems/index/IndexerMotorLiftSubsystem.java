@@ -3,6 +3,7 @@ package frc.team2412.robot.subsystems.index;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,6 +23,9 @@ public class IndexerMotorLiftSubsystem extends SubsystemBase implements IIndexMo
 		this.m_encoder = rightLiftMotor.getEncoder();
 
 		leftLiftMotor.follow(rightLiftMotor);
+		
+		this.m_rightLiftMotor.setIdleMode(IdleMode.kBrake);
+		this.m_leftLiftMotor.setIdleMode(IdleMode.kBrake);
 
 		configPID(m_pidController);
 	}
