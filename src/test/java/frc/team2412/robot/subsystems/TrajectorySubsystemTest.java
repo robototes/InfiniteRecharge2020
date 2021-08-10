@@ -18,6 +18,8 @@ import com.robototes.helpers.TestWithScheduler;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.commands.drive.DriveCommand;
 
@@ -29,6 +31,7 @@ public class TrajectorySubsystemTest {
 	ADXRS450_Gyro mockedGyro;
 	GenericHID mockedGenericHID;
 	Joystick mockedJoystick;
+	XboxController mockedXboxController;
 	WPI_TalonFX mockedMotor1, mockedMotor2, mockedMotor3, mockedMotor4;
 
 	// This is called after tests, and makes sure that nothing is left open and
@@ -50,6 +53,7 @@ public class TrajectorySubsystemTest {
 
 		mockedGyro = mock(ADXRS450_Gyro.class);
 		mockedJoystick = mock(Joystick.class);
+		mockedXboxController = mock(XboxController.class);
 		mockedGenericHID = mock(GenericHID.class);
 
 		realDriveBaseSubsystem = new DriveBaseSubsystem(null, mockedGyro, mockedMotor1, mockedMotor2, mockedMotor3,
@@ -64,18 +68,23 @@ public class TrajectorySubsystemTest {
 		// Reset the mocked objects to make sure all mock values are reset
 		reset(mockedGyro);
 		reset(mockedJoystick);
+		reset(mockedXboxController);
 
 		// Create command
-		DriveCommand driveCommand = new DriveCommand(realDriveBaseSubsystem, mockedJoystick, null, null);
+		DriveCommand driveCommand = new DriveCommand(realDriveBaseSubsystem, mockedXboxController, null, null);
 
 		when(mockedGyro.getAngle()).thenReturn(0.5);
 		System.out.println(mockedGyro.getAngle());
 
 		when(mockedJoystick.getY()).thenReturn(1.0);
 		System.out.println(mockedJoystick.getY());
+		when(mockedXboxController.getY(Hand.kLeft)).thenReturn(1.0);
+		System.out.println(mockedXboxController.getY());
 
 		when(mockedJoystick.getTwist()).thenReturn(0.0);
 		System.out.println(mockedJoystick.getTwist());
+		when(mockedXboxController.getY(Hand.kRight)).thenReturn(0.0);
+		System.out.println(mockedXboxController.getY(Hand.kRight));
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();
