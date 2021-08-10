@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
 		if (RobotMap.driveGyro.isConnected()) {
 			while (RobotMap.driveGyro.isCalibrating()) {
 				try {
-					System.out.println("Waiting for gyro calibrarion");
+					System.out.println("Waiting for gyro calibration");
 					Thread.sleep(50);
 				} catch (InterruptedException ignored) {
 				}
