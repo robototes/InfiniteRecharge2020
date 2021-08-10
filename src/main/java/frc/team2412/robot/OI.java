@@ -90,7 +90,7 @@ public class OI {
 	}
 
 	public static enum DriverControls implements ButtonEnumInterface {
-		START_SHOOT(Joysticks.DRIVER_RIGHT, 3), SHIFT(Joysticks.DRIVER_RIGHT, 5),RUN_LIFT(Joysticks.DRIVER_RIGHT, 4),
+		START_SHOOT(Joysticks.DRIVER_RIGHT, 6), SHIFT(Joysticks.DRIVER_RIGHT, 5),RUN_LIFT(Joysticks.DRIVER_RIGHT, 4),
 		LIFT_DOWN(Joysticks.DRIVER_RIGHT, 2), /*TURRET_AUTOAIM(Joysticks.DRIVER_RIGHT, 3),/* 
 		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3), ,
 		STOP_SHOOTER(Joysticks.DRIVER_RIGHT, 7),*/
