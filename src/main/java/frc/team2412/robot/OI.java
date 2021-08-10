@@ -168,7 +168,7 @@ public class OI {
 	// Driver Controls
 	public final Button shifter = DriverControls.SHIFT.createFrom(driverRightStick);
 	public final Button indexerShootButton = DriverControls.START_SHOOT.createFrom(driverRightStick);
-	public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
+	//public final Button indexerSpitButton = DriverControls.SPIT.createFrom(driverLeftStick);
 	// public final Button startFlywheel = DriverControls.RESET_POSITION.createFrom(driverRightStick);
 	// public final Button bounceRunButton = DriverControls.BOUNCE_RUN.createFrom(driverRightStick);
 	// public final Button stopFlywheel = DriverControls.STOP_SHOOTER.createFrom(driverRightStick);
@@ -240,8 +240,8 @@ public class OI {
 			return;
 		}
 
-		indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem,
-				robotContainer.m_intakeMotorOnOffSubsystem, false));
+		//indexerSpitButton.whileHeld(new IndexSpitCommand(robotContainer.m_indexerMotorSubsystem,
+		//		robotContainer.m_intakeMotorOnOffSubsystem, false));
 
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
 		Command indexShootCommand = new IndexShootCommand(robotContainer.m_indexerMotorSubsystem);
