@@ -12,7 +12,7 @@ public class ClimbLiftUpCommand extends ParallelCommandGroup {
 	public ClimbLiftUpCommand(ClimbLiftSubsystem climbLiftSubsystem, LiftSubsystem liftSubsystem,
 			IndexerSubsystemSuperStructure indexerSubsystem) {
 		addCommands(new LiftDownCommand(liftSubsystem, indexerSubsystem),
-				new InstantCommand(() -> climbLiftSubsystem.retractRails()));
+				new InstantCommand(() -> climbLiftSubsystem.deployRails()));
 	}
 
 }
