@@ -46,7 +46,7 @@ import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
-import frc.team2412.robot.subsystems.constants.ShooterConstants;
+// import frc.team2412.robot.subsystems.constants.ShooterConstants;
 import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceDataPoint;
 
 //This is the class in charge of all the buttons and joysticks that the drivers will use to control the robot
@@ -57,7 +57,6 @@ public class OI {
 		public int getButtonID();
 
 		public int getJoystickID();
-
 		public default Button createFrom(Joystick stick) {
 			if (stick.getPort() != getJoystickID()) {
 				System.err.println("Warning! Binding button to the wrong stick!");
@@ -91,8 +90,8 @@ public class OI {
 	}
 
 	public static enum DriverControls implements ButtonEnumInterface {
-		START_SHOOT(Joysticks.DRIVER_RIGHT, 6), SHIFT(Joysticks.DRIVER_RIGHT, 5),RUN_LIFT(Joysticks.DRIVER_RIGHT, 4),
-		LIFT_DOWN(Joysticks.DRIVER_RIGHT, 2), TURRET_AUTOAIM(Joysticks.DRIVER_RIGHT, 3),/* 
+		START_SHOOT(Joysticks.DRIVER_RIGHT, 3), SHIFT(Joysticks.DRIVER_RIGHT, 5),RUN_LIFT(Joysticks.DRIVER_RIGHT, 4),
+		LIFT_DOWN(Joysticks.DRIVER_RIGHT, 2), /*TURRET_AUTOAIM(Joysticks.DRIVER_RIGHT, 3),/* 
 		RESET_POSITION(Joysticks.DRIVER_RIGHT, 3), ,
 		STOP_SHOOTER(Joysticks.DRIVER_RIGHT, 7),*/
 		SPIT(Joysticks.DRIVER_LEFT, 1), ALIGN_STICKS(Joysticks.DRIVER_LEFT, 3);
@@ -118,7 +117,7 @@ public class OI {
 	}
 
 	public static enum CodriverControls implements ButtonEnumInterface {
-		LIFT(7), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
+		LIFT(8), FRONT_INTAKE_DOWN(2), BACK_INTAKE_DOWN(1), INTAKE_BACK_IN(4), INTAKE_BACK_OUT(3), INTAKE_FRONT_IN(6),
 		INTAKE_FRONT_OUT(5);
 
 		public int buttonID;
@@ -205,20 +204,18 @@ public class OI {
 			new FlywheelSetSpeedCommand(robotContainer.m_flywheelSubsystem, 0)
 		));
 		*/
-		DriverControls.TURRET_AUTOAIM.createFrom(driverRightStick).whileHeld(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_limelightSubsystem));
+		DriverControls.START_SHOOT.createFrom(driverRightStick).whileHeld(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_limelightSubsystem));
 		bindClimbControls(robotContainer);
 		bindDriverControls(robotContainer);
 		bindIntakeControls(robotContainer);
 		bindLiftControls(robotContainer);
 		bindIndexControls(robotContainer);
-		
-		double[] s = new double[1];
 
 		((Button) DriverControls.START_SHOOT.createFrom(driverRightStick).whenPressed(new LimelightReadCommand(robotContainer.m_limelightSubsystem)).whileActiveContinuous(() -> {
 			Optional<ShooterDistanceDataPoint> opPoint = robotContainer.m_limelightSubsystem.getDistanceData();
 			opPoint.ifPresent(point ->{
-				System.out.println(point);
-				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value() + s[0]) / 5500);
+				//System.out.println(point);
+				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
 				robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
 			});
 		})).whenReleased(() -> {
@@ -226,8 +223,8 @@ public class OI {
 			robotContainer.m_hoodSubsystem.setServo(0);
 		});
 		
-        new JoystickButton(driverRightStick, 1).whenPressed(()->s[0]+=15);
-        new JoystickButton(driverRightStick, 4).whenPressed(()->s[0]-=15);
+        // new JoystickButton(driverRightStick, 1).whenPressed(()->s[0]+=15);
+        // new JoystickButton(driverRightStick, 4).whenPressed(()->s[0]-=15);
 
 		DriverControls.RUN_LIFT.createFrom(driverRightStick)
 			.whileHeld(new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem))
@@ -266,18 +263,18 @@ public class OI {
 		backIntakeUpDown.whenReleased(new IntakeBackDownCommand(robotContainer.m_intakeUpDownSubsystem, false));
 		backIntakeUpDown.whenPressed(new IntakeBackUpCommand(robotContainer.m_intakeUpDownSubsystem, false));
 
-		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().in())));
+		intakeFrontIn.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().stop())));
 
-		intakeFrontOut.whenPressed(new IntakeFrontOutCommand(robotContainer.m_intakeMotorOnOffSubsystem));
-		intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+		intakeFrontOut.whileHeld(new IntakeFrontOutCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().out())));
+		intakeFrontOut.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorFrontSubsystem().stop())));
 
+		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().in())));
 		intakeBackIn.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().stop())));
 
 		intakeBackOut.whileHeld(new IntakeBackOutCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().out())));
 		intakeBackOut.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().stop())));
-		intakeFrontIn.whileHeld(new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 
-		intakeBackIn.whileHeld(new IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).alongWith(new InstantCommand(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().in())));
 		// intakeBackIn.whileHeld(new
 		// IntakeBackInCommand(robotContainer.m_intakeMotorOnOffSubsystem).andThen(
 		// new InstantCommand(() ->{
