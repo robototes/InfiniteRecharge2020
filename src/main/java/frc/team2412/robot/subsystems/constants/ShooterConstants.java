@@ -84,8 +84,8 @@ public class ShooterConstants {
 
 	static {
 		// add in data here
-		distanceData.add(ShooterDistanceDataPoint.from(-0.85, 0.3, -3750, 8));
-		distanceData.add(ShooterDistanceDataPoint.from(-7.95, 0.3, -4000, 12));
+		distanceData.add(ShooterDistanceDataPoint.from(-0.85, 0.3, -3550, 8));
+		distanceData.add(ShooterDistanceDataPoint.from(-7.95, 0.3, -3800, 12));
 		distanceData.add(ShooterDistanceDataPoint.from(-13.14, 0.35, -4420, 16));
 
 		// sort data
