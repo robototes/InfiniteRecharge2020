@@ -43,11 +43,18 @@ public interface IIndexMotorSubsystem {
 	public IndexMotorSubsystemType getType();
 
 	public default void in() {
-		this.set(-this.getType().SPEED);
+		this.set(-this.getType().SPEED/*0.5*/);
 	}
 
 	public default void out() {
 		this.set(this.getType().SPEED);
+		// System.out.println("Index: ID: " + getMainMotor().getDeviceId() +
+		// ", Faults: " + getMainMotor().getFaults() +
+		// ", Sticky fault: " + getMainMotor().getStickyFaults() +
+		// ", Last error: " + getMainMotor().getLastError() +
+		// ", Temp: " + getMainMotor().getMotorTemperature() +
+		// ", Current: " + getMainMotor().getOutputCurrent() +
+		// ", Position: " + getMainMotor().getEncoder().getPosition());
 	}
 
 	public default void pid(double rotations) {
@@ -56,7 +63,7 @@ public interface IIndexMotorSubsystem {
 
 	public default void set(double speed) {
 		double newSpeed = MathUtils.constrain(speed, -getType().SPEED, getType().SPEED);
-		getMainMotor().set(newSpeed);
+		getMainMotor().set(newSpeed/*speed*/);
 	}
 
 	public default void stop() {

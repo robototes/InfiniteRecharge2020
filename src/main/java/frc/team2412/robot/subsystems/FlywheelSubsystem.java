@@ -23,21 +23,15 @@ public class FlywheelSubsystem extends SubsystemBase {
 		this.leftMotor = leftMotor;
 		this.leftEncoder = leftMotor.getEncoder();
 		this.leftPIDController = leftMotor.getPIDController();
+		this.leftMotor.setIdleMode(IdleMode.kCoast);
 
 		this.rightMotor = rightMotor;
 		this.rightMotor.setInverted(true);
 		this.rightEncoder = rightMotor.getEncoder();
 		this.rightPIDController = rightMotor.getPIDController();
+		this.rightMotor.setIdleMode(IdleMode.kCoast);
 
-		configureMotor(this.leftMotor, leftEncoder, leftPIDController);
-		configureMotor(this.rightMotor, rightEncoder, rightPIDController);
 		setPIDtoDefault();
-	}
-
-	private void configureMotor(CANSparkMax motor, CANEncoder encoder, CANPIDController pidController) {
-		encoder = motor.getEncoder();
-		pidController = rightMotor.getPIDController();
-		motor.setIdleMode(IdleMode.kCoast);
 	}
 
 	public void setSpeed(double speed) {

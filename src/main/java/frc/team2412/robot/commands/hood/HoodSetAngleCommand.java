@@ -8,8 +8,9 @@ import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceD
 
 public class HoodSetAngleCommand extends CommandBase {
 
-	Supplier<ShooterDistanceDataPoint> m_distanceSupplier;
+	Supplier<ShooterDistanceDataPoint> m_distanceSupplier = null;
 	HoodSubsystem m_HoodSubsystem;
+	double m_angle = 0.0;
 
 	public HoodSetAngleCommand(HoodSubsystem m_HoodSubsystem, Supplier<ShooterDistanceDataPoint> m_distanceSupplier) {
 		this.m_distanceSupplier = m_distanceSupplier;
@@ -18,9 +19,20 @@ public class HoodSetAngleCommand extends CommandBase {
 		addRequirements(m_HoodSubsystem);
 	}
 
+	public HoodSetAngleCommand(HoodSubsystem m_HoodSubsystem, double angle) {
+		this.m_HoodSubsystem = m_HoodSubsystem;
+		this.m_angle = angle;
+
+		addRequirements(m_HoodSubsystem);
+	}
+
 	@Override
 	public void execute() {
-		m_HoodSubsystem.setServo(m_distanceSupplier.get().m_hoodAngle.value());
+		if (m_distanceSupplier != null) {
+			m_HoodSubsystem.setServo(m_distanceSupplier.get().m_hoodAngle.value());
+		} else {
+			m_HoodSubsystem.setServo(m_angle);
+		}
 	}
 
 	@Override

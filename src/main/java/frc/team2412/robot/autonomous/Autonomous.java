@@ -1,6 +1,6 @@
 package frc.team2412.robot.autonomous;
 
-import static frc.team2412.robot.subsystems.constants.AutoConstants.bouncePathTrajectory;
+import static frc.team2412.robot.subsystems.constants.AutoConstants.*;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.config;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.kDriveKinematics;
 import static frc.team2412.robot.subsystems.constants.AutoConstants.pidController;
@@ -11,6 +11,8 @@ import static frc.team2412.robot.subsystems.constants.AutoConstants.squarePathTr
 import java.util.List;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -94,14 +96,50 @@ public class Autonomous {
 		.andThen(new WaitCommand(1.0)).andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 
-	public static Command getBouncePathCommand() {
-		Trajectory adjustedTrajectory = bouncePathTrajectory.relativeTo(bouncePathTrajectory.getInitialPose());
+	public static Command getBarrelPathCommand() {
+		Trajectory adjustedTrajectory = barrelPathTrajectory.relativeTo(barrelPathTrajectory.getInitialPose());
 
 		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
 				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
 				driveSub::tankDriveVolts, driveSub);
 		// Makes robot think it's in position to start the trajectory i.e. resets it
 		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(new WaitCommand(1.0)).andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
+		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
+
+	public static Command getSlalomPathCommand() {
+		Trajectory adjustedTrajectory = slalomPathTrajectory.relativeTo(slalomPathTrajectory.getInitialPose());
+
+		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
+		// Makes robot think it's in position to start the trajectory i.e. resets it
+		// Run path following command, then stop at the end.
+		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
+	}
+
+	public static Command getBouncePathCommand() {
+		Trajectory adjustedTrajectory = bouncePathTrajectory.relativeTo(bouncePathTrajectory.getInitialPose());
+		adjustedTrajectory.transformBy(new Transform2d(new Translation2d(1.3, 0.0), new Rotation2d()));
+
+		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
+		// Makes robot think it's in position to start the trajectory i.e. resets it
+		// Run path following command, then stop at the end.
+		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
+	}
+
+	public static Command getSearchPathCommand() {
+		Trajectory adjustedTrajectory = searchPathTrajectory.relativeTo(searchPathTrajectory.getInitialPose());
+
+		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
+		// Makes robot think it's in position to start the trajectory i.e. resets it
+		// Run path following command, then stop at the end.
+		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
+	}
+
+	
 }

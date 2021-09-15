@@ -1,5 +1,7 @@
 package frc.team2412.robot.subsystems;
 
+import java.util.Optional;
+
 import com.robototes.sensors.Limelight;
 import com.robototes.sensors.Limelight.CamMode;
 import com.robototes.sensors.Limelight.LEDMode;
@@ -20,9 +22,9 @@ public class LimelightSubsystem extends SubsystemBase {
 
 	// Store local values of distance and yaw so they aren't calculated multiple
 	// times a loop
-	public ShooterDistanceDataPoint distanceData;
-	public Rotations yawFromTarget;
-	public ShooterSkewDataPoint skewData;
+	public Optional<ShooterDistanceDataPoint> distanceData = Optional.empty();
+	public Rotations yawFromTarget = new Rotations(0);
+	public Optional<ShooterSkewDataPoint> skewData = Optional.empty();
 
 	public HttpCamera limeCam;
 
@@ -37,26 +39,43 @@ public class LimelightSubsystem extends SubsystemBase {
 		this.limelight.setSnapshotMode(SnapshotMode.OFF);
 		this.limelight.setStreamMode(StreamMode.STANDARD);
 
-		yawFromTarget = new Rotations(0);
+		resetValues();
 
 		getCameraStream();
+	}
+
+	private void resetValues() {
+		distanceData = Optional.empty();
+		yawFromTarget = new Rotations(0, RotationUnits.DEGREE);
+		skewData = Optional.empty();
 	}
 
 	public void getCameraStream() {
 		limeCam = new HttpCamera("limelight", "http://10.24.12.3:5801/stream.mjpg", HttpCameraKind.kMJPGStreamer);
 	}
 
+	//static int loopNum=0;
 	public void getValues() {
+		boolean valid = false;
 		// If we have a target, set distance and yaw, otherwise error them
 		if (limelight.hasValidTarget()) {
+			valid = true;
 			setDistanceDataFromTable();
 			setYawFromTable();
 			setSkewDataFromTable();
+		} else {
+			resetValues();
 		}
+
+		// loopNum++;
+		// if (loopNum == 10) {
+		// 	System.out.println("periodic: getVal: " + valid + ", " + yawFromTarget.convertTo(RotationUnits.DEGREE));
+		// 	loopNum = 0;
+		// }
 	}
 
 	public void setSkewDataFromTable() {
-		skewData = ShooterConstants.getSkewDataPointFromTs(limelight.getTS());
+		skewData = Optional.ofNullable(ShooterConstants.getSkewDataPointFromTs(limelight.getTS()));
 	}
 
 	public Rotations getYawFromTarget() {
@@ -64,7 +83,7 @@ public class LimelightSubsystem extends SubsystemBase {
 	}
 
 	public void setDistanceDataFromTable() {
-		distanceData = ShooterConstants.getDistanceDataPointFromTy(limelight.getTY());
+		distanceData = Optional.of(ShooterConstants.getDistanceDataPointFromTy(limelight.getTY()));
 	}
 
 	public void setYawFromTable() {
@@ -79,15 +98,15 @@ public class LimelightSubsystem extends SubsystemBase {
 		limelight.setLedMode(LEDMode.ON);
 	}
 
-	public ShooterDistanceDataPoint getDistanceData() {
+	public Optional<ShooterDistanceDataPoint> getDistanceData() {
 		return distanceData;
 	}
 
-	public ShooterSkewDataPoint getSkewData() {
+	public Optional<ShooterSkewDataPoint> getSkewData() {
 		return this.skewData;
 	}
 
 	public boolean innerGoalPossible() {
-		return skewData.innerGoalPossible;
+		return skewData.map(skew -> skew.innerGoalPossible).orElse(false);
 	}
 }

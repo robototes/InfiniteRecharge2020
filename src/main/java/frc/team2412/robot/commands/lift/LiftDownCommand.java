@@ -18,7 +18,7 @@ public class LiftDownCommand extends CommandBase {
 	@Override
 	public void execute() {
 		liftSubsystem.liftDown();
-		motorSubsystem.getIndexerMotorLiftSubsystem().addPID(25);
+		//motorSubsystem.getIndexerMotorLiftSubsystem().addPID(25);
 	}
 
 	@Override

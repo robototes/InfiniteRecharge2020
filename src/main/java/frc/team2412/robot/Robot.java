@@ -7,17 +7,28 @@
 
 package frc.team2412.robot;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.team2412.robot.autonomous.Autonomous;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
 import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
+import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
+import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -49,12 +60,18 @@ public class Robot extends TimedRobot {
 		if (RobotMap.driveGyro.isConnected()) {
 			while (RobotMap.driveGyro.isCalibrating()) {
 				try {
-					System.out.println("Waiting for gyro calibrarion");
+					System.out.println("Waiting for gyro calibration");
 					Thread.sleep(50);
 				} catch (InterruptedException ignored) {
 				}
 			}
 		}
+
+		RobotMap.intakeBackMotor.setSmartCurrentLimit(30);
+		RobotMap.indexBackMotor.setSmartCurrentLimit(30);
+
+		RobotMap.turretMotor.enableCurrentLimit(true);
+		RobotMap.turretMotor.configPeakCurrentLimit(5, 100);
 	}
 
 	/**
@@ -71,6 +88,9 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 		timeRemaining = Timer.getMatchTime();
+		// System.out.print("shooter: "+robotContainer.m_flywheelSubsystem.currentLeftSpeed());
+		// System.out.println("   hood: "+robotContainer.m_hoodSubsystem.getServo());
+
 	}
 
 	/**
@@ -89,15 +109,21 @@ public class Robot extends TimedRobot {
 		 * *
 		 */
 
-		autoCommand = new HoodWithdrawCommand(robotContainer.m_hoodSubsystem)
-				.andThen(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, .300))
-				.andThen(new InstantCommand(() -> robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
-				.andThen(new WaitCommand(2))
-				// Add index shooting back in here
-				.andThen(new WaitCommand(8))
-				.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
-				.andThen(new WaitCommand(1))
-				.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
+		// autoCommand = new HoodWithdrawCommand(robotContainer.m_hoodSubsystem)
+		// 		.andThen(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, .300))
+		// 		.andThen(new InstantCommand(() -> robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
+		// 		.andThen(new WaitCommand(2))
+		// 		// Add index shooting back in here
+		// 		.andThen(new WaitCommand(8))
+		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
+		// 		.andThen(new WaitCommand(1))
+		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
+		autoCommand = Autonomous.getBouncePathCommand();
+		//autoCommand = Autonomous.getBarrelPathCommand();
+
+		//autoCommand = new ParallelCommandGroup(Autonomous.getSearchPathCommand(),
+		//	new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem, false),
+		//	new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
 		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 
@@ -114,17 +140,29 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		System.out.println(Arrays.stream(NetworkTableInstance.getDefault().getEntries("", 0)).map(NetworkTableEntry::getName).collect(Collectors.toList()));
+
+		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
+		for(String key : table.getKeys()) {
+			System.out.println(table.getEntry(key).getName());
+		}
+
 		CommandScheduler.getInstance().cancel(autoCommand);
+		robotContainer.m_flywheelSubsystem.setSpeed(0.0);
 		RobotMap.driveLeftFrontMotor.setSelectedSensorPosition(0);
 		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
-		robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
-				robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
+		// robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
+		// 		robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeMotorOnOffSubsystem));
 
-		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+
+
+				// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
 		// m_OI.codriverStick.getY() * 0.5 + 0.5));
+
 	}
 
 	/**
@@ -132,7 +170,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-
+		robotContainer.m_limelightSubsystem.getValues();
 	}
 
 	@Override

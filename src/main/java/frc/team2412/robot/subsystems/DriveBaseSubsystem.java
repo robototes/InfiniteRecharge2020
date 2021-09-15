@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -49,6 +51,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	private double rightMotorRevolutions, leftMotorRevolutions;
 
 	private boolean oneJoystickDrive = false;
+	boolean controllerDrive = true;
 
 	private boolean inOneJoystickDrive = oneJoystickDrive;
 
@@ -88,10 +91,13 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		}
 	}
 
-	public void drive(Joystick rightJoystick, Joystick leftJoystick, Button button) {
+	public void drive(XboxController rightJoystick, Joystick leftJoystick, Button button) {
 		if (oneJoystickDrive) {
-			rightFrontMotor.set(rightJoystick.getY() - Math.pow(rightJoystick.getTwist(), 3));
-			leftFrontMotor.set(rightJoystick.getY() + Math.pow(rightJoystick.getTwist(), 3));
+			// rightFrontMotor.set(rightJoystick.getY() - Math.pow(rightJoystick.getTwist(), 3));
+			// leftFrontMotor.set(rightJoystick.getY() + Math.pow(rightJoystick.getTwist(), 3));
+		} else if(controllerDrive) {
+			rightFrontMotor.set(rightJoystick.getY(Hand.kRight));
+			leftFrontMotor.set(rightJoystick.getY(Hand.kLeft));
 		} else {
 
 			if (button.get()) {
@@ -173,8 +179,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
 				(rightMotorRevolutions / encoderTicksPerRevolution * lowGearRatio) * metersPerWheelRevolution);
 
 		if (!isSimulation && (--telemetryCounter <= 0)) {
-			System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " "
-					+ String.valueOf(RobotMap.driveGyro.isConnected()));
+			//System.out.println("odometry: " + odometry.getPoseMeters() + ", Gyro: " + String.valueOf(angle) + " "
+			//		+ String.valueOf(RobotMap.driveGyro.isConnected()));
 			telemetryCounter = 10;
 		}
 

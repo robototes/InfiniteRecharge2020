@@ -26,7 +26,7 @@ public class IndexLiftShootCommand extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(-IndexerConstants.MAX_LIFT_SPEED / 2);
+		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().out();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -37,6 +37,7 @@ public class IndexLiftShootCommand extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
+		m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().stop();
 	}
 
 	// Returns true when the command should end.

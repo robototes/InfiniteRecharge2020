@@ -1,29 +1,38 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.TurretConstants.TURRET_PID_CONTROLLER;
+import static frc.team2412.robot.subsystems.constants.TurretConstants.*;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.robototes.units.Rotations;
+import com.robototes.units.UnitTypes.*;
+import com.robototes.math.MathUtils;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 public class TurretSubsystem extends PIDSubsystem {
 
 	private Rotations currentAngle;
-	private WPI_TalonSRX motor;
+	private final WPI_TalonSRX motor;
 
-	private LimelightSubsystem limelightSubsystem;
+	private final LimelightSubsystem limelightSubsystem;
 
 	private int turretOffsetPosition = 0;
 	private int turretPastPosition;
 	private int turretCurrentPosition;
+
+	private final static int TURRET_MAX_POSITION = 2500;
+	private final static int TURRET_MIN_POSITION = 0;
 
 	public TurretSubsystem(WPI_TalonSRX motor, LimelightSubsystem limelightSubsystem) {
 		super(TURRET_PID_CONTROLLER);
 		this.motor = motor;
 		this.limelightSubsystem = limelightSubsystem;
 
+		this.motor.configContinuousCurrentLimit(20, 500);
+		this.motor.configPeakCurrentLimit(40, 100);
+		this.motor.enableCurrentLimit(true);
 		initTurretEncoder();
 	}
 
@@ -41,6 +50,8 @@ public class TurretSubsystem extends PIDSubsystem {
 //		motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
 //		motor.setSelectedSensorPosition(0);
 
+		motor.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition, 0, 0);
+
 		motor.setNeutralMode(NeutralMode.Brake);
 
 		// turretOffsetPosition = motor.getSelectedSensorPosition(0);
@@ -53,38 +64,57 @@ public class TurretSubsystem extends PIDSubsystem {
 
 	// @Override
 	// disabled for at home
-	/*
-	 * public void periodic() { turretCurrentPosition =
-	 * motor.getSelectedSensorPosition(0);
-	 * 
-	 * if (turretCurrentPosition - turretPastPosition > ENCODER_MAX_ERROR_JUMP) {
-	 * turretOffsetPosition += TICKS_PER_REVOLUTION;
-	 * 
-	 * } else if (Math.abs(turretCurrentPosition - turretPastPosition) >
-	 * ENCODER_MAX_ERROR_JUMP) { turretCurrentPosition = turretPastPosition; }
-	 * 
-	 * turretPastPosition = turretCurrentPosition; currentAngle = new
-	 * Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() /
-	 * TICKS_PER_DEGREE), RotationUnits.DEGREE); //
-	 * System.out.println(getMeasurement());
-	 */
-	@Override
-	public void periodic() {
+	
+	//static int loopNum = 0;
+	public void periodic() { 
+		turretCurrentPosition =	(int) limelightSubsystem.getYawFromTarget().rotations; //  motor.getSelectedSensorPosition(0);
+	  
+		turretPastPosition = turretCurrentPosition; 
+		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE), RotationUnits.DEGREE); 
+
+		// loopNum++;
+		// if (loopNum == 10) {
+		// 	System.out.println("periodic: internal encoder: " + motor.getSelectedSensorPosition() + ", " + turretCurrentPosition + ", " + currentAngle);
+		// 	loopNum = 0;
+		// }
+	}
+
+	// Set the motor to 'output' unless it would cause the turret to
+	// go outside the encoder max & min positions
+	private void setMotorWithConstraint(double output) {
+		final int position = motor.getSelectedSensorPosition();
+		final double origOutput = output;
+
+		if (output > 0) {
+			// Positive values cause the encoder value to get smaller
+			if (position < TURRET_MIN_POSITION) {
+				output = 0;
+			}
+		} else if (output < 0) {
+			// Negative values cause the encoder value to get larger
+			if (position > TURRET_MAX_POSITION) {
+				output = 0;
+			}
+		}
+
+		//System.out.println("set: orig: " + origOutput + ", final: " + output + ", encoder: " + motor.getSelectedSensorPosition() + ", current: " + motor.getSupplyCurrent() + "," + motor.getStatorCurrent() + "," + motor.getOutputCurrent());
+
+		motor.set(output);
 	}
 
 	public void set(double output) {
-//		output = MathUtils.constrain(output, -1, 1);
+		output = MathUtils.constrain(output, -1, 1);
 
-//		if (output < 0.05 && output > -0.05) {
-		output = 0;
-//		}
+		if (output < 0.05 && output > -0.05) {
+			output = 0;
+		}
 
-		motor.set(output);
+		setMotorWithConstraint(output);
 	}
 
 	@Override
 	public void useOutput(double output, double setpoint) {
-		motor.set(output);
+		setMotorWithConstraint(output);
 	}
 
 	public double getCurrentDraw() {

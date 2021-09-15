@@ -3,6 +3,7 @@ package frc.team2412.robot.subsystems;
 import static frc.team2412.robot.subsystems.constants.IntakeConstants.MAX_INTAKE_SPEED;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeDirection;
@@ -20,6 +21,9 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 
 		this.backMotor.setInverted(true);
 		this.frontMotor.setInverted(true);
+
+		this.backMotor.setIdleMode(IdleMode.kCoast);
+		this.frontMotor.setIdleMode(IdleMode.kCoast);
 	}
 
 	public void set(CANSparkMax motor, double speed) {
