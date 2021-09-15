@@ -26,6 +26,7 @@ public class IndexLiftStopCommand extends CommandBase {
 	@Override
 	public void initialize() {
 		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().stop();
+		m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().stop();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.

@@ -18,8 +18,8 @@ public class LimelightReadCommand extends CommandBase {
 
 	@Override
 	public void end(boolean cancelled) {
-		if (cancelled)
-			m_LimelightSubsystem.stopLimelight();
+		//if (cancelled)
+			//m_LimelightSubsystem.stopLimelight();
 	}
 
 	@Override
@@ -29,6 +29,6 @@ public class LimelightReadCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return true;
+		return false;
 	}
 }

@@ -92,12 +92,17 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	}
 
 	public void drive(XboxController rightJoystick, Joystick leftJoystick, Button button) {
+		double r = rightJoystick.getY(Hand.kRight);
+		double l = rightJoystick.getY(Hand.kLeft);
+		if(Math.abs(l) < 0.1) l = 0;
+		if(Math.abs(r) < 0.1) r = 0;
+
 		if (oneJoystickDrive) {
 			// rightFrontMotor.set(rightJoystick.getY() - Math.pow(rightJoystick.getTwist(), 3));
 			// leftFrontMotor.set(rightJoystick.getY() + Math.pow(rightJoystick.getTwist(), 3));
 		} else if(controllerDrive) {
-			rightFrontMotor.set(rightJoystick.getY(Hand.kRight));
-			leftFrontMotor.set(rightJoystick.getY(Hand.kLeft));
+			rightFrontMotor.set(r);
+			leftFrontMotor.set(l);
 		} else {
 
 			if (button.get()) {

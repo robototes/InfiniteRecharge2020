@@ -8,6 +8,7 @@
 package frc.team2412.robot;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -28,7 +29,9 @@ import frc.team2412.robot.commands.hood.HoodWithdrawCommand;
 import frc.team2412.robot.commands.indexer.IndexBitmapCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontDownCommand;
 import frc.team2412.robot.commands.intake.front.IntakeFrontInCommand;
+import frc.team2412.robot.commands.lift.LiftDownCommand;
 import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
+import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceDataPoint;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -96,6 +99,7 @@ public class Robot extends TimedRobot {
 	/**
 	 * This function is called once when autonomous is started
 	 */
+	long time;
 	@Override
 	public void autonomousInit() {
 		/*
@@ -109,6 +113,7 @@ public class Robot extends TimedRobot {
 		 * *
 		 */
 
+		// Obsolete, autonomous mode that never worked??
 		// autoCommand = new HoodWithdrawCommand(robotContainer.m_hoodSubsystem)
 		// 		.andThen(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, .300))
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
@@ -118,21 +123,39 @@ public class Robot extends TimedRobot {
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
 		// 		.andThen(new WaitCommand(1))
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
-		autoCommand = Autonomous.getBouncePathCommand();
-		//autoCommand = Autonomous.getBarrelPathCommand();
-
+		// autoCommand = Autonomous.getBouncePathCommand();
 		//autoCommand = new ParallelCommandGroup(Autonomous.getSearchPathCommand(),
 		//	new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem, false),
 		//	new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+
+		// TODO : Allow drive team to choose autonomous mode.  See WPILIB docs
+		//  https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/smartdashboard/
+		//  choosing-an-autonomous-program-from-smartdashboard.html?highlight=autonomous%20mode
+		// Default plan should be to shoot 3 PCs then move off the line
+
+		// Default autonomous mode: Shoot PCs in robot and move forward off the line
+		autoCommand = Autonomous.getAuto3PCsAndMoveCommand();
+		CommandScheduler.getInstance().schedule(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		CommandScheduler.getInstance().schedule(autoCommand);
+		time = System.currentTimeMillis();
 	}
 
 	/**
 	 * This function is called periodically during autonomous.
 	 */
+	 
 	@Override
 	public void autonomousPeriodic() {
-
+		Optional<ShooterDistanceDataPoint> opPoint = robotContainer.m_limelightSubsystem.getDistanceData();
+			opPoint.ifPresent(point ->{
+				//System.out.println(point);
+				if(System.currentTimeMillis()-time < 8500){
+				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
+				robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
+				}
+			});
+			// if(System.currentTimeMillis()-time>1)
+				CommandScheduler.getInstance().schedule(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_limelightSubsystem));
 	}
 
 	/**
@@ -140,6 +163,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		// Make sure any autonomous mode commands killed
+		if (autoCommand != null) {
+			autoCommand.cancel();
+		}
+
 		System.out.println(Arrays.stream(NetworkTableInstance.getDefault().getEntries("", 0)).map(NetworkTableEntry::getName).collect(Collectors.toList()));
 
 		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -152,6 +180,7 @@ public class Robot extends TimedRobot {
 		robotContainer.m_flywheelSubsystem.setSpeed(0.0);
 		RobotMap.driveLeftFrontMotor.setSelectedSensorPosition(0);
 		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
+		robotContainer.m_limelightSubsystem.startLimelight();
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
 		// robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
