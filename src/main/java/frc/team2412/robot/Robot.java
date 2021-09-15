@@ -109,6 +109,7 @@ public class Robot extends TimedRobot {
 		 * *
 		 */
 
+		// Obsolete, autonomous mode that never worked??
 		// autoCommand = new HoodWithdrawCommand(robotContainer.m_hoodSubsystem)
 		// 		.andThen(new HoodAdjustCommand(robotContainer.m_hoodSubsystem, .300))
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_flywheelSubsystem.setSpeed(-0.9)))
@@ -118,12 +119,19 @@ public class Robot extends TimedRobot {
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(-12, -12)))
 		// 		.andThen(new WaitCommand(1))
 		// 		.andThen(new InstantCommand(() -> robotContainer.m_driveBaseSubsystem.tankDriveVolts(0, 0)));
-		autoCommand = Autonomous.getBouncePathCommand();
-		//autoCommand = Autonomous.getBarrelPathCommand();
-
+		// autoCommand = Autonomous.getBouncePathCommand();
 		//autoCommand = new ParallelCommandGroup(Autonomous.getSearchPathCommand(),
 		//	new IntakeFrontDownCommand(robotContainer.m_intakeUpDownSubsystem, false),
 		//	new IntakeFrontInCommand(robotContainer.m_intakeMotorOnOffSubsystem));
+
+		// TODO : Allow drive team to choose autonomous mode.  See WPILIB docs
+		//  https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/smartdashboard/
+		//  choosing-an-autonomous-program-from-smartdashboard.html?highlight=autonomous%20mode
+		// Default plan should be to shoot 3 PCs then move off the line
+
+		// Default autonomous mode: Shoot PCs in robot and move forward off the line
+		autoCommand = Autonomous.getAuto3PCsAndMoveCommand();
+		
 		CommandScheduler.getInstance().schedule(autoCommand);
 	}
 
@@ -140,6 +148,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		// Make sure any autonomous mode commands killed
+		if (autoCommand != null) {
+			autoCommand.cancel();
+		}
+
 		System.out.println(Arrays.stream(NetworkTableInstance.getDefault().getEntries("", 0)).map(NetworkTableEntry::getName).collect(Collectors.toList()));
 
 		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
