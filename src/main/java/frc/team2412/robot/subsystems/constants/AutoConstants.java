@@ -237,4 +237,17 @@ public class AutoConstants {
 	public static final Trajectory squarePathTrajectory = TrajectoryGenerator.generateTrajectory(squareWaypoints,
 			config);
 
+
+	// Auto get off of line trajectory points
+	// Moves 1.5 meters forward
+	public static final Translation2d autoForwardOffLineStart = new Translation2d(0, 0);
+	public static final Translation2d autoForwardOffLineMiddle = new Translation2d(0.75, 0);
+	public static final Translation2d autoForwardOffLineEnd = new Translation2d(1.5, 0);
+
+	public static List<Translation2d> autoForwardOffLine = List.of(autoForwardOffLineStart, autoForwardOffLineMiddle, autoForwardOffLineEnd);
+
+	public static final Trajectory autoForwardOffLineTrajectory = TrajectoryGenerator.generateTrajectory(
+		new Pose2d(autoForwardOffLineStart, new Rotation2d(0)), autoForwardOffLine, new Pose2d(autoForwardOffLineEnd, new Rotation2d(0)), config);
+
+
 }
