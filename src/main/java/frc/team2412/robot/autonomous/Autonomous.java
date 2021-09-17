@@ -210,18 +210,18 @@ public class Autonomous {
 		// TODO : Would it be better to check status of sensors instead of using timings?
 		// TODO : Do all these commands work?
 		// TODO : We may want to play with the ordering
+		return resetPositionCommand().andThen(new LimelightReadCommand(limelightSub)
+										.alongWith(new WaitCommand(2)
+											//.andThen(new TurretFollowLimelightCommand(turretSub, limelightSub)).withTimeout(15.0)
+											//  .andThen(new WaitCommand(1.0))
+											.andThen(new IndexLiftShootCommand(indexerMotorSub))
+											.andThen(new WaitCommand(5))
+											.andThen(new IndexLiftStopCommand(indexerMotorSub))
+											.andThen(new WaitCommand(2))
+											//.andThen(new FlywheelStopCommand(flywheelSub))
+											//.andThen(new HoodAdjustCommand(hoodSub, 0))
+											.andThen(moveCommand)));
 		/*
-		return resetPositionCommand().andThen(new LimelightReadCommand(limelightSub))
-									 .alongWith(new WaitCommand(2)
- 									 //.andThen(new TurretFollowLimelightCommand(turretSub, limelightSub)).withTimeout(15.0)
-									//  .andThen(new WaitCommand(1.0))
-									 .andThen(new IndexLiftShootCommand(indexerMotorSub))
-									 .andThen(new WaitCommand(5))
-									 .andThen(new IndexLiftStopCommand(indexerMotorSub))
-									 .andThen(new WaitCommand(2))
-									 .andThen(new HoodAdjustCommand(hoodSub, 0))
-									 .andThen(new FlywheelStopCommand(flywheelSub)));
-		*/
 		return resetPositionCommand().andThen(new WaitCommand(1.0))
 									 .andThen(new LimelightReadCommand(limelightSub))
 									 .andThen(setShooterFromLimelightCommand())
@@ -231,5 +231,6 @@ public class Autonomous {
 									 .andThen(moveCommand)
 									 .andThen(new IndexLiftStopCommand(indexerMotorSub))
 									 .andThen(new FlywheelStopCommand(flywheelSub));
+		*/
 	 }
 }

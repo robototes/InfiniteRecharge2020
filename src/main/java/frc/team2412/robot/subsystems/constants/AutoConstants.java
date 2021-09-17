@@ -240,14 +240,14 @@ public class AutoConstants {
 
 	// Auto get off of line trajectory points
 	// Moves 1.5 meters forward
-	public static final Translation2d autoForwardOffLineStart = new Translation2d(0, 0);
-	public static final Translation2d autoForwardOffLineMiddle = new Translation2d(0.75, 0);
-	public static final Translation2d autoForwardOffLineEnd = new Translation2d(1.5, 0);
+	public static final Pose2d autoForwardOffLineStart = new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0));
+	public static final Pose2d autoForwardOffLineMiddle = new Pose2d(new Translation2d(0.75, 0), Rotation2d.fromDegrees(0));
+	public static final Pose2d autoForwardOffLineEnd = new Pose2d(new Translation2d(1.5, 0), Rotation2d.fromDegrees(0));
 
-	public static List<Translation2d> autoForwardOffLine = List.of(autoForwardOffLineStart, autoForwardOffLineMiddle, autoForwardOffLineEnd);
+	public static List<Pose2d> autoForwardOffLine = List.of(autoForwardOffLineStart, autoForwardOffLineMiddle, autoForwardOffLineEnd);
 
 	public static final Trajectory autoForwardOffLineTrajectory = TrajectoryGenerator.generateTrajectory(
-		new Pose2d(autoForwardOffLineStart, new Rotation2d(0)), autoForwardOffLine, new Pose2d(autoForwardOffLineEnd, new Rotation2d(0)), config);
+		autoForwardOffLine, config);
 
 
 }

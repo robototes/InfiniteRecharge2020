@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -77,7 +78,10 @@ public class Robot extends TimedRobot {
 		RobotMap.indexFrontMotor.setSmartCurrentLimit(10);
 
 		RobotMap.turretMotor.enableCurrentLimit(true);
-		RobotMap.turretMotor.configPeakCurrentLimit(5, 100);
+		RobotMap.turretMotor.configPeakCurrentLimit(25, 100);
+
+		RobotMap.flywheelLeftMotor.setIdleMode(IdleMode.kCoast);
+		RobotMap.flywheelRightMotor.setIdleMode(IdleMode.kCoast);
 	}
 
 	/**
@@ -102,7 +106,7 @@ public class Robot extends TimedRobot {
 	/**
 	 * This function is called once when autonomous is started
 	 */
-	long time;
+	long autoStartTime;
 	@Override
 	public void autonomousInit() {
 		/*
@@ -140,7 +144,7 @@ public class Robot extends TimedRobot {
 		autoCommand = Autonomous.getAuto3PCsAndMoveCommand();
 		//CommandScheduler.getInstance().schedule(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		CommandScheduler.getInstance().schedule(autoCommand);
-		time = System.currentTimeMillis();
+		autoStartTime = System.currentTimeMillis();
 	}
 
 	/**
@@ -152,9 +156,13 @@ public class Robot extends TimedRobot {
 		Optional<ShooterDistanceDataPoint> opPoint = robotContainer.m_limelightSubsystem.getDistanceData();
 			opPoint.ifPresent(point ->{
 				//System.out.println(point);
-				if(System.currentTimeMillis()-time < 8500){
+				if(System.currentTimeMillis() < (autoStartTime + 8500)){
 				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
 				robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
+				} else {
+					robotContainer.m_flywheelSubsystem.setSpeed(0);
+					robotContainer.m_hoodSubsystem.setServo(0);
+	
 				}
 			});
 			// if(System.currentTimeMillis()-time>1)
