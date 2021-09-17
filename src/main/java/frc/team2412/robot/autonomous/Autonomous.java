@@ -198,6 +198,11 @@ public class Autonomous {
 		// RamseteCommand moveCommand = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
 		// 		simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
 		// 		driveSub::tankDriveVolts, driveSub);
+		Trajectory adjustedTrajectory = autoForwardOffLineTrajectory.relativeTo(autoForwardOffLineTrajectory.getInitialPose());
+
+		RamseteCommand moveCommand = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
+				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+				driveSub::tankDriveVolts, driveSub);
 	  
 		// TODO : This seems overly complicated and unoptimized due to some commands never ending.
 		// TODO : Includes complete guesses on timing for shooting and turret to line up?
@@ -205,6 +210,7 @@ public class Autonomous {
 		// TODO : Would it be better to check status of sensors instead of using timings?
 		// TODO : Do all these commands work?
 		// TODO : We may want to play with the ordering
+		/*
 		return resetPositionCommand().andThen(new LimelightReadCommand(limelightSub))
 									 .alongWith(new WaitCommand(2)
  									 //.andThen(new TurretFollowLimelightCommand(turretSub, limelightSub)).withTimeout(15.0)
@@ -215,5 +221,15 @@ public class Autonomous {
 									 .andThen(new WaitCommand(2))
 									 .andThen(new HoodAdjustCommand(hoodSub, 0))
 									 .andThen(new FlywheelStopCommand(flywheelSub)));
+		*/
+		return resetPositionCommand().andThen(new WaitCommand(1.0))
+									 .andThen(new LimelightReadCommand(limelightSub))
+									 .andThen(setShooterFromLimelightCommand())
+ 									 .alongWith(new TurretFollowLimelightCommand(turretSub, limelightSub)).withTimeout(15.0)
+									 .andThen(new WaitCommand(1.0))
+									 .andThen(new IndexLiftShootCommand(indexerMotorSub)).withTimeout(7)
+									 .andThen(moveCommand)
+									 .andThen(new IndexLiftStopCommand(indexerMotorSub))
+									 .andThen(new FlywheelStopCommand(flywheelSub));
 	 }
 }

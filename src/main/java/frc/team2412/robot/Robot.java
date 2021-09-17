@@ -138,7 +138,7 @@ public class Robot extends TimedRobot {
 
 		// Default autonomous mode: Shoot PCs in robot and move forward off the line
 		autoCommand = Autonomous.getAuto3PCsAndMoveCommand();
-		CommandScheduler.getInstance().schedule(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+		//CommandScheduler.getInstance().schedule(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		CommandScheduler.getInstance().schedule(autoCommand);
 		time = System.currentTimeMillis();
 	}
