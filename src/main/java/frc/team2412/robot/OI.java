@@ -214,7 +214,7 @@ public class OI {
 		((Button) DriverControls.START_SHOOT.createFrom(driverRightStick).whenPressed(new LimelightReadCommand(robotContainer.m_limelightSubsystem)).whileActiveContinuous(() -> {
 			Optional<ShooterDistanceDataPoint> opPoint = robotContainer.m_limelightSubsystem.getDistanceData();
 			opPoint.ifPresent(point ->{
-				//System.out.println(point);
+				System.out.println(point);
 				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
 				robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
 			});

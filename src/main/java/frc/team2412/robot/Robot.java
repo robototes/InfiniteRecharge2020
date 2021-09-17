@@ -71,7 +71,10 @@ public class Robot extends TimedRobot {
 		}
 
 		RobotMap.intakeBackMotor.setSmartCurrentLimit(30);
-		RobotMap.indexBackMotor.setSmartCurrentLimit(30);
+		RobotMap.indexBackMotor.setSmartCurrentLimit(10);
+
+		RobotMap.intakeFrontMotor.setSmartCurrentLimit(30);
+		RobotMap.indexFrontMotor.setSmartCurrentLimit(10);
 
 		RobotMap.turretMotor.enableCurrentLimit(true);
 		RobotMap.turretMotor.configPeakCurrentLimit(5, 100);
