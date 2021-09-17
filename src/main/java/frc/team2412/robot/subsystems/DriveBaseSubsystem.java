@@ -233,7 +233,7 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
-		System.out.println("tankDriveVolts: " + leftVolts + ", " + rightVolts);
+		//System.out.println("tankDriveVolts: " + leftVolts + ", " + rightVolts);
 
 		leftFrontMotor.setVoltage(isSimulation ? leftVolts : -leftVolts);
 		rightFrontMotor.setVoltage(isSimulation ? rightVolts : -rightVolts);

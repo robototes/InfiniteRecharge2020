@@ -157,16 +157,17 @@ public class Robot extends TimedRobot {
 			opPoint.ifPresent(point ->{
 				//System.out.println(point);
 				if(System.currentTimeMillis() < (autoStartTime + 8500)){
-				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
-				robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
+					robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
+					robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
 				} else {
 					robotContainer.m_flywheelSubsystem.setSpeed(0);
 					robotContainer.m_hoodSubsystem.setServo(0);
 	
 				}
 			});
-			// if(System.currentTimeMillis()-time>1)
+			if(System.currentTimeMillis() < (autoStartTime + 8500)) {
 				CommandScheduler.getInstance().schedule(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_limelightSubsystem));
+			}
 	}
 
 	/**
