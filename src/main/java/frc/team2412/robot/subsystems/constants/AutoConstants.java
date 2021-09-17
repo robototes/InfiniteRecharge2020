@@ -244,10 +244,21 @@ public class AutoConstants {
 	public static final Pose2d autoForwardOffLineMiddle = new Pose2d(new Translation2d(0.75, 0), Rotation2d.fromDegrees(0));
 	public static final Pose2d autoForwardOffLineEnd = new Pose2d(new Translation2d(1.5, 0), Rotation2d.fromDegrees(0));
 
-	public static List<Pose2d> autoForwardOffLine = List.of(autoForwardOffLineStart, autoForwardOffLineMiddle, autoForwardOffLineEnd);
+	public static List<Pose2d> autoForwardOffLine = List.of(
+		autoForwardOffLineStart,
+		autoForwardOffLineMiddle,
+		autoForwardOffLineEnd
+		);
 
+	// public static List<Pose2d> autoForwardOffLine = List.of(
+	// 	new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
+	// 	//new Pose2d(new Translation2d(-2, 0), Rotation2d.fromDegrees(0)),
+	// 	new Pose2d(new Translation2d(0, -2), Rotation2d.fromDegrees(-90)),
+	// 	new Pose2d(new Translation2d(0, -4), Rotation2d.fromDegrees(-90)),
+	// 	new Pose2d(new Translation2d(2, -4.5), Rotation2d.fromDegrees(0))
+	// 	);
+	
 	public static final Trajectory autoForwardOffLineTrajectory = TrajectoryGenerator.generateTrajectory(
 		autoForwardOffLine, config);
-
 
 }
