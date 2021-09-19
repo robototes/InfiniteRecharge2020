@@ -82,6 +82,9 @@ public class Robot extends TimedRobot {
 
 		RobotMap.flywheelLeftMotor.setIdleMode(IdleMode.kCoast);
 		RobotMap.flywheelRightMotor.setIdleMode(IdleMode.kCoast);
+
+		RobotMap.climbLeftMotor.setSmartCurrentLimit(50);
+		RobotMap.climbRightMotor.setSmartCurrentLimit(50);
 	}
 
 	/**
@@ -156,7 +159,7 @@ public class Robot extends TimedRobot {
 		Optional<ShooterDistanceDataPoint> opPoint = robotContainer.m_limelightSubsystem.getDistanceData();
 			opPoint.ifPresent(point ->{
 				//System.out.println(point);
-				if(System.currentTimeMillis() < (autoStartTime + 8500)){
+				if(System.currentTimeMillis() < (autoStartTime + 8000)){
 					robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
 					robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
 				} else {
