@@ -227,12 +227,15 @@ public class OI {
         // new JoystickButton(driverRightStick, 4).whenPressed(()->s[0]-=15);
 
 		DriverControls.RUN_LIFT.createFrom(driverRightStick)
-			.whileHeld(new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem))
-			.whenReleased(new IndexLiftStopCommand(robotContainer.m_indexerMotorSubsystem));
+			.whileHeld(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().out())
+			// .whileHeld(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().in())
+			//.whileHeld(new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem))
+			.whenReleased(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().stop());
 
 		DriverControls.LIFT_DOWN.createFrom(driverRightStick)
 			.whileHeld(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().in())
-			.whenReleased(new IndexLiftStopCommand(robotContainer.m_indexerMotorSubsystem));
+			// .whileHeld(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().stop())
+			.whenReleased(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().stop());
 	}
 	
 	public void bindIndexControls(RobotContainer robotContainer) {
