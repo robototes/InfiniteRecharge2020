@@ -10,49 +10,40 @@ package frc.team2412.robot.commands.indexer.shoot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.subsystems.constants.IndexerConstants;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
-// import jdk.internal.jshell.tool.resources.l10n;
 
-public class IndexLiftShootCommand extends CommandBase {
+public class IndexLiftShootSlowCommand extends CommandBase {
 	/**
 	 * Creates a new IndexLiftShootCommand.
 	 */
 
 	private IndexerSubsystemSuperStructure m_IndexerSubsystemSuperStructure;
 
-	public IndexLiftShootCommand(IndexerSubsystemSuperStructure indexerSubsystemSuperStructure) {
-		addRequirements(indexerSubsystemSuperStructure);
+	public IndexLiftShootSlowCommand(IndexerSubsystemSuperStructure indexerSubsystemSuperStructure) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		this.m_IndexerSubsystemSuperStructure = indexerSubsystemSuperStructure;
 	}
+
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0.3);
+		m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontSensorValue()){
-			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().in();
-			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(0.2);
-		} else if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackSensorValue()){
-			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().in();
-			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().in();
-		}
-		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().out();
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		m_IndexerSubsystemSuperStructure.setAllSubsystemsToZero();
 		// m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().stop();
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().allBackSensorsOff()
-		 && m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().allFrontSensorsOff();
+		return true;
 	}
 }

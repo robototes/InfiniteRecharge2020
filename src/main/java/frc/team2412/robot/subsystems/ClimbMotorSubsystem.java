@@ -44,6 +44,8 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 
 		leftEncoder = this.leftMotor.getEncoder();
 		PIDController.setP(0.005);
+		// leftMotor.follow(rightMotor);
+		// rightMotor.follow(leftMotor);
 	}
 
 	public boolean atReference() {
@@ -76,8 +78,21 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 	public void setMotors(double value) {
 		// left : 0-75
 		// right: -75 - 0
-		setMotor(value, rightMotor, rightEncoder);
-		setMotor(value, leftMotor, leftEncoder);
+		// setMotor(value, rightMotor, rightEncoder);
+		if (value < 0 && -MAX_ARM_EXTENSION < rightEncoder.getPosition()
+				|| 0 < value && rightEncoder.getPosition() < MIN_ARM_EXTENSION) {
+			rightMotor.set(value);
+		} else {
+			rightMotor.set(0);
+		}
+		if (value < 0 && MIN_ARM_EXTENSION < leftEncoder.getPosition()
+				|| 0 < value && leftEncoder.getPosition() < MAX_ARM_EXTENSION) {
+			leftMotor.set(value);
+		} else {
+			leftMotor.set(0);
+		}
+		// setMotor(value, leftMotor, rightEncoder);
+
 
 	}
 

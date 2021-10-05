@@ -53,7 +53,6 @@ public class AutoConstants {
 
 	public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
 
-
 	// old constants
 	// public static final double KvLinear = 1.65;
 	// public static final double KaLinear = 0.18;
@@ -85,6 +84,18 @@ public class AutoConstants {
 					.setKinematics(kDriveKinematics)
 					// Apply the voltage constraint
 					.addConstraint(autoVoltageConstraint);
+
+					public static TrajectoryConfig reversedConfig = new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+					kMaxAccelerationMetersPerSecondSquared)
+							// Add kinematics to ensure max speed is actually obeyed
+							.setKinematics(kDriveKinematics)
+							// Apply the voltage constraint
+							.addConstraint(autoVoltageConstraint)
+							//Make the robot got backwards
+							.setReversed(true);
+					
+
+	
 
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
@@ -250,15 +261,27 @@ public class AutoConstants {
 		autoForwardOffLineEnd
 		);
 
-	// public static List<Pose2d> autoForwardOffLine = List.of(
-	// 	new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
-	// 	//new Pose2d(new Translation2d(-2, 0), Rotation2d.fromDegrees(0)),
-	// 	new Pose2d(new Translation2d(0, -2), Rotation2d.fromDegrees(-90)),
-	// 	new Pose2d(new Translation2d(0, -4), Rotation2d.fromDegrees(-90)),
-	// 	new Pose2d(new Translation2d(2, -4.5), Rotation2d.fromDegrees(0))
-	// 	);
+	public static List<Pose2d> backIntoTrench = List.of(
+		new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
+		new Pose2d(new Translation2d(-2, 0), Rotation2d.fromDegrees(0))
+	);
+	
+	public static List<Pose2d> pullOutOfTrench = List.of(
+		new Pose2d(new Translation2d(-2, 0), Rotation2d.fromDegrees(0)),
+		new Pose2d(new Translation2d(-0.5, 1), Rotation2d.fromDegrees(0)),
+		new Pose2d(new Translation2d(0, 1), Rotation2d.fromDegrees(0))
+		// new Pose2d(new Translation2d(0, 4), Rotation2d.fromDegrees(90)),
+		// new Pose2d(new Translation2d(2, 4.5), Rotation2d.fromDegrees(0))
+	);
+
 	
 	public static final Trajectory autoForwardOffLineTrajectory = TrajectoryGenerator.generateTrajectory(
 		autoForwardOffLine, config);
+
+	public static final Trajectory backIntoTrenchTrajectory = TrajectoryGenerator.generateTrajectory(
+		backIntoTrench, reversedConfig);
+	
+	public static final Trajectory pullOutOfTrenchTrajectory = TrajectoryGenerator.generateTrajectory(
+		pullOutOfTrench, config);
 
 }

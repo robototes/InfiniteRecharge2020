@@ -31,7 +31,7 @@ public class TurretRotateCommand extends PIDCommand {
 		getController().setTolerance(TURRET_MAX_TOLERANCE);
 	}
 
-	public void configureSetpoint(double inSetpoint) {
+	public TurretRotateCommand configureSetpoint(double inSetpoint) {
 		m_doubleSetpoint = inSetpoint;
 
 		if (m_doubleSetpoint > TICKS_PER_REVOLUTION / 2) {
@@ -47,6 +47,7 @@ public class TurretRotateCommand extends PIDCommand {
 				return m_doubleSetpoint;
 			}
 		};
+		return this;
 	}
 
 	@Override

@@ -29,16 +29,24 @@ import frc.team2412.robot.commands.flywheel.FlywheelStopCommand;
 import frc.team2412.robot.commands.hood.HoodAdjustCommand;
 import frc.team2412.robot.commands.indexer.IndexShootCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexLiftShootCommand;
+import frc.team2412.robot.commands.indexer.shoot.IndexLiftShootSlowCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexLiftStopCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackInCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackOffCommand;
+import frc.team2412.robot.commands.intake.back.IntakeBackUpCommand;
 import frc.team2412.robot.commands.lift.LiftUpCommand;
 import frc.team2412.robot.commands.limelight.LimelightReadCommand;
 import frc.team2412.robot.commands.turret.TurretFollowLimelightCommand;
 import frc.team2412.robot.subsystems.DriveBaseSubsystem;
 import frc.team2412.robot.subsystems.FlywheelSubsystem;
 import frc.team2412.robot.subsystems.HoodSubsystem;
+import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
+import frc.team2412.robot.subsystems.IntakeMotorSubsystem;
 import frc.team2412.robot.subsystems.LimelightSubsystem;
 import frc.team2412.robot.subsystems.TurretSubsystem;
 import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceDataPoint;
+import frc.team2412.robot.subsystems.index.IndexerMotorBackSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 public class Autonomous {
@@ -49,7 +57,9 @@ public class Autonomous {
 	private static TurretSubsystem turretSub = RobotMap.m_robotContainer.m_turretSubsystem;
 	private static FlywheelSubsystem flywheelSub = RobotMap.m_robotContainer.m_flywheelSubsystem;
 	private static HoodSubsystem hoodSub = RobotMap.m_robotContainer.m_hoodSubsystem;
-	private static  IndexerSubsystemSuperStructure indexerMotorSub = RobotMap.m_robotContainer.m_indexerMotorSubsystem;
+	private static IndexerSubsystemSuperStructure indexerMotorSub = RobotMap.m_robotContainer.m_indexerMotorSubsystem;
+	private static IntakeMotorSubsystem intakeSub = RobotMap.m_robotContainer.m_intakeMotorOnOffSubsystem;
+	private static IntakeLiftSubsystem intakePneuSub = RobotMap.m_robotContainer.m_intakeUpDownSubsystem;
 
 	// Does this work?  Has it been tested?
 	public static Command getMoveCertainAmountCommand(double finalX, double finalY) {
@@ -135,51 +145,6 @@ public class Autonomous {
 		.andThen(new WaitCommand(1.0)).andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
 	}
 
-	public static Command getBarrelPathCommand() {
-		Trajectory adjustedTrajectory = barrelPathTrajectory.relativeTo(barrelPathTrajectory.getInitialPose());
-
-		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
-				driveSub::tankDriveVolts, driveSub);
-		// Makes robot think it's in position to start the trajectory i.e. resets it
-		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
-	}
-
-	public static Command getSlalomPathCommand() {
-		Trajectory adjustedTrajectory = slalomPathTrajectory.relativeTo(slalomPathTrajectory.getInitialPose());
-
-		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
-				driveSub::tankDriveVolts, driveSub);
-		// Makes robot think it's in position to start the trajectory i.e. resets it
-		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
-	}
-
-	public static Command getBouncePathCommand() {
-		Trajectory adjustedTrajectory = bouncePathTrajectory.relativeTo(bouncePathTrajectory.getInitialPose());
-		adjustedTrajectory.transformBy(new Transform2d(new Translation2d(1.3, 0.0), new Rotation2d()));
-
-		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
-				driveSub::tankDriveVolts, driveSub);
-		// Makes robot think it's in position to start the trajectory i.e. resets it
-		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
-	}
-
-	public static Command getSearchPathCommand() {
-		Trajectory adjustedTrajectory = searchPathTrajectory.relativeTo(searchPathTrajectory.getInitialPose());
-
-		RamseteCommand command = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
-				driveSub::tankDriveVolts, driveSub);
-		// Makes robot think it's in position to start the trajectory i.e. resets it
-		// Run path following command, then stop at the end.
-		return resetPositionCommand().andThen(command).andThen(() -> driveSub.tankDriveVolts(0, 0));
-	}
-
 	// Autonomous get move forward off of the line command
 	public static Command getAutoForwardOffOfLineCommand() {
 		Trajectory adjustedTrajectory = autoForwardOffLineTrajectory.relativeTo(autoForwardOffLineTrajectory.getInitialPose());
@@ -198,12 +163,23 @@ public class Autonomous {
 		// RamseteCommand moveCommand = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
 		// 		simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
 		// 		driveSub::tankDriveVolts, driveSub);
-		Trajectory adjustedTrajectory = autoForwardOffLineTrajectory.relativeTo(autoForwardOffLineTrajectory.getInitialPose());
+		Trajectory driveForwardAdjustedTrajectory = autoForwardOffLineTrajectory.relativeTo(autoForwardOffLineTrajectory.getInitialPose());
 
-		RamseteCommand moveCommand = new RamseteCommand(adjustedTrajectory, driveSub::getPose, ramseteControlller,
-				simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
-				driveSub::tankDriveVolts, driveSub);
+		RamseteCommand driveForwardOffLine = new RamseteCommand(driveForwardAdjustedTrajectory, driveSub::getPose, ramseteControlller,
+			simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+			driveSub::tankDriveVolts, driveSub);
+
+		Trajectory backIntoTrenchAdjustedTrajectory = backIntoTrenchTrajectory.relativeTo(backIntoTrenchTrajectory.getInitialPose());
+
+		RamseteCommand backIntoTrench = new RamseteCommand(backIntoTrenchAdjustedTrajectory, driveSub::getPose, ramseteControlller,
+			simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+			driveSub::tankDriveVolts, driveSub);
 	  
+		Trajectory pullOutOfTrenchAdjustedTrajectory = pullOutOfTrenchTrajectory.relativeTo(pullOutOfTrenchTrajectory.getInitialPose());
+
+		RamseteCommand pullOutOfTrench = new RamseteCommand(pullOutOfTrenchAdjustedTrajectory, driveSub::getPose, ramseteControlller,
+			simpleMotorFeedforward, kDriveKinematics, driveSub::getWheelSpeeds, pidController, pidController,
+			driveSub::tankDriveVolts, driveSub);
 		// TODO : This seems overly complicated and unoptimized due to some commands never ending.
 		// TODO : Includes complete guesses on timing for shooting and turret to line up?
 		// TODO : Do we have to wait longer for limelight to finish booting?
@@ -211,16 +187,36 @@ public class Autonomous {
 		// TODO : Do all these commands work?
 		// TODO : We may want to play with the ordering
 		return resetPositionCommand().andThen(new LimelightReadCommand(limelightSub)
-										.alongWith(new WaitCommand(2)
-											//.andThen(new TurretFollowLimelightCommand(turretSub, limelightSub)).withTimeout(15.0)
-											//  .andThen(new WaitCommand(1.0))
-											.andThen(new IndexLiftShootCommand(indexerMotorSub))
-											.andThen(new WaitCommand(5))
-											.andThen(new IndexLiftStopCommand(indexerMotorSub))
-											.andThen(new WaitCommand(2))
-											//.andThen(new FlywheelStopCommand(flywheelSub))
-											//.andThen(new HoodAdjustCommand(hoodSub, 0))
-											.andThen(moveCommand)));
+			.alongWith(
+				new WaitCommand(3)
+				//.andThen(new TurretFollowLimelightCommand(turretSub, limelightSub)).withTimeout(15.0)
+				//  .andThen(new WaitCommand(1.0))
+
+				.andThen(new IndexLiftShootSlowCommand(indexerMotorSub))
+				.andThen(new WaitCommand(3))
+				.andThen(new IndexLiftStopCommand(indexerMotorSub))
+				.andThen(new WaitCommand(1))
+
+				//.andThen(new FlywheelStopCommand(flywheelSub))
+				//.andThen(new HoodAdjustCommand(hoodSub, 0))
+
+				// this is the auto for comp
+				.andThen(driveForwardOffLine)
+
+				//get your trench balls experimental auto
+				// .andThen(backIntoTrench)
+				// .alongWith(new IntakeBackDownCommand(intakePneuSub))
+				// .alongWith(new IntakeBackInCommand(intakeSub))
+				// .alongWith(new InstantCommand(() -> RobotMap.m_robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().in()))
+				// .andThen(pullOutOfTrench)
+				// .alongWith(new IntakeBackUpCommand(intakePneuSub))
+				// .alongWith(new IntakeBackOffCommand(intakeSub))
+				// .alongWith(new InstantCommand(() -> RobotMap.m_robotContainer.m_indexerMotorSubsystem.getIndexerMotorBackSubsystem().stop()))
+				// .andThen(new IndexLiftShootCommand(indexerMotorSub))
+				// .andThen(new WaitCommand(5))
+				// .andThen(new IndexLiftStopCommand(indexerMotorSub))
+			)
+		);
 		/*
 		return resetPositionCommand().andThen(new WaitCommand(1.0))
 									 .andThen(new LimelightReadCommand(limelightSub))
