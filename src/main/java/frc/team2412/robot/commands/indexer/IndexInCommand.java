@@ -36,21 +36,21 @@ public class IndexInCommand extends CommandBase {
 			if(ms.getIndexFrontSensorValue()){
 				mf.in();
 				if(!ms.getIndexBackMidSensorValue()) mb.set(0.3);
-				//ml.set(-0.1);
+				ml.set(-0.05);
 			} else if(ms.getIndexBackSensorValue()){
 				mb.in();
 				if(!ms.getIndexFrontMidSensorValue()) mf.set(0.3);
-				//ml.set(-0.1);
+				ml.set(-0.05);
 			 }else{
 				mf.stop();
 				mb.stop();
-			//	ml.stop();
+				ml.stop();
 				
 			}
 		} else{
 			mf.stop();
 			mb.stop();
-		//	ml.stop();
+			ml.stop();
 		}
 		
 	}

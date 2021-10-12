@@ -33,13 +33,30 @@ public class IndexLiftShootCommand extends CommandBase {
 	@Override
 	public void execute() {
 		if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontSensorValue()){
-			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().in();
-			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(0.2);
+			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
+			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(0.1);
 		} else if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackSensorValue()){
-			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().in();
-			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().in();
+			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(0.1);
+			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.3);
 		}
-		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().out();
+		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0.3);
+		// if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontInnerSensorValue()&&m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackInnerSensorValue()){
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.2);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(0.2);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0.3);
+		// }else if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontMidSensorValue()){
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(0);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0.3);
+		// }else if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackMidSensorValue()){
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.3);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(0);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0.3);
+		// }else{
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.3);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0);
+		// }
 	}
 
 	// Called once the command ends or is interrupted.
