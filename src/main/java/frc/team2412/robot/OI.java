@@ -87,7 +87,7 @@ public class OI {
 	}
 
 	public static enum Joysticks {
-		DRIVER_RIGHT(0), DRIVER_LEFT(1), CODRIVER(3), CODRIVER_MANUAL(2);
+		DRIVER_RIGHT(0), DRIVER_LEFT(1), CODRIVER(2), CODRIVER_MANUAL(3);
 
 		public int id;
 
@@ -234,7 +234,7 @@ public class OI {
         // new JoystickButton(driverRightStick, 4).whenPressed(()->s[0]-=15);
 
 		DriverControls.RUN_LIFT.createFrom(driverRightStick)
-			.whileHeld(new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem))
+			.whenPressed(new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem))
 			.whileHeld(new IntakeBothInCommandGroup(robotContainer.m_intakeMotorOnOffSubsystem))
 			.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem, false))
 			.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem, false))

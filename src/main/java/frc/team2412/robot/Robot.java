@@ -196,6 +196,7 @@ public class Robot extends TimedRobot {
 		RobotMap.driveLeftFrontMotor.setSelectedSensorPosition(0);
 		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
 		robotContainer.m_limelightSubsystem.startLimelight();
+		CommandScheduler.getInstance().schedule(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
 		// robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
