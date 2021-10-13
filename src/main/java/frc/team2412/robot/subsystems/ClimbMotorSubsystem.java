@@ -1,11 +1,6 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.ClimbConstants.CLIMB_OFFSET_HEIGHT;
-import static frc.team2412.robot.subsystems.constants.ClimbConstants.DEADBAND;
-import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_ARM_EXTENSION;
-import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_SPEED;
-import static frc.team2412.robot.subsystems.constants.ClimbConstants.MIN_ARM_EXTENSION;
-import static frc.team2412.robot.subsystems.constants.ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.*;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -79,15 +74,16 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		// left : 0-75
 		// right: -75 - 0
 		// setMotor(value, rightMotor, rightEncoder);
+		double speed = value * CLIMB_RPM_OFFSET;
 		if (value < 0 && -MAX_ARM_EXTENSION < rightEncoder.getPosition()
 				|| 0 < value && rightEncoder.getPosition() < MIN_ARM_EXTENSION) {
-			rightMotor.set(value);
+			rightMotor.getPIDController().setReference(speed, ControlType.kVelocity);
 		} else {
 			rightMotor.set(0);
 		}
 		if (value < 0 && MIN_ARM_EXTENSION < leftEncoder.getPosition()
 				|| 0 < value && leftEncoder.getPosition() < MAX_ARM_EXTENSION) {
-			leftMotor.set(value);
+			leftMotor.getPIDController().setReference(speed, ControlType.kVelocity);
 		} else {
 			leftMotor.set(0);
 		}

@@ -49,4 +49,6 @@ public class ClimbConstants {
 	public static final int MAX_ARM_EXTENSION = 70;//76;
 
 	public static final double MAX_EXTENSION = -70; // where is this used?
+	
+	public static final int CLIMB_RPM_OFFSET = 1000;
 }
