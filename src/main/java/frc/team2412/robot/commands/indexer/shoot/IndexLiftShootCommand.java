@@ -25,21 +25,32 @@ public class IndexLiftShootCommand extends CommandBase {
 		this.m_IndexerSubsystemSuperStructure = indexerSubsystemSuperStructure;
 	}
 	// Called when the command is initially scheduled.
+	boolean side;
 	@Override
 	public void initialize() {
+		side = m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontSensorValue();
 	}
-
+	
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontSensorValue()){
-			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
+		// if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontSensorValue()){
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(0.1);
+		// } else if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackSensorValue()){
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(0.1);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.3);
+		// }else{
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
+		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.3);
+		// }
+		if(side){
 			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(0.1);
-		} else if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackMidSensorValue() || m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackSensorValue()){
-			m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(0.1);
+		}else{
 			m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.3);
 		}
-		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0.3);
+		m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(-0.3);
+		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().set(0.6);
 		// if(m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexFrontInnerSensorValue()&&m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().getIndexBackInnerSensorValue()){
 		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().set(-0.2);
 		// 	m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().set(0.2);
@@ -62,14 +73,17 @@ public class IndexLiftShootCommand extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		m_IndexerSubsystemSuperStructure.setAllSubsystemsToZero();
-		// m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().stop();
+		// m_IndexerSubsystemSuperStructure.setAllSubsystemsToZero();
+
+		m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().stop();
+		m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().stop();
+		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().stop();
+
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().allBackSensorsOff()
-		 && m_IndexerSubsystemSuperStructure.getIndexerSensorSubsystem().allFrontSensorsOff();
+		return false;
 	}
 }

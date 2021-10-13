@@ -84,18 +84,23 @@ public class ShooterConstants {
 
 	static {
 		// add in data here
-		distanceData.add(ShooterDistanceDataPoint.from(24, 0.1, -2300, 2));
-		distanceData.add(ShooterDistanceDataPoint.from(12, 0.28, -3700, 3));
-		distanceData.add(ShooterDistanceDataPoint.from(3, 0.28, -3700, 4));
-		distanceData.add(ShooterDistanceDataPoint.from(0, 0.29, -3700, 6));
-		distanceData.add(ShooterDistanceDataPoint.from(-0.85, 0.3, -3700, 8));
-		distanceData.add(ShooterDistanceDataPoint.from(-7.95, 0.31, -4000, 12));
-		distanceData.add(ShooterDistanceDataPoint.from(-12, 0.29, -5500, 14));
-		distanceData.add(ShooterDistanceDataPoint.from(-13.14, 0.35, -4420, 16));
-		distanceData.add(ShooterDistanceDataPoint.from(-15, 0.31, -5500, 18));
-		distanceData.add(ShooterDistanceDataPoint.from(-18, 0.3, -5500, 20));
+		// distanceData.add(ShooterDistanceDataPoint.from(24, 0.1, -2300, 2));
+		// distanceData.add(ShooterDistanceDataPoint.from(12, 0.28, -3700, 3));
+		// distanceData.add(ShooterDistanceDataPoint.from(3, 0.28, -3700, 4));
+		// distanceData.add(ShooterDistanceDataPoint.from(0, 0.29, -3700, 6));
+		// distanceData.add(ShooterDistanceDataPoint.from(-0.85, 0.3, -3700, 8));
+		// distanceData.add(ShooterDistanceDataPoint.from(-7.95, 0.31, -4000, 12));
+		// distanceData.add(ShooterDistanceDataPoint.from(-12, 0.29, -5500, 14));
+		// distanceData.add(ShooterDistanceDataPoint.from(-13.14, 0.35, -4420, 16));
+		// distanceData.add(ShooterDistanceDataPoint.from(-15, 0.31, -5500, 18));
+		// distanceData.add(ShooterDistanceDataPoint.from(-18, 0.3, -5500, 20));
 		
-		distanceData.add(ShooterDistanceDataPoint.from(-20, 0.31, -6000, 28));
+		// distanceData.add(ShooterDistanceDataPoint.from(-20, 0.31, -6000, 28));
+
+		distanceData.add(ShooterDistanceDataPoint.from(12.3, 0.22, -4000, 5));
+		distanceData.add(ShooterDistanceDataPoint.from(-4.7, 0.29, -4500, 10));
+		distanceData.add(ShooterDistanceDataPoint.from(-13.6, 0.3, -5000, 15));
+		distanceData.add(ShooterDistanceDataPoint.from(-18.2, 0.29, -5800, 20));
 
 		// sort data
 		distanceData.sort((o1, o2) -> o1.m_ty.compareTo(o2.m_ty));

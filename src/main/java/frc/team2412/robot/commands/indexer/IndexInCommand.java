@@ -36,11 +36,11 @@ public class IndexInCommand extends CommandBase {
 			if(ms.getIndexFrontSensorValue()){
 				mf.in();
 				if(!ms.getIndexBackMidSensorValue()) mb.set(0.3);
-				ml.set(-0.05);
+				ml.set(-0.08);
 			} else if(ms.getIndexBackSensorValue()){
 				mb.in();
 				if(!ms.getIndexFrontMidSensorValue()) mf.set(0.3);
-				ml.set(-0.05);
+				ml.set(-0.08);
 			 }else{
 				mf.stop();
 				mb.stop();
@@ -63,6 +63,7 @@ public class IndexInCommand extends CommandBase {
 	public void end(boolean cancel){
 		mf.stop();
 		mb.stop();
+		ml.stop();
 	}
 
 }
