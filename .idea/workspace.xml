@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -19,7 +22,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a9335bf-fb7d-4415-9d59-49ea9ddfef16" name="Default Changelist" comment="" />
+    <list default="true" id="6a9335bf-fb7d-4415-9d59-49ea9ddfef16" name="Default Changelist" comment="stuff">
+      <change afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexNewShootCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/OI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/OI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/ClimbMotorSubsystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/ClimbMotorSubsystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/ClimbConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/ClimbConstants.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +44,11 @@
     </projectState>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
@@ -46,10 +61,20 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
     <property name="show.unlinked.gradle.project.popup" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="frc.team2412.robot.commands.indexer.shoot" />
+    </key>
   </component>
   <component name="RunManager" selected="Gradle.IntakeLiftSubsystemTest">
     <configuration name="ClimbLiftSubsystemTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -97,6 +122,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -132,28 +158,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactored the testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored the testing" />
+    <MESSAGE value="stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="stuff" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1594609579475">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="277" y="14" key="SettingsEditor" timestamp="1634161120334">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594609579475" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1594609579474">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="277" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1634161120334" />
+    <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1634161192554">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594609579474" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1594609579474">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594609579474" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1594609579475">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594609579474" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1594609561359">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1594609561359" />
+    <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1536.864@0.0.1536.864" timestamp="1634161192554" />
   </component>
 </project>

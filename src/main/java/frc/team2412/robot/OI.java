@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import com.robototes.units.Rotations;
 
-import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,6 +35,7 @@ import frc.team2412.robot.commands.indexer.IndexSpitCommand;
 import frc.team2412.robot.commands.indexer.IndexSpitFrontCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexLiftShootCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexLiftStopCommand;
+import frc.team2412.robot.commands.indexer.shoot.IndexNewShootCommand;
 import frc.team2412.robot.commands.indexer.shoot.IndexShiftBackCommand;
 import frc.team2412.robot.commands.intake.IntakeBothInCommandGroup;
 import frc.team2412.robot.commands.intake.back.IntakeBackDownCommand;
@@ -234,7 +234,7 @@ public class OI {
         // new JoystickButton(driverRightStick, 4).whenPressed(()->s[0]-=15);
 
 		DriverControls.RUN_LIFT.createFrom(driverRightStick)
-			.whenPressed(new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem))
+			.whenPressed(new IndexNewShootCommand(robotContainer.m_indexerMotorSubsystem))
 			.whileHeld(new IntakeBothInCommandGroup(robotContainer.m_intakeMotorOnOffSubsystem))
 			.whenReleased(new IntakeBackOffCommand(robotContainer.m_intakeMotorOnOffSubsystem, false))
 			.whenReleased(new IntakeFrontOffCommand(robotContainer.m_intakeMotorOnOffSubsystem, false))
@@ -253,7 +253,6 @@ public class OI {
 		//		robotContainer.m_intakeMotorOnOffSubsystem, false));
 
 		// Crashes due to intakeBothUpCommand requiring the same subsystem twice
-		Command indexShootCommand = new IndexLiftShootCommand(robotContainer.m_indexerMotorSubsystem);
 
 		robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexInCommand(robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeUpDownSubsystem));
 		// indexerShootButton.whenPressed(indexShootCommand);
