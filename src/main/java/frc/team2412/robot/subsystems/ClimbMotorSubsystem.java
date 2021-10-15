@@ -1,6 +1,12 @@
 package frc.team2412.robot.subsystems;
 
-import static frc.team2412.robot.subsystems.constants.ClimbConstants.*;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.CLIMB_OFFSET_HEIGHT;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.CLIMB_RPM_OFFSET;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.DEADBAND;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_ARM_EXTENSION;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MAX_SPEED;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MIN_ARM_EXTENSION;
+import static frc.team2412.robot.subsystems.constants.ClimbConstants.MOTOR_REVOLUTIONS_TO_INCHES;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
