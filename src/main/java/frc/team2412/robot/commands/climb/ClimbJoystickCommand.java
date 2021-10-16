@@ -18,7 +18,7 @@ public class ClimbJoystickCommand extends CommandBase {
 	public void execute() {
 		double joystickValue = m_joystick.getY();
 
-		if (Math.abs(joystickValue) < 0.1) {
+		if (Math.abs(joystickValue) < 0.12) {
 			joystickValue = 0;
 		}
 
