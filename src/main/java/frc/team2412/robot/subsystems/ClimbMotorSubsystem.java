@@ -73,7 +73,9 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 	public void setMotors(double value) {
 		// left : 0-75
 		// right: -75 - 0
-		// setMotor(value, rightMotor, rightEncoder);
+		setMotor(value, rightMotor, rightEncoder);
+		setMotor(value, leftMotor, rightEncoder);
+		/*
 		double speed = value * CLIMB_RPM_OFFSET;
 		if (value < 0 && -MAX_ARM_EXTENSION < rightEncoder.getPosition()
 				|| 0 < value && rightEncoder.getPosition() < MIN_ARM_EXTENSION) {
@@ -87,19 +89,20 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 		} else {
 			leftMotor.stopMotor();
 		}
-		// setMotor(value, leftMotor, rightEncoder);
+		*/
 
 
 	}
 
 
 	private void setMotor(double value, CANSparkMax motor, CANEncoder encoder) {
-		if (value < 0 && MIN_ARM_EXTENSION < encoder.getPosition()
-				|| 0 < value && encoder.getPosition() < MAX_ARM_EXTENSION) {
-			motor.set(value);
-		} else {
-			motor.set(0);
-		}
+		final double position = encoder.getPosition();
+		final boolean withinLimits = ((value < 0) && (MIN_ARM_EXTENSION < position)
+				|| (0 < value) && (position < MAX_ARM_EXTENSION));
+
+		final double leftPosition = leftEncoder.getPosition();
+		System.out.println("Climb setMotor: left: " + leftPosition + ", right: " + position + ", " + withinLimits + ", " + value);
+		motor.set(withinLimits ? value : 0);
 	}
 
 	public void setReference(ClimbHeight newHeight) {
