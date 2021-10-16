@@ -97,6 +97,9 @@ public class ShooterConstants {
 		
 		// distanceData.add(ShooterDistanceDataPoint.from(-20, 0.31, -6000, 28));
 
+		//as of 1:49 pm 10/16/21 the following line has not been deployed
+		distanceData.add(ShooterDistanceDataPoint.from(18, 0.22, -2500, 2));
+
 		distanceData.add(ShooterDistanceDataPoint.from(12.3, 0.22, -4000, 5));
 		distanceData.add(ShooterDistanceDataPoint.from(-4.7, 0.29, -4500, 10));
 		distanceData.add(ShooterDistanceDataPoint.from(-13.6, 0.3, -5000, 15));
