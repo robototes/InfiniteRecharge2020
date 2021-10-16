@@ -8,6 +8,7 @@ public class ClimbJoystickCommand extends CommandBase {
 
 	private ClimbMotorSubsystem m_ClimbMotorSubsystem;
 	private Joystick m_joystick;
+	final static double m_joystickDeadZone = 0.12;
 
 	public ClimbJoystickCommand(Joystick m_joystick, ClimbMotorSubsystem m_ClimbMotorSubsystem) {
 		this.m_joystick = m_joystick;
@@ -16,13 +17,18 @@ public class ClimbJoystickCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		double joystickValue = m_joystick.getY();
-
-		if (Math.abs(joystickValue) < 0.12) {
-			joystickValue = 0;
+		double joystickValue = getCorrectedJoystickValue(m_joystick.getY());
+		m_ClimbMotorSubsystem.setMotors(joystickValue);
+	}
+	
+	static double getCorrectedJoystickValue(double uncorrectedJoystickValue) {
+		if (Math.abs(uncorrectedJoystickValue) < m_joystickDeadZone) {
+			return 0;
 		}
 
-		m_ClimbMotorSubsystem.setMotors(joystickValue);
+		double scaleValue = 1.0 / (1.0 - m_joystickDeadZone);
+		double offsetValue = uncorrectedJoystickValue > 0 ? m_joystickDeadZone : -m_joystickDeadZone; 
+		return (uncorrectedJoystickValue - offsetValue) * scaleValue;
 	}
 
 	@Override
