@@ -2,7 +2,7 @@ package frc.team2412.robot;
 
 public class RobotMapConstants {
 
-	public final static boolean CLIMB_CONNECTED = false;
+	public final static boolean CLIMB_CONNECTED = true;
 	public final static boolean CONTROL_PANEL_CONNECTED = false;
 	public final static boolean SHOOTER_CONNECTED = true;
 	public final static boolean INDEX_CONNECTED = true;

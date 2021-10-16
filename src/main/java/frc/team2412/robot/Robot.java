@@ -84,7 +84,9 @@ public class Robot extends TimedRobot {
 		RobotMap.flywheelRightMotor.setIdleMode(IdleMode.kCoast);
 
 		RobotMap.climbLeftMotor.setSmartCurrentLimit(50);
+		RobotMap.climbLeftMotor.setIdleMode(IdleMode.kBrake);
 		RobotMap.climbRightMotor.setSmartCurrentLimit(50);
+		RobotMap.climbRightMotor.setIdleMode(IdleMode.kBrake);
 	}
 
 	/**
