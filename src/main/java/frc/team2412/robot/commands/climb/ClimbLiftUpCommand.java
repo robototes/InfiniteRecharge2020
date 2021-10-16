@@ -11,7 +11,7 @@ public class ClimbLiftUpCommand extends ParallelCommandGroup {
 
 	public ClimbLiftUpCommand(ClimbLiftSubsystem climbLiftSubsystem, LiftSubsystem liftSubsystem,
 			IndexerSubsystemSuperStructure indexerSubsystem) {
-		addCommands(new LiftDownCommand(liftSubsystem, indexerSubsystem),
+		addCommands(new LiftDownCommand(liftSubsystem),
 				new InstantCommand(() -> climbLiftSubsystem.deployRails()));
 	}
 

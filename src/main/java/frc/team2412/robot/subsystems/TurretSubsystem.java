@@ -64,19 +64,12 @@ public class TurretSubsystem extends PIDSubsystem {
 
 	// @Override
 	// disabled for at home
-	
-	//static int loopNum = 0;
+
 	public void periodic() { 
 		turretCurrentPosition =	(int) limelightSubsystem.getYawFromTarget().rotations; //  motor.getSelectedSensorPosition(0);
 	  
 		turretPastPosition = turretCurrentPosition; 
-		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE), RotationUnits.DEGREE); 
-
-		// loopNum++;
-		// if (loopNum == 10) {
-		// 	System.out.println("periodic: internal encoder: " + motor.getSelectedSensorPosition() + ", " + turretCurrentPosition + ", " + currentAngle);
-		// 	loopNum = 0;
-		// }
+		currentAngle = new Rotations((getMeasurement() == 0) ? 0 : (getMeasurement() / TICKS_PER_DEGREE), RotationUnits.DEGREE);
 	}
 
 	// Set the motor to 'output' unless it would cause the turret to

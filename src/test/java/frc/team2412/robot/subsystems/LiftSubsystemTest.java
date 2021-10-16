@@ -41,13 +41,13 @@ public class LiftSubsystemTest extends TestBase {
 	@Ignore
 	@Test
 	public void LiftDownCommandTest() {
-		test(new LiftDownCommand(realLiftSubsystem, mockedIndexerMotorSubsystem), mockedLiftSolenoid, Value.kReverse);
+		test(new LiftDownCommand(realLiftSubsystem), mockedLiftSolenoid, Value.kReverse);
 	}
 
 	@Ignore
 	@Test
 	public void LiftUpCommandTest() {
-		test(new LiftUpCommand(realLiftSubsystem, mockedIndexerMotorSubsystem), mockedLiftSolenoid, Value.kForward);
+		test(new LiftUpCommand(realLiftSubsystem), mockedLiftSolenoid, Value.kForward);
 	}
 
 }

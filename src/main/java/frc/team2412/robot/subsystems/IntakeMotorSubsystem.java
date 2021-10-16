@@ -12,8 +12,7 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 
 	public static IntakeDirection intakeDirection;
 
-	public CANSparkMax frontMotor;
-	public CANSparkMax backMotor;
+	public CANSparkMax frontMotor, backMotor;
 
 	public IntakeMotorSubsystem(CANSparkMax frontMotor, CANSparkMax backMotor) {
 		this.frontMotor = frontMotor;

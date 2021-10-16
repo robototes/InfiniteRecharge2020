@@ -159,6 +159,6 @@ public class RobotMap {
 	public static RobotContainer m_robotContainer = new RobotContainer();
 
 	// OI
-	public static OI m_OI = new OI(m_robotContainer);
+	public static OperatorInterface m_OI = new OperatorInterface(m_robotContainer);
 
 }

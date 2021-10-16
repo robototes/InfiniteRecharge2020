@@ -23,12 +23,69 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a9335bf-fb7d-4415-9d59-49ea9ddfef16" name="Default Changelist" comment="stuff">
-      <change afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexNewShootCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexButtonShootCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexTimeShootCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/OI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/OI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/OI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/OperatorInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/Robot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/RobotMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/RobotMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/autonomous/Autonomous.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/autonomous/Autonomous.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbExtendArmCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbLiftUpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbLiftUpCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbRetractArmCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbStopArmCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbToBottomHeightCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbToMiddleHeightCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/climb/ClimbToTopHeightCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/flywheel/FlywheelShootCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/hood/HoodJoystickCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexAllInCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexAllOffCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexAllOutCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexInCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexPulseCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexShootCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexSpitCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexLiftShootCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexLiftShootCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexLiftShootSlowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexLiftShootSlowCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexLiftStopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexLiftStopCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexNewShootCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexNewShootCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShiftBackCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShiftFrontCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShootBackCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShootBackThenFront.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShootFrontCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShootFrontThenBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShootLargestCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShootSelectionCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/shoot/IndexShootShiftCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/IntakeBothDownCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/IntakeBothOffCommandGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/IntakeBothOutCommandGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/IntakeBothUpCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/IntakeEverythingOnCommandGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/IntakeSpitCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/back/IntakeBackBothOffCommandGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/back/IntakeBackBothOnCommandGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/front/IntakeFrontBothOffCommandGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/intake/front/IntakeFrontBothOnCommandGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/lift/LiftDownCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/lift/LiftDownCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/lift/LiftUpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/lift/LiftUpCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/shooter/RobotShootCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/shooter/SetShooterValueCommand.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/ClimbMotorSubsystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/ClimbMotorSubsystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/ClimbConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/ClimbConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/HoodSubsystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/HoodSubsystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/IntakeLiftSubsystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/IntakeLiftSubsystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/IntakeMotorSubsystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/IntakeMotorSubsystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/TurretSubsystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/TurretSubsystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/AutoConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/AutoConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/IndexerConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/IndexerConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/ShooterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/constants/ShooterConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/index/IndexerSensorSubsystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/index/IndexerSensorSubsystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/index/IndexerSubsystemSuperStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/subsystems/index/IndexerSubsystemSuperStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/frc/team2412/robot/subsystems/LiftSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/frc/team2412/robot/subsystems/LiftSubsystemTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,8 +122,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
     <property name="show.unlinked.gradle.project.popup" value="true" />
@@ -76,7 +133,20 @@
       <recent name="frc.team2412.robot.commands.indexer.shoot" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.IntakeLiftSubsystemTest">
+  <component name="RunManager" selected="Gradle.robotcode">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="frc.team2412.robot.Main" />
+      <module name="robotcode.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="frc.team2412.robot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ClimbLiftSubsystemTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -115,8 +185,27 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="robotcode" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.robotcode" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.IntakeLiftSubsystemTest" />
         <item itemvalue="Gradle.ClimbLiftSubsystemTest" />
       </list>
@@ -141,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594609557526</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="stuff">
+      <created>1634162126533</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1634162126533</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -162,13 +258,72 @@
     <option name="LAST_COMMIT_MESSAGE" value="stuff" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="277" y="14" key="SettingsEditor" timestamp="1634161120334">
+    <state x="223" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1634162769301">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="277" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1634161120334" />
+    <state x="223" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1634162769301" />
+    <state x="574" y="139" key="#com.intellij.ide.util.MemberChooser" timestamp="1634317671591">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="574" y="139" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1634317671591" />
+    <state x="82" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1634322244923">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="82" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.864@0.0.1536.864" timestamp="1634322244923" />
+    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1634319272012">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1634319272012" />
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1634337677461">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1634337677461" />
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1600.900@0.0.1600.900" timestamp="1634185121731" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1634337677461">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1634337677461" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1600.900@0.0.1600.900" timestamp="1634185121731" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1634337677461">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1634337677461" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1600.900@0.0.1600.900" timestamp="1634185121725" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1634337677461">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1634337677461" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1600.900@0.0.1600.900" timestamp="1634185121731" />
+    <state x="481" y="153" key="RollbackChangesDialog" timestamp="1634338277671">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="481" y="153" key="RollbackChangesDialog/0.0.1536.864@0.0.1536.864" timestamp="1634338277671" />
+    <state x="277" y="14" key="SettingsEditor" timestamp="1634163723800">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="277" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1634163723800" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1634162141629">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1634162141629" />
     <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1634161192554">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1536.864@0.0.1536.864" timestamp="1634161192554" />
+    <state x="431" y="181" key="search.everywhere.popup" timestamp="1634317921284">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="431" y="181" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1634317921284" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/frc/team2412/robot/Main.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

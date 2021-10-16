@@ -21,23 +21,6 @@ public class AutoConstants {
 
 	public static final boolean kGyroReversed = true;
 
-	// Old characterization constants
-	// public static final double ksVolts = 0.185;
-	// public static final double kvVoltSecondsPerMeter = 0.0754;
-	// public static final double kaVoltSecondsSquaredPerMeter = 0.0105;
-
-	// public static final double kPDriveVel = 0.488;
-
-	// public static final double kTrackwidthMeters = Units.inchesToMeters(21.5); // Horizontal distance between wheels
-
-	// Garage-measured characterization constants
-	// public static final double /*kS*/ ksVolts = 0.6;
-	// public static final double /*kV*/ kvVoltSecondsPerMeter = 3.97;
-	// public static final double /*kA*/ kaVoltSecondsSquaredPerMeter = 0.266;
-
-	// public static final double kPDriveVel = 1.69;
-	// public static final double kTrackwidthMeters = 0.6419121763651794; // Horizontal distance between wheels
-
 	// ESCWest-measured characterization constants
 	public static final double /*kS*/ ksVolts = 0.578;
 	public static final double /*kV*/ kvVoltSecondsPerMeter = 3.99;
@@ -52,12 +35,6 @@ public class AutoConstants {
 	public static final double kMaxSpeedMetersPerSecond = 2.0; // Max speed we can drive
 
 	public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
-
-	// old constants
-	// public static final double KvLinear = 1.65;
-	// public static final double KaLinear = 0.18;
-	// public static final double KvAngular = 1.4;
-	// public static final double KaAngular = 0.2;
 
 	// Garage measured constants (for linear - made up for angular)
 	public static final double KvLinear = 3.97;
@@ -99,22 +76,6 @@ public class AutoConstants {
 
 	public static RamseteController ramseteControlller = new RamseteController(kRamseteB, kRamseteZeta);
 	public static PIDController pidController = new PIDController(kPDriveVel, 0, 0);
-
-	// Barrel Route points - Hits cones
-  	//   Left in if the new Barrel is not as good as expected.
-	// public static final Translation2d barrelStart = new Translation2d(1.37, -2.41);
-	// public static final Translation2d barrelOne = new Translation2d(5.27, -2.4);
-	// public static final Translation2d barrelTwo = new Translation2d(4.5, -4.5);
-	// public static final Translation2d barrelThree  = new Translation2d(3.26, -3.07);
-	// public static final Translation2d barrelFour = new Translation2d(6.52, -1.75);
-	// public static final Translation2d barrelFive = new Translation2d(5.71, -1.24);
-	// public static final Translation2d barrelSix = new Translation2d(7, -3.53);
-	// public static final Translation2d barrelSeven = new Translation2d(8, -3);
-	// public static final Translation2d barrelEight = new Translation2d(7.74, -2);
-	// public static final Translation2d barrelEnd = new Translation2d(1.37, -2.41);
-
-  	// public static List<Translation2d> interiorWaypointsBarrelPath = List.of(barrelOne, barrelTwo, barrelThree,
-	// 		barrelFour, barrelFive, barrelSix, barrelSeven);
 
 	// Barrel 3 Route points from Pathweaver
   	//   More points and wider paths in an attempt to get around the cones
@@ -166,24 +127,6 @@ public class AutoConstants {
 			new Pose2d(slalomPointOne, new Rotation2d(0)), interiorWaypointsSlalomPath,
 			new Pose2d(slalomPointFourteen, new Rotation2d(180)), config);
 
-	// Bounce Route points
-	// public static final Translation2d bounceStart = new Translation2d(0.91, -2.29);
-	// public static final Translation2d bounceStart2 = new Translation2d(2, -2.2);
-	// public static final Translation2d bounceStar1 = new Translation2d(2.29, -0.69);
-	// public static final Translation2d bouncePoint1a = new Translation2d(3.5, -3.81);
-	// public static final Translation2d bouncePoint1b = new Translation2d(4.45, -3.81);
-	// public static final Translation2d bounceStar2 = new Translation2d(4.8, -0.69);
-	// public static final Translation2d bouncePoint2 = new Translation2d(5.03, -3.66);
-	// public static final Translation2d bouncePoint3 = new Translation2d(7, -3.02);
-	// public static final Translation2d bounceStar3 = new Translation2d(7, -0.69);
-	// public static final Translation2d bounceEnd = new Translation2d(8.23, -2);
-
-	// public static List<Translation2d> interiorWaypointsBouncePath = List.of(bounceStart2, bounceStar1, bouncePoint1a, bouncePoint1b, bounceStar2,
-	//		bouncePoint2, bouncePoint3, bounceStar3);
-
-  	// public static final Trajectory bouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
-  	// 		new Pose2d(bounceStart, new Rotation2d(0)), interiorWaypointsBouncePath,
-  	// 		new Pose2d(bounceEnd, new Rotation2d(-180)), config);
 
   	// Bounce 3 Route points
   	//   More points to better round curves

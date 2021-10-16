@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.team2412.robot.commands.indexer.shoot;
+package frc.team2412.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team2412.robot.subsystems.IntakeLiftSubsystem;
@@ -29,23 +29,20 @@ public class IndexNewShootCommand extends CommandBase {
 		ml=indexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem();
 		ms=indexerSubsystemSuperStructure.getIndexerSensorSubsystem();
 	}
-	@Override
-	public void initialize() {
-	}
-	
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		if(ms.getIndexBackInnerSensorValue()){
+		 if(!ms.allFrontSensorsOff()){
 			mf.set(-0.3);
 			if(!ms.getIndexBackSensorValue()) mb.set(0.2);
-		}else if(!ms.getIndexBackInnerSensorValue()||!ms.getIndexFrontInnerSensorValue()){
+		}else if(!ms.allBackSensorsOff()){
 			mb.set(-0.3);
 			if(!ms.getIndexFrontSensorValue()) mf.set(0.2);
 		}else{
-			mf.set(-0.2);
-			mb.set(-0.2);
+			mf.set(-0.3);
+			mb.set(-0.3);
 		}
+		ml.set(0.6);
 
 	}
 
@@ -53,7 +50,6 @@ public class IndexNewShootCommand extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		// m_IndexerSubsystemSuperStructure.setAllSubsystemsToZero();
-
 		mf.stop();
 		mb.stop();
 		ml.stop();

@@ -13,7 +13,7 @@ import frc.team2412.robot.subsystems.index.IndexerSensorSubsystem;
 import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 
 //This is an example command for this year. Make sure all commands extend CommandBase and they use take all dependencies(fields) through a constructor
-public class IndexInCommand extends CommandBase {
+public class IndexCommand extends CommandBase {
 
 	private IndexerMotorFrontSubsystem mf;
 	private IndexerMotorBackSubsystem mb;
@@ -21,7 +21,7 @@ public class IndexInCommand extends CommandBase {
 	private IndexerSensorSubsystem ms;
 	private IntakeLiftSubsystem ls;
 
-	public IndexInCommand(IndexerSubsystemSuperStructure motorSubsystem, IntakeLiftSubsystem l) {
+	public IndexCommand(IndexerSubsystemSuperStructure motorSubsystem, IntakeLiftSubsystem l) {
 		ls = l;
 		mf = motorSubsystem.getIndexerMotorFrontSubsystem();
 		mb = motorSubsystem.getIndexerMotorBackSubsystem();

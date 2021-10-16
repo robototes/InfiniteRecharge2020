@@ -7,18 +7,15 @@ import frc.team2412.robot.subsystems.index.IndexerSubsystemSuperStructure;
 public class LiftUpCommand extends CommandBase {
 
 	private LiftSubsystem liftSubsystem;
-	private IndexerSubsystemSuperStructure motorSubsystem;
 
-	public LiftUpCommand(LiftSubsystem liftSubsystem, IndexerSubsystemSuperStructure motorSubsystem) {
+	public LiftUpCommand(LiftSubsystem liftSubsystem) {
 		addRequirements(liftSubsystem);
 		this.liftSubsystem = liftSubsystem;
-		this.motorSubsystem = motorSubsystem;
 	}
 
 	@Override
 	public void execute() {
 		liftSubsystem.liftUp();
-		//motorSubsystem.getIndexerMotorLiftSubsystem().addPID(-25);
 	}
 
 	@Override

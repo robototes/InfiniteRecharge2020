@@ -8,12 +8,12 @@ public class IndexerConstants {
 		public void flip() {
 			UnbalancedSide s = this;
 			switch (s) {
-			case FRONT:
-				s = UnbalancedSide.BACK;
-				break;
-			case BACK:
-				s = UnbalancedSide.FRONT;
-				break;
+				case FRONT:
+					s = UnbalancedSide.BACK;
+					break;
+				case BACK:
+					s = UnbalancedSide.FRONT;
+					break;
 			}
 		}
 	}
@@ -116,8 +116,8 @@ public class IndexerConstants {
 		}
 
 		private IndexCommandEntry(final int validBits, final int expectedBits,
-				final IndexDirection intakeOffFrontIndexDir, final IndexDirection intakeOffBackIndexDir,
-				final IndexDirection intakeOnFrontIndexDir, final IndexDirection intakeOnBackIndexDir) {
+								  final IndexDirection intakeOffFrontIndexDir, final IndexDirection intakeOffBackIndexDir,
+								  final IndexDirection intakeOnFrontIndexDir, final IndexDirection intakeOnBackIndexDir) {
 			assert ((validBits & expectedBits) == expectedBits);
 			this.validBits = validBits;
 			this.expectedBits = expectedBits;

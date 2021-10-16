@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
 	public double timeRemaining;
 
 	private RobotContainer robotContainer = RobotMap.m_robotContainer;
-	private OI OI = RobotMap.m_OI;
+	private OperatorInterface OI = RobotMap.m_OI;
 
 	Command autoCommand;
 
@@ -153,24 +153,24 @@ public class Robot extends TimedRobot {
 	/**
 	 * This function is called periodically during autonomous.
 	 */
-	 
+
 	@Override
 	public void autonomousPeriodic() {
 		Optional<ShooterDistanceDataPoint> opPoint = robotContainer.m_limelightSubsystem.getDistanceData();
-			opPoint.ifPresent(point ->{
-				//System.out.println(point);
-				if(System.currentTimeMillis() < (autoStartTime + 8000)){
-					robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
-					robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
-				} else {
-					robotContainer.m_flywheelSubsystem.setSpeed(0);
-					robotContainer.m_hoodSubsystem.setServo(0);
-	
-				}
-			});
-			if(System.currentTimeMillis() < (autoStartTime + 8500)) {
-				CommandScheduler.getInstance().schedule(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_limelightSubsystem));
+		opPoint.ifPresent(point ->{
+			//System.out.println(point);
+			if(System.currentTimeMillis() < (autoStartTime + 8000)){
+				robotContainer.m_flywheelSubsystem.setSpeed((point.m_shooterPower.value()) / 5500);
+				robotContainer.m_hoodSubsystem.setServo(point.m_hoodAngle.value());
+			} else {
+				robotContainer.m_flywheelSubsystem.setSpeed(0);
+				robotContainer.m_hoodSubsystem.setServo(0);
+
 			}
+		});
+		if(System.currentTimeMillis() < (autoStartTime + 8500)) {
+			CommandScheduler.getInstance().schedule(new TurretFollowLimelightCommand(robotContainer.m_turretSubsystem, robotContainer.m_limelightSubsystem));
+		}
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class Robot extends TimedRobot {
 		RobotMap.driveLeftFrontMotor.setSelectedSensorPosition(0);
 		RobotMap.driveRightFrontMotor.setSelectedSensorPosition(0);
 		robotContainer.m_limelightSubsystem.startLimelight();
-		CommandScheduler.getInstance().schedule(new LiftDownCommand(robotContainer.m_liftSubsystem, robotContainer.m_indexerMotorSubsystem));
+		//CommandScheduler.getInstance().schedule(new LiftDownCommand(robotContainer.m_liftSubsystem));
 		// m_robotContainer.m_flywheelSubsystem.setSpeed(-0.25);
 
 		// robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexBitmapCommand(
@@ -204,7 +204,7 @@ public class Robot extends TimedRobot {
 
 
 
-				// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
+		// m_robotContainer.m_hoodSubsystem.setDefaultCommand(
 		// new HoodJoystickCommand(m_robotContainer.m_hoodSubsystem, () ->
 		// m_OI.codriverStick.getY() * 0.5 + 0.5));
 

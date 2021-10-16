@@ -3,9 +3,6 @@ package frc.team2412.robot.subsystems.index;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team2412.robot.commands.indexer.IndexInCommand;
-import frc.team2412.robot.subsystems.constants.IndexerConstants;
-
 public class IndexerSubsystemSuperStructure extends SubsystemBase {
 
 	private IndexerMotorBackSubsystem m_IndexerMotorBackSubsystem;

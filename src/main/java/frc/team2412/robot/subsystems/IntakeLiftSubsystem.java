@@ -6,8 +6,7 @@ import frc.team2412.robot.subsystems.constants.IntakeConstants.IntakeState;
 
 public class IntakeLiftSubsystem extends SubsystemBase {
 
-	private Solenoid frontSolenoid;
-	private Solenoid backSolenoid;
+	private Solenoid frontSolenoid, backSolenoid;
 
 	private IntakeState currentState = IntakeState.WITHDRAWN;
 

@@ -108,7 +108,7 @@ public class ShooterConstants {
 		skewData.sort((o1, o2) -> o1.m_ts.compareTo(o2.m_ts));
 	}
 
-	public static <T extends Interpolable<T>> @Nullable T interpolateInList(List<T> list,
+	public static <T extends Interpolable<T>> T interpolateInList(List<T> list,
 			Function<T, InterpolatingDouble> fieldSupplier, double t_in) {
 		InterpolatingDouble tyInter = new InterpolatingDouble(t_in);
 		if (list.isEmpty()) {

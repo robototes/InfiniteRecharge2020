@@ -79,13 +79,13 @@ public class ClimbMotorSubsystem extends SubsystemBase {
 				|| 0 < value && rightEncoder.getPosition() < MIN_ARM_EXTENSION) {
 			rightMotor.getPIDController().setReference(speed, ControlType.kVelocity);
 		} else {
-			rightMotor.set(0);
+			rightMotor.stopMotor();
 		}
 		if (value < 0 && MIN_ARM_EXTENSION < leftEncoder.getPosition()
 				|| 0 < value && leftEncoder.getPosition() < MAX_ARM_EXTENSION) {
 			leftMotor.getPIDController().setReference(speed, ControlType.kVelocity);
 		} else {
-			leftMotor.set(0);
+			leftMotor.stopMotor();
 		}
 		// setMotor(value, leftMotor, rightEncoder);
 

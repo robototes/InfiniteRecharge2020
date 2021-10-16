@@ -46,12 +46,12 @@ public class IndexerSensorSubsystem extends SubsystemBase {
 	}
 
 	public boolean allBackSensorsOff() {
-		return !getIndexBackSensorValue() && !getIndexBackMidSensorValue() && !getIndexBackInnerSensorValue();
+		return !getIndexBackSensorValue() && !getIndexBackMidSensorValue();
 		//return !m_indexBackSensor.get() && !m_indexBackMidSensor.get() && !m_indexBackInnerSensor.get();
 	}
 
 	public boolean allFrontSensorsOff() {
-		return !getIndexFrontSensorValue() && !getIndexFrontMidSensorValue() && !getIndexFrontInnerSensorValue();
+		return !getIndexFrontSensorValue() && !getIndexFrontMidSensorValue();
 
 		//return !m_indexFrontSensor.get() && !m_indexFrontMidSensor.get() && !m_indexFrontInnerSensor.get();
 	}
