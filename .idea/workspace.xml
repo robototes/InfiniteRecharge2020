@@ -22,10 +22,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a9335bf-fb7d-4415-9d59-49ea9ddfef16" name="Default Changelist" comment="comp code">
+    <list default="true" id="6a9335bf-fb7d-4415-9d59-49ea9ddfef16" name="Default Changelist" comment="fix autoton">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/autonomous/Autonomous.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/autonomous/Autonomous.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexLiftShootSlowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team2412/robot/commands/indexer/IndexLiftShootSlowCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634342590024</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix autoton">
+      <created>1634421923445</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634421923445</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -229,7 +234,8 @@
     <MESSAGE value="Refactored the testing" />
     <MESSAGE value="stuff" />
     <MESSAGE value="comp code" />
-    <option name="LAST_COMMIT_MESSAGE" value="comp code" />
+    <MESSAGE value="fix autoton" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix autoton" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1634421685738">
@@ -280,10 +286,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1634342604215" />
-    <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1634161192554">
+    <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1634421896308">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1536.864@0.0.1536.864" timestamp="1634161192554" />
+    <state x="548" y="334" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1536.864@0.0.1536.864" timestamp="1634421896308" />
     <state x="431" y="181" key="search.everywhere.popup" timestamp="1634317921284">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
