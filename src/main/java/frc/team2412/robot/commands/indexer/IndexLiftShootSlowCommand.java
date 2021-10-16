@@ -19,7 +19,7 @@ public class IndexLiftShootSlowCommand extends CommandBase {
 	private IndexerSubsystemSuperStructure m_IndexerSubsystemSuperStructure;
 
 	public IndexLiftShootSlowCommand(IndexerSubsystemSuperStructure indexerSubsystemSuperStructure) {
-		// Use addRequirements() here to declare subsystem dependencies.
+		addRequirements(indexerSubsystemSuperStructure);
 		this.m_IndexerSubsystemSuperStructure = indexerSubsystemSuperStructure;
 	}
 
@@ -38,12 +38,14 @@ public class IndexLiftShootSlowCommand extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		// m_IndexerSubsystemSuperStructure.getIndexerMotorBackSubsystem().stop();
+		 m_IndexerSubsystemSuperStructure.getIndexerMotorFrontSubsystem().stop();
+		m_IndexerSubsystemSuperStructure.getIndexerMotorLiftSubsystem().stop();
+
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return true;
+		return false;
 	}
 }

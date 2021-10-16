@@ -177,9 +177,7 @@ public class Autonomous {
 				//.andThen(new TurretFollowLimelightCommand(turretSub, limelightSub)).withTimeout(15.0)
 				//  .andThen(new WaitCommand(1.0))
 
-				.andThen(new IndexLiftShootSlowCommand(indexerMotorSub))
-				.andThen(new WaitCommand(3))
-				.andThen(new IndexLiftStopCommand(indexerMotorSub))
+				.andThen(new IndexLiftShootSlowCommand(indexerMotorSub).withTimeout(3))
 				.andThen(new WaitCommand(1))
 
 				//.andThen(new FlywheelStopCommand(flywheelSub))
