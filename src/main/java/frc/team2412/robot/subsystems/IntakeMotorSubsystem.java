@@ -27,6 +27,7 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 
 	public void set(CANSparkMax motor, double speed) {
 		motor.set(speed);
+		motor.setInverted(true);
 	}
 
 	public void backIntakeOff() {

@@ -31,7 +31,7 @@ public class IndexTimeShootCommand extends CommandBase {
 		ms=indexerSubsystemSuperStructure.getIndexerSensorSubsystem();
 		t=new Timer();
 	}
-	public static final double TIME = 1;
+	public static final double TIME = 1.5;
 	@Override
 	public void initialize() {
 		t.start();
@@ -40,15 +40,15 @@ public class IndexTimeShootCommand extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		mf.set(t.get()<TIME ? -0.4 : ms.getIndexFrontSensorValue() ? 0.1 : 0.4);
-		mb.set(t.get()>TIME ? -0.4 : ms.getIndexBackSensorValue() ? 0.1 : 0.4);
-		ml.set(1);
+		mf.set(t.get()<TIME+0.1 && t.get()>0.1 ? -0.5 : ms.getIndexFrontSensorValue() ? 0.1 : 0.3);
+		mb.set(t.get()>TIME+0.1 ? -0.5 : ms.getIndexBackSensorValue() ? 0.1 : 0.3);
+		ml.set(0.7);
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return t.get()>TIME*2;
+		return t.get()>TIME*2+0.1;
 	}
 
 	// Called once the command ends or is interrupted.

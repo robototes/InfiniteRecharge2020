@@ -193,6 +193,7 @@ public class OperatorInterface {
 		Command twoButtonShoot = new IndexButtonShootCommand(robotContainer.m_indexerMotorSubsystem, intakeFrontIn, intakeBackIn);
 		Command timeShoot = new IndexTimeShootCommand(robotContainer.m_indexerMotorSubsystem);
 
+		new Button(driverRightStick::getXButton).whileActiveContinuous(twoButtonShoot);
 		DriverControls.RUN_LIFT.createFrom(driverRightStick).whileActiveContinuous(timeShoot);
 
 		robotContainer.m_indexerMotorSubsystem.setDefaultCommand(new IndexCommand(robotContainer.m_indexerMotorSubsystem, robotContainer.m_intakeUpDownSubsystem));
