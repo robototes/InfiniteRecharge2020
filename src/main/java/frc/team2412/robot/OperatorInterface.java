@@ -231,7 +231,7 @@ public class OperatorInterface {
 		if (!LIFT_CONNECTED) return;
 
 		DriverControls.LIFT_DOWN.createFrom(driverRightStick)
-				.whileHeld(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().in())
+				.whileHeld(() -> robotContainer.m_indexerMotorSubsystem.getIndexerMotorLiftSubsystem().in(), robotContainer.m_indexerMotorSubsystem)
 				.whenReleased(new IndexLiftStopCommand(robotContainer.m_indexerMotorSubsystem));
 
 		liftButton.whenPressed(new LiftUpCommand(robotContainer.m_liftSubsystem))

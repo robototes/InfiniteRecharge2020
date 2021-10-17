@@ -38,8 +38,8 @@ public class IndexButtonShootCommand extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		mf.set(frontButton.get() ? -0.3 : 0);
-		mb.set(backButton.get() ? -0.3 : 0);
+		mf.set(frontButton.get() ? -0.5 : 0.05);
+		mb.set(backButton.get() ? -0.5 : 0.05);
 		ml.set(0.6);
 
 	}

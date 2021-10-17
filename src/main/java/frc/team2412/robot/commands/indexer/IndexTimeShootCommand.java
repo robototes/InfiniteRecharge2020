@@ -40,9 +40,9 @@ public class IndexTimeShootCommand extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		mf.set(t.get()<TIME ? -0.5 : ms.getIndexFrontSensorValue() ? 0 : 0.1);
-		mb.set(t.get()>TIME ? -0.5 : ms.getIndexBackSensorValue() ? 0 : 0.1);
-		ml.set(0.6);
+		mf.set(t.get()<TIME ? -0.4 : ms.getIndexFrontSensorValue() ? 0.1 : 0.4);
+		mb.set(t.get()>TIME ? -0.4 : ms.getIndexBackSensorValue() ? 0.1 : 0.4);
+		ml.set(1);
 	}
 
 	// Returns true when the command should end.
