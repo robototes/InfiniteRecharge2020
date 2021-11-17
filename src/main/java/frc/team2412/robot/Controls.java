@@ -16,15 +16,22 @@ public class Controls {
 	}
 
 	// Joysticks
-	public Joystick driverStick = new Joystick(0);
+	public final Joystick driverStick = new Joystick(0);
 
 	// Buttons
-	public Button exampleButton = new JoystickButton(driverStick, ControlConstants.EXAMPLE_PORT);
+	public final Button exampleButton = new JoystickButton(driverStick, ControlConstants.EXAMPLE_PORT);
+	// the robot instance
+	public final RobotContainer robot;
 
 	// Constructor to set all of the commands and buttons
 	public Controls(RobotContainer robotContainer) {
+		robot = robotContainer;
 		// telling the button that when its pressed to execute example command with the
 		// in this case it causes the command to start running when the button is just pressed
-		if(EXAMPLE_CONNECTED) exampleButton.whenPressed(new ExampleCommand(robotContainer.m_ExampleSubsystem));
+		if(EXAMPLE_CONNECTED) bindExampleControls();
+	}
+
+	public void bindExampleControls(){
+		exampleButton.whenPressed(new ExampleCommand(robot.exampleSubsystem));
 	}
 }
