@@ -20,9 +20,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 @SuppressWarnings("unused")
 public class Robot extends TimedRobot {
 
-	// Have instances of robot container and OI for easy access
-	private RobotContainer m_RobotContainer = RobotMap.mRobotContainer;
-	private OI m_OI = RobotMap.mOI;
+	// Have instances of robot container and controls for easy access
+	public final RobotContainer robotContainer = new RobotContainer();
+	public final Controls controls = new Controls(robotContainer);
+
+
 
 	/**
 	 * This function is called once when autonomous is started

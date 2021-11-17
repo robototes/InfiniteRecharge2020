@@ -11,8 +11,7 @@ import com.robototes.helpers.MockHardwareExtension;
 import com.robototes.helpers.TestWithScheduler;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.team2412.robot.Commands.ExampleCommand;
-import frc.team2412.robot.Subsystems.ExampleSubsystem;
+import frc.team2412.robot.commands.ExampleCommand;
 
 // This is an example test of the robot. This is to make sure that everything is working as intended before code goes on a robot.
 public class ExampleSubsystemTest {
@@ -53,7 +52,7 @@ public class ExampleSubsystemTest {
 		fakeButton.release();
 
 		// Verify that subsystemMethod was called once
-		verify(mockedExampleSubsystem, times(1)).subsystemMethod();
+		verify(mockedExampleSubsystem, times(1)).enable(2);
 
 		// Clear the scheduler
 		TestWithScheduler.schedulerClear();
