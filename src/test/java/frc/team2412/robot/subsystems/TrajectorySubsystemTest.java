@@ -78,13 +78,13 @@ public class TrajectorySubsystemTest {
 
 		when(mockedJoystick.getY()).thenReturn(1.0);
 		System.out.println(mockedJoystick.getY());
-		when(mockedXboxController.getY(Hand.kLeft)).thenReturn(1.0);
+		when(mockedXboxController.getLeftY()).thenReturn(1.0);
 		System.out.println(mockedXboxController.getY());
 
 		when(mockedJoystick.getTwist()).thenReturn(0.0);
 		System.out.println(mockedJoystick.getTwist());
-		when(mockedXboxController.getY(Hand.kRight)).thenReturn(0.0);
-		System.out.println(mockedXboxController.getY(Hand.kRight));
+		when(mockedXboxController.getRightY()).thenReturn(0.0);
+		System.out.println(mockedXboxController.getRightY());
 
 		// Create a fake button that will be "pressed"
 		MockButton fakeButton = new MockButton();

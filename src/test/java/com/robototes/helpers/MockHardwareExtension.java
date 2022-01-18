@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 public final class MockHardwareExtension {
 
 	public static void afterAll() {
-		DriverStation.getInstance().release();
+		DriverStation.release();
 		HAL.releaseDSMutex();
 	}
 

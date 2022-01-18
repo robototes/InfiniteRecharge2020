@@ -20,19 +20,19 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
-import edu.wpi.first.wpiutil.math.VecBuilder;
+import edu.wpi.first.math.VecBuilder;
 import frc.team2412.robot.RobotMap;
 import frc.team2412.robot.subsystems.constants.DriveBaseConstants;
 
@@ -92,8 +92,8 @@ public class DriveBaseSubsystem extends SubsystemBase {
 	}
 
 	public void drive(XboxController rightJoystick, Joystick leftJoystick, Button button) {
-		double r = rightJoystick.getY(Hand.kRight);
-		double l = rightJoystick.getY(Hand.kLeft);
+		double r = rightJoystick.getRightY();
+		double l = rightJoystick.getLeftY();
 		if(Math.abs(l) < 0.1) l = 0;
 		if(Math.abs(r) < 0.1) r = 0;
 

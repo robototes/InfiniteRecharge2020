@@ -11,8 +11,8 @@ import com.robototes.sensors.Limelight.StreamMode;
 import com.robototes.units.Rotations;
 import com.robototes.units.UnitTypes.RotationUnits;
 
-import edu.wpi.cscore.HttpCamera;
-import edu.wpi.cscore.HttpCamera.HttpCameraKind;
+import edu.wpi.first.cscore.HttpCamera;
+import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team2412.robot.subsystems.constants.ShooterConstants;
 import frc.team2412.robot.subsystems.constants.ShooterConstants.ShooterDistanceDataPoint;
