@@ -9,10 +9,25 @@ import edu.wpi.first.wpilibj.simulation.DriverStationSim;
  * initialized to be able to run the scheduler.
  */
 public final class MockHardwareExtension {
+	private static boolean m_executeUnlockThread = true;
 
 	public static void afterAll() {
+		m_executeUnlockThread = true;
+		Thread unlockThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (m_executeUnlockThread) {
+					HAL.releaseDSMutex();
+				}
+			}
+		});
+
+		unlockThread.start();
 		DriverStation.release();
-		HAL.releaseDSMutex();
+		m_executeUnlockThread = false;
+		try {
+			unlockThread.join();
+		} catch (InterruptedException ignored) {}
 	}
 
 	public static void beforeAll() {

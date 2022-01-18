@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -106,10 +105,10 @@ public class DriveBaseSubsystem extends SubsystemBase {
 		} else {
 
 			if (button.get()) {
-				rightFrontMotor.set(rightJoystick.getY());
-				leftFrontMotor.set(rightJoystick.getY());
+				rightFrontMotor.set(rightJoystick.getLeftY());
+				leftFrontMotor.set(rightJoystick.getLeftY());
 			} else {
-				rightFrontMotor.set(rightJoystick.getY());
+				rightFrontMotor.set(rightJoystick.getLeftY());
 				leftFrontMotor.set(leftJoystick.getY());
 			}
 		}

@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team2412.robot.commands.drive.DriveCommand;
 
@@ -79,7 +78,7 @@ public class TrajectorySubsystemTest {
 		when(mockedJoystick.getY()).thenReturn(1.0);
 		System.out.println(mockedJoystick.getY());
 		when(mockedXboxController.getLeftY()).thenReturn(1.0);
-		System.out.println(mockedXboxController.getY());
+		System.out.println(mockedXboxController.getLeftY());
 
 		when(mockedJoystick.getTwist()).thenReturn(0.0);
 		System.out.println(mockedJoystick.getTwist());

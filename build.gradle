@@ -5,6 +5,10 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2022.1.1"
 }
 
+repositories {
+  maven { url 'https://jitpack.io' }
+}
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -67,7 +71,16 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation "com.github.Oblarg.Oblog:lib:3.1.0"	
+	implementation 'com.github.Robototes:2412RobotLibrary:2020.08.03'
+
     testImplementation 'junit:junit:4.12'
+	testImplementation 'org.mockito:mockito-core:3.2.0'
+	testImplementation 'net.bytebuddy:byte-buddy-agent:1.10.3'
+	testImplementation 'net.bytebuddy:byte-buddy:1.10.3'
+	testImplementation 'org.objenesis:objenesis:2.6'
+
 }
 
 // Simulation configuration (e.g. environment variables).

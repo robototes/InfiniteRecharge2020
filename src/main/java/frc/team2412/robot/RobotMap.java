@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -52,11 +53,11 @@ public class RobotMap {
 	public static final AHRS driveGyro = new AHRS(SPI.Port.kMXP);
 
 	// DriveBase Solenoid
-	public static Solenoid driveSolenoid = new Solenoid(PneumaticPort.DRIVE.id);
+	public static Solenoid driveSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticPort.DRIVE.id);
 
 	// climb Pneumatics
-	public static Solenoid climbLeftSolenoid = new Solenoid(PneumaticPort.CLIMB_LEFT.id);
-	public static Solenoid climbRightSolenoid = new Solenoid(PneumaticPort.CLIMB_RIGHT.id);
+	public static Solenoid climbLeftSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticPort.CLIMB_LEFT.id);
+	public static Solenoid climbRightSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticPort.CLIMB_RIGHT.id);
 
 	// Motors
 	public static CANSparkMax climbLeftMotor = new CANSparkMax(CANBus.CLIMB1.id, MotorType.kBrushless);
@@ -128,12 +129,12 @@ public class RobotMap {
 
 	// Intake Subsystem
 	// -------------------------------------------------------------------------------
-	public static Solenoid intakeFrontSolenoid = new Solenoid(PneumaticPort.INTAKE_FRONT_UP.id);
-	public static Solenoid intakeBackSolenoid = new Solenoid(PneumaticPort.INTAKE_BACK_UP.id);
+	public static Solenoid intakeFrontSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticPort.INTAKE_FRONT_UP.id);
+	public static Solenoid intakeBackSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticPort.INTAKE_BACK_UP.id);
 
 	// Lift Subsystem
 	// -------------------------------------------------------------------------------
-	public static DoubleSolenoid liftDoubleSolenoid = new DoubleSolenoid(PneumaticPort.LIFT_UP.id,
+	public static DoubleSolenoid liftDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticPort.LIFT_UP.id,
 			PneumaticPort.LIFT_DOWN.id);
 
 	// CONTROL PANEL SUBSYSTEM
@@ -153,7 +154,7 @@ public class RobotMap {
 			Pipeline.FOUR, StreamMode.STANDARD, SnapshotMode.OFF);
 
 	// Compressor
-	public static Compressor compressor = new Compressor();
+	public static Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
 	// Robot container
 	public static RobotContainer m_robotContainer = new RobotContainer();

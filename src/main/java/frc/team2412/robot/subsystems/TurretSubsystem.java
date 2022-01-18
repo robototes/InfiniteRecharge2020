@@ -82,7 +82,7 @@ public class TurretSubsystem extends PIDSubsystem {
 	// Set the motor to 'output' unless it would cause the turret to
 	// go outside the encoder max & min positions
 	private void setMotorWithConstraint(double output) {
-		final int position = motor.getSelectedSensorPosition();
+		final double position = motor.getSelectedSensorPosition();
 		final double origOutput = output;
 
 		if (output > 0) {
